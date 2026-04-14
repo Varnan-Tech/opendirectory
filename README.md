@@ -1,101 +1,90 @@
 <div align="center">
-  <img src="docs/assets/logo-white-bg.webp" width="400" alt="OpenDirectory Logo" style="background-color: white; padding: 20px; border-radius: 10px;" />
+  <img src="docs/assets/opendirectory_banner.webp" width="100%" alt="OpenDirectory Banner" />
 </div>
 
-# OpenDirectory
+<br />
 
-OpenDirectory is a production grade, open source registry and command line interface for AI Agent Skills. It provides a centralized repository of specialized instructions and capabilities that can be injected into various AI assistants and development agents.
+<div align="center">
+  <strong>A curated registry and CLI for AI Agent Skills, meticulously designed for Go-To-Market (GTM), Technical Marketing, and growth automation.</strong>
+</div>
 
-By using OpenDirectory, developers can extend the functionality of their AI tools with pre-configured skills for tasks such as documentation generation, codebase analysis, web scraping, and automated project management.
+<div align="center">
+
+[![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+</div>
+
+---
 
 ## What is OpenDirectory?
 
-OpenDirectory acts as a bridge between specialized AI instructions and the agents that execute them. It solves the problem of fragmented agent configurations by providing a standardized format for skills and a unified CLI to manage their installation across different platforms.
+OpenDirectory is a central library that allows you to add new capabilities, or superpowers, to your AI agents. Instead of teaching your AI how to perform complex marketing or growth tasks from scratch, you can simply download a pre-built skill from our catalog and install it directly into your project.
 
-Each skill in the directory is a self contained package consisting of a SKILL.md file that defines the agent's behavior, along with any necessary supporting assets. The CLI handles the complexity of placing these files in the correct locations for each supported agent, whether you are working in a local project or want the skill available globally.
+## Prerequisites
 
-## Getting Started
+Before you begin, you must have Node.js installed on your computer. Node.js provides the necessary tools to download and run these skills.
 
-The easiest way to use OpenDirectory is via npx, which allows you to run the CLI without a permanent installation.
+1. Visit [nodejs.org](https://nodejs.org/).
+2. Download and install the version labeled Recommended For Most Users.
+3. Once installed, you will have access to a tool called terminal or command prompt on your computer, which you will use for the following steps.
 
-### List Available Skills
+## Installation (Zero-Install Required)
 
-To browse the registry and see all available skills:
+Because we use `npx`, there is no need to install the OpenDirectory tool itself. `npx` is a magic command that comes with Node.js. When you type `npx "@opendirectory.dev/skills"`, your computer automatically downloads the registry in the background and runs it instantly.
 
-```bash
-npx @opendirectory.dev/skills list
-```
+## Step 1: View Available Skills
 
-This command displays a table of all skills currently available in the registry, including their names and brief descriptions.
-
-### Install a Skill
-
-To install a specific skill, use the install command with a target agent.
-
-#### Local Installation
-
-By default, skills are installed into the current working directory. This is ideal for project specific configurations.
+To see the full list of available skills, open your terminal and run the following command:
 
 ```bash
-npx @opendirectory.dev/skills install claude-md-generator --target claude
+npx "@opendirectory.dev/skills" list
 ```
 
-#### Global Installation
+This command will display a list of all skills currently available in the OpenDirectory registry.
 
-If you want a skill to be available across all your projects, use the --global flag.
+## Step 2: Choose Your Agent
+
+OpenDirectory supports several different AI agents. When you install a skill, you need to tell the system which agent you are using by using the `--target` flag.
+
+Supported agents include:
+
+*   **Claude Code**: Use `--target claude`
+*   **OpenCode**: Use `--target opencode`
+*   **Codex**: Use `--target codex`
+*   **Gemini CLI**: Use `--target gemini`
+*   **Anti-Gravity**: Use `--target anti-gravity`
+*   **OpenClaw**: Use `--target openclaw`
+*   **Hermes**: Use `--target hermes`
+
+## Step 3: Install a Skill
+
+Once you have found a skill you want to use, run the following command in your terminal, replacing `<skill-name>` with the name of the skill and `<your-agent>` with the agent you chose in Step 2:
 
 ```bash
-npx @opendirectory.dev/skills install claude-md-generator --target claude --global
+npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
 ```
 
-## Supported Agents and File Structures
+This command installs the skill into your agent's global configuration directory, making it available across all your projects.
 
-OpenDirectory supports a wide range of AI agents. The CLI automatically manages the directory structure for each target.
+## How to Use the Skills
 
-### OpenCode
-OpenCode is a specialized agent for development tasks.
-- Local: ./.opencode/skills/[skill-name]/
-- Global: ~/.config/opencode/skills/[skill-name]/
+After the installation is complete, your AI agent is ready to use the new skill. Simply open your AI agent (such as Claude Code) within your project folder and give it a command related to the skill.
 
-### Claude Code (claude)
-The official CLI agent from Anthropic.
-- Local: ./.claude/skills/[skill-name]/
-- Global: ~/.claude/skills/[skill-name]/
+For example, if you installed a skill for SEO analysis, you might say:
+"Use the SEO analysis skill to check the homepage of my website."
 
-### Codex
-A versatile agent for code generation and analysis.
-- Local: ./.codex/skills/[skill-name]/
-- Global: ~/.codex/skills/[skill-name]/
+## Why NPX?
 
-### Gemini CLI (gemini)
-Google's command line interface for Gemini models.
-- Local: ./.gemini/skills/[skill-name]/
-- Global: ~/.gemini/skills/[skill-name]/
-
-### Anti-Gravity
-A high performance agent framework.
-- Local: ./.agent/skills/[skill-name]/
-- Global: ~/.gemini/antigravity/skills/[skill-name]/
-
-### OpenClaw
-An open source alternative for agentic workflows.
-- Local: ./.openclaw/skills/[skill-name]/
-- Global: ~/.openclaw/skills/[skill-name]/
-
-### Hermes
-A lightweight agent focused on speed and efficiency.
-- Local: ./.hermes/skills/[skill-name]/
-- Global: ~/.hermes/skills/[skill-name]/
-- Note: For local installations, the CLI also updates ~/.hermes/config.yaml to include the local skills directory.
+We use a tool called `npx` to manage these skills. This ensures that every time you run a command, you are automatically using the most recent version of the skill and the latest security updates. You never have to worry about manually updating your software.
 
 ## How to Contribute
 
-We welcome contributions from the community. Whether you want to add a new skill, improve the CLI, or update documentation, please refer to our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+We welcome contributions from the community. If you have built an innovative GTM, Technical Marketing, or growth automation skill, we encourage you to share it with the ecosystem.
 
-**Contributor Rewards:** Top contributors to the OpenDirectory project will receive free exclusive merchandis from our team as a thank you!
-
-All new skills must follow a strict format and undergo a security review before being merged into the main registry.
+Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on the strict format required for new skills and our security validation process.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License.

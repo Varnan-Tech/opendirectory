@@ -12,7 +12,7 @@ import Table from 'cli-table3';
 const program = new Command();
 
 program
-  .name('@opendirectory.dev/cli')
+  .name('@opendirectory.dev/skills')
   .description(chalk.blue.bold('CLI to install OpenDirectory skills'))
   .version('0.1.0');
 
@@ -59,7 +59,7 @@ program
       }
       
       console.log(table.toString());
-      console.log(chalk.gray(`\nRun \`${chalk.white('npx @opendirectory.dev/cli install <skill-name> --target <agent>')}\` to install a skill.`));
+      console.log(chalk.gray(`\nRun \`${chalk.white('npx "@opendirectory.dev/skills" install <skill-name> --target <agent>')}\` to install a skill.`));
 
     } catch (error) {
       spinner.stop();
@@ -72,7 +72,6 @@ program
   .command('install <skill>')
   .description('Install a skill for your AI agent')
   .requiredOption('-t, --target <tool>', 'Target agent (opencode, claude, codex, gemini, anti-gravity, openclaw, hermes)')
-  .option('-g, --global', 'Install globally for all projects')
   .action(async (skillName, options) => {
     const spinner = ora(`Installing ${chalk.yellow(skillName)}...`).start();
     try {
@@ -120,7 +119,7 @@ program
         } catch (dirErr) {
           spinner.stop();
           console.error(chalk.red(`Error: Repository '${skillName}' not found.`));
-          console.log(chalk.gray(`Try running \`${chalk.white('npx @opendirectory.dev/cli list')}\` to see available skills.`));
+          console.log(chalk.gray(`Try running \`${chalk.white('npx "@opendirectory.dev/skills" list')}\` to see available skills.`));
           process.exit(1);
         }
       }
@@ -137,33 +136,28 @@ program
       const finalSkillName = actualSkillFolderName === skillName ? skillName : actualSkillFolderName;
 
       const target = options.target.toLowerCase();
-      const isGlobal = options.global;
 
       const validTargets = ['opencode', 'claude', 'codex', 'gemini', 'anti-gravity', 'openclaw', 'hermes'];
 
       if (validTargets.includes(target)) {
         let targetFolder = '';
-        if (target === 'opencode') targetFolder = isGlobal ? `~/.config/opencode/skills/${finalSkillName}` : `./.opencode/skills/${finalSkillName}`;
-        if (target === 'claude') targetFolder = isGlobal ? `~/.claude/skills/${finalSkillName}` : `./.claude/skills/${finalSkillName}`;
-        if (target === 'codex') targetFolder = isGlobal ? `~/.codex/skills/${finalSkillName}` : `./.codex/skills/${finalSkillName}`;
-        if (target === 'gemini') targetFolder = isGlobal ? `~/.gemini/skills/${finalSkillName}` : `./.gemini/skills/${finalSkillName}`;
-        if (target === 'anti-gravity') targetFolder = isGlobal ? `~/.gemini/antigravity/skills/${finalSkillName}` : `./.agent/skills/${finalSkillName}`;
-        if (target === 'openclaw') targetFolder = isGlobal ? `~/.openclaw/skills/${finalSkillName}` : `./.openclaw/skills/${finalSkillName}`;
-        if (target === 'hermes') targetFolder = isGlobal ? `~/.hermes/skills/${finalSkillName}` : `./.hermes/skills/${finalSkillName}`;
+        if (target === 'opencode') targetFolder = `~/.config/opencode/skills/${finalSkillName}`;
+        if (target === 'claude') targetFolder = `~/.claude/skills/${finalSkillName}`;
+        if (target === 'codex') targetFolder = `~/.codex/skills/${finalSkillName}`;
+        if (target === 'gemini') targetFolder = `~/.gemini/skills/${finalSkillName}`;
+        if (target === 'anti-gravity') targetFolder = `~/.gemini/antigravity/skills/${finalSkillName}`;
+        if (target === 'openclaw') targetFolder = `~/.openclaw/skills/${finalSkillName}`;
+        if (target === 'hermes') targetFolder = `~/.hermes/skills/${finalSkillName}`;
         
-        const { resolvePath, updateHermesConfig } = require('./fs-adapters');
+        const { resolvePath } = require('./fs-adapters');
         const resolvedDest = resolvePath(targetFolder);
         await fs.mkdir(resolvedDest, { recursive: true });
         await fs.cp(skillDir, resolvedDest, { recursive: true });
         
-        if (target === 'hermes' && !isGlobal) {
-          await updateHermesConfig();
-        }
-        
         spinner.stop();
         console.log(chalk.green(`Successfully installed ${chalk.bold(finalSkillName)}!`));
         console.log(`\n  ${chalk.cyan('Agent:')}   ${target}`);
-        console.log(`  ${chalk.cyan('Scope:')}   ${isGlobal ? 'Global' : 'Local Project'}`);
+        console.log(`  ${chalk.cyan('Scope:')}   Global`);
         console.log(`  ${chalk.cyan('Path:')}    ${targetFolder}\n`);
       } else {
         spinner.stop();
