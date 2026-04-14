@@ -1,0 +1,148 @@
+{
+  "name": "OpenDirectory GTM Skills",
+  "author": "Varnan",
+  "description": "A collection of GTM skills for Claude Code",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "name": "blog-cover-image-cli",
+      "description": "A skill for blog-cover-image-cli",
+      "path": "./skills/blog-cover-image-cli"
+    },
+    {
+      "name": "claude-md-generator",
+      "description": "Skill for claude-md-generator",
+      "path": "./skills/claude-md-generator"
+    },
+    {
+      "name": "cook-the-blog",
+      "description": "Generate high-converting, deep-dive growth case studies in MDX format. Use this skill when asked to write a case study or blog post about a company's growth, tech stack, or product-led strategy. It handles the full pipeline (researching the company via Tavily, generating a 16:9 cover image, quality checking the draft, uploading assets to cloud storage, and pushing directly to the target repository).",
+      "path": "./skills/cook-the-blog"
+    },
+    {
+      "name": "dependency-update-bot",
+      "description": "Scans your project for outdated npm, pip, Cargo, Go, or Ruby packages. Runs a CVE security audit. Fetches changelogs, summarizes breaking changes with Gemini, and opens one PR per risk group (patch, minor, major). Includes Diagnosis Mode for install conflicts. Use when asked to update dependencies, check for outdated packages, open dependency PRs, scan for package updates, audit for CVEs, or flag breaking changes in upgrades. Trigger when a user says \"check for outdated packages\", \"update my dependencies\", \"open PRs for dependency updates\", \"scan for CVEs\", or \"which packages need upgrading\".",
+      "path": "./skills/dependency-update-bot"
+    },
+    {
+      "name": "docs-from-code",
+      "description": "Generates and updates README.md and API reference docs by reading your codebase's functions, routes, types, schemas, and architecture. Uses graphify to build a knowledge graph first, then writes accurate docs from it. Use when asked to write docs, generate a README, document an API, update stale docs, create an API reference from code, add an architecture section, or document a project in any language. Trigger when a user says their docs are missing, outdated, or wants to document their codebase without writing it manually.",
+      "path": "./skills/docs-from-code"
+    },
+    {
+      "name": "explain-this-pr",
+      "description": "Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment. Use when asked to explain a PR, summarize a pull request, write a plain-English description of a PR, add a summary comment to a PR, or understand what a PR changes. Trigger when a user says \"explain this PR\", \"summarize this pull request\", \"what does this PR do\", \"add a comment explaining the PR\", or shares a GitHub PR URL and asks what it does.",
+      "path": "./skills/explain-this-pr"
+    },
+    {
+      "name": "google-trends-api-skills",
+      "description": "A skill for google-trends-api-skills",
+      "path": "./skills/google-trends-api-skills"
+    },
+    {
+      "name": "hackernews-intel",
+      "description": "Monitors Hacker News for user-configured keywords, deduplicates against a local SQLite cache, and sends Slack alerts for new matching posts. Use when asked to monitor Hacker News for mentions, track keywords on HN, get alerts when something is posted about a topic on Hacker News, or set up HN keyword monitoring. Trigger when a user mentions Hacker News alerts, HN monitoring, keyword tracking on HN, or wants to know when a topic appears on Hacker News.",
+      "path": "./skills/hackernews-intel"
+    },
+    {
+      "name": "kill-the-standup",
+      "description": "Reads yesterday's Linear issues and GitHub commits for the authenticated user, formats a standup update (done / doing / blockers), and posts it to Slack. Use when asked to write a standup, generate a standup update, post to the standup channel, summarize yesterday's work, or automate the daily standup. Trigger when a user says \"write my standup\", \"post standup\", \"generate standup update\", \"what did I do yesterday\", or \"kill the standup\".",
+      "path": "./skills/kill-the-standup"
+    },
+    {
+      "name": "linkedin-post-generator",
+      "description": "Converts any content, blog post URL, pasted article, GitHub PR description, or a description of something built, into a formatted LinkedIn post with proper hook, story arc, and formatting. Optionally posts directly to LinkedIn via Composio. Use when asked to write a LinkedIn post, turn a blog into a LinkedIn update, announce a shipped feature, share a case study on LinkedIn, or post something professionally. Trigger when a user mentions LinkedIn, wants to share content professionally, says \"post this to LinkedIn\", or asks to repurpose a blog/article/PR for social media.",
+      "path": "./skills/linkedin-post-generator"
+    },
+    {
+      "name": "llms-txt-generator",
+      "description": "Generates and maintains a standards-compliant llms.txt file for any website — either by crawling the live site OR by reading the website's codebase directly. Use this skill when asked to create an llms.txt, add AI discoverability to a site, improve GEO (Generative Engine Optimization), make a website readable by AI agents, generate an llms-full.txt, check if a site has llms.txt, or audit a site's AI readiness for generative search. Trigger this skill any time a user mentions llms.txt, AI discoverability, LLM site readability, or wants their site to appear in AI-generated answers. Also trigger when the user is inside a website codebase and asks about SEO, AI readiness, or content structure.",
+      "path": "./skills/llms-txt-generator"
+    },
+    {
+      "name": "luma-attendees-scraper",
+      "description": "A skill for luma-attendees-scraper",
+      "path": "./skills/luma-attendees-scraper"
+    },
+    {
+      "name": "meeting-brief-generator",
+      "description": "Takes a company name and optional contact, runs targeted research via Tavily, synthesizes a 1-page pre-call brief with Gemini, and optionally saves it to Notion. Use when asked to prepare for a meeting, research a prospect before a call, generate a company brief, create a pre-call summary, or write a meeting prep doc. Trigger when a user says \"prepare me for a meeting with\", \"research this company before my call\", \"generate a meeting brief for\", \"I have a call with X tomorrow\", or \"create a prospect brief for\".",
+      "path": "./skills/meeting-brief-generator"
+    },
+    {
+      "name": "meta-ads-skill",
+      "description": "A skill for meta-ads-skill",
+      "path": "./skills/meta-ads-skill"
+    },
+    {
+      "name": "newsletter-digest",
+      "description": "Aggregates RSS feeds from the past week, synthesizes the top stories using Gemini, and publishes a newsletter digest to Ghost CMS. Optionally outputs formatted Markdown for Substack or any other platform. Use when asked to generate a newsletter, create a weekly digest, summarize RSS feeds, compile top stories for a newsletter, or publish a digest to Ghost. Trigger when a user mentions newsletter digest, weekly roundup, RSS digest, compile top stories, or publish to Ghost.",
+      "path": "./skills/newsletter-digest"
+    },
+    {
+      "name": "noise2blog",
+      "description": "Turns rough notes, bullet points, voice transcripts, or tweet dumps into a polished, publication-ready blog post. Optionally enriches with Tavily research to add supporting data and credibility to claims. Use when asked to write a blog post from notes, turn rough ideas into an article, expand bullet points into a full post, clean up a voice transcript into a blog, or repurpose a tweet thread as an article. Trigger when a user says \"write a blog post from this\", \"turn these notes into a post\", \"expand this into an article\", \"make this publishable\", \"I have rough notes write a blog\", or \"clean up this transcript\".",
+      "path": "./skills/noise2blog"
+    },
+    {
+      "name": "outreach-sequence-builder",
+      "description": "Takes a buying signal and generates a personalized multi-channel outreach sequence across email, LinkedIn, and phone. Outputs 4-6 ready-to-send touchpoints over 10-14 days. Optionally drafts email touchpoints via Composio Gmail. Use when asked to write an outreach sequence, build a sales cadence, create a follow-up sequence, personalize outreach for a signal, or generate cold outreach messages. Trigger when a user says \"build an outreach sequence for\", \"write a sales cadence for\", \"create outreach based on this signal\", \"they just raised a round write me a sequence\", or \"generate personalized outreach for\".",
+      "path": "./skills/outreach-sequence-builder"
+    },
+    {
+      "name": "position-me",
+      "description": "A skill for position-me",
+      "path": "./skills/position-me"
+    },
+    {
+      "name": "pr-description-writer",
+      "description": "Skill for pr-description-writer",
+      "path": "./skills/pr-description-writer"
+    },
+    {
+      "name": "producthunt-launch-kit",
+      "description": "Skill for producthunt-launch-kit",
+      "path": "./skills/producthunt-launch-kit"
+    },
+    {
+      "name": "reddit-icp-monitor",
+      "description": "Watches subreddits for people describing the exact problem you solve, scores their relevance to your ICP, and drafts a helpful non-spammy reply for each high-signal post. Use when asked to monitor Reddit for ICP signals, find prospects on Reddit, surface pain point posts, draft helpful Reddit replies, or scan subreddits for buying signals. Trigger when a user says \"monitor Reddit for my ICP\", \"find people on Reddit who need my product\", \"scan subreddits for pain points\", \"draft Reddit replies for prospects\", or \"check Reddit for buying signals\".",
+      "path": "./skills/reddit-icp-monitor"
+    },
+    {
+      "name": "reddit-post-engine",
+      "description": "Writes and optionally posts a Reddit post for any subreddit, following that subreddit's specific culture and rules. Drafts a title, body, and first comment using the 90/10 rule. Uses Composio Reddit MCP for optional direct posting. Use when asked to post on Reddit, draft a Reddit post, share a project on Reddit, write a subreddit post, or launch something on Reddit. Trigger when a user says \"post this on Reddit\", \"write a Reddit post for r/...\", \"help me launch on Reddit\", \"draft something for Reddit\", or \"how do I share this on Reddit without getting banned\".",
+      "path": "./skills/reddit-post-engine"
+    },
+    {
+      "name": "schema-markup-generator",
+      "description": "Skill for schema-markup-generator",
+      "path": "./skills/schema-markup-generator"
+    },
+    {
+      "name": "show-hn-writer",
+      "description": "Skill for show-hn-writer",
+      "path": "./skills/show-hn-writer"
+    },
+    {
+      "name": "stargazer",
+      "description": "A skill for stargazer",
+      "path": "./skills/stargazer"
+    },
+    {
+      "name": "tweet-thread-from-blog",
+      "description": "Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA. Optionally posts the full thread to X via Composio using a reply chain. Use when asked to turn a blog post into a tweet thread, repurpose an article for Twitter, create a thread from a blog, write a Twitter thread about a topic, or share a blog post as a thread. Trigger when a user mentions Twitter thread, X thread, tweet thread, or wants to repurpose blog content for X/Twitter.",
+      "path": "./skills/tweet-thread-from-blog"
+    },
+    {
+      "name": "twitter-GTM-find-skill",
+      "description": "A skill for twitter-GTM-find-skill",
+      "path": "./skills/twitter-GTM-find-skill"
+    },
+    {
+      "name": "yc-intent-radar-skill",
+      "description": "A skill for yc-intent-radar-skill",
+      "path": "./skills/yc-intent-radar-skill"
+    }
+  ]
+}

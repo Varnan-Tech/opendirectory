@@ -2,7 +2,8 @@
   "name": "opendirectory-cli-root",
   "private": true,
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "build:plugin": "tsx scripts/build-claude-plugin.ts"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",

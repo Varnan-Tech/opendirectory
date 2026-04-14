@@ -1,0 +1,10 @@
+{
+  "name": "OpenDirectory Marketplace",
+  "description": "Official marketplace for OpenDirectory skills",
+  "plugins": [
+    {
+      "name": "OpenDirectory GTM Skills",
+      "path": "./.claude-plugin"
+    }
+  ]
+}

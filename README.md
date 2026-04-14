@@ -34,6 +34,20 @@ Before you begin, you must have Node.js installed on your computer. Node.js prov
 
 Because we use `npx`, there is no need to install the OpenDirectory tool itself. `npx` is a magic command that comes with Node.js. When you type `npx "@opendirectory.dev/skills"`, your computer automatically downloads the registry in the background and runs it instantly.
 
+## Native Installation (Claude Code Only)
+
+Users who exclusively use Anthropic's Claude Code can add OpenDirectory as a native community marketplace directly inside their Claude interface. This allows you to install skills using Claude's built-in plugin system.
+
+Run the following commands inside your Claude Code terminal:
+
+```bash
+# Add the OpenDirectory marketplace
+/plugin marketplace add Varnan-Tech/opendirectory
+
+# Install a skill directly
+/plugin install claude-md-generator@OpenDirectory-Marketplace
+```
+
 ## Step 1: View Available Skills
 
 To see the full list of available skills, open your terminal and run the following command:
