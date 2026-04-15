@@ -76,7 +76,33 @@ function buildRegistry() {
         console.warn(`Warning: Failed to parse skill.meta.json in ${folder}`);
       }
     } else {
-      const skillMdPath = path.join(folderPath, 'SKILL.md');
+      let skillMdPath = path.join(folderPath, 'SKILL.md');
+      
+      if (!fs.existsSync(skillMdPath)) {
+        try {
+          const subDirs = fs.readdirSync(folderPath, { withFileTypes: true });
+          for (const entry of subDirs) {
+            if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
+              const possiblePath = path.join(folderPath, entry.name, 'SKILL.md');
+              if (fs.existsSync(possiblePath)) {
+                skillMdPath = possiblePath;
+                break;
+              }
+              const subSubDirs = fs.readdirSync(path.join(folderPath, entry.name), { withFileTypes: true });
+              for (const subEntry of subSubDirs) {
+                if (subEntry.isDirectory()) {
+                  const possiblePath2 = path.join(folderPath, entry.name, subEntry.name, 'SKILL.md');
+                  if (fs.existsSync(possiblePath2)) {
+                    skillMdPath = possiblePath2;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        } catch (e) {}
+      }
+
       const readmeMdPath = path.join(folderPath, 'README.md');
       const mdPath = fs.existsSync(skillMdPath) ? skillMdPath : (fs.existsSync(readmeMdPath) ? readmeMdPath : null);
 

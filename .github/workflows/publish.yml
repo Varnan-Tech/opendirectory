@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -29,6 +32,18 @@ jobs:
 
       - name: Build registry
         run: pnpm exec tsx scripts/build-registry.ts
+
+      - name: Update README with skills list
+        run: pnpm exec tsx scripts/update-readme.ts
+
+      - name: Update CONTRIBUTING with claimed skills
+        run: pnpm exec tsx scripts/update-contributing.ts
+
+      - name: Commit updated README and CONTRIBUTING
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: auto-update skills list in README and CONTRIBUTING [skip ci]"
+          file_pattern: "README.md CONTRIBUTING.md"
 
       - name: Build Claude Plugin manifest
         run: pnpm exec tsx scripts/build-claude-plugin.ts

@@ -1,83 +1,145 @@
 # Contributing to OpenDirectory
 
-Thank you for your interest in contributing to OpenDirectory. This project aims to build a universal registry for AI Agent Skills. We welcome contributions in the form of new skills, bug fixes, and feature enhancements.
+Welcome to the OpenDirectory community! We are building the first universal registry for AI Agent Skills. Whether you are a seasoned growth engineer or making your very first open-source contribution, this guide will walk you through exactly how to build and submit a skill.
 
-**Contributor Rewards:** We truly appreciate our open-source community. To say thank you, **top contributors will receive free exclusive OpenDirectory merchandise and t-shirts!** Whether you are submitting highly requested skills, and fixing core bugs, your efforts will be rewarded.
+**Contributor Rewards:** Top contributors receive exclusive OpenDirectory swag, including limited-edition t-shirts and merchandise. We track contributions closely and reward those who help grow the ecosystem with high-quality GTM and Technical Marketing skills.
 
-## Adding a New Skill
+---
 
-To add a new skill to the registry, follow these steps:
+## What is an AI Agent Skill?
 
-1. Create a new directory in the skills/ folder. The directory name should be the name of your skill (e.g., my-awesome-skill).
-2. Create a SKILL.md file inside your new directory.
-3. Add the required YAML frontmatter to the top of the SKILL.md file.
+An AI Agent Skill is a package of instructions, context, and scripts that teaches an AI assistant (like Claude Code, OpenCode, or Cursor) how to perform a specific, complex task. 
 
-### Mandatory Skill Structure
+Instead of typing a massive prompt every time you want the AI to do something, you create a **Skill**. Once installed, you just type `/your-skill-name` and the AI instantly knows exactly what to do, what scripts to run, and what format to output.
 
-Every skill must have a SKILL.md file with the following frontmatter structure:
+---
+
+## How to Build a Skill (Step-by-Step)
+
+### Step 1: Clone the Repository
+Get the code onto your local machine by opening your terminal and running:
+
+```bash
+git clone https://github.com/Varnan-Tech/opendirectory.git
+cd opendirectory
+```
+
+### Step 2: Create Your Skill Folder
+All skills live inside the `skills/` directory. Create a new folder for your skill using a short, descriptive name (use dashes, no spaces).
+
+```bash
+mkdir skills/my-awesome-skill
+cd skills/my-awesome-skill
+```
+
+### Step 3: Choose Your Architecture
+
+You can build a **Basic Skill** (just instructions) or an **Advanced Skill** (instructions + code execution).
+
+#### Option A: The Basic Skill
+A basic skill is perfect for simple prompt-based tasks. It only requires two files in your folder:
+
+```text
+skills/my-awesome-skill/
+├── README.md
+└── SKILL.md
+```
+
+#### Option B: The Advanced Skill (Highly Recommended)
+Advanced skills are production-grade tools that use external scripts (Python/Node), local databases (SQLite), or complex reference materials. This is what makes OpenDirectory powerful. Look at `skills/position-me` or `skills/stargazer` in this repository for real-world examples.
+
+```text
+skills/my-advanced-skill/
+├── README.md            (The public documentation and cover image)
+├── SKILL.md             (The YAML frontmatter and AI instructions)
+├── .env.example         (Template for required API keys)
+├── scripts/             (Executable Python/JS scripts for scraping or APIs)
+│   └── scraper.py
+└── references/          (SOPs, output templates, or complex guidelines)
+    └── output_format.md
+```
+
+### Step 4: Write Your Files
+
+**1. The `SKILL.md` File**
+This is the brain of your skill. It MUST start with YAML frontmatter, followed by the instructions you want to give the AI agent.
 
 ```markdown
 ---
 name: my-awesome-skill
-description: A brief description of what the skill does.
-author: your-username
-version: 0.0.1
+description: Scrapes a website and generates a targeted cold email.
+author: your-github-username
+version: 1.0.0
 ---
 
-# My Awesome Skill
+# Cold Email Generator Skill
 
-Detailed instructions for the AI agent on how to use this skill.
+When the user asks you to generate a cold email:
+1. Run the `scripts/scraper.py` file to extract the target's website data.
+2. Read the rules in `references/email_guidelines.md`.
+3. Output the final email in a markdown code block.
 ```
 
-The frontmatter must include the name, description, author, and version fields. The name should match the directory name.
+**2. The `README.md` File**
+This is the public face of your skill. **It MUST have a dark-mode cover image at the very top.** This image will be automatically extracted and displayed on the main OpenDirectory registry page.
 
-## Local Development and Testing
+*Tip: You can use the `blog-cover-image-cli` skill already in this registry, or use Midjourney/ChatGPT/Flux to generate a 1280x640 dark-themed technical banner.*
 
-Before submitting a Pull Request, you must test your skill locally to ensure it functions correctly with the CLI.
+```markdown
+<img src="https://link-to-your-hosted-image.png" width="100%" alt="cover" />
+
+# My Awesome Skill
+This skill helps marketers automate their cold outreach by...
 
 ### Prerequisites
+- Python 3.10+
+- OpenAI API Key
 
-- Node.js (v18 or higher)
-- pnpm
+### Usage
+Once installed, simply type: "Use my-awesome-skill to email john@example.com"
+```
 
-### Setup
+### Step 5: Test Your Skill Locally
+Before submitting a Pull Request, verify that your skill compiles and installs correctly using our CLI tool.
 
-1. Clone the repository.
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
-3. Build the project:
-   ```bash
-   pnpm run build
-   ```
+Run these commands from the root `opendirectory` folder:
 
-### Testing Your Skill Locally
+```bash
+pnpm install
+pnpm build
+npx "@opendirectory.dev/skills" install my-awesome-skill --target opencode
+```
 
-After building the project, you can run the local version of the CLI to verify your skill appears in the list and can be installed correctly.
+If successful, check your `~/.config/opencode/skills/my-awesome-skill` folder to ensure all your scripts and files were copied perfectly!
 
-1. Verify the skill is listed:
-   ```bash
-   node packages/cli/dist/index.js list
-   ```
+### Step 6: Submit a Pull Request
+1. Commit your changes: `git add .` -> `git commit -m "feat: add my-awesome-skill"`
+2. Push to your fork and open a Pull Request against the main repository.
+3. **Security Scan**: Our automated GitHub Actions will strictly scan your code for formatting and malware.
+4. **AI Review**: A Gemini 3.1 Pro AI agent will review your code diff and leave comments.
+5. **Merge**: If everything passes, a human maintainer will merge your PR, and your skill will instantly be published to NPM and the Claude Marketplace!
 
-2. Test the installation process for a specific target (e.g., opencode):
-   ```bash
-   node packages/cli/dist/index.js install my-awesome-skill --target opencode
-   ```
+---
 
-Verify that the files are placed in the expected directory (e.g., ./.opencode/skills/my-awesome-skill/).
+## Looking for Inspiration? Build One of These!
 
-## Pull Request Process
+If you want to contribute but aren't sure what to build, pick one of these high-demand, advanced Go-To-Market (GTM) ideas. Our automation script tracks these, so once your PR is merged, the box will be checked automatically!
 
-1. Ensure your skill follows the mandatory structure and passes local testing.
-2. Submit a Pull Request with a clear description of your changes.
-3. Automated Security Scan: All PRs are subject to an automated security scan. This scan checks for malicious content, including but not limited to:
-   - Executable files (.exe, .bin, etc.)
-   - Malicious shell scripts
-   - Obfuscated code
-4. Human Review: After passing the automated scan, your PR will be reviewed by a maintainer. We look for clarity in instructions, accuracy of descriptions, and overall quality.
+- [ ] `gh-issue-to-demand-signal` - Scans the open GitHub issues of a competitor's public repo, clusters them by theme (missing features, bugs, UX complaints), and outputs a ranked "demand gap" report. Tells you exactly what their users are begging for — which is your product's messaging brief.
+- [ ] `who-viewed-my-talk` - Given a conference talk URL (YouTube/Luma/Sessionize), scrapes the comments, likes, and attendee list, cross-references speakers from the event's speaker page, and outputs a warm lead list of people who watched your category of content.
+- [ ] `linkedin-hiring-intent-scanner` - Searches LinkedIn job posts for roles that signal buying intent — e.g., "Head of Developer Relations", "Growth Engineer", "RevOps Manager" — at companies in a given funding stage or industry, and outputs a prioritized list with context on why each company is interesting right now.
+- [ ] `npm-downloads-to-leads` - Takes a list of npm package names (yours or competitors'), pulls weekly download trends via the npm API, identifies packages with breakout velocity, and maps the maintainers to Twitter/GitHub profiles. Useful for finding evangelists before they're famous.
+- [ ] `api-error-to-faq-builder` - Pulls open issues from your GitHub repo tagged as "bug" or "question", clusters them by the error message or API endpoint mentioned, and auto-drafts a troubleshooting FAQ in Markdown. The most hated support task, automated.
+- [ ] `sdk-adoption-tracker` - Given your SDK name, searches GitHub code search for public repos that import/require it, categorizes them by company/project type, and tracks week-over-week adoption velocity. Real signal of who's building on you — often invisible until you look.
+- [ ] `noise-to-linkedin-carousel` - Takes a raw voice note transcript, a rough idea dump, or a messy thread of thoughts, and restructures it into a polished LinkedIn carousel script — slide-by-slide, with a hook slide, 5-7 insight slides, and a CTA slide. Designed for founders who think out loud.
+- [ ] `oss-launch-kit` - Given a GitHub repo URL, generates the full launch kit: a Show HN post, a Product Hunt description, 5 Reddit posts tailored to relevant subreddits, a Twitter thread, and a "first week" community engagement plan. Built specifically for open-source product launches.
+- [ ] `competitor-churner-finder` - Monitors Twitter and Reddit for posts from people expressing frustration with a specific competitor tool (e.g., "switching away from X", "X is broken again"), extracts their profiles, and drafts a timely, empathetic DM that offers your product as the alternative — without being creepy.
+- [ ] `ph-daily-radar` - Hits the Product Hunt API every morning, filters launches by category, extracts the makers' Twitter/LinkedIn, and sends you a digest of who launched in your category today — with a drafted "congrats" outreach for each maker. Relationship building on autopilot.
+- [ ] `domain-expired-opportunity-finder` - Monitors daily expired domain lists, filters for domains that still have backlinks pointing to them (via public Ahrefs/Moz data), and flags ones in your niche that you could buy cheaply and redirect — one of the most underrated SEO plays, almost nobody automates the search.
+- [ ] `pricing-page-psychology-audit` - Takes a SaaS pricing page URL and audits it against 12 known pricing psychology principles (anchoring, decoy effect, loss aversion framing, feature-vs-value naming, etc.). Outputs specific suggestions on how to reframe each tier. Pricing is the highest-leverage GTM lever and almost nobody stress-tests it.
+- [ ] `content-repurpose-queue` - Looks at your last 30 pieces of content (tweets, blogs, LinkedIn posts), flags every one that got above-average engagement but was never repurposed, and generates a queue of 5 repurposing formats for each one. Most people create, post once, and forget. This treats content like an asset.
+- [ ] `github-discussion-to-devrel-content` - Monitors GitHub Discussions on your own or a competitor's repo, surfaces threads with 10+ replies or unresolved questions, and auto-drafts a short blog post or Twitter thread that answers each one — turning your community's questions into SEO-indexed content.
+- [ ] `youtube-tutorial-comment-scraper` - Scrapes comments on popular tutorial videos for competitor products, identifies frustrated users, extracts channel metadata, and finds business emails for outreach.
+- [ ] `app-store-review-arbitrage` - Scrapes iOS and Android app store reviews for competitor applications, filters for low-star reviews mentioning specific missing features using Python NLP scripts, and generates targeted ad copy highlighting those exact features in your own product.
 
-## Code of Conduct
-
-We expect all contributors to follow our Code of Conduct to ensure a welcoming and inclusive environment for everyone.
+This list is continuously updated with new high-demand GTM ideas. If you have a great idea for a skill that you want someone else to build, please open an issue to submit your suggestion. We encourage contributors to share their own ideas and help expand the registry.
