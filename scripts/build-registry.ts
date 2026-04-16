@@ -127,6 +127,7 @@ function buildRegistry() {
     }
 
     metadata.description = metadata.description || 'No description available';
+    metadata.name = folder;
 
     const result = SkillSchema.safeParse(metadata);
     if (result.success) {

@@ -1,6 +1,6 @@
 [
   {
-    "name": "blog-cover-generator",
+    "name": "blog-cover-image-cli",
     "description": "Use when the user asks to generate a blog cover image, thumbnail, or article header. Automatically uses modern typography, brand logos, and Google Search grounding to create beautiful 16:9 images with Gemini 3.1 Flash Image Preview.",
     "tags": [],
     "author": "",
@@ -48,7 +48,7 @@
     "path": "skills/explain-this-pr"
   },
   {
-    "name": "seo-keyword-research",
+    "name": "google-trends-api-skills",
     "description": "SEO keyword research workflow for blog generation using Google Trends data. Use when writing blog posts, planning content calendars, or optimizing articles for search engines. Finds breakout keywords, builds content structure, and generates SEO-optimized blog outlines targeting tech and developer audiences.",
     "tags": [],
     "author": "farizanjum",
@@ -104,7 +104,7 @@
     "path": "skills/meeting-brief-generator"
   },
   {
-    "name": "meta-ads-expert",
+    "name": "meta-ads-skill",
     "description": "Use when interacting with the Meta Ads MCP server to manage accounts, campaigns, ads, insights, and targeting, or to troubleshoot OAuth token authentication. Act as an Expert Media Buyer.",
     "tags": [],
     "author": "Unknown",
@@ -192,7 +192,7 @@
     "path": "skills/show-hn-writer"
   },
   {
-    "name": "stargazer-deep-extractor",
+    "name": "stargazer",
     "description": "Advanced 5-tier OSINT scraper for extracting GitHub stargazer emails. Use this skill when a user wants to scrape, extract, or download stargazers from a GitHub repository.",
     "tags": [],
     "author": "Unknown",
@@ -208,7 +208,7 @@
     "path": "skills/tweet-thread-from-blog"
   },
   {
-    "name": "twitter-GTM-find-Skill",
+    "name": "twitter-GTM-find-skill",
     "description": "End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP) using Gemini's native Google Search Grounding. Use this skill when OpenClaw needs to find developer-first, funded startups actively hiring for GTM, DevRel, or Growth roles.",
     "tags": [],
     "author": "Unknown",
@@ -216,7 +216,7 @@
     "path": "skills/twitter-GTM-find-skill"
   },
   {
-    "name": "yc-jobs-scraper",
+    "name": "yc-intent-radar-skill",
     "description": "Scrape daily job listings from YCombinator's Workatastartup platform without duplicates. Use this skill when asked to scrape YC jobs, update the YC companies list, or retrieve the latest startup jobs. It handles authentication, extracts company slugs via Inertia.js JSON payloads, falls back to public YC job pages when necessary, and maintains a local SQLite database to track historical jobs and prevent duplicates.",
     "tags": [],
     "author": "Unknown",
