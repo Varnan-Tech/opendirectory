@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'skills/**'
+      - 'packages/cli/**'
+      - 'scripts/**'
+      - 'registry.json'
 
 permissions:
   contents: write
