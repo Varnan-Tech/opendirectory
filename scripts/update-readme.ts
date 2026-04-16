@@ -27,7 +27,7 @@ function generateMarkdownTable(skills: Skill[]): string {
       desc = 'No description provided.';
     }
     
-    table += `| \`${skill.name}\` | ${desc} | \`${skill.version}\` |\n`;
+    table += `| [\`${skill.name}\`](${skill.path}) | ${desc} | \`${skill.version}\` |\n`;
   }
 
   return table;
