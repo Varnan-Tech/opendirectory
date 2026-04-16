@@ -54,7 +54,7 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | `show-hn-writer` | <img src="https://github.com/user-attachments/assets/224030e0-c3e0-499c-98d4-a049d7dddc51" width="600" /> | `1.0.0` |
 | `stargazer-deep-extractor` | Advanced 5-tier OSINT scraper for extracting GitHub stargazer emails. Use this skill when a user wants to scrape, extract, or download stargazers from a GitHub repository. | `0.0.1` |
 | `tweet-thread-from-blog` | <img src="https://github.com/user-attachments/assets/18b96a6b-9477-444d-b169-ea14a63e9fdf" width="600" /> | `1.0.0` |
-| `twitter-GTM-find-Skill` | <img src="https://github.com/user-attachments/assets/618b0abe-34fc-4c3e-a345-1a3eaeb3d20b" width="600" /> | `0.0.1` |
+| `twitter-GTM-find-Skill` | End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP) using Gemini's native Google Search Grounding. Use this skill when OpenClaw needs to find developer-first, funded startups actively hiring for GTM, DevRel, or Growth roles. | `0.0.1` |
 | `yc-jobs-scraper` | Scrape daily job listings from YCombinator's Workatastartup platform without duplicates. Use this skill when asked to scrape YC jobs, update the YC companies list, or retrieve the latest startup jobs. It handles authentication, extracts company slugs via Inertia.js JSON payloads, falls back to public YC job pages when necessary, and maintains a local SQLite database to track historical jobs and prevent duplicates. | `0.0.1` |
 
 <!-- SKILLS_LIST_END -->
