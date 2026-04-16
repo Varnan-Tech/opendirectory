@@ -28,20 +28,20 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 
 | Skill Name | Description | Version |
 |---|---|---|
-| `blog-cover-generator` | Use when the user asks to generate a blog cover image, thumbnail, or article header. Automatically uses modern typography, brand logos, and Google Search grounding to create beautiful 16:9 images with Gemini 3.1 Flash Image Preview. | `1.0.17` |
+| `blog-cover-generator` | <img src="https://github.com/user-attachments/assets/20336e16-a838-4281-9c48-af023fc84b4c" width="600" /> | `1.0.17` |
 | `claude-md-generator` | <img src="https://github.com/user-attachments/assets/0e295271-2216-47f7-828f-845c98ef0298" width="600" /> | `1.0.0` |
 | `cook-the-blog` | <img src="https://github.com/user-attachments/assets/01fc87a2-78a8-433d-8531-a06a6a6df617" width="600" /> | `1.0.0` |
 | `dependency-update-bot` | <img src="https://github.com/user-attachments/assets/08939280-bba2-4ac9-a349-2ca8c25ca328" width="600" /> | `1.0.0` |
 | `docs-from-code` | <img src="https://github.com/user-attachments/assets/493c7c61-9aa9-48e9-a71b-7c77c8c6a949" width="600" /> | `1.0.0` |
 | `explain-this-pr` | <img src="https://github.com/user-attachments/assets/9e76fc64-f982-4c4c-9b58-4398541aab97" width="600" /> | `1.0.0` |
-| `seo-keyword-research` | SEO keyword research workflow for blog generation using Google Trends data. Use when writing blog posts, planning content calendars, or optimizing articles for search engines. Finds breakout keywords, builds content structure, and generates SEO-optimized blog outlines targeting tech and developer audiences. | `2.0` |
+| `seo-keyword-research` | <img src="https://github.com/user-attachments/assets/848aa1be-64af-4b4b-bf46-af3d0798b7ee" width="600" /> | `2.0` |
 | `hackernews-intel` | <img src="https://github.com/user-attachments/assets/8d75cba9-7c2b-4693-8365-00779ed2b3d3" width="600" /> | `1.0.0` |
 | `kill-the-standup` | <img src="https://github.com/user-attachments/assets/4fcf306d-7ef9-455a-b5f1-02532c292f65" width="600" /> | `1.0.0` |
 | `linkedin-post-generator` | <img src="https://github.com/user-attachments/assets/dc71e06b-8b3c-486a-adbf-d56a7b22cdc1" width="600" /> | `1.0.0` |
 | `llms-txt-generator` | <img src="https://github.com/user-attachments/assets/7f549d0b-4d55-40a8-97c6-59510cc40b54" width="600" /> | `1.0.0` |
 | `luma-attendees-scraper` | <img src="https://github.com/user-attachments/assets/44acd3d4-8c4d-4c8a-823b-96cd6585e5ae" width="600" /> | `1.0.0` |
 | `meeting-brief-generator` | <img src="https://github.com/user-attachments/assets/30026bc4-657a-4ce9-8c0e-4dd2654783f8" width="600" /> | `1.0.0` |
-| `meta-ads-expert` | Use when interacting with the Meta Ads MCP server to manage accounts, campaigns, ads, insights, and targeting, or to troubleshoot OAuth token authentication. Act as an Expert Media Buyer. | `0.0.1` |
+| `meta-ads-expert` | <img src="https://github.com/user-attachments/assets/baf2509b-0ee0-41ca-9555-3ad350a6824c" width="600" /> | `0.0.1` |
 | `newsletter-digest` | <img src="https://github.com/user-attachments/assets/cb2879ae-eb5c-4727-a1a2-47b4462a699b" width="600" /> | `1.0.0` |
 | `noise2blog` | <img src="https://github.com/user-attachments/assets/2359cff9-dfd4-4276-bb3e-4b6091ad6983" width="600" /> | `1.0.0` |
 | `outreach-sequence-builder` | <img src="https://github.com/user-attachments/assets/3d73358a-52ca-48e7-b34e-b1ba33246d6e" width="600" /> | `1.0.0` |
@@ -52,10 +52,10 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | `reddit-post-engine` | <img src="https://github.com/user-attachments/assets/2706f326-5fb9-46fc-851a-ec54ccf53f74" width="600" /> | `1.0.0` |
 | `schema-markup-generator` | <img src="https://github.com/user-attachments/assets/4b5e5bfb-3c33-4a20-afff-59fda19196b4" width="600" /> | `1.0.0` |
 | `show-hn-writer` | <img src="https://github.com/user-attachments/assets/224030e0-c3e0-499c-98d4-a049d7dddc51" width="600" /> | `1.0.0` |
-| `stargazer-deep-extractor` | Advanced 5-tier OSINT scraper for extracting GitHub stargazer emails. Use this skill when a user wants to scrape, extract, or download stargazers from a GitHub repository. | `0.0.1` |
+| `stargazer-deep-extractor` | <img src="https://github.com/user-attachments/assets/54d6b003-2f2c-42bd-a8f9-b4e835338dfc" width="600" /> | `0.0.1` |
 | `tweet-thread-from-blog` | <img src="https://github.com/user-attachments/assets/18b96a6b-9477-444d-b169-ea14a63e9fdf" width="600" /> | `1.0.0` |
-| `twitter-GTM-find-Skill` | End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP) using Gemini's native Google Search Grounding. Use this skill when OpenClaw needs to find developer-first, funded startups actively hiring for GTM, DevRel, or Growth roles. | `0.0.1` |
-| `yc-jobs-scraper` | Scrape daily job listings from YCombinator's Workatastartup platform without duplicates. Use this skill when asked to scrape YC jobs, update the YC companies list, or retrieve the latest startup jobs. It handles authentication, extracts company slugs via Inertia.js JSON payloads, falls back to public YC job pages when necessary, and maintains a local SQLite database to track historical jobs and prevent duplicates. | `0.0.1` |
+| `twitter-GTM-find-Skill` | <img src="https://github.com/user-attachments/assets/618b0abe-34fc-4c3e-a345-1a3eaeb3d20b" width="600" /> | `0.0.1` |
+| `yc-jobs-scraper` | <img src="https://github.com/user-attachments/assets/2328ae2b-1b5d-45ad-8604-b90721b8d398" width="600" /> | `0.0.1` |
 
 <!-- SKILLS_LIST_END -->
 
@@ -135,6 +135,14 @@ We use a tool called `npx` to manage these skills. This ensures that every time 
 We welcome contributions from the community. If you have built an innovative GTM, Technical Marketing, or growth automation skill, we encourage you to share it with the ecosystem.
 
 Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on the strict format required for new skills and our security validation process.
+
+## Top Contributors
+
+<a href="https://github.com/Varnan-Tech/opendirectory/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Varnan-Tech/opendirectory" />
+</a>
+
+A massive thank you to everyone who has helped build the OpenDirectory ecosystem! Join us by checking out the [CONTRIBUTING.md](CONTRIBUTING.md) guide.
 
 ## License
 

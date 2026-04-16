@@ -8,10 +8,11 @@ interface Skill {
   name: string;
   description: string;
   version: string;
+  path: string;
 }
 
-function findImageInReadme(skillName: string): string | null {
-  const skillDir = path.join(__dirname, '../skills', skillName);
+function findImageInReadme(skillPath: string): string | null {
+  const skillDir = path.join(__dirname, '../', skillPath);
   
   function searchDir(dir: string): string | null {
     if (!fs.existsSync(dir)) return null;
@@ -69,7 +70,7 @@ function generateMarkdownTable(skills: Skill[]): string {
   for (const skill of skills) {
     let desc = skill.description;
     
-    const imageUrl = findImageInReadme(skill.name);
+    const imageUrl = findImageInReadme(skill.path);
     
     if (imageUrl) {
       desc = `<img src="${imageUrl}" width="600" />`;

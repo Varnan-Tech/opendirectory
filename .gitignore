@@ -4,3 +4,4 @@ coverage/
 *.log
 /.sisyphus
 /.next/dev/static/chunks
+.dev/static/chunks
