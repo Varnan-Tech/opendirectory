@@ -127,6 +127,14 @@ function buildRegistry() {
     }
 
     metadata.description = metadata.description || 'No description available';
+    if (metadata.description.length > 130) {
+      // Split by sentence and take the first one or two
+      const sentences = metadata.description.match(/[^\.!\?]+[\.!\?]+/g) || [metadata.description];
+      metadata.description = sentences.slice(0, 1).join(' ').trim();
+      if (metadata.description.length > 150) {
+        metadata.description = metadata.description.substring(0, 147).trim() + '...';
+      }
+    }
     metadata.name = folder;
 
     const result = SkillSchema.safeParse(metadata);
