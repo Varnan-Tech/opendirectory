@@ -88,14 +88,6 @@
     "path": "skills/llms-txt-generator"
   },
   {
-    "name": "luma-attendees-scraper",
-    "description": "Browser-console script to export attendee data from a Luma event into a CSV.",
-    "tags": [],
-    "author": "Varnan",
-    "version": "1.0.0",
-    "path": "skills/luma-attendees-scraper"
-  },
-  {
     "name": "meeting-brief-generator",
     "description": "Takes a company name and optional contact, runs targeted research via Tavily, synthesizes a 1-page pre-call brief with Gemini, and optionally saves...",
     "tags": [],
@@ -190,14 +182,6 @@
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/show-hn-writer"
-  },
-  {
-    "name": "stargazer",
-    "description": "Advanced 5-tier OSINT scraper for extracting GitHub stargazer emails.",
-    "tags": [],
-    "author": "Unknown",
-    "version": "0.0.1",
-    "path": "skills/stargazer"
   },
   {
     "name": "tweet-thread-from-blog",
