@@ -47,6 +47,8 @@ jobs:
       - name: Bump CLI version
         run: |
           cd packages/cli
+          LATEST_VERSION=$(npm view @opendirectory.dev/skills version || echo "0.0.0")
+          npm version $LATEST_VERSION --no-git-tag-version --allow-same-version
           npm version patch --no-git-tag-version
 
       - name: Commit updated README, CONTRIBUTING, and package.json
