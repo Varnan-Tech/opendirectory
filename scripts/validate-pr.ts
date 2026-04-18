@@ -87,6 +87,14 @@ function validateSkills() {
       if (!skillMdPath) {
         errors.push(`Error: Skill '${entry.name}' is missing a SKILL.md file anywhere inside its folder.`);
       } else {
+        const skillDir = path.dirname(skillMdPath);
+        const readmePath = path.join(skillDir, 'README.md');
+        const parentReadmePath = path.join(path.dirname(skillDir), 'README.md');
+        
+        if (!fs.existsSync(readmePath) && !fs.existsSync(parentReadmePath)) {
+          errors.push(`Error: Skill '${entry.name}' is missing a README.md file in the same directory as SKILL.md (or its parent).`);
+        }
+
         try {
           const fileContent = fs.readFileSync(skillMdPath, 'utf-8');
           const parsed = matter(fileContent);
