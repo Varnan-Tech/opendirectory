@@ -16,6 +16,14 @@
     "path": "skills/claude-md-generator"
   },
   {
+    "name": "cold-email-verifier",
+    "description": "Use when the user wants to verify cold emails, enrich a lead list, or autonomously guess email addresses from a CSV using ValidEmail.",
+    "tags": [],
+    "author": "Unknown",
+    "version": "0.0.1",
+    "path": "skills/cold-email-verifier"
+  },
+  {
     "name": "cook-the-blog",
     "description": "Generate high-converting, deep-dive growth case studies in MDX format.",
     "tags": [],
@@ -62,6 +70,14 @@
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/hackernews-intel"
+  },
+  {
+    "name": "human-tone",
+    "description": "|",
+    "tags": [],
+    "author": "Unknown",
+    "version": "1.0.0",
+    "path": "skills/human-tone"
   },
   {
     "name": "kill-the-standup",

@@ -30,12 +30,14 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 |---|---|---|
 | [`blog-cover-image-cli`](skills/blog-cover-image-cli) | Use when the user asks to generate a blog cover image, thumbnail, or article header. | `1.0.17` |
 | [`claude-md-generator`](skills/claude-md-generator) | Read the codebase. Write a CLAUDE.md that tells Claude exactly what it needs: no more, no less. | `1.0.0` |
+| [`cold-email-verifier`](skills/cold-email-verifier) | Use when the user wants to verify cold emails, enrich a lead list, or autonomously guess email addresses from a CSV using ValidEmail. | `0.0.1` |
 | [`cook-the-blog`](skills/cook-the-blog) | Generate high-converting, deep-dive growth case studies in MDX format. | `1.0.0` |
 | [`dependency-update-bot`](skills/dependency-update-bot) | Scans your project for outdated npm, pip, Cargo, Go, or Ruby packages. | `1.0.0` |
 | [`docs-from-code`](skills/docs-from-code) | Generates and updates README. | `1.0.0` |
 | [`explain-this-pr`](skills/explain-this-pr) | Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment. | `1.0.0` |
 | [`google-trends-api-skills`](skills/google-trends-api-skills) | SEO keyword research workflow for blog generation using Google Trends data. | `2.0` |
 | [`hackernews-intel`](skills/hackernews-intel) | Monitors Hacker News for user-configured keywords, deduplicates against a local SQLite cache, and sends Slack alerts for new matching posts. | `1.0.0` |
+| [`human-tone`](skills/human-tone) | \| | `1.0.0` |
 | [`kill-the-standup`](skills/kill-the-standup) | Reads yesterday's Linear issues and GitHub commits for the authenticated user, formats a standup update (done / doing / blockers), and posts it to... | `1.0.0` |
 | [`linkedin-post-generator`](skills/linkedin-post-generator) | Converts any content, blog post URL, pasted article, GitHub PR description, or a description of something built, into a formatted LinkedIn post wit... | `1.0.0` |
 | [`llms-txt-generator`](skills/llms-txt-generator) | Generates and maintains a standards-compliant llms. | `1.0.0` |
