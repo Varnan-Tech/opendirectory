@@ -28,34 +28,32 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 
 | Skill Name | Description | Version |
 |---|---|---|
-| `blog-cover-generator` | <img src="https://github.com/user-attachments/assets/20336e16-a838-4281-9c48-af023fc84b4c" width="600" /> | `1.0.17` |
-| `claude-md-generator` | <img src="https://github.com/user-attachments/assets/0e295271-2216-47f7-828f-845c98ef0298" width="600" /> | `1.0.0` |
-| `cook-the-blog` | <img src="https://github.com/user-attachments/assets/01fc87a2-78a8-433d-8531-a06a6a6df617" width="600" /> | `1.0.0` |
-| `dependency-update-bot` | <img src="https://github.com/user-attachments/assets/08939280-bba2-4ac9-a349-2ca8c25ca328" width="600" /> | `1.0.0` |
-| `docs-from-code` | <img src="https://github.com/user-attachments/assets/493c7c61-9aa9-48e9-a71b-7c77c8c6a949" width="600" /> | `1.0.0` |
-| `explain-this-pr` | <img src="https://github.com/user-attachments/assets/9e76fc64-f982-4c4c-9b58-4398541aab97" width="600" /> | `1.0.0` |
-| `seo-keyword-research` | <img src="https://github.com/user-attachments/assets/848aa1be-64af-4b4b-bf46-af3d0798b7ee" width="600" /> | `2.0` |
-| `hackernews-intel` | <img src="https://github.com/user-attachments/assets/8d75cba9-7c2b-4693-8365-00779ed2b3d3" width="600" /> | `1.0.0` |
-| `kill-the-standup` | <img src="https://github.com/user-attachments/assets/4fcf306d-7ef9-455a-b5f1-02532c292f65" width="600" /> | `1.0.0` |
-| `linkedin-post-generator` | <img src="https://github.com/user-attachments/assets/dc71e06b-8b3c-486a-adbf-d56a7b22cdc1" width="600" /> | `1.0.0` |
-| `llms-txt-generator` | <img src="https://github.com/user-attachments/assets/7f549d0b-4d55-40a8-97c6-59510cc40b54" width="600" /> | `1.0.0` |
-| `luma-attendees-scraper` | <img src="https://github.com/user-attachments/assets/44acd3d4-8c4d-4c8a-823b-96cd6585e5ae" width="600" /> | `1.0.0` |
-| `meeting-brief-generator` | <img src="https://github.com/user-attachments/assets/30026bc4-657a-4ce9-8c0e-4dd2654783f8" width="600" /> | `1.0.0` |
-| `meta-ads-expert` | <img src="https://github.com/user-attachments/assets/baf2509b-0ee0-41ca-9555-3ad350a6824c" width="600" /> | `0.0.1` |
-| `newsletter-digest` | <img src="https://github.com/user-attachments/assets/cb2879ae-eb5c-4727-a1a2-47b4462a699b" width="600" /> | `1.0.0` |
-| `noise2blog` | <img src="https://github.com/user-attachments/assets/2359cff9-dfd4-4276-bb3e-4b6091ad6983" width="600" /> | `1.0.0` |
-| `outreach-sequence-builder` | <img src="https://github.com/user-attachments/assets/3d73358a-52ca-48e7-b34e-b1ba33246d6e" width="600" /> | `1.0.0` |
-| `position-me` | <img src="https://github.com/user-attachments/assets/118fcd1f-1efc-4eca-b0b0-366a6f9ff5da" width="600" /> | `0.0.1` |
-| `pr-description-writer` | <img src="https://github.com/user-attachments/assets/485f5846-b621-40ac-8a99-2b50243fb454" width="600" /> | `1.0.0` |
-| `producthunt-launch-kit` | <img src="https://github.com/user-attachments/assets/dc16bde9-9bc4-4022-94a8-a4db024cbd95" width="600" /> | `1.0.0` |
-| `reddit-icp-monitor` | <img src="https://github.com/user-attachments/assets/8182b73f-1f8d-4812-9061-165fd8aeb0e8" width="600" /> | `1.0.0` |
-| `reddit-post-engine` | <img src="https://github.com/user-attachments/assets/2706f326-5fb9-46fc-851a-ec54ccf53f74" width="600" /> | `1.0.0` |
-| `schema-markup-generator` | <img src="https://github.com/user-attachments/assets/4b5e5bfb-3c33-4a20-afff-59fda19196b4" width="600" /> | `1.0.0` |
-| `show-hn-writer` | <img src="https://github.com/user-attachments/assets/224030e0-c3e0-499c-98d4-a049d7dddc51" width="600" /> | `1.0.0` |
-| `stargazer-deep-extractor` | <img src="https://github.com/user-attachments/assets/54d6b003-2f2c-42bd-a8f9-b4e835338dfc" width="600" /> | `0.0.1` |
-| `tweet-thread-from-blog` | <img src="https://github.com/user-attachments/assets/18b96a6b-9477-444d-b169-ea14a63e9fdf" width="600" /> | `1.0.0` |
-| `twitter-GTM-find-Skill` | <img src="https://github.com/user-attachments/assets/618b0abe-34fc-4c3e-a345-1a3eaeb3d20b" width="600" /> | `0.0.1` |
-| `yc-jobs-scraper` | <img src="https://github.com/user-attachments/assets/2328ae2b-1b5d-45ad-8604-b90721b8d398" width="600" /> | `0.0.1` |
+| [`blog-cover-image-cli`](skills/blog-cover-image-cli) | Use when the user asks to generate a blog cover image, thumbnail, or article header. | `1.0.17` |
+| [`claude-md-generator`](skills/claude-md-generator) | Read the codebase. Write a CLAUDE.md that tells Claude exactly what it needs: no more, no less. | `1.0.0` |
+| [`cook-the-blog`](skills/cook-the-blog) | Generate high-converting, deep-dive growth case studies in MDX format. | `1.0.0` |
+| [`dependency-update-bot`](skills/dependency-update-bot) | Scans your project for outdated npm, pip, Cargo, Go, or Ruby packages. | `1.0.0` |
+| [`docs-from-code`](skills/docs-from-code) | Generates and updates README. | `1.0.0` |
+| [`explain-this-pr`](skills/explain-this-pr) | Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment. | `1.0.0` |
+| [`google-trends-api-skills`](skills/google-trends-api-skills) | SEO keyword research workflow for blog generation using Google Trends data. | `2.0` |
+| [`hackernews-intel`](skills/hackernews-intel) | Monitors Hacker News for user-configured keywords, deduplicates against a local SQLite cache, and sends Slack alerts for new matching posts. | `1.0.0` |
+| [`kill-the-standup`](skills/kill-the-standup) | Reads yesterday's Linear issues and GitHub commits for the authenticated user, formats a standup update (done / doing / blockers), and posts it to... | `1.0.0` |
+| [`linkedin-post-generator`](skills/linkedin-post-generator) | Converts any content, blog post URL, pasted article, GitHub PR description, or a description of something built, into a formatted LinkedIn post wit... | `1.0.0` |
+| [`llms-txt-generator`](skills/llms-txt-generator) | Generates and maintains a standards-compliant llms. | `1.0.0` |
+| [`meeting-brief-generator`](skills/meeting-brief-generator) | Takes a company name and optional contact, runs targeted research via Tavily, synthesizes a 1-page pre-call brief with Gemini, and optionally saves... | `1.0.0` |
+| [`meta-ads-skill`](skills/meta-ads-skill) | Use when interacting with the Meta Ads MCP server to manage accounts, campaigns, ads, insights, and targeting, or to troubleshoot OAuth token authe... | `0.0.1` |
+| [`newsletter-digest`](skills/newsletter-digest) | Aggregates RSS feeds from the past week, synthesizes the top stories using Gemini, and publishes a newsletter digest to Ghost CMS. | `1.0.0` |
+| [`noise2blog`](skills/noise2blog) | Turns rough notes, bullet points, voice transcripts, or tweet dumps into a polished, publication-ready blog post. | `1.0.0` |
+| [`outreach-sequence-builder`](skills/outreach-sequence-builder) | Takes a buying signal and generates a personalized multi-channel outreach sequence across email, LinkedIn, and phone. | `1.0.0` |
+| [`position-me`](skills/position-me) | Elite Website Reviewer Agent for AEO, GEO, SEO, UI/UX Psychology, and Copywriting. | `0.0.1` |
+| [`pr-description-writer`](skills/pr-description-writer) | Read the current branch diff and write a complete GitHub pull request description. Create or update the PR with one command. | `1.0.0` |
+| [`producthunt-launch-kit`](skills/producthunt-launch-kit) | Generate every asset you need for a Product Hunt launch: listing copy, maker comment, and day-one social posts. | `1.0.0` |
+| [`reddit-icp-monitor`](skills/reddit-icp-monitor) | Watches subreddits for people describing the exact problem you solve, scores their relevance to your ICP, and drafts a helpful non-spammy reply for... | `1.0.0` |
+| [`reddit-post-engine`](skills/reddit-post-engine) | Writes and optionally posts a Reddit post for any subreddit, following that subreddit's specific culture and rules. | `1.0.0` |
+| [`schema-markup-generator`](skills/schema-markup-generator) | You are an SEO engineer specialising in structured data. | `1.0.0` |
+| [`show-hn-writer`](skills/show-hn-writer) | Draft a Show HN post title and body that follows the unwritten rules of Hacker News: specific, honest, first-person, no marketing. | `1.0.0` |
+| [`tweet-thread-from-blog`](skills/tweet-thread-from-blog) | Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA. | `1.0.0` |
+| [`twitter-GTM-find-skill`](skills/twitter-GTM-find-skill) | End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP)... | `0.0.1` |
+| [`yc-intent-radar-skill`](skills/yc-intent-radar-skill) | Scrape daily job listings from YCombinator's Workatastartup platform without duplicates. | `0.0.1` |
 
 <!-- SKILLS_LIST_END -->
 

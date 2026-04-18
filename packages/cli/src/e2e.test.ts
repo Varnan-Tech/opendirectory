@@ -24,9 +24,12 @@ describe('CLI End-to-End Tests', () => {
   it('should install a skill for opencode locally', () => {
     const skillName = 'claude-md-generator';
     
-    execSync(`node "${cliPath}" install ${skillName} --target opencode`, { cwd: tempDir });
+    // Set HOME and USERPROFILE to tempDir so that ~ resolves to tempDir
+    const env = { ...process.env, HOME: tempDir, USERPROFILE: tempDir };
     
-    const expectedPath = path.join(tempDir, '.opencode', 'skills', skillName, 'SKILL.md');
+    execSync(`node "${cliPath}" install ${skillName} --target opencode`, { cwd: tempDir, env });
+    
+    const expectedPath = path.join(tempDir, '.config', 'opencode', 'skills', skillName, 'SKILL.md');
     expect(fs.existsSync(expectedPath)).toBe(true);
     
     const content = fs.readFileSync(expectedPath, 'utf-8');

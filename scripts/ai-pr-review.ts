@@ -5,7 +5,7 @@ async function main() {
   const prNumber = process.env.PR_NUMBER;
 
   if (!geminiApiKey || !githubToken || !githubRepository || !prNumber) {
-    console.error("Missing required environment variables. Ensure GEMINI_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY, and PR_NUMBER are set.");
+    console.warn("Skipping AI PR Review: Secrets are not available for PRs submitted from forks.");
     process.exit(0);
   }
 

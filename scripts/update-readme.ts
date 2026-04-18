@@ -11,81 +11,23 @@ interface Skill {
   path: string;
 }
 
-function findImageInReadme(skillPath: string): string | null {
-  const skillDir = path.join(__dirname, '../', skillPath);
-  
-  function searchDir(dir: string): string | null {
-    if (!fs.existsSync(dir)) return null;
-    
-    const files = fs.readdirSync(dir);
-    
-    const readmePath = path.join(dir, 'README.md');
-    if (fs.existsSync(readmePath)) {
-      const content = fs.readFileSync(readmePath, 'utf-8');
-      
-      const imgRegex = /<img[^>]+src=["']([^"']+)["']/g;
-      const mdImgRegex = /!\[.*?\]\((.*?)\)/g;
-      
-      const matches: { url: string, index: number }[] = [];
-      
-      let match;
-      while ((match = imgRegex.exec(content)) !== null) {
-        const url = match[1];
-        if (!url.match(/\.(mp4|mov|webm)$/i)) {
-          matches.push({ url, index: match.index });
-        }
-      }
-      
-      while ((match = mdImgRegex.exec(content)) !== null) {
-        const url = match[1];
-        if (!url.match(/\.(mp4|mov|webm)$/i)) {
-          matches.push({ url, index: match.index });
-        }
-      }
-      
-      if (matches.length > 0) {
-        matches.sort((a, b) => a.index - b.index);
-        return matches[0].url;
-      }
-    }
-    
-    for (const file of files) {
-      const fullPath = path.join(dir, file);
-      if (fs.statSync(fullPath).isDirectory() && file !== 'node_modules' && file !== '.git') {
-        const result = searchDir(fullPath);
-        if (result) return result;
-      }
-    }
-    
-    return null;
-  }
-  
-  return searchDir(skillDir);
-}
-
 function generateMarkdownTable(skills: Skill[]): string {
   let table = '| Skill Name | Description | Version |\n';
   table += '|---|---|---|\n';
 
   for (const skill of skills) {
-    let desc = skill.description;
+    let desc = skill.description.replace(/<img[^>]*>/g, '').replace(/!\[.*?\]\(.*?\)/g, '').trim();
     
-    const imageUrl = findImageInReadme(skill.path);
-    
-    if (imageUrl) {
-      desc = `<img src="${imageUrl}" width="600" />`;
-    } else {
-      desc = desc
-        .replace(/\n/g, ' ')
-        .replace(/\|/g, '\\|')
-        .trim();
-        
-      if (!desc) {
-        desc = 'No description provided.';
-      }
+    desc = desc
+      .replace(/\n/g, ' ')
+      .replace(/\|/g, '\\|')
+      .trim();
+      
+    if (!desc) {
+      desc = 'No description provided.';
     }
     
-    table += `| \`${skill.name}\` | ${desc} | \`${skill.version}\` |\n`;
+    table += `| [\`${skill.name}\`](${skill.path}) | ${desc} | \`${skill.version}\` |\n`;
   }
 
   return table;

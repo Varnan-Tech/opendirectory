@@ -1,18 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { z } from 'zod';
 
 const skillsDir = path.join(process.cwd(), 'skills');
 
-const frontmatterSchema = z.object({
-  name: z.string(),
-  description: z.string(),
-  author: z.string(),
-  version: z.string(),
-});
-
-const disallowedExtensions = ['.exe', '.dll', '.bat', '.zip', '.tar.gz'];
+const disallowedExtensions = ['.exe', '.dll', '.bat', '.zip', '.gz', '.tar'];
 const dangerousPatterns = [
   /rm\s+-rf\s+\//,
   /curl.*\|.*bash/,
@@ -25,6 +17,8 @@ function scanDirectory(dir: string, errors: string[]) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
   for (const entry of entries) {
+    if (entry.name === 'node_modules' || entry.name === '.git') continue;
+
     const fullPath = path.join(dir, entry.name);
 
     if (entry.isDirectory()) {
@@ -49,6 +43,32 @@ function scanDirectory(dir: string, errors: string[]) {
   }
 }
 
+function findSkillMd(dir: string, depth: number = 0): string | null {
+  if (depth > 4) return null;
+  
+  let entries;
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch (e) {
+    return null;
+  }
+  
+  for (const entry of entries) {
+    if ((entry.isFile() || entry.isSymbolicLink()) && entry.name.toLowerCase() === 'skill.md') {
+      return path.join(dir, entry.name);
+    }
+  }
+  
+  for (const entry of entries) {
+    if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
+      const found = findSkillMd(path.join(dir, entry.name), depth + 1);
+      if (found) return found;
+    }
+  }
+  
+  return null;
+}
+
 function validateSkills() {
   if (!fs.existsSync(skillsDir)) {
     console.log('No skills directory found.');
@@ -61,19 +81,21 @@ function validateSkills() {
   for (const entry of entries) {
     if (entry.isDirectory()) {
       const skillPath = path.join(skillsDir, entry.name);
-      const skillMdPath = path.join(skillPath, 'SKILL.md');
+      const skillMdPath = findSkillMd(skillPath);
       const errors: string[] = [];
 
-      if (!fs.existsSync(skillMdPath)) {
-        errors.push(`Error: Skill '${entry.name}' is missing a SKILL.md file.`);
+      if (!skillMdPath) {
+        errors.push(`Error: Skill '${entry.name}' is missing a SKILL.md file anywhere inside its folder.`);
       } else {
         try {
           const fileContent = fs.readFileSync(skillMdPath, 'utf-8');
           const parsed = matter(fileContent);
           
-          const result = frontmatterSchema.safeParse(parsed.data);
-          if (!result.success) {
-            errors.push(`Error: Skill '${entry.name}' has invalid frontmatter in SKILL.md: ${result.error.message}`);
+          if (typeof parsed.data.name !== 'string') {
+            errors.push(`Error: Skill '${entry.name}' is missing 'name' in SKILL.md frontmatter.`);
+          }
+          if (typeof parsed.data.description !== 'string') {
+            errors.push(`Error: Skill '${entry.name}' is missing 'description' in SKILL.md frontmatter.`);
           }
         } catch (err: any) {
           errors.push(`Error: Failed to parse SKILL.md for '${entry.name}': ${err.message}`);
