@@ -1,6 +1,6 @@
 {
   "name": "@opendirectory.dev/skills",
-  "version": "0.1.18",
+  "version": "0.1.21",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
