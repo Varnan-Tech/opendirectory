@@ -1,0 +1,111 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="1280" height="640" fill="#0a0a0f"/>
+
+  <!-- Subtle grid -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.3" opacity="0.06"/>
+    </pattern>
+    <radialGradient id="glow1" cx="30%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0a0a0f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="75%" cy="60%" r="40%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#0a0a0f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#grid)"/>
+  <rect width="1280" height="640" fill="url(#glow1)"/>
+  <rect width="1280" height="640" fill="url(#glow2)"/>
+
+  <!-- Server rack illustration (right side) -->
+  <g transform="translate(820, 120)" opacity="0.55">
+    <!-- Rack frame -->
+    <rect x="0" y="0" width="280" height="400" rx="6" fill="none" stroke="#334155" stroke-width="1.5"/>
+    <rect x="0" y="0" width="280" height="400" rx="6" fill="#0f172a"/>
+
+    <!-- Server units -->
+    <g fill="#1e293b" stroke="#334155" stroke-width="1">
+      <rect x="12" y="16" width="256" height="36" rx="3"/>
+      <rect x="12" y="60" width="256" height="36" rx="3"/>
+      <rect x="12" y="104" width="256" height="36" rx="3"/>
+      <rect x="12" y="148" width="256" height="36" rx="3"/>
+      <rect x="12" y="192" width="256" height="36" rx="3"/>
+      <rect x="12" y="236" width="256" height="36" rx="3"/>
+      <rect x="12" y="280" width="256" height="36" rx="3"/>
+      <rect x="12" y="324" width="256" height="36" rx="3"/>
+    </g>
+
+    <!-- Status LEDs - active servers -->
+    <circle cx="30" cy="34" r="4" fill="#22c55e"/>
+    <circle cx="30" cy="78" r="4" fill="#22c55e"/>
+    <circle cx="30" cy="122" r="4" fill="#3b82f6"/>
+    <circle cx="30" cy="166" r="4" fill="#22c55e"/>
+    <circle cx="30" cy="210" r="4" fill="#22c55e"/>
+    <circle cx="30" cy="254" r="4" fill="#f59e0b"/>
+    <circle cx="30" cy="298" r="4" fill="#22c55e"/>
+    <circle cx="30" cy="342" r="4" fill="#22c55e"/>
+
+    <!-- Drive slots -->
+    <g fill="#0f172a" stroke="#1e293b" stroke-width="0.8">
+      <rect x="50" y="22" width="40" height="22" rx="2"/>
+      <rect x="96" y="22" width="40" height="22" rx="2"/>
+      <rect x="142" y="22" width="40" height="22" rx="2"/>
+      <rect x="50" y="66" width="40" height="22" rx="2"/>
+      <rect x="96" y="66" width="40" height="22" rx="2"/>
+      <rect x="142" y="66" width="40" height="22" rx="2"/>
+    </g>
+
+    <!-- Rack label -->
+    <text x="140" y="388" text-anchor="middle" font-size="10" fill="#475569" letter-spacing="2">HOSTINGER VPS</text>
+  </g>
+
+  <!-- Connection lines (left to right) -->
+  <g stroke="#3b82f6" stroke-width="1.2" opacity="0.3" fill="none">
+    <path d="M 380 240 Q 550 240 640 270"/>
+    <path d="M 380 280 Q 550 290 640 310"/>
+    <path d="M 380 320 Q 540 330 640 350"/>
+  </g>
+
+  <!-- Nginx / SSL badge (center decorative) -->
+  <g transform="translate(640, 200)" opacity="0.7">
+    <rect x="-48" y="-14" width="96" height="28" rx="14" fill="#1e293b" stroke="#22c55e" stroke-width="1"/>
+    <text x="0" y="5" text-anchor="middle" font-size="11" fill="#22c55e" font-weight="600" letter-spacing="1">SSL + NGINX</text>
+  </g>
+  <g transform="translate(640, 250)" opacity="0.7">
+    <rect x="-38" y="-14" width="76" height="28" rx="14" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+    <text x="0" y="5" text-anchor="middle" font-size="11" fill="#3b82f6" font-weight="600" letter-spacing="1">DOCKER</text>
+  </g>
+  <g transform="translate(640, 300)" opacity="0.7">
+    <rect x="-32" y="-14" width="64" height="28" rx="14" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="0" y="5" text-anchor="middle" font-size="11" fill="#8b5cf6" font-weight="600" letter-spacing="1">RSYNC</text>
+  </g>
+
+  <!-- Main heading -->
+  <text x="130" y="230" font-size="64" font-weight="700" fill="#f8fafc" letter-spacing="-2">VPS Deploy</text>
+  <text x="130" y="305" font-size="64" font-weight="700" letter-spacing="-2">
+    <tspan fill="#3b82f6">Playbook</tspan>
+  </text>
+
+  <!-- Sub-heading -->
+  <text x="132" y="360" font-size="20" fill="#94a3b8" font-weight="400" letter-spacing="0.2">
+    Docker · Nginx · SSL · Zero-downtime deploys
+  </text>
+
+  <!-- Bottom tag line -->
+  <text x="132" y="420" font-size="15" fill="#475569" letter-spacing="0.5">
+    master → test.domain.com   ·   main → domain.com
+  </text>
+
+  <!-- OpenDirectory badge -->
+  <g transform="translate(130, 490)">
+    <rect x="0" y="0" width="170" height="32" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="21" font-size="12" fill="#64748b" letter-spacing="1">OPENDIRECTORY SKILL</text>
+  </g>
+
+  <!-- Top-right label -->
+  <text x="1150" y="52" font-size="12" fill="#334155" text-anchor="middle" letter-spacing="2">v1.0.0</text>
+</svg>

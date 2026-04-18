@@ -200,6 +200,14 @@
     "path": "skills/twitter-GTM-find-skill"
   },
   {
+    "name": "vps-deploy-playbook",
+    "description": "Full Docker + Nginx + SSL deployment to a Linux VPS.",
+    "tags": [],
+    "author": "zeroone-dots-ai",
+    "version": "1.0.0",
+    "path": "skills/vps-deploy-playbook"
+  },
+  {
     "name": "yc-intent-radar-skill",
     "description": "Scrape daily job listings from YCombinator's Workatastartup platform without duplicates.",
     "tags": [],

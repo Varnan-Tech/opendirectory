@@ -1,0 +1,41 @@
+{
+  "skill_name": "vps-deploy-playbook",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Deploy this app to the VPS",
+      "expected_output": "Agent checks all env vars: VPS_HOST, VPS_USER, SERVICE_NAME, DOMAIN, APP_PORT — all present. Reads current git branch. Branch is 'master', so sets DEPLOY_DOMAIN to test.$DOMAIN and DEPLOY_ENV to test. Runs SSH connectivity check and confirms Docker is running. Detects package manager from lockfile, runs build. Rsyncs files excluding node_modules, .git, .next, .env. Transfers .env separately via scp. Builds and starts Docker container via docker compose or standalone run. Checks if Nginx config exists for test.$DOMAIN — it does not. Writes HTTP-only nginx config from NGINX-TEMPLATE.md. Tests and reloads Nginx. Checks if SSL cert exists — it does not. Provisions Certbot cert. Replaces config with HTTPS template. Reloads Nginx. Runs curl health check, gets HTTP 200. Prints deployment report.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Deploy to production",
+      "expected_output": "Agent checks env vars — all present. Reads current git branch — branch is 'main'. Sets DEPLOY_DOMAIN to $DOMAIN (no test prefix) and DEPLOY_ENV to production. STOPS and asks user: 'You are on `main`. This will deploy to production at $DOMAIN. Continue? (yes/no)'. If user says yes — proceeds with full deploy flow targeting the production domain. If user says no — stops and suggests running on master branch first.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Deploy this app — VPS_HOST is missing",
+      "expected_output": "Agent checks env vars. Detects VPS_HOST is missing. Stops immediately. Tells the user: 'VPS_HOST is required. It should be the raw IP or hostname of your VPS (no protocol prefix). Add it to your .env file. See .env.example for the full list of required variables.' Does not attempt SSH, build, rsync, or any subsequent step.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Deploy to VPS — SSH connection fails",
+      "expected_output": "Agent checks env vars — all present. Runs SSH connectivity check. SSH command exits with non-zero (timeout or connection refused). Agent stops. Tells the user: Check that VPS_HOST is correct (no protocol prefix), check that their SSH key is added with ssh-add, check that the VPS firewall allows their IP on port 22. Does not proceed to build or file transfer.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "The deploy just failed. Roll back production.",
+      "expected_output": "Agent reads references/ROLLBACK-SOP.md in full. Asks user to confirm what is broken — container crashed, Nginx returning 502, or code-level bug? If container crashed: lists available Docker images, stops broken container, starts previous image by ID. If Nginx is broken: shows current config, checks error logs, restores from .bak or rewrites HTTP-only config, tests and reloads. If code bug: identifies last good commit via git log, creates revert commit, re-runs deploy. Verifies recovery with curl health check after each rollback step.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Deploy this app — SSL cert provisioning fails with rate limit error",
+      "expected_output": "Agent attempts Certbot provisioning. Certbot returns a rate limit error. Agent explains: Let's Encrypt allows 5 duplicate certificates per domain per week. Offers two options: (1) wait for rate limit reset and retry, or (2) run with --staging flag to verify the flow works, then re-run without --staging when the rate limit resets. Does not crash or leave a broken deployment — the HTTP-only Nginx config remains active and the site continues to serve on port 80 while SSL is being resolved.",
+      "files": []
+    }
+  ]
+}
