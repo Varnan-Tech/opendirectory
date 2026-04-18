@@ -69,6 +69,32 @@ function findSkillMd(dir: string, depth: number = 0): string | null {
   return null;
 }
 
+function findReadmeMd(dir: string, depth: number = 0): string | null {
+  if (depth > 4) return null;
+  
+  let entries;
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch (e) {
+    return null;
+  }
+  
+  for (const entry of entries) {
+    if ((entry.isFile() || entry.isSymbolicLink()) && entry.name.toLowerCase() === 'readme.md') {
+      return path.join(dir, entry.name);
+    }
+  }
+  
+  for (const entry of entries) {
+    if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
+      const found = findReadmeMd(path.join(dir, entry.name), depth + 1);
+      if (found) return found;
+    }
+  }
+  
+  return null;
+}
+
 function validateSkills() {
   if (!fs.existsSync(skillsDir)) {
     console.log('No skills directory found.');
@@ -87,12 +113,10 @@ function validateSkills() {
       if (!skillMdPath) {
         errors.push(`Error: Skill '${entry.name}' is missing a SKILL.md file anywhere inside its folder.`);
       } else {
-        const skillDir = path.dirname(skillMdPath);
-        const readmePath = path.join(skillDir, 'README.md');
-        const parentReadmePath = path.join(path.dirname(skillDir), 'README.md');
+        const readmePath = findReadmeMd(skillPath);
         
-        if (!fs.existsSync(readmePath) && !fs.existsSync(parentReadmePath)) {
-          errors.push(`Error: Skill '${entry.name}' is missing a README.md file in the same directory as SKILL.md (or its parent).`);
+        if (!readmePath) {
+          errors.push(`Error: Skill '${entry.name}' is missing a README.md file anywhere inside its folder.`);
         }
 
         try {
