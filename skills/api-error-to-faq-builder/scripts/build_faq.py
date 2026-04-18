@@ -39,6 +39,23 @@ def extract_code_blocks(text: str) -> List[str]:
     inlines = re.findall(r"`([^`\n]+)`", text)
     return blocks + inlines
 
+def escape_markdown_text(text: str) -> str:
+    replacements = {
+        "\\": "\\\\",
+        "`": "\\`",
+        "*": "\\*",
+        "_": "\\_",
+        "[": "\\[",
+        "]": "\\]",
+        "(": "\\(",
+        ")": "\\)",
+        "#": "\\#",
+        "!": "\\!"
+    }
+    for k, v in replacements.items():
+        text = text.replace(k, v)
+    return text
+
 def get_text_basis(issue: Dict[str, Any]) -> str:
     """Concatenates title, body, and comments for signal extraction."""
     parts = [issue.get("title", ""), issue.get("body", "")]
@@ -66,12 +83,13 @@ def normalize_issue(issue: Dict[str, Any]) -> Dict[str, Any]:
     }
     
     status_pattern = r"\b(400|401|403|404|409|422|429|500|502|503|504)\b"
-    signals["status_codes"] = list(set(re.findall(status_pattern, text)))
+    status_matches = re.findall(status_pattern, text)
+    signals["status_codes"] = list(dict.fromkeys(status_matches))
     
     # Endpoint extraction with cleanup
     endpoint_matches = re.findall(r"(/(?:v\d+|api)/[\w/\-{}]+)", text)
-    cleaned_endpoints = {e.rstrip('.,;:"\'()?!') for e in endpoint_matches}
-    signals["endpoints"] = list(cleaned_endpoints)
+    cleaned_endpoints = [e.rstrip('.,;:"\'()?!') for e in endpoint_matches]
+    signals["endpoints"] = list(dict.fromkeys(cleaned_endpoints))
     
     # Error extraction from code snippets
     error_keywords = ["error", "exception", "failed", "invalid", "not found", "unauthorized", "timeout", "bad request"]
@@ -230,7 +248,8 @@ def generate_faq_markdown(repo_full_name: str, clusters: List[Dict[str, Any]], t
         lines.append(f"**Cluster Confidence Score:** {cluster['confidence']}/1.0")
         lines.append(f"\n**Related issues ({cluster['issue_count']})**")
         for issue in cluster['issues']:
-            lines.append(f"- [#{issue['number']}]({issue['url']}) - {issue['title']}")
+            title = escape_markdown_text(issue['title'])
+            lines.append(f"- [#{issue['number']}]({issue['url']}) - {title}")
         lines.append("\n---\n")
         
     return "\n".join(lines)

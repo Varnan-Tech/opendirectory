@@ -7,6 +7,12 @@ import os
 import requests
 from typing import List, Dict, Any
 
+def normalize_label(label: str) -> str:
+    lbl = label.lower().strip()
+    if lbl.startswith("type:"):
+        lbl = lbl[len("type:"):].strip()
+    return lbl
+
 def fetch_github_issues(
     repo_full_name: str, 
     labels: str = "bug,question", 
@@ -39,7 +45,7 @@ def fetch_github_issues(
     })
     
     if token:
-        session.headers.update({"Authorization": f"token {token}"})
+        session.headers.update({"Authorization": f"Bearer {token}"})
     
     url = f"https://api.github.com/repos/{repo_full_name}/issues"
     params = {
@@ -48,12 +54,15 @@ def fetch_github_issues(
     }
     
     # Parse labels for local OR filtering
-    target_labels = [l.strip().lower() for l in labels.split(",") if l.strip()] if labels else []
+    target_labels_set = set(normalize_label(l) for l in labels.split(",") if l.strip()) if labels else set()
     # Do NOT pass labels to params, since GitHub uses AND. We want OR logic locally.
     
     issues = []
     pages_fetched = 0
-    MAX_PAGES = 10 # Prevent infinite crawling on massive repos if matching issues are rare
+    # Prevent infinite crawling on massive repos if matching issues are rare
+    PER_PAGE = 100
+    base_max_pages = (limit // PER_PAGE) + 2 # small slack
+    MAX_PAGES = max(1, min(base_max_pages, 25))
     
     while url and len(issues) < limit and pages_fetched < MAX_PAGES:
         pages_fetched += 1
@@ -84,15 +93,11 @@ def fetch_github_issues(
                 continue
                 
             item_labels_raw = [label["name"] for label in item.get("labels", [])]
-            item_labels_lower = [l.lower() for l in item_labels_raw]
             
-            # Local OR filtering with substring match (e.g. 'bug' matches 'Type: Bug')
-            if target_labels:
-                match_found = any(
-                    any(t_lbl in i_lbl for i_lbl in item_labels_lower)
-                    for t_lbl in target_labels
-                )
-                if not match_found:
+            # Local OR filtering with exact match on normalized labels
+            if target_labels_set:
+                issue_labels_set = set(normalize_label(lbl) for lbl in item_labels_raw)
+                if not (target_labels_set & issue_labels_set):
                     continue
                     
             issue_data = {
