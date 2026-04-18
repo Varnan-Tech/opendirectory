@@ -2,7 +2,7 @@
 
 <!-- TODO: Insert custom dark technical cover banner here -->
 
-> Pulls open GitHub issues from a public repository, clusters them by recurring API errors, and generates a clean troubleshooting FAQ.
+> Given a public GitHub repo, this skill reads open issues, finds recurring API errors, and writes a troubleshooting FAQ in Markdown.
 
 [![opendirectory](https://img.shields.io/badge/opendirectory-skill-blue)](https://opendirectory.dev)
 [![version](https://img.shields.io/badge/version-1.0.0-green)](https://github.com/Varnan-Tech/opendirectory)
@@ -12,15 +12,15 @@
 
 ## Overview
 
-Convert fragmented issue noise into a reusable support artifact. This skill pulls issues tagged `bug` or `question`, extracts contextual signals (HTTP status codes, endpoint paths, error strings), and deterministically groups them into meaningful API troubleshooting questions.
+Convert fragmented issue noise into a reusable support document. This skill pulls open issues, extracts context like HTTP status codes and endpoint paths, and groups them into API troubleshooting questions.
 
-* No web UI, no vector databases, no massive dependencies.
-* Returns a robust Markdown artifact suitable for public docs.
-* Uses safe fuzzy matching and clustering confidence metrics.
+* No web UI, vector databases, or heavy ML models.
+* Returns a clean Markdown file ready for public docs.
+* Uses fuzzy matching and clustering confidence metrics to filter out noise.
 
 ## Prerequisites
 - Python 3.10+
-- Dependencies: `requests`, `python-dotenv`, `thefuzz`
+- `requests`, `python-dotenv`, `thefuzz`
 
 ## Installation
 
@@ -37,31 +37,38 @@ Clone the OpenDirectory repo and install dependencies manually to edit and run t
 pnpm install
 pnpm build
 
-# Navigate to the skill and install python dependencies
+# Navigate to the skill and install Python dependencies
 cd skills/api-error-to-faq-builder
 pip install requests python-dotenv "thefuzz[speedup]"
 ```
 
 ## Usage
-Run the orchestrated CLI against any public repository.
-*(Note: Set `GITHUB_TOKEN` in `.env` to prevent rate limiting.)*
+Run the CLI against any public GitHub repository. Set `GITHUB_TOKEN` in `.env` to avoid rate limits.
 
+### Examples
+
+**Standard Run:**
 ```bash
-# Standard run (fetches 100 open bugs/questions)
-python scripts/run.py openai/openai-python
+python scripts/run.py vercel/next.js --limit 100
+```
+*Output:* Generates `FAQ.md` with entries like "Why do requests frequently fail with a 404 status code?" and "How can I resolve recurring timeout errors?"
 
-# Scan broader issue types and include comment scanning
-python scripts/run.py supabase/supabase --labels '' --comments --limit 200
+**Broad Scan with Comments:**
+```bash
+python scripts/run.py openai/openai-python --labels "" --comments --limit 200
+```
+*Output:* Scans 200 open issues including their comment threads to find deeper nested auth and rate-limiting configurations, generating `FAQ.md`.
 
-# Specify custom output destination
-python scripts/run.py vercel/next.js --output docs/SUPPORT.md
+**Custom Output File:**
+```bash
+python scripts/run.py supabase/supabase --output docs/SUPPORT.md
 ```
 
 ## Sample Output
 Preview how clusters are generated in [references/sample-output.md](references/sample-output.md).
 
-## Limitations (v1)
+## Limitations
 - Evaluates public GitHub repositories only.
-- Relies primarily on REST API-centric hints (HTTP status codes, URIs).
-- Processing is done sequentially on the local machine; massive issue counts combined with heavy comment parsing may be slow.
-- Does not cross-post or deploy replies back to live GitHub issues automatically.
+- Designed primarily for REST API topics (HTTP status codes, URIs).
+- Local sequential processing can be slow for massive issue counts with comment parsing.
+- Generates a static document; does not auto-reply to live GitHub issues.
