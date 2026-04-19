@@ -9,6 +9,50 @@ from typing import List, Dict, Any
 
 from thefuzz import fuzz
 
+# ---------------------------------------------------------------------------
+# Confidence threshold for FAQ generation
+# ---------------------------------------------------------------------------
+CONFIDENCE_THRESHOLD = 0.7
+
+# ---------------------------------------------------------------------------
+# Cluster rules: keywords trigger initial match, but anchors MUST also be
+# present for broad/ambiguous keywords.  Negative keywords veto the match.
+# ---------------------------------------------------------------------------
+CLUSTER_RULES: Dict[str, Dict[str, list]] = {
+    "Rate Limiting": {
+        "keywords": ["rate limit", "too many requests", "429", "throttle"],
+        "anchors": [],          # all keywords are specific enough
+        "negative": ["rate of change", "rating"]
+    },
+    "Authentication": {
+        "keywords": ["unauthorized", "api key", "api token", "auth token",
+                     "forbidden", "auth failed", "invalid credentials"],
+        "anchors": ["401", "403", "unauthorized", "token",
+                    "invalid credentials", "auth failed"],
+        "negative": ["authenticates successfully", "auth works",
+                     "authentication is fine"]
+    },
+    "Validation": {
+        "keywords": ["validation", "invalid param", "bad request",
+                     "422", "malformed"],
+        "anchors": [],
+        "negative": ["validates correctly", "validation passes"]
+    },
+    "Timeout": {
+        "keywords": ["timeout", "timed out", "slow", "hang",
+                     "unresponsive", "socket closed"],
+        "anchors": ["timeout", "timed out", "connection",
+                    "request failed", "no response", "deadline"],
+        "negative": ["memory leak", "regional", "startup",
+                     "infinite loop", "logic"]
+    },
+    "Not Found": {
+        "keywords": ["not found", "404", "no route", "endpoint not found"],
+        "anchors": [],
+        "negative": []
+    }
+}
+
 # Pre-defined guidance providing cautious but useful hypotheses
 CATEGORY_GUIDANCE = {
     "Rate Limiting": {
@@ -99,18 +143,23 @@ def normalize_issue(issue: Dict[str, Any]) -> Dict[str, Any]:
         if len(snippet) < 150 and any(k in snippet_lower for k in error_keywords):
             signals["errors"].append(snippet.strip()[:100])
             
-    # Categories
-    if any(k in text for k in ["rate limit", "too many requests", "429"]):
-        signals["categories"].append("Rate Limiting")
-    if any(k in text for k in ["unauthorized", "api key", "api token", "auth token", "forbidden", "auth "]):
-        signals["categories"].append("Authentication")
-    if any(k in text for k in ["validation", "invalid param", "bad request"]):
-        signals["categories"].append("Validation")
-    if any(k in text for k in ["timeout", "timed out", "socket closed", "hang"]):
-        signals["categories"].append("Timeout")
-    if any(k in text for k in ["not found", "404", "no route", "endpoint not found"]):
-        signals["categories"].append("Not Found")
-        
+    # Categories — compound matching with anchor + negative filtering
+    for category, rule in CLUSTER_RULES.items():
+        kw_hit = any(k in text for k in rule["keywords"])
+        if not kw_hit:
+            continue
+
+        # Negative filter: if any negative phrase appears, skip this category
+        if any(neg in text for neg in rule.get("negative", [])):
+            continue
+
+        # Anchor check: broad keywords require at least one anchor term
+        anchors = rule.get("anchors", [])
+        if anchors and not any(a in text for a in anchors):
+            continue
+
+        signals["categories"].append(category)
+
     enriched["signals"] = signals
     return enriched
 
@@ -213,18 +262,33 @@ def cluster_issues(issues: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 def generate_faq_markdown(repo_full_name: str, clusters: List[Dict[str, Any]], total_scanned: int) -> str:
-    """Renders high-confidence clusters into a standard Markdown FAQ."""
+    """Renders clusters into a standard Markdown FAQ, gated by confidence.
+
+    Confidence rules:
+      >= 0.7  — include normally
+      >= 0.5  — include with a low-confidence warning
+      <  0.5  — skip entirely
+    """
     lines = []
     lines.append(f"# Troubleshooting FAQ: `{repo_full_name}`")
     lines.append(f"> Auto-generated from {total_scanned} open issues.\n")
-    
-    if not clusters:
+
+    eligible = [c for c in clusters if c["confidence"] >= 0.5]
+
+    if not eligible:
         lines.append("No recurring API errors or meaningful groupings were found.")
         return "\n".join(lines)
-        
-    for cluster in clusters:
+
+    for cluster in eligible:
         lines.append(f"## {cluster['title']}\n")
-        
+
+        # Low-confidence banner
+        if cluster["confidence"] < CONFIDENCE_THRESHOLD:
+            lines.append(
+                f"⚠️ Low confidence cluster (score: {cluster['confidence']}) "
+                "— review before publishing\n"
+            )
+
         categories = cluster["signals"].get("categories", [])
         cat = categories[0] if categories else None
         # Resolve sensible contextual guidance
@@ -232,24 +296,24 @@ def generate_faq_markdown(repo_full_name: str, clusters: List[Dict[str, Any]], t
             "cause": "Multiple users reported this behavior. It is frequently caused by invalid parameters or temporary disruptions.",
             "workaround": "Check the related issues below for confirmed maintainer guidance."
         })
-        
+
         lines.append("**Common symptoms**")
         lines.append(f"- Consistent errors matching cluster signature: `{cluster['key']}`")
         if cluster["signals"].get("status_codes"):
             lines.append(f"- API typically responds with HTTP `{cluster['signals']['status_codes'][0]}`")
         lines.append("")
-        
+
         lines.append("**Likely cause**")
         lines.append(f"- {guidance['cause']}\n")
-        
+
         lines.append("**Suggested workaround**")
         lines.append(f"- {guidance['workaround']}\n")
-        
+
         lines.append(f"**Cluster Confidence Score:** {cluster['confidence']}/1.0")
         lines.append(f"\n**Related issues ({cluster['issue_count']})**")
         for issue in cluster['issues']:
             title = escape_markdown_text(issue['title'])
             lines.append(f"- [#{issue['number']}]({issue['url']}) - {title}")
         lines.append("\n---\n")
-        
+
     return "\n".join(lines)

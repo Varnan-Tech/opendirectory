@@ -68,7 +68,16 @@ python scripts/run.py supabase/supabase --output docs/SUPPORT.md
 Preview how clusters are generated in [references/sample-output.md](references/sample-output.md).
 
 ## Limitations
-- Evaluates public GitHub repositories only.
-- Designed primarily for REST API topics (HTTP status codes, URIs).
-- Local sequential processing can be slow for massive issue counts with comment parsing.
-- Generates a static document; does not auto-reply to live GitHub issues.
+
+- **Best for API-focused repos**: This skill is designed for repositories
+  where issues predominantly contain HTTP status codes, endpoint paths,
+  and error strings (e.g., `openai/openai-python`, `stripe/stripe-python`).
+- **Noisy on general product trackers**: Running on repos like
+  `openclaw/openclaw` (a general product bug tracker) will produce lower
+  accuracy because issues mix infrastructure bugs, logic bugs, network
+  issues, and feature requests in the same tracker.
+- **Dynamic pricing pages**: Some issues may not contain error messages
+  at all — the skill works best when issues have structured error output
+  in their bodies.
+- **Confidence scores**: Clusters with confidence < 0.7 are flagged as
+  low confidence. Review them manually before adding to production docs.
