@@ -8,6 +8,14 @@
     "path": "skills/blog-cover-image-cli"
   },
   {
+    "name": "brand-alchemy",
+    "description": "World-class brand strategist and naming expert.",
+    "tags": [],
+    "author": "Unknown",
+    "version": "0.0.1",
+    "path": "skills/brand-alchemy"
+  },
+  {
     "name": "claude-md-generator",
     "description": "Read the codebase. Write a CLAUDE.md that tells Claude exactly what it needs: no more, no less.",
     "tags": [],
@@ -158,6 +166,14 @@
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/pr-description-writer"
+  },
+  {
+    "name": "pricing-page-psychology-audit",
+    "description": "Audits any SaaS pricing page URL against 12 pricing psychology principles and outputs a ranked improvement report with specific rewrite suggestions...",
+    "tags": [],
+    "author": "ajaycodesitbetter",
+    "version": "1.0.0",
+    "path": "skills/pricing-page-psychology-audit"
   },
   {
     "name": "producthunt-launch-kit",
