@@ -1,10 +1,10 @@
+<img width="2752" height="1536" alt="human-tone-skill-cover-image" src="https://github.com/user-attachments/assets/aa2c99dc-87a6-490e-a989-21fd6a2bbc9a" />
+
 # Human Tone
 
 AI assistants write terrible marketing copy. They rely on generic filler words, force everything into lists of three, and bury your actual product under layers of hype.
 
 The Human Tone skill teaches your AI how to edit its own work. It provides strict rules for stripping out robotic patterns and rewriting text to sound like a direct conversation from a founder to a customer.
-
-<img width="2752" height="1536" alt="human-tone-skill-cover-image" src="https://github.com/user-attachments/assets/aa2c99dc-87a6-490e-a989-21fd6a2bbc9a" />
 
 
 ## What It Fixes
