@@ -11,16 +11,98 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
 </div>
 
 ---
 
-## What is OpenDirectory?
+[Overview](#overview) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Supported Agents](#supported-agents) • [Available Skills](#available-skills)
 
-OpenDirectory is a central library that allows you to add new capabilities, or superpowers, to your AI agents. Instead of teaching your AI how to perform complex marketing or growth tasks from scratch, you can simply download a pre-built skill from our catalog and install it directly into your project.
+OpenDirectory is a central library and CLI tool that allows you to add new capabilities, or "skills", to your AI agents. Instead of teaching your AI how to perform complex marketing or growth tasks from scratch, you can simply download a pre-built skill from our catalog and install it directly into your project.
+
+> [!NOTE]  
+> OpenDirectory skills are modular, reusable integrations designed to work across a variety of AI coding assistants and agents.
+
+## Overview
+
+Building agentic workflows can be complex and time-consuming. OpenDirectory simplifies this by providing a registry of discoverable skills—ready-to-use markdown files and scripts that give your agents new abilities like Twitter GTM radar, Hacker News intel, docs extraction, and more. 
+
+The main CLI (`@opendirectory.dev/skills`) installs and manages these skills seamlessly, acting as a package manager for AI agent capabilities.
+
+## Features
+
+- **Extensive Registry**: A wide array of pre-built skills for GTM, technical marketing, and growth.
+- **Zero-Install CLI**: Run instantly via `npx` to list and install skills without cluttering your environment.
+- **Multi-Agent Support**: Compatible with a variety of agents like Claude Code, OpenCode, Gemini CLI, and more.
+- **Native Claude Code Integration**: Can be added as a native community marketplace directly inside Claude Code.
+- **Global Installation**: Installs skills into your agent's global configuration directory, making them available across all your projects.
+
+## Installation
+
+Because we use `npx`, there is no need to permanently install the OpenDirectory tool. You can run it instantly from your terminal.
+
+> [!TIP]
+> Using `npx` ensures you are automatically using the most recent version of the CLI and the latest skills registry.
+
+### Native Installation (Claude Code)
+
+Users who exclusively use Anthropic's Claude Code can add OpenDirectory as a native community marketplace directly inside their Claude interface:
+
+```bash
+# Add the OpenDirectory marketplace
+/plugin marketplace add Varnan-Tech/opendirectory
+
+# Install a skill directly
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+## Usage
+
+### 1. View Available Skills
+
+To see the full list of available skills in the registry, open your terminal and run:
+
+```bash
+npx "@opendirectory.dev/skills" list
+```
+
+This command fetches the latest `registry.json` and displays all available skills along with their descriptions.
+
+### 2. Install a Skill
+
+Once you have found a skill you want to use, install it by specifying the skill name and your target agent:
+
+```bash
+npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
+```
+
+For example, to install the `blog-cover-image-cli` skill for Claude:
+
+```bash
+npx "@opendirectory.dev/skills" install blog-cover-image-cli --target claude
+```
+
+### 3. Use the Skill
+
+After the installation is complete, your AI agent is ready to use the new skill. Simply open your AI agent within your project folder and give it a command related to the skill.
+
+For example:
+_"Use the blog-cover-image-cli skill to generate a thumbnail for my new article."_
+
+## Supported Agents
+
+When installing a skill, you must specify the target agent using the `--target` flag. Supported agents include:
+
+- **Claude Code**: `--target claude`
+- **OpenCode**: `--target opencode`
+- **Codex**: `--target codex`
+- **Gemini CLI**: `--target gemini`
+- **Anti-Gravity**: `--target anti-gravity`
+- **OpenClaw**: `--target openclaw`
+- **Hermes**: `--target hermes`
 
 ## Available Skills
 
@@ -61,91 +143,8 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 
 <!-- SKILLS_LIST_END -->
 
-## Prerequisites
+---
 
-Before you begin, you must have Node.js installed on your computer. Node.js provides the necessary tools to download and run these skills.
-
-1. Visit [nodejs.org](https://nodejs.org/).
-2. Download and install the version labeled Recommended For Most Users.
-3. Once installed, you will have access to a tool called terminal or command prompt on your computer, which you will use for the following steps.
-
-## Installation (Zero-Install Required)
-
-Because we use `npx`, there is no need to install the OpenDirectory tool itself. `npx` is a magic command that comes with Node.js. When you type `npx "@opendirectory.dev/skills"`, your computer automatically downloads the registry in the background and runs it instantly.
-
-## Native Installation (Claude Code Only)
-
-Users who exclusively use Anthropic's Claude Code can add OpenDirectory as a native community marketplace directly inside their Claude interface. This allows you to install skills using Claude's built-in plugin system.
-
-Run the following commands inside your Claude Code terminal:
-
-```bash
-# Add the OpenDirectory marketplace
-/plugin marketplace add Varnan-Tech/opendirectory
-
-# Install a skill directly
-/plugin install opendirectory-gtm-skills@opendirectory-marketplace
-```
-
-## Step 1: View Available Skills
-
-To see the full list of available skills, open your terminal and run the following command:
-
-```bash
-npx "@opendirectory.dev/skills" list
-```
-
-This command will display a list of all skills currently available in the OpenDirectory registry.
-
-## Step 2: Choose Your Agent
-
-OpenDirectory supports several different AI agents. When you install a skill, you need to tell the system which agent you are using by using the `--target` flag.
-
-Supported agents include:
-
-*   **Claude Code**: Use `--target claude`
-*   **OpenCode**: Use `--target opencode`
-*   **Codex**: Use `--target codex`
-*   **Gemini CLI**: Use `--target gemini`
-*   **Anti-Gravity**: Use `--target anti-gravity`
-*   **OpenClaw**: Use `--target openclaw`
-*   **Hermes**: Use `--target hermes`
-
-## Step 3: Install a Skill
-
-Once you have found a skill you want to use, run the following command in your terminal, replacing `<skill-name>` with the name of the skill and `<your-agent>` with the agent you chose in Step 2:
-
-```bash
-npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
-```
-
-This command installs the skill into your agent's global configuration directory, making it available across all your projects.
-
-## How to Use the Skills
-
-After the installation is complete, your AI agent is ready to use the new skill. Simply open your AI agent (such as Claude Code) within your project folder and give it a command related to the skill.
-
-For example, if you installed a skill for SEO analysis, you might say:
-"Use the SEO analysis skill to check the homepage of my website."
-
-## Why NPX?
-
-We use a tool called `npx` to manage these skills. This ensures that every time you run a command, you are automatically using the most recent version of the skill and the latest security updates. You never have to worry about manually updating your software.
-
-## How to Contribute
-
-We welcome contributions from the community. If you have built an innovative GTM, Technical Marketing, or growth automation skill, we encourage you to share it with the ecosystem.
-
-Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on the strict format required for new skills and our security validation process.
-
-## Top Contributors
-
-<a href="https://github.com/Varnan-Tech/opendirectory/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Varnan-Tech/opendirectory" />
-</a>
-
-A massive thank you to everyone who has helped build the OpenDirectory ecosystem! Join us by checking out the [CONTRIBUTING.md](CONTRIBUTING.md) guide.
-
-## License
-
-This project is licensed under the MIT License.
+<div align="center">
+  <em>Powered by the OpenDirectory community.</em>
+</div>
