@@ -1,4 +1,4 @@
-<img width="2752" height="1536" alt="human-tone-skill-cover-image" src="https://github.com/user-attachments/assets/aa2c99dc-87a6-490e-a989-21fd6a2bbc9a" />
+<img width="1280" height="640" alt="human-tone-skill-cover-image" src="https://github.com/user-attachments/assets/aa2c99dc-87a6-490e-a989-21fd6a2bbc9a" />
 
 # Human Tone
 
