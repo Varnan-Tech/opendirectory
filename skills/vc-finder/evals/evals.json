@@ -1,0 +1,125 @@
+[
+  {
+    "id": "eval_001",
+    "name": "B2B SaaS product URL: full two-track output with correct stage detection",
+    "description": "A B2B SaaS developer tool with a demo CTA. Validates the full 10-step workflow, stage detection from page signals, two-track VC research, and complete output.",
+    "input": {
+      "prompt": "Find VCs for my startup: https://linear.app",
+      "env": {
+        "GEMINI_API_KEY": "set",
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Fetches URL via Firecrawl",
+      "Step 4 detects 'free trial or demo CTA' signal from page content",
+      "Stage outputs 'seed' or 'series-a' with medium or high confidence",
+      "Industry taxonomy: software > developer tools > issue tracking or project management",
+      "Generates 5 comparable companies (e.g. Jira, Shortcut, Height, Plane, Asana)",
+      "Runs 5 Track A Tavily searches using quoted company names",
+      "Runs 3 Track B Tavily searches using L2 and L3 taxonomy terms",
+      "Every Track A VC in the output has evidence_company field populated",
+      "Every Track B VC in the output has thesis_source_title field populated",
+      "Self-QA step removes any VCs missing required evidence fields",
+      "Output includes exactly 5 deep dives and exactly 3 outreach hooks",
+      "Output saved to docs/vc-intel/linear-[date].md"
+    ],
+    "expected_output": "Full two-track VC list with sourced Track A evidence and Track B thesis citations, 5 deep dives with product-specific outreach hooks, saved to docs/vc-intel/"
+  },
+  {
+    "id": "eval_002",
+    "name": "Consumer app: different stage signals, consumer-focused VCs not B2B enterprise funds",
+    "description": "A consumer mobile app. Validates that the skill detects consumer-specific signals and returns consumer-focused investors, not enterprise SaaS funds.",
+    "input": {
+      "prompt": "Find investors for this consumer app: https://www.bereal.com",
+      "env": {
+        "GEMINI_API_KEY": "set",
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Fetches URL successfully",
+      "Industry taxonomy maps to consumer or social media, not B2B SaaS",
+      "Comparable companies are consumer social apps, not enterprise tools",
+      "Track A searches target consumer social investors (who backed TikTok, Snapchat, Instagram at early stage)",
+      "Track B searches use consumer social or UGC thesis terms",
+      "VCs in output are consumer-focused funds, not B2B SaaS investors",
+      "Outreach hooks are specific to consumer social or photo product type",
+      "No B2B enterprise-only investors appear in the output"
+    ],
+    "expected_output": "VC list with consumer-focused investors, stage-appropriate alignment, no B2B enterprise fund entries"
+  },
+  {
+    "id": "eval_003",
+    "name": "Description-only input: skips fetch, goes direct to Gemini analysis",
+    "description": "User pastes a product description with no URL. Validates that Steps 3 and 4 are skipped and the skill proceeds directly to Gemini analysis.",
+    "input": {
+      "prompt": "Find VCs for my startup. Here's what we do: We build an AI-powered legal contract review tool for in-house legal teams at mid-market companies. Our tool flags risky clauses and suggests standard language. We're pre-seed, 3 months post-launch, no pricing page yet. US-focused.",
+      "env": {
+        "GEMINI_API_KEY": "set",
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Detects no URL in the input",
+      "Skips Step 3: no fetch attempt is made",
+      "Skips Step 4: no regex stage detection from page",
+      "Passes the pasted description directly to Gemini in Step 5",
+      "Stage set to 'pre-seed' with high confidence (user stated it explicitly)",
+      "Industry taxonomy: software > legaltech > contract review automation",
+      "Generates 5 comparable legaltech companies",
+      "Runs full Track A and Track B searches using description-derived comparables and taxonomy",
+      "Output note: 'Stage: pre-seed (stated by user)'",
+      "data_quality_flags includes note about stage coming from user description not page signals"
+    ],
+    "expected_output": "Full VC list using description-derived analysis, legaltech-specific investors, stage labeled as user-stated"
+  },
+  {
+    "id": "eval_004",
+    "name": "GEMINI_API_KEY missing: immediate stop at Step 1",
+    "description": "Validates that the skill stops at Step 1 with exact setup instructions when Gemini key is absent.",
+    "input": {
+      "prompt": "Find VCs for https://stripe.com",
+      "env": {
+        "GEMINI_API_KEY": "not set",
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Step 1 detects GEMINI_API_KEY is missing",
+      "Stops immediately at Step 1",
+      "Tells the user: 'GEMINI_API_KEY is required for product analysis and VC synthesis. Get it at aistudio.google.com. Add it to your .env file.'",
+      "Does NOT fetch the URL",
+      "Does NOT run any Tavily searches",
+      "Does NOT attempt any analysis"
+    ],
+    "expected_output": "Immediate stop at Step 1 with exact error message including the URL to get the key. No partial output generated."
+  },
+  {
+    "id": "eval_005",
+    "name": "TAVILY_API_KEY missing: immediate stop at Step 1, no fallback",
+    "description": "Validates that the skill stops at Step 1 when Tavily key is absent, with no fallback path suggested.",
+    "input": {
+      "prompt": "Who invests in CI/CD automation startups? https://buildkite.com",
+      "env": {
+        "GEMINI_API_KEY": "set",
+        "TAVILY_API_KEY": "not set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Step 1 detects GEMINI_API_KEY is set",
+      "Step 1 detects TAVILY_API_KEY is missing",
+      "Stops immediately at Step 1",
+      "Tells the user: 'TAVILY_API_KEY is required to research VC investments and theses. There is no fallback for this. Get it at app.tavily.com. Free tier: 1000 credits/month (about 125 full runs). Add it to your .env file.'",
+      "Does NOT fetch the URL",
+      "Does NOT run any Gemini analysis",
+      "Does NOT suggest any workaround"
+    ],
+    "expected_output": "Immediate stop at Step 1 with exact error message. Does not proceed past setup check."
+  }
+]
