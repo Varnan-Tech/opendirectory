@@ -5,6 +5,12 @@
 
 Read your current git branch diff and generate a complete GitHub pull request description: summary, specific change bullets, and testing steps. Create or update the PR in one step.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install pr-description-writer --target claude
+```
+
 ## What It Does
 
 - Reads `git diff main...HEAD` to understand what changed

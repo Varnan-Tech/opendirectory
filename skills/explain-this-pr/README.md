@@ -5,6 +5,12 @@
 
 Point this skill at any GitHub PR and it writes a plain-English explanation of what changed and why, then posts it as a PR comment.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install explain-this-pr --target claude
+```
+
 ## What It Does
 
 - Fetches the PR diff and metadata via `gh`

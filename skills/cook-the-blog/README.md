@@ -4,6 +4,12 @@
 
 This guide explains how to set up, configure, and run the `cook-the-blog` skill. This AI agent pipeline autonomously researches companies, extracts SEO keywords, generates custom cover images, writes high-converting MDX case studies without AI fluff, uploads assets to cloud storage, and pushes the final code to your designated GitHub repository.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install cook-the-blog --target claude
+```
+
 ## Prerequisites & Dependencies
 
 Before running the skill, the AI agent needs access to several external tools, APIs, and environment details.

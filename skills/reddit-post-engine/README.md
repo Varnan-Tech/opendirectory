@@ -5,6 +5,12 @@
 
 Write and optionally post Reddit content that fits the target subreddit's culture. Fetches subreddit rules and top posts before drafting. Follows the 90/10 rule. Optionally posts via Composio Reddit MCP.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install reddit-post-engine --target claude
+```
+
 ## What It Does
 
 - Fetches the target subreddit's rules and top posts from Reddit's public API

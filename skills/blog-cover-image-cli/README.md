@@ -14,6 +14,12 @@ It handles everything from fetching company logos to pixel-perfect typography in
 
 ---
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install blog-cover-image-cli --target claude
+```
+
 ## Features
 - **Full AI Generation**: Uses `gemini-3.1-flash-image-preview` to generate the entire image.
 - **Smart Logo Fetching**: Pass a domain (like `vercel.com`) and the CLI automatically fetches the logo using `Brandfetch`, normalizes it to PNG via `sharp`, and injects it into the AI context.

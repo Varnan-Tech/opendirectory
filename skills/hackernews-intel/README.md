@@ -5,6 +5,12 @@
 
 Monitor Hacker News for keywords. Get a Slack alert every time a new post matches your topics, without duplicates. Run it manually, on a cron schedule, or via GitHub Actions.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install hackernews-intel --target claude
+```
+
 ## What It Does
 
 - Fetches new posts from HN using the free Algolia search API (no API key needed)

@@ -5,6 +5,12 @@
 
 Paste your rough notes, bullet points, voice transcript, or tweet dump and get a publication-ready blog post.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install noise2blog --target claude
+```
+
 ## What It Does
 
 - Accepts any rough input: bullet points, rough notes, voice transcripts, tweet dumps, short drafts, or a URL

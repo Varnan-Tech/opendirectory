@@ -5,6 +5,12 @@
 
 Write your daily standup in seconds. The skill reads yesterday's Linear issues and GitHub commits, formats a done/doing/blockers update, and posts it to Slack.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install kill-the-standup --target claude
+```
+
 ## What It Does
 
 - Fetches yesterday's Linear issues assigned to you (completed and in-progress)

@@ -5,6 +5,12 @@
 
 Aggregate RSS feeds, synthesize the week's top stories with Gemini, and publish a newsletter digest to Ghost CMS. Supports three digest formats and outputs HTML, Markdown, and plain text for any platform.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install newsletter-digest --target claude
+```
+
 ## What It Does
 
 - Reads your RSS/Atom feed list from `feeds.json`

@@ -4,6 +4,12 @@
 
 Agent Skills for SEO keyword research using Google Trends data via SerpApi. Built for AI agents that generate tech and developer-focused blog content.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install google-trends-api-skills --target claude
+```
+
 ## Skills
 
 ### 1. `google-trends-api/`

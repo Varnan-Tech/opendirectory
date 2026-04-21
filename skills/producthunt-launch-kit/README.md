@@ -5,6 +5,12 @@
 
 Generates a complete Product Hunt launch kit from your product description: tagline variants (60 chars max), listing description, maker comment, launch day tweet thread, LinkedIn post, and a 4-email sequence.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install producthunt-launch-kit --target claude
+```
+
 ## What It Does
 
 - Generates 5 tagline variants with character counts (all under 60 chars)

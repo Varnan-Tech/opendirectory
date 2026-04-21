@@ -5,6 +5,12 @@
 
 Weekly scan for outdated npm or pip packages. Fetches changelogs for each. Summarizes breaking changes with Gemini. Opens one PR per risk group.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install dependency-update-bot --target claude
+```
+
 ## What It Does
 
 - Runs `npm outdated --json` or `pip list --outdated` to find outdated packages

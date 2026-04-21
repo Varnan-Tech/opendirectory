@@ -4,6 +4,12 @@ Agent Skill that equips your AI agent with the ability to autonomously guess, en
 
 Instead of running Python scripts manually, this skill teaches your AI how to read your lead lists, discover corporate domains via the Clearbit API, generate standard email permutations, and securely verify them.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install cold-email-verifier --target claude
+```
+
 ## Verification Engines Supported
 The AI is trained to use two different verification backends:
 1. **ValidEmail.co API (Highly Recommended)**: The AI will use this SaaS API for enterprise-grade accuracy, bypassing strict catch-all servers. You can get a free tier of verification credits at validemail.co.

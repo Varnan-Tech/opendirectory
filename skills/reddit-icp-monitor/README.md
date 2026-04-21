@@ -5,6 +5,12 @@
 
 Watch subreddits for people describing the exact problem you solve. Score each post for ICP relevance. Draft a helpful, non-spammy reply for every high-signal match.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install reddit-icp-monitor --target claude
+```
+
 ## What It Does
 
 - Reads your ICP definition from docs/icp.md (or asks 3 questions to build it)

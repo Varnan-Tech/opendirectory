@@ -4,6 +4,12 @@
 
 World-class brand strategist and naming expert. Uses an interrogation-led discovery phase to extract your brand's DNA, then applies scientific naming frameworks (Phonosemantics) and automated multi-TLD domain checking.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install brand-alchemy --target claude
+```
+
 ## Core Capabilities
 
 When invoked, the skill commands the AI agent to act as an elite branding consultant through a rigorous protocol:

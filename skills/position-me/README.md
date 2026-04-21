@@ -6,6 +6,12 @@ The Website Reviewer Agent Skill for AEO, GEO, SEO, UI/UX Psychology, and Direct
 
 An open source skill that transforms modern AI Agents into rigorous positioning consultants. It forces the agent to use native vision capabilities to evaluate cognitive load and verify Generative Engine Optimization (GEO) compatibility.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install position-me --target claude
+```
+
 ## Core Capabilities
 
 When invoked, the skill commands the AI agent to conduct an exhaustive teardown of the target website through a rigid protocol:

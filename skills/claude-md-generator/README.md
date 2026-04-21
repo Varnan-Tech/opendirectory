@@ -5,6 +5,12 @@
 
 Reads your codebase and writes a CLAUDE.md that gives Claude Code the context it needs: build commands, code conventions, architecture notes, and gotchas. Stays under 200 lines.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install claude-md-generator --target claude
+```
+
 ## What It Does
 
 - Scans project files: package.json, tsconfig.json, linter configs, Makefile, directory structure

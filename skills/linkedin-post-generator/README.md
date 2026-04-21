@@ -4,6 +4,12 @@
 
 Generate LinkedIn posts from any content: blog posts, articles, GitHub PRs, or a description of what you built. The agent reads your source material, applies LinkedIn's content patterns, and produces a post with the right hook, story arc, and formatting.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install linkedin-post-generator --target claude
+```
+
 ## Post Styles
 
 | Style | Use When | Example Input |

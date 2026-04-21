@@ -5,6 +5,12 @@
 
 Generate valid JSON-LD structured data for any webpage. The agent crawls the page, detects which schema types apply, and outputs a script tag ready to paste into your HTML. Optionally opens a GitHub PR with the markup injected.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install schema-markup-generator --target claude
+```
+
 ## Schema Types Supported
 
 | Type | Use When |

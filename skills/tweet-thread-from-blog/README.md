@@ -5,6 +5,12 @@
 
 Turn any blog post or article into a Twitter/X thread. The agent reads the content, picks the right thread style, and writes 7-10 tweets with a strong hook, one insight per tweet, and a CTA. Optionally posts the full thread to X via Composio using a reply chain.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install tweet-thread-from-blog --target claude
+```
+
 ## Thread Styles
 
 | Style | Use When | Example Input |

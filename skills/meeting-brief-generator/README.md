@@ -5,6 +5,12 @@
 
 Walk into every sales or business development call prepared. Give the skill a company name and it runs targeted research, synthesizes a 1-page brief, and optionally saves it to Notion.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install meeting-brief-generator --target claude
+```
+
 ## What It Does
 
 - Runs 6-8 targeted Tavily searches covering company overview, recent news, tech stack, product, competitors, funding, and contact background

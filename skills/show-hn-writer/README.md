@@ -5,6 +5,12 @@
 
 Draft a Show HN post (title + body) that follows Hacker News norms: specific, honest, first-person, no marketing. Generates three title variants and a complete body, then runs a Gemini review to catch HN anti-patterns before you post.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install show-hn-writer --target claude
+```
+
 ## What It Does
 
 - Reads your project context (from README or your answers)

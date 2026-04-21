@@ -5,6 +5,12 @@
 
 Turn a buying signal into a ready-to-send multi-channel outreach sequence. Give the skill a signal and it generates 4-6 personalized touchpoints across email, LinkedIn, and phone, with objection pre-emption built in.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install outreach-sequence-builder --target claude
+```
+
 ## What It Does
 
 - Identifies the signal type from 7 categories: Post-Fundraise, Hiring Signal, Competitor Displacement, Product Launch, Content Engagement, Event Follow-up, Job Change

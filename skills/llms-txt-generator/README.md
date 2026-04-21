@@ -4,6 +4,12 @@
 
 Generate a standards-compliant `llms.txt` file for any website. Makes your site fully readable and citable by AI agents the GEO (Generative Engine Optimization) equivalent of having a great sitemap.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install llms-txt-generator --target claude
+```
+
 ## What It Does
 
 The skill crawls your website using Chrome DevTools, reads your actual pages, and produces a clean `llms.txt` file in the format specified by [Jeremy Howard's llms.txt standard](https://llmstxt.org). When AI agents (Claude, ChatGPT, Gemini) visit your site, they read `llms.txt` first to understand what you are and where to find authoritative content.

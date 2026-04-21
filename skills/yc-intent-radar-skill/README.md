@@ -4,6 +4,12 @@
 
 An automated scraper that pulls job listings and company data from YCombinator's Workatastartup platform. It bypasses login bottlenecks by utilizing authenticated sessions and ensures no duplicates are recorded by saving everything directly to a local SQLite database (`jobs.db`).
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install yc-intent-radar-skill --target claude
+```
+
 ## Features
 - **Deduplication:** Utilizes `better-sqlite3` to store state, ensuring you never scrape the same job twice.
 - **Robust Extraction:** Identifies hidden JSON payloads on YC pages to grab accurate backend `job_id` values.

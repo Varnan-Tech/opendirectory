@@ -4,6 +4,12 @@
 
 Automatically generate and maintain README.md, API reference docs, and an Architecture section by reading your codebase. Uses [graphify](https://github.com/safishamsi/graphify) to build a knowledge graph first, then uses AI to write clean documentation grounded in what actually exists.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install docs-from-code --target claude
+```
+
 ## What It Generates
 
 | Output | When |

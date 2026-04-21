@@ -2,6 +2,12 @@
 
 <img width="1376" height="768" alt="meta-ads-skill" src="https://github.com/user-attachments/assets/baf2509b-0ee0-41ca-9555-3ad350a6824c" />
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install meta-ads-skill --target claude
+```
+
 ## Overview
 
 The **Meta Ads Skill** is a comprehensive, production-ready OpenCode skill designed to give LLMs and AI agents expert-level capabilities to orchestrate the [Varnan-Tech Meta Ads MCP Server](https://github.com/Varnan-Tech/Meta-Ads-MCP). 

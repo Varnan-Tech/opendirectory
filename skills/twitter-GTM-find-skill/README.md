@@ -6,6 +6,12 @@ This repository contains the `twitter-GTM-find/` AI Skill.
 
 This pipeline automates the discovery of highly-targeted, Developer-First startups hiring for Go-To-Market (GTM), Developer Relations (DevRel), and Growth roles by scraping Twitter (via Apify) and automatically verifying the startups' funding and product type using Gemini's native Google Search Grounding.
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install twitter-GTM-find-skill --target claude
+```
+
 ## The Skill Directory
 
 All executable code and documentation are packaged cleanly inside the `twitter-GTM-find/` folder. This is designed to be directly imported and read by AI agents (like OpenClaw or Claude) so they understand how to use the tool.

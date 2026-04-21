@@ -7,6 +7,12 @@ AI assistants write terrible marketing copy. They rely on generic filler words, 
 The Human Tone skill teaches your AI how to edit its own work. It provides strict rules for stripping out robotic patterns and rewriting text to sound like a direct conversation from a founder to a customer.
 
 
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install human-tone --target claude
+```
+
 ## What It Fixes
 
 * Removes words like "streamline", "empower", and "revolutionize".
