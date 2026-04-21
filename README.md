@@ -36,6 +36,7 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | [`dependency-update-bot`](skills/dependency-update-bot) | Scans your project for outdated npm, pip, Cargo, Go, or Ruby packages. | `1.0.0` |
 | [`docs-from-code`](skills/docs-from-code) | Generates and updates README. | `1.0.0` |
 | [`explain-this-pr`](skills/explain-this-pr) | Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment. | `1.0.0` |
+| [`gh-issue-to-demand-signal`](skills/gh-issue-to-demand-signal) | Takes a competitor's public GitHub repo URL, fetches their open issues via the GitHub REST API, filters noise locally, clusters issues into 6 deman... | `0.0.1` |
 | [`google-trends-api-skills`](skills/google-trends-api-skills) | SEO keyword research workflow for blog generation using Google Trends data. | `2.0` |
 | [`hackernews-intel`](skills/hackernews-intel) | Monitors Hacker News for user-configured keywords, deduplicates against a local SQLite cache, and sends Slack alerts for new matching posts. | `1.0.0` |
 | [`human-tone`](skills/human-tone) | Rewrites AI-generated marketing copy to sound naturally human. | `1.0.0` |
