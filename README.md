@@ -57,6 +57,7 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | [`show-hn-writer`](skills/show-hn-writer) | Draft a Show HN post backed by real HN performance data. Uses observed patterns from 250 top HN posts to maximise score. | `2.0.0` |
 | [`tweet-thread-from-blog`](skills/tweet-thread-from-blog) | Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA. | `1.0.0` |
 | [`twitter-GTM-find-skill`](skills/twitter-GTM-find-skill) | End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP)... | `0.0.1` |
+| [`vc-finder`](skills/vc-finder) | Takes a startup product URL or description, detects the industry and funding stage, identifies 5 comparable funded companies, searches who invested... | `0.0.1` |
 | [`yc-intent-radar-skill`](skills/yc-intent-radar-skill) | Scrape daily job listings from YCombinator's Workatastartup platform without duplicates. | `0.0.1` |
 
 <!-- SKILLS_LIST_END -->
