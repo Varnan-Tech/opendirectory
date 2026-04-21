@@ -20,6 +20,24 @@ It handles everything from fetching company logos to pixel-perfect typography in
 npx "@opendirectory.dev/skills" install blog-cover-image-cli --target claude
 ```
 
+### Video Tutorial
+Watch this quick video to see how it's done:
+
+https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+
+### Step 1: Download the skill from GitHub
+1. Copy the URL of this specific skill folder from your browser's address bar.
+2. Go to [download-directory.github.io](https://download-directory.github.io/).
+3. Paste the URL and click **Enter** to download.
+
+### Step 2: Install the Skill in Claude
+1. Open your **Claude desktop app**.
+2. Go to the sidebar on the left side and click on the **Customize** section.
+3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
+4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
+
+> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
+
 ## Features
 - **Full AI Generation**: Uses `gemini-3.1-flash-image-preview` to generate the entire image.
 - **Smart Logo Fetching**: Pass a domain (like `vercel.com`) and the CLI automatically fetches the logo using `Brandfetch`, normalizes it to PNG via `sharp`, and injects it into the AI context.
@@ -130,23 +148,3 @@ The workflow will automatically publish a new version to NPM whenever you create
 2. **Context Assembly**: Loads aesthetic examples from the `./examples` folder to ground the style.
 3. **Multimodal Prompting**: Assembles the exact text instructions, the visual examples, and the fetched logo into a single unified payload.
 4. **Google GenAI SDK**: Sends the payload with `tools: [{ googleSearch: {} }]` to the Gemini 3.1 Flash Image model.
-
-## Installation in Claude Desktop App
-
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
-### Step 1: Download the skill from GitHub
-1. Copy the URL of this specific skill folder from your browser's address bar.
-2. Go to [download-directory.github.io](https://download-directory.github.io/).
-3. Paste the URL and click **Enter** to download.
-
-### Step 2: Install the Skill in Claude
-1. Open your **Claude desktop app**.
-2. Go to the sidebar on the left side and click on the **Customize** section.
-3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
-4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
-
-> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!

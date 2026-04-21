@@ -11,6 +11,24 @@ Generate valid JSON-LD structured data for any webpage. The agent crawls the pag
 npx "@opendirectory.dev/skills" install schema-markup-generator --target claude
 ```
 
+### Video Tutorial
+Watch this quick video to see how it's done:
+
+https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+
+### Step 1: Download the skill from GitHub
+1. Copy the URL of this specific skill folder from your browser's address bar.
+2. Go to [download-directory.github.io](https://download-directory.github.io/).
+3. Paste the URL and click **Enter** to download.
+
+### Step 2: Install the Skill in Claude
+1. Open your **Claude desktop app**.
+2. Go to the sidebar on the left side and click on the **Customize** section.
+3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
+4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
+
+> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
+
 ## Schema Types Supported
 
 | Type | Use When |
@@ -118,23 +136,3 @@ schema-markup-generator/
 ## License
 
 MIT
-
-## Installation in Claude Desktop App
-
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
-### Step 1: Download the skill from GitHub
-1. Copy the URL of this specific skill folder from your browser's address bar.
-2. Go to [download-directory.github.io](https://download-directory.github.io/).
-3. Paste the URL and click **Enter** to download.
-
-### Step 2: Install the Skill in Claude
-1. Open your **Claude desktop app**.
-2. Go to the sidebar on the left side and click on the **Customize** section.
-3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
-4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
-
-> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
