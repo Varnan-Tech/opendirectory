@@ -1,6 +1,6 @@
 ---
 name: product-update-logger
-description: Tell the skill what your product shipped. It writes a polished dated entry to a living docs/changelog.md and produces a ready-to-use content package: tweet thread, LinkedIn post, email snippet, and one-liner.
+description: "Tell the skill what your product shipped. It writes a polished dated entry to a living docs/changelog.md and produces a ready-to-use content package: tweet thread, LinkedIn post, email snippet, and one-liner."
 ---
 
 # product-update-logger
