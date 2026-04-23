@@ -1,14 +1,6 @@
 ---
 name: map-your-market
-description: >-
-  Given a product description, category keywords, or competitor names (any combination), searches
-  Reddit, Hacker News, GitHub Issues, G2, and Google Trends for the real pains your market
-  experiences -- then synthesizes everything into a positioning framework showing who your ICP is,
-  what they say out loud, and exactly how to talk to them. Use when asked to understand a market,
-  find ICP pain points, map competitors, build a positioning doc, find messaging angles, or answer
-  who is my customer and what do they actually care about. Trigger when a user says map my market,
-  who is my ICP, what pains does my market have, understand my market, find my target customer,
-  what are the top complaints in X space, help me position my product, or who should I be selling to.
+description: Given a product description, category keywords, or competitor names (any combination), searches Reddit, Hacker News, GitHub Issues, G2, and Google Trends for the real pains your market experiences, then synthesizes everything into a positioning framework showing who your ICP is, what they say out loud, and exactly how to talk to them. Use when asked to understand a market, find ICP pain points, map competitors, build a positioning doc, find messaging angles, or answer who is my customer and what do they actually care about. Trigger when a user says map my market, who is my ICP, what pains does my market have, understand my market, find my target customer, what are the top complaints in X space, help me position my product, or who should I be selling to.
 compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 

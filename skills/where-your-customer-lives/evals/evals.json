@@ -1,0 +1,108 @@
+[
+  {
+    "id": "eval_001",
+    "name": "Developer tools ICP (devops) -- full pipeline",
+    "input": {
+      "product": "Observability platform that replaces Datadog for teams under 200 engineers",
+      "icp_role": "DevOps engineers at mid-size companies",
+      "icp_pain": "Datadog bill growing faster than team size",
+      "category": "devops observability monitoring",
+      "competitors": ["Datadog", "New Relic", "Grafana"]
+    },
+    "expected": {
+      "min_channels": 8,
+      "required_channel_types": ["reddit", "newsletter", "conference"],
+      "top_channel_must_be_type": "reddit",
+      "top_channel_must_contain": "devops",
+      "reddit_channels_min": 3,
+      "icp_signals_min": 10,
+      "competitor_layer_ran": true,
+      "entry_tactic_must_not_contain": "post about your product",
+      "banned_words": ["powerful", "robust", "seamless", "innovative", "game-changing", "streamline", "leverage", "transform", "revolutionize"],
+      "no_em_dashes": true
+    },
+    "notes": "Full pipeline. r/devops should be #1 with high icp_signal_count. Datadog/Grafana competitor mentions should boost channels where those tools are discussed. Newsletter like 'DevOps Weekly' should appear. KubeCon or similar conference expected."
+  },
+  {
+    "id": "eval_002",
+    "name": "B2B sales tool ICP -- competitor layer fires",
+    "input": {
+      "product": "AI-powered outbound sales tool for B2B SaaS companies",
+      "icp_role": "sales leaders at B2B SaaS startups",
+      "icp_pain": "outbound sequences get ignored, response rates under 1%",
+      "category": "B2B sales outbound CRM",
+      "competitors": ["Clay", "Apollo", "HubSpot", "Outreach"]
+    },
+    "expected": {
+      "min_channels": 6,
+      "required_channel_types": ["reddit", "linkedin_group"],
+      "competitor_layer_ran": true,
+      "competitor_channels_present": true,
+      "channels_differ_from_eval_001": true,
+      "reddit_channels_must_not_contain": "devops",
+      "entry_tactic_must_not_contain": "post about your product",
+      "no_em_dashes": true
+    },
+    "notes": "Competitor layer should fire strongly on Clay/Apollo/HubSpot. LinkedIn groups should appear (sales leaders use LinkedIn more than Reddit). Channel list should differ substantially from eval_001 -- different ICP produces different channels."
+  },
+  {
+    "id": "eval_003",
+    "name": "Consumer app ICP -- different channel mix",
+    "input": {
+      "product": "Personal finance app for people tracking subscriptions",
+      "icp_role": "people frustrated by unknown monthly charges",
+      "icp_pain": "losing money on subscriptions I forgot about",
+      "category": "personal finance consumer app subscriptions",
+      "competitors": ["Rocket Money", "Trim", "PocketGuard"]
+    },
+    "expected": {
+      "min_channels": 5,
+      "required_channel_types": ["reddit", "youtube"],
+      "must_not_include_type": "linkedin_group",
+      "channels_differ_from_eval_001": true,
+      "channels_differ_from_eval_002": true,
+      "no_em_dashes": true
+    },
+    "notes": "Consumer ICP should surface r/personalfinance, YouTube channels, possibly Discord. LinkedIn groups are wrong for this ICP -- flag if they appear. The channel mix should look nothing like devops or sales tool results."
+  },
+  {
+    "id": "eval_004",
+    "name": "Very niche ICP -- thin data handled honestly",
+    "input": {
+      "product": "Compliance automation for small community banks",
+      "icp_role": "compliance officers at community banks under $500M assets",
+      "icp_pain": "BSA/AML reporting takes 3 days per quarter",
+      "category": "community bank compliance BSA AML regulatory",
+      "competitors": []
+    },
+    "expected": {
+      "thin_data_acknowledged": true,
+      "min_channels": 2,
+      "no_fabricated_member_counts": true,
+      "competitor_layer_ran": false,
+      "report_must_say": "member count not found",
+      "no_em_dashes": true
+    },
+    "notes": "This ICP is niche enough that Reddit signal count will be low. Script should still try DuckDuckGo for conference/newsletter/association channels. Output must not fabricate community sizes. If member count unavailable, must say 'member count not found' not an estimated number."
+  },
+  {
+    "id": "eval_005",
+    "name": "No competitors provided -- competitor layer skipped cleanly",
+    "input": {
+      "product": "Email deliverability monitoring for SaaS companies",
+      "icp_role": "growth engineers at B2B SaaS",
+      "icp_pain": "transactional emails landing in spam without warning",
+      "category": "email deliverability SMTP SaaS",
+      "competitors": []
+    },
+    "expected": {
+      "competitor_layer_ran": false,
+      "output_notes_competitor_layer_skipped": true,
+      "min_channels": 4,
+      "required_channel_types": ["reddit"],
+      "no_em_dashes": true,
+      "output_recommends_adding_competitors": true
+    },
+    "notes": "Competitor layer should be cleanly skipped with no errors. Output should note that competitor layer was not run and suggest adding competitors (MXroute, Mailgun, Postmark, etc.) for richer results. Signal-trace should still produce valid Reddit channels."
+  }
+]
