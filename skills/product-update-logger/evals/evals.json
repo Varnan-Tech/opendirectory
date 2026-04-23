@@ -1,0 +1,119 @@
+[
+  {
+    "id": "eval_001",
+    "name": "Free text only -- happy path",
+    "description": "User provides 3 items as free text. Expects all categories populated, clean content output.",
+    "input": {
+      "items": "Added dark mode|Fixed CSV export bug|Improved API speed by 40%",
+      "since": 7,
+      "repo": ""
+    },
+    "expected": {
+      "changelog_entry_has_categories": ["new", "improved", "fixed"],
+      "tweet_thread_count_min": 3,
+      "tweet_thread_count_max": 5,
+      "all_tweets_under_280_chars": true,
+      "linkedin_no_hashtags": true,
+      "linkedin_no_markdown": true,
+      "no_em_dashes": true,
+      "no_banned_words": true,
+      "no_invented_metrics": true,
+      "one_liner_under_20_words": true
+    }
+  },
+  {
+    "id": "eval_002",
+    "name": "Git commits only -- noise filtered",
+    "description": "No free text. Git log has 4 commits: 2 real, 2 noise (merge + version bump). Expects noise filtered.",
+    "input": {
+      "items": "",
+      "since": 7,
+      "repo": ""
+    },
+    "git_log_mock": [
+      "abc1234|Add user avatar upload|Users can now upload a profile picture|2026-04-21",
+      "def4567|Merge pull request #45 from user/feature||2026-04-21",
+      "ghi7890|bump version to 1.3.2||2026-04-20",
+      "jkl0123|Fix timezone bug in scheduler|Events were firing 1 hour early in non-UTC timezones|2026-04-19"
+    ],
+    "expected": {
+      "noise_filtered_count": 2,
+      "items_remaining": 2,
+      "changelog_has_new": true,
+      "changelog_has_fixed": true,
+      "merge_commit_not_in_output": true,
+      "version_bump_not_in_output": true
+    }
+  },
+  {
+    "id": "eval_003",
+    "name": "GitHub PRs as source",
+    "description": "GITHUB_TOKEN set, repo provided. Expects PRs to be fetched and used as source. PR body used for context.",
+    "input": {
+      "items": "",
+      "since": 7,
+      "repo": "acme/dashboard"
+    },
+    "mock_prs": [
+      {
+        "number": 47,
+        "title": "Fix CSV export dropping last row",
+        "body": "Regression from v1.3.1. Off-by-one error in row iterator. Fixes #102.",
+        "merged_at": "2026-04-22T10:30:00Z",
+        "labels": ["bug"]
+      },
+      {
+        "number": 48,
+        "title": "Add bulk delete to contacts list",
+        "body": "Users can now select multiple contacts and delete them at once.",
+        "merged_at": "2026-04-21T09:00:00Z",
+        "labels": []
+      }
+    ],
+    "expected": {
+      "github_available": true,
+      "pr_titles_used_as_source": true,
+      "pr_body_used_for_context": true,
+      "changelog_has_new": true,
+      "changelog_has_fixed": true,
+      "regression_context_preserved": true
+    }
+  },
+  {
+    "id": "eval_004",
+    "name": "Single item -- minimal input",
+    "description": "User provides one item. Expects no invented features, concise thread, one-liner under 20 words.",
+    "input": {
+      "items": "Fixed the login page loading slowly on mobile",
+      "since": 7,
+      "repo": ""
+    },
+    "expected": {
+      "changelog_entry_has_fixed": true,
+      "changelog_entry_has_new": false,
+      "tweet_thread_count_min": 2,
+      "tweet_thread_count_max": 3,
+      "one_liner_under_20_words": true,
+      "no_invented_additional_features": true,
+      "linkedin_mentions_mobile": true
+    }
+  },
+  {
+    "id": "eval_005",
+    "name": "Existing changelog -- correct prepend",
+    "description": "docs/changelog.md already exists with a prior entry. New run should prepend, not append. Old entry preserved.",
+    "input": {
+      "items": "Launched API v2|Deprecated old auth endpoint",
+      "since": 7,
+      "repo": ""
+    },
+    "existing_changelog": "# Changelog\n\n## Week of April 14, 2026\n\n### New\n- **Dashboard** -- New analytics dashboard with weekly summaries.\n\n---\n",
+    "expected": {
+      "new_entry_is_prepended_not_appended": true,
+      "existing_entry_still_present": true,
+      "new_label_not_equal_to_april_14": true,
+      "changelog_heading_preserved": true,
+      "api_v2_in_new_section": true
+    }
+  }
+]
