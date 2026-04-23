@@ -1,7 +1,7 @@
-# PRD: vc-finder
+# PRD: vc-curated-match
 
 ## Overview
-The `vc-finder` is an OpenDirectory skill that connects founders and open-source creators with highly relevant Venture Capital firms. It accepts a product description and a homepage URL to algorithmically identify investors targeting that exact stage, industry, and niche.
+The `vc-curated-match` is an OpenDirectory skill that connects founders and open-source creators with highly relevant Venture Capital firms. It accepts a product description and a homepage URL to algorithmically identify investors targeting that exact stage, industry, and niche.
 
 ## Who it is for
 Startup founders, open-source maintainers considering commercialization, and indie hackers seeking early-stage (Pre-seed, Seed, Series A) or niche-specific funding.

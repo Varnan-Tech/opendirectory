@@ -8,7 +8,7 @@ from match_vcs import match_vcs
 from generate_report import generate_report
 
 def main():
-    parser = argparse.ArgumentParser(description="VC Finder Pipeline")
+    parser = argparse.ArgumentParser(description="vc-curated-match: Algorithmically identify relevant VCs based on product context.")
     
     parser.add_argument("--description", required=True, help="Product description string.")
     parser.add_argument("--url", required=True, help="Product homepage or GitHub URL.")

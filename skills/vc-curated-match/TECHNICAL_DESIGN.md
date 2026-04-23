@@ -1,4 +1,4 @@
-# Technical Design: vc-finder
+# Technical Design: vc-curated-match
 
 ## Data Architecture
 - **Source of Truth**: Uses a strictly curated static dataset (`data/vc_funds.json`) containing verified fund data.

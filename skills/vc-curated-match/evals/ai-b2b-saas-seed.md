@@ -1,8 +1,8 @@
-# VC Finder Report
+# VC Curated Match Report
 
 **Product:** An AI-powered B2B SaaS platform that helps sales teams automate outreach and qualify leads faster
 **URL:** https://example-ai-sales.com
-**Extracted Tags:** B2B SaaS, AI
+**Extracted Tags:** AI, B2B SaaS
 **Stage:** Seed
 **Geography:** US
 **Generated:** 2026-04-23
@@ -21,7 +21,7 @@
 **Notable Portfolio:** Stripe, Airbnb, GitLab
 **Website:** https://www.ycombinator.com
 **Match Score:** 75/100
-**Why this match:** This fund focuses on B2B SaaS, AI which aligns with your product's B2B SaaS, AI. They are active at Seed stage in US.
+**Why this match:** This fund focuses on AI, B2B SaaS which aligns with your product's AI, B2B SaaS. They are active at Seed stage in US.
 
 ---
 ## 2. Nexus Venture Partners — Medium Confidence
@@ -72,7 +72,19 @@
 **Why this match:** This fund focuses on AI which aligns with your product's AI. They are active at Seed stage in US.
 
 ---
-## 6. First Round Capital — Medium Confidence
+## 6. Bain Capital Ventures — Medium Confidence
+
+**Thesis:** From seed to growth, we back founders building legendary infrastructure, fintech, application, and commerce companies.
+**Check Size:** $1M - $50M+
+**Stage Focus:** Seed, Series A, Growth
+**Geography:** US, Global
+**Notable Portfolio:** DocuSign, SendGrid, Redis
+**Website:** https://www.baincapitalventures.com
+**Match Score:** 45/100
+**Why this match:** This fund focuses on B2B SaaS which aligns with your product's B2B SaaS. They are active at Seed stage in US.
+
+---
+## 7. First Round Capital — Medium Confidence
 
 **Thesis:** We are the seed-stage firm that builds the most supportive community for founders.
 **Check Size:** $1M - $4M
@@ -84,26 +96,14 @@
 **Why this match:** This fund focuses on B2B SaaS which aligns with your product's B2B SaaS. They are active at Seed stage in US.
 
 ---
-## 7. Index Ventures — Medium Confidence
+## 8. Founder Collective — Medium Confidence
 
-**Thesis:** We back the best and most ambitious entrepreneurs across all stages to build category-defining businesses.
-**Check Size:** $1M - $20M+
-**Stage Focus:** Seed, Series A, Growth
-**Geography:** Europe, US, Global
-**Notable Portfolio:** Dropbox, Slack, Figma
-**Website:** https://www.indexventures.com
-**Match Score:** 45/100
-**Why this match:** This fund focuses on B2B SaaS which aligns with your product's B2B SaaS. They are active at Seed stage in US.
-
----
-## 8. Bain Capital Ventures — Medium Confidence
-
-**Thesis:** From seed to growth, we back founders building legendary infrastructure, fintech, application, and commerce companies.
-**Check Size:** $1M - $50M+
-**Stage Focus:** Seed, Series A, Growth
+**Thesis:** We are a seed-stage venture capital fund, built by founders, for founders. We back weird, wonderful, and wild startups.
+**Check Size:** $500k - $2M
+**Stage Focus:** Seed
 **Geography:** US, Global
-**Notable Portfolio:** DocuSign, SendGrid, Redis
-**Website:** https://www.baincapitalventures.com
+**Notable Portfolio:** Uber, Airtable, BuzzFeed
+**Website:** https://www.foundercollective.com
 **Match Score:** 45/100
 **Why this match:** This fund focuses on B2B SaaS which aligns with your product's B2B SaaS. They are active at Seed stage in US.
 
@@ -120,14 +120,14 @@
 **Why this match:** This fund focuses on AI which aligns with your product's AI. They are active at Seed stage in US.
 
 ---
-## 10. Unusual Ventures — Medium Confidence
+## 10. Index Ventures — Medium Confidence
 
-**Thesis:** We provide a breakthrough level of support for early-stage founders building enterprise tech.
-**Check Size:** $1M - $5M
-**Stage Focus:** Pre-seed, Seed
-**Geography:** US
-**Notable Portfolio:** Arctic Wolf, Harness, Vivun
-**Website:** https://www.unusual.vc
+**Thesis:** We back the best and most ambitious entrepreneurs across all stages to build category-defining businesses.
+**Check Size:** $1M - $20M+
+**Stage Focus:** Seed, Series A, Growth
+**Geography:** Europe, US, Global
+**Notable Portfolio:** Dropbox, Slack, Figma
+**Website:** https://www.indexventures.com
 **Match Score:** 45/100
 **Why this match:** This fund focuses on B2B SaaS which aligns with your product's B2B SaaS. They are active at Seed stage in US.
 

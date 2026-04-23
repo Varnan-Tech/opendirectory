@@ -1,11 +1,10 @@
----
-name: vc-finder
+name: vc-curated-match
 description: Accepts a product description and URL to algorithmically identify relevant Venture Capital investors targeting exactly that stage, industry, and niche based on a curated static dataset.
 author: OpenDirectory
 version: 1.0.0
 ---
 
-# VC Finder Skill
+# VC Curated Match Skill
 
 Identify targeted VC funds based on a product's description and URL.
 

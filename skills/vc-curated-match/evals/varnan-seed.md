@@ -1,4 +1,4 @@
-# VC Finder Report
+# VC Curated Match Report
 
 **Product:** Varnan is a GTM distribution platform for AI startups. It helps founders automate outreach across LinkedIn, email, and s...
 **URL:** https://varnan.tech

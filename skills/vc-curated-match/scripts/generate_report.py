@@ -28,7 +28,7 @@ def generate_report(matches: List[Dict], product_context: Dict) -> str:
     
     # Handle empty edge case
     if not matches:
-        return f"""# VC Finder Report
+        return f"""# VC Curated Match Report
 
 No matches found. Try broadening your description.
 
@@ -52,7 +52,7 @@ No matches found. Try broadening your description.
     geo = product_context.get("geography_hint") or "Global"
 
     lines = [
-        "# VC Finder Report",
+        "# VC Curated Match Report",
         "",
         f"**Product:** {desc}",
         f"**URL:** {url}",

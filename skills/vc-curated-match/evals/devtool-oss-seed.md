@@ -1,8 +1,8 @@
-# VC Finder Report
+# VC Curated Match Report
 
 **Product:** An open source developer tool that helps engineers automate cloud infrastructure management from the command line
 **URL:** https://github.com/example/infra-cli
-**Extracted Tags:** B2B SaaS, DevTools, Open Source, Infrastructure
+**Extracted Tags:** B2B SaaS, DevTools, Infrastructure, Open Source
 **Stage:** Seed
 **Geography:** US
 **Generated:** 2026-04-23
@@ -21,22 +21,10 @@
 **Notable Portfolio:** PagerDuty, Sanity, Netlify
 **Website:** https://www.heavybit.com
 **Match Score:** 100/100
-**Why this match:** This fund focuses on DevTools, Open Source, Infrastructure which aligns with your product's DevTools, Open Source, Infrastructure. They are active at Seed stage in US.
+**Why this match:** This fund focuses on DevTools, Infrastructure, Open Source which aligns with your product's DevTools, Infrastructure, Open Source. They are active at Seed stage in US.
 
 ---
-## 2. boldstart ventures — High Confidence
-
-**Thesis:** Day one partner for developer first, crypto, and SaaS founders. We love deeply technical founders solving hard infrastructure problems.
-**Check Size:** $1M - $3M
-**Stage Focus:** Pre-seed, Seed
-**Geography:** Global, US
-**Notable Portfolio:** Snyk, Blockdaemon, Superhuman
-**Website:** https://boldstart.vc
-**Match Score:** 80/100
-**Why this match:** This fund focuses on DevTools, Infrastructure which aligns with your product's DevTools, Infrastructure. They are active at Seed stage in US.
-
----
-## 3. Amplify Partners — High Confidence
+## 2. Amplify Partners — High Confidence
 
 **Thesis:** We invest in technical founders building the next generation of IT infrastructure, developer tools, and data platforms.
 **Check Size:** $2M - $8M
@@ -48,7 +36,7 @@
 **Why this match:** This fund focuses on DevTools, Infrastructure which aligns with your product's DevTools, Infrastructure. They are active at Seed stage in US.
 
 ---
-## 4. Bain Capital Ventures — High Confidence
+## 3. Bain Capital Ventures — High Confidence
 
 **Thesis:** From seed to growth, we back founders building legendary infrastructure, fintech, application, and commerce companies.
 **Check Size:** $1M - $50M+
@@ -58,6 +46,18 @@
 **Website:** https://www.baincapitalventures.com
 **Match Score:** 80/100
 **Why this match:** This fund focuses on B2B SaaS, Infrastructure which aligns with your product's B2B SaaS, Infrastructure. They are active at Seed stage in US.
+
+---
+## 4. Nexus Venture Partners — High Confidence
+
+**Thesis:** We are a US-India venture capital firm backing extraordinary founders building product-first companies.
+**Check Size:** $1M - $10M
+**Stage Focus:** Seed, Series A
+**Geography:** India, US
+**Notable Portfolio:** Postman, Hasura, Zepto
+**Website:** https://nexusvp.com
+**Match Score:** 80/100
+**Why this match:** This fund focuses on B2B SaaS, DevTools which aligns with your product's B2B SaaS, DevTools. They are active at Seed stage in US.
 
 ---
 ## 5. Unusual Ventures — High Confidence
@@ -72,26 +72,26 @@
 **Why this match:** This fund focuses on B2B SaaS, DevTools which aligns with your product's B2B SaaS, DevTools. They are active at Seed stage in US.
 
 ---
-## 6. Nexus Venture Partners — High Confidence
+## 6. boldstart ventures — High Confidence
 
-**Thesis:** We are a US-India venture capital firm backing extraordinary founders building product-first companies.
-**Check Size:** $1M - $10M
-**Stage Focus:** Seed, Series A
-**Geography:** India, US
-**Notable Portfolio:** Postman, Hasura, Zepto
-**Website:** https://nexusvp.com
+**Thesis:** Day one partner for developer first, crypto, and SaaS founders. We love deeply technical founders solving hard infrastructure problems.
+**Check Size:** $1M - $3M
+**Stage Focus:** Pre-seed, Seed
+**Geography:** Global, US
+**Notable Portfolio:** Snyk, Blockdaemon, Superhuman
+**Website:** https://boldstart.vc
 **Match Score:** 80/100
-**Why this match:** This fund focuses on B2B SaaS, DevTools which aligns with your product's B2B SaaS, DevTools. They are active at Seed stage in US.
+**Why this match:** This fund focuses on DevTools, Infrastructure which aligns with your product's DevTools, Infrastructure. They are active at Seed stage in US.
 
 ---
-## 7. Y Combinator — High Confidence
+## 7. Accel — High Confidence
 
-**Thesis:** We provide seed funding for startups. We invest in deeply technical teams building massive companies across all domains.
-**Check Size:** $500k
-**Stage Focus:** Pre-seed, Seed
+**Thesis:** We partner with exceptional founders from inception through all phases of private company growth.
+**Check Size:** $1M - $20M+
+**Stage Focus:** Seed, Series A, Growth
 **Geography:** Global
-**Notable Portfolio:** Stripe, Airbnb, GitLab
-**Website:** https://www.ycombinator.com
+**Notable Portfolio:** Facebook, Atlassian, Spotify
+**Website:** https://www.accel.com
 **Match Score:** 75/100
 **Why this match:** This fund focuses on B2B SaaS, DevTools which aligns with your product's B2B SaaS, DevTools. They are active at Seed stage in US.
 
@@ -108,14 +108,14 @@
 **Why this match:** This fund focuses on DevTools, Open Source which aligns with your product's DevTools, Open Source. They are active at Seed stage in US.
 
 ---
-## 9. Accel — High Confidence
+## 9. Y Combinator — High Confidence
 
-**Thesis:** We partner with exceptional founders from inception through all phases of private company growth.
-**Check Size:** $1M - $20M+
-**Stage Focus:** Seed, Series A, Growth
+**Thesis:** We provide seed funding for startups. We invest in deeply technical teams building massive companies across all domains.
+**Check Size:** $500k
+**Stage Focus:** Pre-seed, Seed
 **Geography:** Global
-**Notable Portfolio:** Facebook, Atlassian, Spotify
-**Website:** https://www.accel.com
+**Notable Portfolio:** Stripe, Airbnb, GitLab
+**Website:** https://www.ycombinator.com
 **Match Score:** 75/100
 **Why this match:** This fund focuses on B2B SaaS, DevTools which aligns with your product's B2B SaaS, DevTools. They are active at Seed stage in US.
 
