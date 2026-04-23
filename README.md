@@ -56,6 +56,7 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | [`reddit-icp-monitor`](skills/reddit-icp-monitor) | Watches subreddits for people describing the exact problem you solve, scores their relevance to your ICP, and drafts a helpful non-spammy reply for... | `1.0.0` |
 | [`reddit-post-engine`](skills/reddit-post-engine) | Writes and optionally posts a Reddit post for any subreddit, following that subreddit's specific culture and rules. | `1.0.0` |
 | [`schema-markup-generator`](skills/schema-markup-generator) | You are an SEO engineer specialising in structured data. | `1.0.0` |
+| [`sdk-adoption-tracker`](skills/sdk-adoption-tracker) | Given your SDK or library name, searches GitHub code search for public repos that import or require it, classifies each repo as company org, affili... | `0.0.1` |
 | [`show-hn-writer`](skills/show-hn-writer) | Draft a Show HN post backed by real HN performance data. Uses observed patterns from 250 top HN posts to maximise score. | `2.0.0` |
 | [`tweet-thread-from-blog`](skills/tweet-thread-from-blog) | Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA. | `1.0.0` |
 | [`twitter-GTM-find-skill`](skills/twitter-GTM-find-skill) | End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP)... | `0.0.1` |
