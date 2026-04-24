@@ -4,10 +4,10 @@
     "full": "cli-cli.full.md",
     "description": "Strong CLI tool",
     "expectations": [
-      "Launch Readiness is HIGH",
-      "Show HN fitness is high",
-      "Includes Show HN section",
-      "Timeline includes Day 1: Show HN"
+      "**Project Maturity**: HIGH",
+      "Show HN fitness is HIGH",
+      "Includes Channel Strategy & Positioning section",
+      "Timeline includes Show HN"
     ]
   },
   {
@@ -15,11 +15,12 @@
     "full": "octocat-hello-world.full.md",
     "description": "Weak project",
     "expectations": [
-      "Launch Readiness is LOW",
-      "Shows [!WARNING] at the top",
+      "**Project Maturity**: LOW",
+      "> [!CAUTION]",
+      "This project is not launch-ready yet",
       "Show HN and Product Hunt are NOT recommended",
-      "Timeline focuses on Documentation Sprint",
-      "Show HN/PH sections are absent"
+      "Channel Strategy & Positioning section is absent",
+      "Coordinated Launch Timeline is absent"
     ]
   },
   {
@@ -27,8 +28,8 @@
     "full": "pydantic-pydantic.full.md",
     "description": "Mature library",
     "expectations": [
-      "Launch Readiness is HIGH",
-      "Show HN fitness is high"
+      "**Project Maturity**: HIGH",
+      "Show HN fitness is HIGH"
     ]
   },
   {
@@ -36,8 +37,8 @@
     "full": "vercel-next-js.full.md",
     "description": "Polished framework",
     "expectations": [
-      "Launch Readiness is HIGH",
-      "Product Hunt fitness is high"
+      "**Project Maturity**: HIGH",
+      "Product Hunt fitness is HIGH"
     ]
   }
 ]

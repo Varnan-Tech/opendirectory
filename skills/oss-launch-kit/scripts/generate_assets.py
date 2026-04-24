@@ -165,7 +165,6 @@ def _render_low_confidence_note(brief: dict[str, Any]) -> str:
         note += "\n" + _low_confidence_edit_note()
     return note
 
-
 def _tagline_candidates(brief: dict[str, Any]) -> list[str]:
     summary = _canonical_summary(brief)
     audience = _strip_markdown(brief.get("audience"))
@@ -213,12 +212,9 @@ def _pick_tagline(brief: dict[str, Any]) -> str:
     fallback = _strip_markdown(brief.get("value_proposition")) or "Launch copy grounded in repo facts"
     return _shorten(fallback, 60)
 
-
 def _reddit_subreddit_candidates(brief: dict[str, Any]) -> list[tuple[str, str]]:
     audience = _strip_markdown(brief.get("audience")).lower()
     summary = _canonical_summary(brief).lower()
-    language = _clean(brief.get("language") or "").lower()
-    topics = {str(topic).lower() for topic in (brief.get("links") or {}).get("topics", [])}
     title = _repo_slug(brief).lower()
     candidates: list[tuple[str, str]] = []
     low_conf = _is_low_confidence(brief)
@@ -244,9 +240,9 @@ def _reddit_subreddit_candidates(brief: dict[str, Any]) -> list[tuple[str, str]]
         add("r/programming", "developer audience")
     if any(term in summary for term in ["side project", "indie", "personal"]):
         add("r/SideProject", "maker / indie launch context")
-    if any(term in topics for term in ["python", "go", "rust", "javascript", "typescript"]):
+    if any(term in summary for term in ["python", "go", "rust", "javascript", "typescript"]):
         for topic in ["python", "go", "rust", "javascript", "typescript"]:
-            if topic in topics:
+            if topic in summary:
                 add(f"r/{topic.capitalize()}", f"language-specific community for {topic}")
                 break
 
@@ -304,23 +300,24 @@ def generate_product_hunt(brief: dict[str, Any]) -> dict[str, str]:
 
     if marketing_heavy:
         audience_phrase = category
-
-    if marketing_heavy:
-        tagline = f"{repo_name}: {category} for {audience_phrase}"
         description = _shorten(
             f"Built for {audience_phrase}. This draft keeps the pitch factual and avoids repeating the README’s slogans.",
             220,
         )
     else:
-        tagline = f"{repo_name}: {category} for {audience_phrase}"
         description_parts = [f"Built for {audience_phrase}."]
         if problem and not _phrase_overlap(problem, summary):
-            description_parts.append(f"Focuses on the repo’s core function instead of reusing README language.")
+            description_parts.append("Focuses on the repo’s core function instead of reusing README language.")
         elif summary and not _phrase_overlap(summary, problem or summary):
             description_parts.append("Keeps the pitch factual and plain.")
         else:
             description_parts.append("Keeps the pitch grounded in repo facts.")
         description = _shorten(" ".join(description_parts), 220)
+
+    if category.lower() == audience_phrase.lower():
+        tagline = f"{repo_name}: {category}"
+    else:
+        tagline = f"{repo_name}: {category} for {audience_phrase}"
 
     maker_comment = "Draft only. Edit before posting."
     return {

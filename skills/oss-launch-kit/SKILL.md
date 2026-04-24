@@ -28,4 +28,6 @@ Rather than just writing generic copy, this skill serves as the **Strategic Entr
   - `show-hn-writer` (for technical deep-dives)
   - `producthunt-launch-kit` (for PH assets and badges)
   - `reddit-post-engine` (for community-specific variants)
+  - `tweet-thread-from-blog` (for Twitter/X threads)
+  - `linkedin-post-generator` (for LinkedIn posts)
 - **Coordinated Strategy**: Get a realistic, timed checklist for multiple platforms.

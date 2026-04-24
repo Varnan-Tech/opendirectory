@@ -5,12 +5,11 @@
 
 The v1 output is a single Markdown document containing:
 - executive summary & launch readiness
-- channel orchestration (where to launch & why)
-- coordinated launch timeline
-- Show HN draft (conditionally included)
-- Product Hunt draft (conditionally included)
-- 5 Reddit post variants (focus on feedback for weak repos)
-- Twitter/X thread
+- Launch Readiness Fix Plan
+- soft launch strategy (for medium readiness)
+- coordinated launch timeline (for medium/high readiness)
+- channel strategy hooks (Show HN, PH, Reddit, X)
+- explicit handoffs to specialized skills ([!TIP])
 - full confidence notes & assumptions
 
 ## Problem Statement
@@ -41,10 +40,11 @@ That makes the challenge more mergeable and easier to validate.
 
 ## Goals
 - Analyze repo context to determine appropriate launch channels and project maturity.
-- Generate grounded, channel-aware launch assets.
+- Act as a Phase 0 orchestrator: decide *if* and *how* to launch, not to write every post.
+- Provide a prioritized, actionable Launch Readiness Fix Plan for missing signals.
+- Generate strategic hooks and positioning for key channels.
 - Provide a coordinated, day-by-day launch strategy.
 - Minimize hallucinations and unsupported claims.
-- Produce output that is directly usable for OSS launches.
 - Explicitly flag low-confidence areas when the README or metadata is sparse.
 
 ## Non-Goals
@@ -60,10 +60,6 @@ That makes the challenge more mergeable and easier to validate.
 ### Optional CLI inputs
 - `--output <path>`: write Markdown to a file instead of stdout.
   - default: `launch-kit.md`
-- `--include-release-info`: fetch latest release metadata if available.
-  - default: off
-- `--max-reddit-variants <n>`: override the default 5 post variants.
-  - default: `5`
 
 ### Environment variables
 - `GITHUB_TOKEN`: optional, used to raise GitHub API rate limits.
@@ -78,24 +74,20 @@ That makes the challenge more mergeable and easier to validate.
 The output must be a single Markdown document with stable headings.
 
 ### Required structure
-1. `# Launch Strategy for <repo>`
-2. `## Executive Summary & Launch Readiness`
-3. `## Channel Orchestration (Where to launch & Why)`
-4. `## Coordinated Launch Timeline`
-5. `## Show HN Draft` (Conditional)
-6. `## Product Hunt Draft` (Conditional)
-7. `## Reddit Drafts`
-8. `## Twitter/X Thread`
-9. `## Full Confidence Notes & Assumptions`
+1. `# Launch Orchestrator for <repo>`
+2. `## Executive Summary & Launch Readiness` (with readiness score and CAUTION nodes)
+3. `## Launch Readiness Fix Plan` (Condition: Readiness is LOW/MEDIUM)
+4. `## Soft Launch Strategy` (Condition: Readiness is MEDIUM)
+5. `## Coordinated Launch Timeline` (Condition: Readiness is MEDIUM/HIGH)
+6. `## Channel Strategy & Positioning` (Condition: Readiness is HIGH)
+7. `## Full Confidence Notes & Assumptions`
 
 ### Content expectations
-- Repo summary should cite only verified repo facts.
-- Messaging brief should explain problem, solution, audience, and evidence.
-- Show HN should be direct, technical, and not salesy.
-- Product Hunt should include a tagline, description, and maker-comment style copy.
-- Reddit should provide 5 variants with subreddit-fit notes.
-- Twitter/X should be concise and evidence-based.
-- Launch plan should be practical, day-based, and channel-aware.
+- Executive Summary cites only verified repo facts and computed project maturity.
+- Fix Plan provides prioritized, actionable steps (e.g., "Add Quickstart", "Add License").
+- Channel Strategy provides hooks, taglines, and niche community targets.
+- Coordinated Launch Timeline is a practical, day-based coordination plan.
+- Integration uses `[!TIP]` handoffs to specialized skills (`producthunt-launch-kit`, `show-hn-writer`, etc.).
 - Low-confidence areas must explicitly list anything inferred rather than verified.
 
 ## Data Sources

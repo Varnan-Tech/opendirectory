@@ -6,7 +6,7 @@
 - `SKILL.md` for operational instructions
 - `.env.example` for required environment variables
 - `scripts/` for executable orchestration
-- `references/` for stable rules, templates, and prompt guidance
+- `references/` for design guides, templates, and frameworks (note: these are for design-time reference, the current scripts use hardcoded templates for maximum performance and stability).
 - `evals/` for validation cases
 
 The implementation should be a two-stage pipeline:
@@ -28,15 +28,23 @@ Convert raw GitHub repo data into a normalized brief that captures only what can
 ### Output schema
 ```json
 {
-  "repo_name": "",
-  "summary": "",
-  "problem": "",
-  "solution": "",
-  "audience": "",
-  "key_features": [],
-  "evidence": [],
-  "confidence_notes": [],
-  "candidate_subreddits": []
+  "repo_name": "string",
+  "one_line_summary": "string",
+  "project_type": "string",
+  "launch_readiness": {
+    "score": "low | medium | high",
+    "signals": "object",
+    "fix_plan": "list"
+  },
+  "audience": "string",
+  "problem_solved": "string",
+  "value_proposition": "string",
+  "key_proof_points": "list",
+  "key_features": "list",
+  "links": "object",
+  "confidence": "low | medium | high",
+  "assumptions": "list",
+  "channel_fitness": "object"
 }
 ```
 
@@ -70,7 +78,8 @@ Use the brief to generate channel-specific drafts with channel rules applied.
 ### Hallucination controls
 - no new facts beyond the brief
 - confidence notes carry through to final output
-- use explicit limits for each channel
+- use explicit `[!TIP]` handoffs to specialized skills
+- suppress aggressive channels for unready repos
 
 ## Channel Rules
 ### Show HN
@@ -86,10 +95,9 @@ Use the brief to generate channel-specific drafts with channel rules applied.
 - do not exceed practical PH length constraints
 
 ### Reddit
-- generate 5 variants
-- tailor by subreddit fit, not by invented community knowledge
+- generate niche suggestions based on repo tags and description
 - include a warning to verify subreddit rules before posting
-- be transparent that the author is the maker
+- prioritize feedback-first communities for early-stage repos
 
 ### Twitter/X
 - concise thread

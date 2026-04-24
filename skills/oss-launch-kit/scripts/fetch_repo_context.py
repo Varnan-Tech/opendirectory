@@ -8,12 +8,18 @@ from __future__ import annotations
 
 import base64
 import os
-import re
+import os
 from dataclasses import dataclass
 from typing import Any
 from urllib.parse import urlparse
 
-import requests
+try:
+    import requests
+except ImportError as exc:
+    # Use the class name directly since RepoContextError is defined below
+    raise ValueError(
+        "This skill requires the 'requests' library. Install it with: pip install requests"
+    ) from exc
 
 GITHUB_API_BASE = "https://api.github.com"
 DEFAULT_TIMEOUT = 30
@@ -41,6 +47,8 @@ def _parse_repo_url(repo_url: str) -> RepoRef:
         raise RepoContextError("repo-url must look like https://github.com/owner/repo")
 
     owner, name = parts[0], parts[1]
+    if name.endswith(".git"):
+        name = name[:-4]
     if not owner or not name:
         raise RepoContextError("repo-url is missing owner or repository name")
 
