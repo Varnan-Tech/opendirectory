@@ -1,0 +1,124 @@
+[
+  {
+    "id": "eval_001",
+    "name": "B2B SaaS project management -- full happy path",
+    "description": "A developer-focused issue tracking tool. Validates the full 10-step workflow: fetch, competitor discovery, confirmation, pricing page fetch, extraction, pattern analysis, positioning, and recommendation.",
+    "input": {
+      "prompt": "Find pricing benchmarks for my startup: https://linear.app",
+      "env": {
+        "dependencies": "duckduckgo-search requests beautifulsoup4 html2text -- all installed",
+        "TAVILY_API_KEY": "not set",
+        "FIRECRAWL_API_KEY": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Fetches linear.app via requests+BS4",
+      "Product analysis: taxonomy maps to developer tools > project management > issue tracking",
+      "Phase 1 discovers 5 issue tracking / project management competitors (Jira, Shortcut, Height, Plane, Asana or similar)",
+      "Step 5 shows competitor list with pricing URLs and pauses for confirmation",
+      "Phase 2 fetches all 5 pricing pages -- at least 3 return content_length > 500 chars via requests",
+      "Step 7 extracts per-seat model for at least 3 competitors",
+      "Step 7 records 'Contact Sales' as-is for enterprise tiers (never estimates a price)",
+      "Step 8 identifies per-seat as dominant model",
+      "Step 8 benchmark table has entry_tier median between $8-$20/mo",
+      "Step 9 recommendation references specific median from benchmark table",
+      "Step 9 identifies at least one underserved gap in the positioning map",
+      "Output saved to docs/pricing-intel/linear-[date].md",
+      "No em dashes in output",
+      "No banned buzzwords in recommendation"
+    ],
+    "expected_output": "Full pricing intel report: per-seat model dominant, benchmark table with 4-5 competitors, positioning map, concrete recommended pricing strategy with justified prices"
+  },
+  {
+    "id": "eval_002",
+    "name": "API/payments tool -- usage-based pricing dominates",
+    "description": "A payment processing API. Validates that the skill correctly identifies usage-based (per-transaction %) as the dominant model, not flat-rate or per-seat.",
+    "input": {
+      "prompt": "Pricing research for: https://stripe.com",
+      "env": {
+        "dependencies": "all installed",
+        "TAVILY_API_KEY": "not set",
+        "FIRECRAWL_API_KEY": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Taxonomy maps to fintech > payments > payment processing",
+      "Competitors are payment processors (PayPal, Square, Braintree, Adyen, Paddle, etc.)",
+      "Step 7 extracts percentage-based pricing (e.g., '2.9% + $0.30 per transaction')",
+      "Step 8 identifies usage-based as dominant model",
+      "Benchmark table shows transaction fees / percentage rates, not flat monthly prices",
+      "Step 9 recommendation reflects usage-based model, not per-seat or flat-rate",
+      "Recommendation references specific transaction fee benchmarks from the extracted data"
+    ],
+    "expected_output": "Pricing intel showing usage-based dominance, transaction fee benchmarks, recommendation with fee-based pricing structure"
+  },
+  {
+    "id": "eval_003",
+    "name": "Description-only input (no URL) -- skips fetch, uses description",
+    "description": "User provides a product description with no URL. Validates that Steps 3-4 fetch are skipped and the skill proceeds with the pasted text.",
+    "input": {
+      "prompt": "Find pricing benchmarks. We build AI-powered legal contract review for in-house legal teams at mid-market companies. Pre-seed, US-focused.",
+      "env": {
+        "dependencies": "all installed",
+        "TAVILY_API_KEY": "not set",
+        "FIRECRAWL_API_KEY": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Detects no URL in input",
+      "Skips Step 3 (no fetch attempt)",
+      "Skips Step 4 page fetch (no requests+BS4 call)",
+      "AI derives product analysis from description: taxonomy maps to software > legaltech > contract review",
+      "Stage noted in analysis as 'pre-seed (stated by user)'",
+      "Competitor discovery finds legaltech / contract review tools",
+      "data_quality_flags includes: 'Product analysis from user description, not live page'"
+    ],
+    "expected_output": "Full pricing intel using description-derived taxonomy, legaltech-focused competitors, data_quality_flags noting description source"
+  },
+  {
+    "id": "eval_004",
+    "name": "Pricing page blocked -- 3-tier fallback completes gracefully",
+    "description": "A competitor's pricing page is JS-rendered and blocked. Validates the fallback chain: requests fails, Google cache fails, search snippet fallback used, data_quality flagged as low, analysis still proceeds.",
+    "input": {
+      "prompt": "Find pricing benchmarks: https://notion.so",
+      "env": {
+        "dependencies": "all installed",
+        "TAVILY_API_KEY": "not set",
+        "FIRECRAWL_API_KEY": "not set"
+      }
+    },
+    "expected_behavior": [
+      "For at least one competitor, requests fetch returns content_length < 500",
+      "Google cache attempt is made for that competitor",
+      "If Google cache also fails, DuckDuckGo search snippet fallback is used",
+      "That competitor's data_quality is marked 'low'",
+      "data_quality_note explains the fallback",
+      "Pattern analysis proceeds with a note about reduced confidence for that competitor",
+      "Recommendation is still generated but notes which competitors had low-quality data",
+      "No crash or stop -- skill completes the full run"
+    ],
+    "expected_output": "Full pricing intel report completed, with data_quality_flags noting which competitors had snippet-only data"
+  },
+  {
+    "id": "eval_005",
+    "name": "Missing pip dependency -- immediate stop with clear instructions",
+    "description": "The duckduckgo-search package is not installed. Validates that Step 1 dependency check catches this and stops immediately with the exact install command.",
+    "input": {
+      "prompt": "Find pricing benchmarks: https://notion.so",
+      "env": {
+        "dependencies": "duckduckgo-search NOT installed",
+        "TAVILY_API_KEY": "not set",
+        "FIRECRAWL_API_KEY": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Step 1 dependency check detects duckduckgo_search import fails",
+      "Stops immediately at Step 1",
+      "Tells user: 'Missing Python dependencies. Run: pip install duckduckgo-search requests beautifulsoup4 html2text -- all free, no accounts needed.'",
+      "Does NOT fetch the product page",
+      "Does NOT attempt any searches",
+      "Does NOT proceed past Step 1"
+    ],
+    "expected_output": "Immediate stop at Step 1 with exact pip install command. No partial output."
+  }
+]
