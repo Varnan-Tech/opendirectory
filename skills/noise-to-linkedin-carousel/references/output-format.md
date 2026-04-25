@@ -2,6 +2,12 @@
 
 When returning the LinkedIn carousel content pack, you MUST format your response deterministically according to this exact schema. 
 
+## Assumptions *(optional)*
+Use this section **only** when the source input is weak, ambiguous, or too sparse to extract a clear thesis. State what you assumed and why.  
+**Omit this section entirely when the input is sufficient.**
+
+
+
 ## 1. Distilled Thesis
 **Thesis:** *[One sharp, clear sentence capturing the core idea that the entire carousel will communicate. No jargon.]*
 

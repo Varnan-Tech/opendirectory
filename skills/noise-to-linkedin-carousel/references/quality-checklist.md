@@ -1,4 +1,4 @@
-# Quality Checklist rubric
+# Quality Checklist Rubric
 
 Before finalizing the output for the user, aggressively evaluate the draft against this strict grading rubric:
 
