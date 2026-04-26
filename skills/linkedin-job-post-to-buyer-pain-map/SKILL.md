@@ -96,7 +96,7 @@ cat > /tmp/pain-map-score-request.json << 'ENDJSON'
 {
   "system_instruction": {
     "parts": [{
-      "text": "You are a GTM analyst who specializes in decoding hiring signals into buyer intent. For each account provided, you will score three dimensions and infer company context. Rules: (1) Every score must include a one-sentence plain-text explanation. (2) signal_strength measures how many and how specific the hiring signals are relative to the user's product area. (3) urgency measures how time-sensitive the hiring need appears. (4) icp_fit measures how closely the company matches the user's ICP description. (5) Each score is 1-10. (6) overall_score = round((0.4 * signal_strength + 0.3 * urgency + 0.3 * icp_fit) * 10). (7) Infer buy_vs_build from job language: 'build from scratch' = leaning build, 'evaluate vendors' = leaning buy, 'replace legacy' = leaning buy, mixed = hybrid, unclear = unknown. (8) Infer stage_guess from company clues: funding stage, employee count, company type. (9) Output valid JSON only."
+      "text": "You are a GTM analyst who specializes in decoding hiring signals into buyer intent. For each account provided, you will score three dimensions and infer company context. Rules: (1) Every score must include a one-sentence plain-text explanation. (2) signal_strength measures how many and how specific the hiring signals are relative to the user's product area. (3) urgency measures how time-sensitive the hiring need appears. (4) icp_fit measures how closely the company matches the user's ICP description. (5) Each score is 1-10. (6) overall_score = round((0.4 * signal_strength + 0.3 * urgency + 0.3 * icp_fit) * 10). (7) Infer buy_vs_build from job language. Use EXACTLY one of these labels: 'Leaning build', 'Leaning buy', 'Hybrid (buy-and-build)', 'Unknown'. (8) Infer stage_guess from company clues: funding stage, employee count, company type. (9) Output valid JSON only."
     }]
   },
   "contents": [{
@@ -267,10 +267,13 @@ EOF
 echo "Pain map saved to $OUTFILE"
 ```
 
-If multiple companies are analyzed, also save individual files:
+If multiple companies are analyzed, also save individual files using slugified company names (lowercase, replace spaces and special characters with hyphens, strip trailing hyphens):
+
+e.g., "ACME, Inc." → `acme-inc.md`, "CoolStartup Inc" → `coolstartup-inc.md`
 
 ```bash
-cat > "docs/pain-maps/COMPANY-NAME.md" << 'EOF'
+SLUG=$(echo "COMPANY_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/-$//')
+cat > "docs/pain-maps/${SLUG}.md" << 'EOF'
 INDIVIDUAL_ACCOUNT_CONTENT_HERE
 EOF
 ```

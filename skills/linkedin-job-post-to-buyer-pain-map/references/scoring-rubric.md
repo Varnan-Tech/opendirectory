@@ -71,13 +71,13 @@ Measures how closely the company profile in the job post matches the user's `icp
 
 ---
 
-## Overall Score (0–100)
+## Overall Score (10–100)
 
 ```
 overall = round((0.4 × signal_strength + 0.3 × urgency + 0.3 × icp_fit) × 10)
 ```
 
-Each dimension is 1–10, so the raw weighted sum ranges from 1.0 to 10.0. Multiply by 10 to get 0–100 scale.
+Each dimension is 1–10, so the raw weighted sum ranges from 1.0 to 10.0. Multiply by 10 to get 10–100 scale.
 
 **Interpretation guide:**
 
@@ -113,8 +113,8 @@ Inferred from company context clues in the job description.
 
 | Clue | Stage Guess |
 |------|------------|
-| "Series A", "seed", "early stage", < 50 employees | Pre-PMF or Early |
+| "Series A", "seed", "early stage", &lt; 50 employees | Pre-PMF or Early |
 | "Series B/C", "scaling", "hypergrowth", 50–500 employees | Scaling post-PMF |
-| "Enterprise", "Fortune 500", "publicly traded", > 500 employees | Mature / Enterprise |
+| "Enterprise", "Fortune 500", "publicly traded", &gt; 500 employees | Mature / Enterprise |
 | "First [role] hire", "founding team" | Very early |
 | No clues available | "Unknown" |

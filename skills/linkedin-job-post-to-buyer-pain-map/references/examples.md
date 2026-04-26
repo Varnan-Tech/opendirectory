@@ -33,7 +33,8 @@ This file provides 3 worked examples showing how the skill interprets different 
 - Urgency: 8 (partnering with 6+ teams suggests backlog, "scaling rapidly")
 - ICP fit: 9 (Series B, 120 employees, dbt + Snowflake, self-serve analytics need)
 - Stage guess: Scaling post-PMF
-- Buy-vs-build: Hybrid (building infrastructure + likely to buy BI tooling)
+- Buy-vs-build: Hybrid (buy-and-build)
+  - _Reasoning: building infrastructure + likely to buy BI tooling_
 
 **Primary pain:** "Data team is a bottleneck for business teams needing metrics access. PMs and leads are blocked by ad-hoc data requests."
 
@@ -67,7 +68,7 @@ This file provides 3 worked examples showing how the skill interprets different 
 
 **Summary:**
 - Headline: "Generic engineering hire with no relevant GTM or sales signals"
-- Overall score: 18
+- Overall score: 16
 - Signal strength: 1 (no sales, onboarding, or GTM signals; engineering role unrelated to product area)
 - Urgency: 2 (no urgency language, exploratory tone)
 - ICP fit: 2 (no company size, no sales team indicators, no relevant function)
@@ -104,12 +105,13 @@ This file provides 3 worked examples showing how the skill interprets different 
 
 **Summary:**
 - Headline: "Healthcare company building cloud infra and observability from scratch"
-- Overall score: 52
+- Overall score: 62
 - Signal strength: 8 (Director-level, building observability from scratch, Kubernetes, AWS migration)
 - Urgency: 7 (200+ app migration, building from scratch, leadership hire)
 - ICP fit: 3 (healthcare, not cloud-native tech company; on-prem migrating to cloud, not cloud-native)
 - Stage guess: Mature / Enterprise
-- Buy-vs-build: Leaning buy ("establish monitoring and observability practices from scratch" suggests they need to adopt tooling)
+- Buy-vs-build: Leaning buy
+  - _Reasoning: "establish monitoring and observability practices from scratch" suggests they need to adopt tooling_
 
 **Primary pain:** "No monitoring or observability stack exists. Migrating 200+ on-prem apps to AWS with zero cloud-native visibility."
 

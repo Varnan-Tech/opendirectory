@@ -10,7 +10,7 @@ Turn LinkedIn job posts into an actionable buyer pain map with signal strength, 
 - Extracts team, seniority, responsibility emphasis, requirement language, and tool/stack hints from each post
 - Infers primary and secondary operational pains with cited evidence from the job text
 - Scores each account on 3 dimensions: signal strength (1–10), urgency (1–10), ICP fit (1–10)
-- Computes an overall priority score (0–100) using a transparent weighted formula
+- Computes an overall priority score (10–100) using a transparent weighted formula
 - Determines buy-vs-build posture and company stage from hiring language
 - Generates 1–3 actionable outreach angles per account with talk-track bullets
 - Produces a structured handoff object ready for `outreach-sequence-builder` consumption
@@ -85,7 +85,7 @@ Reports are saved to `docs/pain-maps/` as dated markdown files.
 | Urgency | 30% | Time-sensitivity indicators in the job text |
 | ICP Fit | 30% | Company profile match to user's ICP description |
 
-**Overall Score** = `round((0.4 × signal + 0.3 × urgency + 0.3 × icp_fit) × 10)` → 0–100 scale.
+**Overall Score** = `round((0.4 × signal + 0.3 × urgency + 0.3 × icp_fit) × 10)` → 10–100 scale.
 
 See `references/scoring-rubric.md` for full scoring rules and modifiers.
 
