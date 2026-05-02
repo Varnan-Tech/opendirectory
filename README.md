@@ -42,6 +42,7 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | [`google-trends-api-skills`](skills/google-trends-api-skills) | SEO keyword research workflow for blog generation using Google Trends data. | `2.0` |
 | [`graphic-case-study`](skills/graphic-case-study) | Generates a professionally designed case study PDF for B2B SaaS sales and marketing. | `1.0.0` |
 | [`graphic-ebook`](skills/graphic-ebook) | Creates professionally designed B2B SaaS e-books in HTML + CSS, exported as print-ready PDF. | `1.0.0` |
+| [`graphic-gif`](skills/graphic-gif) | Creates animated looping GIFs from CSS animations (default) or AI image-to-video. | `1.0.0` |
 | [`graphic-slide-deck`](skills/graphic-slide-deck) | Generates a professionally designed HTML slide deck from a brief or content. | `1.0.0` |
 | [`hackernews-intel`](skills/hackernews-intel) | Monitors Hacker News for user-configured keywords, deduplicates against a local SQLite cache, and sends Slack alerts for new matching posts. | `1.0.0` |
 | [`human-tone`](skills/human-tone) | Rewrites AI-generated marketing copy to sound naturally human. | `1.0.0` |
