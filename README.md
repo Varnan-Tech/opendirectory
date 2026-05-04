@@ -244,7 +244,7 @@ Run these commands inside Claude Code:
 
 <!-- SKILLS_LIST_START -->
 
-<details>
+
 <summary><b>51 skills across 7 categories</b> — click to expand</summary>
 <br>
 
@@ -520,7 +520,6 @@ Run these commands inside Claude Code:
   </tr>
 </table>
 
-</details>
 
 <!-- SKILLS_LIST_END -->
 
