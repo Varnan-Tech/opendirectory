@@ -244,277 +244,283 @@ Run these commands inside Claude Code:
 
 <!-- SKILLS_LIST_START -->
 
+<details>
+<summary><b>51 skills across 7 categories</b> — click to expand</summary>
+<br>
+
 <table>
   <tr><th colspan="3" align="left">Visual &amp; Media</th></tr>
   <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
   <tr>
     <td><a href="skills/blog-cover-image-cli"><code>blog-cover-image-cli</code></a></td>
-    <td>1200×630px blog cover image with self-healing QA loop, retries up to 3× with vision feedback.</td>
+    <td>A modern, AI-powered CLI tool designed to automatically generate high-converting, minimalist blog cover images and thumbnails using Gemini 3.1 Flash Image Preview.</td>
     <td><code>1.0.17</code></td>
   </tr>
   <tr>
-    <td><a href="skills/graphic-chart"><code>graphic-chart</code></a></td>
-    <td>Data visualization charts as PNG — bar, line, area, pie, doughnut, scatter, radar, treemap. Apache ECharts v6.</td>
-    <td><code>2.0.0</code></td>
-  </tr>
-  <tr>
     <td><a href="skills/graphic-case-study"><code>graphic-case-study</code></a></td>
-    <td>Professionally designed case study PDF for B2B SaaS sales and marketing.</td>
+    <td>Generate a professionally designed case study PDF for B2B SaaS sales and marketing. Structured around the challenge → solution → results → testimonial arc. Outputs a browser-ready HTML file + print-ready PDF. Supports 7 page section layouts and 9 business style presets.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
+    <td><a href="skills/graphic-chart"><code>graphic-chart</code></a></td>
+    <td>Generate publication-quality data visualization charts as PNG using Chart.js v4. 8 chart types, 5 style presets, annotation highlights.</td>
+    <td><code>2.0.0</code></td>
+  </tr>
+  <tr>
     <td><a href="skills/graphic-ebook"><code>graphic-ebook</code></a></td>
-    <td>Professionally designed B2B SaaS e-books in HTML + CSS, exported as print-ready PDF.</td>
+    <td>Create professionally designed B2B SaaS e-books (3–10 pages) using HTML + CSS. Supports 9 visual styles and 11 page layout types. Outputs a browser-ready HTML file + print-ready PDF.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/graphic-gif"><code>graphic-gif</code></a></td>
-    <td>Animated looping GIFs from CSS animations or AI image-to-video. 6 animation types, 4 style presets.</td>
+    <td>Generate animated looping GIFs from CSS animations. 800×800px default, 6 animation types, 4 style presets.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/graphic-slide-deck"><code>graphic-slide-deck</code></a></td>
-    <td>Professionally designed HTML slide deck from a brief or content. 5 design presets.</td>
+    <td>Generate a professionally designed HTML slide deck from a brief, content notes, or an existing PowerPoint. Outputs a browser-ready presentation + optional PDF. Supports 13 named layout types and 8 business style presets.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/vid-motion-graphics"><code>vid-motion-graphics</code></a></td>
-    <td>Motion graphics MP4 from a content brief. HTML/CSS to Playwright to FFmpeg, no React, no AI APIs.</td>
+    <td>Generates multi-scene motion graphics as MP4 from a content brief. HTML/CSS animations rendered frame-by-frame in headless Chromium via Playwright, assembled with FFmpeg. No React, no AI APIs, no Python.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr><th colspan="3" align="left">Content</th></tr>
   <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
   <tr>
     <td><a href="skills/cook-the-blog"><code>cook-the-blog</code></a></td>
-    <td>MDX post, cover image, and GitHub push in one run: research, write, deploy.</td>
+    <td>This guide explains how to set up, configure, and run the cook-the-blog skill. This AI agent pipeline autonomously researches companies, extracts SEO keywords, generates custom cover images, writes high-converting MDX case studies without AI fluff, uploads assets to cloud storage, and pushes the final code to your designated GitHub repository.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/email-newsletter"><code>email-newsletter</code></a></td>
-    <td>Complete HTML email newsletter from a topic or brief. Outlook-compatible with variable injection for Loops, Mailchimp, Beehiiv, and Resend.</td>
+    <td>Draft and design a complete HTML email newsletter from a topic or content brief. Output is paste-ready for Loops, Mailchimp, Beehiiv, Resend, or any standard email platform.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/human-tone"><code>human-tone</code></a></td>
-    <td>Rewrites AI-generated marketing copy to sound naturally human using 18 GTM slop detection patterns.</td>
+    <td>AI assistants write terrible marketing copy. They rely on generic filler words, force everything into lists of three, and bury your actual product under layers of hype.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/linkedin-post-generator"><code>linkedin-post-generator</code></a></td>
-    <td>Generates LinkedIn posts from any content source. Applies LinkedIn content patterns for hook, story arc, and formatting.</td>
+    <td>Generate LinkedIn posts from any content: blog posts, articles, GitHub PRs, or a description of what you built. The agent reads your source material, applies LinkedIn's content patterns, and produces a post with the right hook, story arc, and formatting.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/newsletter-digest"><code>newsletter-digest</code></a></td>
-    <td>Aggregates RSS feeds from the past week, synthesizes top stories using Gemini, and publishes a newsletter digest to Ghost CMS.</td>
+    <td>Aggregate RSS feeds, synthesize the week's top stories with Gemini, and publish a newsletter digest to Ghost CMS. Supports three digest formats and outputs HTML, Markdown, and plain text for any platform.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/noise-to-linkedin-carousel"><code>noise-to-linkedin-carousel</code></a></td>
-    <td>Turns rough notes, transcripts, and idea dumps into a LinkedIn carousel with a strong hook, clear slide structure, and a CTA.</td>
+    <td>noise-to-linkedin-carousel turns rough notes, transcripts, and idea dumps into a LinkedIn-ready carousel content pack with a strong hook, clear slide-by-slide structure, and a CTA — built for founders, GTM teams, and technical marketers who think faster than they write.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/noise2blog"><code>noise2blog</code></a></td>
-    <td>Turns rough notes, bullet points, voice transcripts, or tweet dumps into a polished, publication-ready blog post.</td>
+    <td>Paste your rough notes, bullet points, voice transcript, or tweet dump and get a publication-ready blog post.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/tweet-thread-from-blog"><code>tweet-thread-from-blog</code></a></td>
-    <td>Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA.</td>
+    <td>Turn any blog post or article into a Twitter/X thread. The agent reads the content, picks the right thread style, and writes 7-10 tweets with a strong hook, one insight per tweet, and a CTA. Optionally posts the full thread to X via Composio using a reply chain.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr><th colspan="3" align="left">Launch</th></tr>
   <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
   <tr>
     <td><a href="skills/brand-alchemy"><code>brand-alchemy</code></a></td>
-    <td>World-class brand strategist and naming expert for positioning, naming, and brand identity work.</td>
+    <td>World-class brand strategist and naming expert. Uses an interrogation-led discovery phase to extract your brand's DNA, then applies scientific naming frameworks (Phonosemantics) and automated multi-TLD domain checking.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/oss-launch-kit"><code>oss-launch-kit</code></a></td>
-    <td>OSS launch orchestrator that analyzes repos, selects channels, and coordinates full launch plans.</td>
+    <td>The high-level OSS Launch Orchestrator for GitHub repositories. It serves as the strategic entry point that analyzes your repo and coordinates a multi-channel launch plan.</td>
     <td><code>0.2.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/product-update-logger"><code>product-update-logger</code></a></td>
-    <td>Logs product updates and formats them for changelogs, social posts, and internal documentation.</td>
+    <td>Tell the skill what your product shipped. It writes a polished, living docs/changelog.md entry and hands you a ready-to-use content package: tweet thread, LinkedIn post, email snippet, and one-liner.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/producthunt-launch-kit"><code>producthunt-launch-kit</code></a></td>
-    <td>Product Hunt launch assets: taglines, listing copy, maker comment, launch emails, and an hour-by-hour timeline.</td>
+    <td>Generates a complete Product Hunt launch kit from your product description: tagline variants (60 chars max), listing description, maker comment, launch day tweet thread, LinkedIn post, and a 4-email sequence.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/show-hn-writer"><code>show-hn-writer</code></a></td>
-    <td>Draft a Show HN post backed by real HN performance data. Patterns from 250 top-performing posts.</td>
+    <td>Draft a Show HN post (title + body) that follows Hacker News norms: specific, honest, first-person, no marketing. Generates three title variants and a complete body, then runs a Gemini review to catch HN anti-patterns before you post.</td>
     <td><code>2.0.0</code></td>
   </tr>
   <tr><th colspan="3" align="left">GTM Intelligence</th></tr>
   <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
   <tr>
     <td><a href="skills/competitor-pr-finder"><code>competitor-pr-finder</code></a></td>
-    <td>Finds press mentions, podcast appearances, and community posts across competitors. Returns journalist names, angles, and ready-to-send cold pitches.</td>
+    <td>Give it your product URL. It finds your top 5 competitors, researches every press mention, podcast appearance, and community post across all of them, and tells you exactly which channels to pitch -- with the journalist's name, the angle that got your competitors featured, and a ready-to-send cold pitch for your product.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/gh-issue-to-demand-signal"><code>gh-issue-to-demand-signal</code></a></td>
-    <td>Clusters competitor GitHub issues into 6 demand categories, scores by engagement, and outputs a ranked demand gap report with a GTM messaging brief.</td>
+    <td>Give the skill a competitor's public GitHub repo URL. It fetches their open issues, filters noise locally, clusters into 6 demand categories using the AI already running the skill, scores by real engagement (reactions), detects ignored demand (high reactions + no response = your opportunity), and outputs a ranked demand gap report with a GTM messaging brief.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/google-trends-api-skills"><code>google-trends-api-skills</code></a></td>
-    <td>SEO keyword research workflow for blog generation using Google Trends data.</td>
+    <td>Agent Skills for SEO keyword research using Google Trends data via SerpApi. Built for AI agents that generate tech and developer-focused blog content.</td>
     <td><code>2.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/hackernews-intel"><code>hackernews-intel</code></a></td>
-    <td>Monitors Hacker News for configured keywords, deduplicates against a local SQLite cache, and sends Slack alerts for new matching posts.</td>
+    <td>Monitor Hacker News for keywords. Get a Slack alert every time a new post matches your topics, without duplicates. Run it manually, on a cron schedule, or via GitHub Actions.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/map-your-market"><code>map-your-market</code></a></td>
-    <td>Searches Reddit, HN, GitHub Issues, G2, and Google Trends for pain signals, then builds a complete positioning framework with ICP profile and messaging.</td>
+    <td>Give this skill a product description, category keywords, or competitor names. It searches Reddit, Hacker News, GitHub Issues, G2, and Google Trends for real pain signals from your market -- then builds a complete positioning framework: who your ICP is, what they say out loud, and how to talk to them.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/meta-ads-skill"><code>meta-ads-skill</code></a></td>
-    <td>Meta Ads CLI interface for managing accounts, campaigns, ads, and insights as an Expert Media Buyer.</td>
+    <td>npx "@opendirectory.dev/skills" install meta-ads-skill --target claude</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/meta-tribeV2-skill"><code>meta-tribeV2-skill</code></a></td>
-    <td>Analyzes video hooks and scripts using Meta's TRIBE v2 fMRI model for neuro-marketing scroll-stopping power analysis.</td>
+    <td>AI Skill that uses Meta's TRIBE v2 fMRI Model to analyze the neuroscience of video hooks, reels, and scripts.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/npm-downloads-to-leads"><code>npm-downloads-to-leads</code></a></td>
-    <td>Velocity scoring on npm download data surfaces breakout maintainers with personalized outreach briefs.</td>
+    <td>Give this skill a list of npm packages. It fetches 12 weeks of download data, scores each package by growth velocity, maps maintainers to GitHub and Twitter, and outputs a ranked lead brief per breakout package: who built it, how to reach them, and what to say.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/reddit-icp-monitor"><code>reddit-icp-monitor</code></a></td>
-    <td>Watches subreddits for people describing the exact problem you solve, scores ICP relevance, and drafts helpful non-spammy replies.</td>
+    <td>Watch subreddits for people describing the exact problem you solve. Score each post for ICP relevance. Draft a helpful, non-spammy reply for every high-signal match.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/reddit-post-engine"><code>reddit-post-engine</code></a></td>
-    <td>Writes and optionally posts a Reddit post for any subreddit following that subreddit's culture and rules.</td>
+    <td>Write and optionally post Reddit content that fits the target subreddit's culture. Fetches subreddit rules and top posts before drafting. Follows the 90/10 rule. Optionally posts via Composio Reddit MCP.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/sdk-adoption-tracker"><code>sdk-adoption-tracker</code></a></td>
-    <td>Searches GitHub for repos that import your SDK, scores by company signal and activity, and outputs a ranked adoption report.</td>
+    <td>Give this skill an SDK or library name. It searches GitHub for public repos that import it, scores each repo by company signal and activity, identifies who is building on you in production, and outputs a ranked adoption report with outreach context for high-signal company repos.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/twitter-GTM-find-skill"><code>twitter-GTM-find-skill</code></a></td>
-    <td>End-to-end pipeline scraping Twitter for GTM and DevRel tech startup jobs using Apify, validated against an ICP definition.</td>
+    <td>This repository contains the twitter-GTM-find/ AI Skill.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/yc-intent-radar-skill"><code>yc-intent-radar-skill</code></a></td>
-    <td>Scrapes daily job listings from YCombinator's Workatastartup platform without duplicates.</td>
+    <td>An automated scraper that pulls job listings and company data from YCombinator's Workatastartup platform. It bypasses login bottlenecks by utilizing authenticated sessions and ensures no duplicates are recorded by saving everything directly to a local SQLite database (jobs.db).</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr><th colspan="3" align="left">Outreach</th></tr>
   <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
   <tr>
     <td><a href="skills/cold-email-verifier"><code>cold-email-verifier</code></a></td>
-    <td>Verifies cold emails, enriches lead lists, and autonomously guesses email addresses from a CSV using ValidEmail.</td>
+    <td>Agent Skill that equips your AI agent with the ability to autonomously guess, enrich, and verify cold email addresses directly from a CSV file.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/outreach-sequence-builder"><code>outreach-sequence-builder</code></a></td>
-    <td>Takes a buying signal and generates a personalized multi-channel outreach sequence across email, LinkedIn, and phone.</td>
+    <td>Turn a buying signal into a ready-to-send multi-channel outreach sequence. Give the skill a signal and it generates 4-6 personalized touchpoints across email, LinkedIn, and phone, with objection pre-emption built in.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr><th colspan="3" align="left">Research</th></tr>
   <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
   <tr>
     <td><a href="skills/linkedin-job-post-to-buyer-pain-map"><code>linkedin-job-post-to-buyer-pain-map</code></a></td>
-    <td>Turns LinkedIn job posts into actionable buyer pain maps with signal strength, urgency, and outreach angles.</td>
+    <td>Turn LinkedIn job posts into an actionable buyer pain map with signal strength, urgency, and outreach angles for each account.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/meeting-brief-generator"><code>meeting-brief-generator</code></a></td>
-    <td>Runs targeted research via Tavily and synthesizes a 1-page pre-call brief with Gemini for any company or contact.</td>
+    <td>Walk into every sales or business development call prepared. Give the skill a company name and it runs targeted research, synthesizes a 1-page brief, and optionally saves it to Notion.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/position-me"><code>position-me</code></a></td>
-    <td>Elite Website Reviewer for AEO, GEO, SEO, UI/UX Psychology, and Copywriting with specific improvement recommendations.</td>
+    <td>The Website Reviewer Agent Skill for AEO, GEO, SEO, UI/UX Psychology, and Direct Response Copywriting.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/pricing-finder"><code>pricing-finder</code></a></td>
-    <td>Finds 5 competitors globally, fetches their pricing pages, and returns a complete pricing intelligence report with model analysis and recommended strategy.</td>
+    <td>Tell it what your product is (URL or description). It finds 5 competitors globally, fetches their actual pricing pages, and returns a complete pricing intelligence report: the dominant pricing model in your space, a benchmark price table, feature gate analysis, a competitive positioning map, and a concrete recommended pricing strategy for your product.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/pricing-page-psychology-audit"><code>pricing-page-psychology-audit</code></a></td>
-    <td>Audits any SaaS pricing page against 12 pricing psychology principles with scores, specific rewrites, and ranked improvement suggestions.</td>
+    <td>Paste any SaaS pricing page URL. Get a full audit against 12 pricing</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/vc-curated-match"><code>vc-curated-match</code></a></td>
-    <td>Matches your product to a curated dataset of top global VC firms based on industry tags, stage, and geography.</td>
+    <td>Identify targeted VC funds based on a product's description and URL. This skill matches project inputs to a curated dataset of top global venture capital firms based on industry tags, stage, and geography.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/vc-finder"><code>vc-finder</code></a></td>
-    <td>Detects industry and funding stage, identifies comparable funded companies, and finds best-fit investors for your startup.</td>
+    <td>Give the skill a product URL or description. It detects the industry and funding stage, identifies 5 comparable funded companies, searches who backed those companies (Track A), finds VCs who publish investment theses about this space (Track B), and returns a ranked sourced investor list with deep-dives and outreach hooks.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/where-your-customer-lives"><code>where-your-customer-lives</code></a></td>
-    <td>Researches the internet to find the specific channels where your ICP talks, complains, and makes decisions.</td>
+    <td>Give this skill a product utility and ICP. It searches Reddit, Hacker News, and DuckDuckGo to find the specific communities where your customer actually gathers -- then builds a per-channel playbook: evidence your ICP is there, one entry tactic, one content angle, and specific anti-patterns.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr><th colspan="3" align="left">Developer Tools</th></tr>
   <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
   <tr>
     <td><a href="skills/claude-md-generator"><code>claude-md-generator</code></a></td>
-    <td>Generates or updates a project's CLAUDE.md or AGENTS.md context file from a codebase scan.</td>
+    <td>Reads your codebase and writes a CLAUDE.md that gives Claude Code the context it needs: build commands, code conventions, architecture notes, and gotchas. Stays under 200 lines.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/dependency-update-bot"><code>dependency-update-bot</code></a></td>
-    <td>Scans your project for outdated npm, pip, Cargo, Go, or Ruby packages with upgrade recommendations.</td>
+    <td>Weekly scan for outdated npm or pip packages. Fetches changelogs for each. Summarizes breaking changes with Gemini. Opens one PR per risk group.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/docs-from-code"><code>docs-from-code</code></a></td>
-    <td>Auto-generates and maintains README.md, API reference, and architecture docs from codebase analysis.</td>
+    <td>Automatically generate and maintain README.md, API reference docs, and an Architecture section by reading your codebase. Uses graphify to build a knowledge graph first, then uses AI to write clean documentation grounded in what actually exists.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/explain-this-pr"><code>explain-this-pr</code></a></td>
-    <td>Takes a GitHub PR URL or current branch and writes a plain-English explanation, then posts it as a PR comment.</td>
+    <td>Point this skill at any GitHub PR and it writes a plain-English explanation of what changed and why, then posts it as a PR comment.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/kill-the-standup"><code>kill-the-standup</code></a></td>
-    <td>Reads Linear issues and GitHub commits, formats a standup update (done/doing/blockers), and posts to Slack.</td>
+    <td>Write your daily standup in seconds. The skill reads yesterday's Linear issues and GitHub commits, formats a done/doing/blockers update, and posts it to Slack.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/llms-txt-generator"><code>llms-txt-generator</code></a></td>
-    <td>Generates a standards-compliant llms.txt file — makes your site fully readable and citable by AI agents.</td>
+    <td>Generate a standards-compliant llms.txt file for any website. Makes your site fully readable and citable by AI agents the GEO (Generative Engine Optimization) equivalent of having a great sitemap.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/pr-description-writer"><code>pr-description-writer</code></a></td>
-    <td>Writes, drafts, or updates a GitHub pull request description for the current branch.</td>
+    <td>Read your current git branch diff and generate a complete GitHub pull request description: summary, specific change bullets, and testing steps. Create or update the PR in one step.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/schema-markup-generator"><code>schema-markup-generator</code></a></td>
-    <td>Generates JSON-LD structured data markup for any webpage to improve search visibility.</td>
+    <td>Generate valid JSON-LD structured data for any webpage. The agent crawls the page, detects which schema types apply, and outputs a script tag ready to paste into your HTML. Optionally opens a GitHub PR with the markup injected.</td>
     <td><code>1.0.0</code></td>
   </tr>
 </table>
+
+</details>
 
 <!-- SKILLS_LIST_END -->
 
