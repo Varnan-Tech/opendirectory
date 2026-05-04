@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.6.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
