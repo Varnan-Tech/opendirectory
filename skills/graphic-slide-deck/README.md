@@ -1,4 +1,4 @@
-# graphic-slide-deck
+﻿# graphic-slide-deck
 
 Generate a professionally designed HTML slide deck from a brief, content notes, or an existing PowerPoint. Outputs a browser-ready presentation + optional PDF. Supports 13 named layout types and 8 business style presets.
 
@@ -11,7 +11,7 @@ npx "@opendirectory.dev/skills" install graphic-slide-deck --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

@@ -1,4 +1,4 @@
-# map-your-market
+﻿# map-your-market
 
 Give this skill a product description, category keywords, or competitor names. It searches Reddit, Hacker News, GitHub Issues, G2, and Google Trends for real pain signals from your market -- then builds a complete positioning framework: who your ICP is, what they say out loud, and how to talk to them.
 
@@ -11,7 +11,7 @@ npx "@opendirectory.dev/skills" install map-your-market --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

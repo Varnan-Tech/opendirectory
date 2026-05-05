@@ -1,4 +1,4 @@
-# pricing-finder
+﻿# pricing-finder
 
 Tell it what your product is (URL or description). It finds 5 competitors globally, fetches their actual pricing pages, and returns a complete pricing intelligence report: the dominant pricing model in your space, a benchmark price table, feature gate analysis, a competitive positioning map, and a concrete recommended pricing strategy for your product.
 
@@ -13,7 +13,7 @@ npx "@opendirectory.dev/skills" install pricing-finder --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

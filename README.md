@@ -30,25 +30,23 @@ OpenDirectory is a central library of AI Agent Skills. Each skill is a pre-built
 
 <br>
 
-<table>
-  <tr>
-    <td align="center" width="33%">
-      <b>1. Browse</b><br><br>
-      <pre>npx "@opendirectory.dev/skills" list</pre>
-      <sub>View all 51 skills</sub>
-    </td>
-    <td align="center" width="33%">
-      <b>2. Pick your agent</b><br><br>
-      <pre>--target claude</pre>
-      <sub>7 agents supported</sub>
-    </td>
-    <td align="center" width="33%">
-      <b>3. Install</b><br><br>
-      <pre>npx "@opendirectory.dev/skills" install &lt;skill&gt; --target claude</pre>
-      <sub>Instant domain expertise</sub>
-    </td>
-  </tr>
-</table>
+### 1. Browse
+```bash
+npx "@opendirectory.dev/skills" list
+```
+*Explore our growing library of 51 specialized skills*
+
+### 2. Pick your agent
+```bash
+--target claude
+```
+*Supports Claude, OpenCode, Codex, Gemini, Anti-Gravity, OpenClaw, Hermes*
+
+### 3. Install
+```bash
+npx "@opendirectory.dev/skills" install <skill> --target claude
+```
+*Equips your agent with specialized knowledge, tools, and prompts for the task*
 
 ---
 
@@ -61,95 +59,75 @@ OpenDirectory is a central library of AI Agent Skills. Each skill is a pre-built
 <table>
   <tr>
     <td valign="top" width="50%">
-      <a href="skills/blog-cover-image-cli"><b>blog-cover-image-cli</b></a> &nbsp;<code>PNG</code> &nbsp;<sub>v1.0.17</sub>
-      <hr>
+      <a href="skills/blog-cover-image-cli"><b>blog-cover-image-cli</b></a>
+      <br>
       1200×630px blog cover with self-healing QA loop, retries up to 3× with vision feedback.
     </td>
     <td valign="top" width="50%">
-      <a href="skills/human-tone"><b>human-tone</b></a> &nbsp;<code>Copy Rewrite</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
+      <a href="skills/brand-alchemy"><b>brand-alchemy</b></a>
+      <br>
+      World-class brand strategist and naming expert.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <a href="skills/cold-email-verifier"><b>cold-email-verifier</b></a>
+      <br>
+      Verify cold emails, enrich lead lists, or autonomously guess email addresses from a CSV.
+    </td>
+    <td valign="top">
+      <a href="skills/cook-the-blog"><b>cook-the-blog</b></a>
+      <br>
+      Generate high-converting, deep-dive growth case studies in MDX format.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <a href="skills/email-newsletter"><b>email-newsletter</b></a>
+      <br>
+      Drafts and designs a complete HTML email newsletter from a topic or content brief.
+    </td>
+    <td valign="top">
+      <a href="skills/human-tone"><b>human-tone</b></a>
+      <br>
       Rewrites AI marketing copy against 18 GTM slop patterns with before/after audit notes.
     </td>
   </tr>
   <tr>
     <td valign="top">
-      <a href="skills/show-hn-writer"><b>show-hn-writer</b></a> &nbsp;<code>HN Post</code> &nbsp;<sub>v2.0.0</sub>
-      <hr>
-      Show HN post built from patterns observed in 250 top-performing posts.
+      <a href="skills/meta-tribeV2-skill"><b>meta-tribeV2-skill</b></a>
+      <br>
+      Analyzes video hooks and scripts using Meta's TRIBE v2 fMRI model for neuro-marketing breakdown.
     </td>
     <td valign="top">
-      <a href="skills/hackernews-intel"><b>hackernews-intel</b></a> &nbsp;<code>Slack Alerts</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      HN keyword monitor with SQLite deduplication and Slack alerts for new matching posts.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <a href="skills/cook-the-blog"><b>cook-the-blog</b></a> &nbsp;<code>MDX + Deploy</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      MDX post + cover image + GitHub push in one run: research, write, deploy.
-    </td>
-    <td valign="top">
-      <a href="skills/vid-motion-graphics"><b>vid-motion-graphics</b></a> &nbsp;<code>MP4</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      H.264 MP4 motion graphic from a content brief. HTML/CSS → Playwright → FFmpeg, no React, no AI APIs.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <a href="skills/graphic-ebook"><b>graphic-ebook</b></a> &nbsp;<code>PDF</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      Print-ready PDF ebook, 9 visual styles, 11 page layouts.
-    </td>
-    <td valign="top">
-      <a href="skills/graphic-gif"><b>graphic-gif</b></a> &nbsp;<code>GIF</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      Animated looping GIF, 6 animation types, 4 style presets.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <a href="skills/graphic-slide-deck"><b>graphic-slide-deck</b></a> &nbsp;<code>HTML Deck</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      HTML slide deck from a content brief, 5 design presets.
-    </td>
-    <td valign="top">
-      <a href="skills/graphic-case-study"><b>graphic-case-study</b></a> &nbsp;<code>PDF</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      PDF case study for B2B SaaS sales and marketing.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <a href="skills/graphic-chart"><b>graphic-chart</b></a> &nbsp;<code>PNG</code> &nbsp;<sub>v2.0.0</sub>
-      <hr>
-      4K retina PNG charts: bar, line, pie, scatter, radar, treemap, area, doughnut.
-    </td>
-    <td valign="top">
-      <a href="skills/email-newsletter"><b>email-newsletter</b></a> &nbsp;<code>HTML Email</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      Outlook-compatible HTML email with platform-specific variable injection for Loops, Mailchimp, Beehiiv, Resend.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <a href="skills/npm-downloads-to-leads"><b>npm-downloads-to-leads</b></a> &nbsp;<code>Lead Report</code> &nbsp;<sub>v0.0.1</sub>
-      <hr>
+      <a href="skills/npm-downloads-to-leads"><b>npm-downloads-to-leads</b></a>
+      <br>
       Velocity scoring on npm download data surfaces breakout maintainers with personalized outreach briefs.
     </td>
+  </tr>
+  <tr>
     <td valign="top">
-      <a href="skills/producthunt-launch-kit"><b>producthunt-launch-kit</b></a> &nbsp;<code>Launch Kit</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      Product Hunt launch assets: taglines, listing copy, maker comment, launch emails, hour-by-hour timeline.
+      <a href="skills/position-me"><b>position-me</b></a>
+      <br>
+      Elite Website Reviewer Agent for AEO, GEO, SEO, UI/UX Psychology, and Copywriting.
+    </td>
+    <td valign="top">
+      <a href="skills/twitter-GTM-find-skill"><b>twitter-GTM-find-skill</b></a>
+      <br>
+      End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify.
     </td>
   </tr>
   <tr>
     <td valign="top">
-      <a href="skills/kill-the-standup"><b>kill-the-standup</b></a> &nbsp;<code>Slack Post</code> &nbsp;<sub>v1.0.0</sub>
-      <hr>
-      Daily standup from Linear issues and GitHub commits, posted to Slack.
+      <a href="skills/yc-intent-radar-skill"><b>yc-intent-radar-skill</b></a>
+      <br>
+      Scrape daily job listings from YCombinator's Workatastartup platform without duplicates.
     </td>
-    <td valign="top"></td>
+    <td valign="top">
+      <a href="skills/pricing-page-psychology-audit"><b>pricing-page-psychology-audit</b></a>
+      <br>
+      Audits any SaaS pricing page against 12 pricing psychology principles with ranked improvement reports.
+    </td>
   </tr>
 </table>
 

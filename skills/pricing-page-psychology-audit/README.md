@@ -1,4 +1,4 @@
-<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&h=640&fit=crop&q=80" width="100%" alt="cover" />
+﻿<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1280&h=640&fit=crop&q=80" width="100%" alt="cover" />
 
 # pricing-page-psychology-audit
 
@@ -84,7 +84,7 @@ npx @opendirectory.dev/skills install pricing-page-psychology-audit
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

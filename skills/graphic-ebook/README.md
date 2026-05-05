@@ -1,4 +1,4 @@
-# graphic-ebook
+﻿# graphic-ebook
 
 Create professionally designed B2B SaaS e-books (3–10 pages) using HTML + CSS. Supports 9 visual styles and 11 page layout types. Outputs a browser-ready HTML file + print-ready PDF.
 
@@ -11,7 +11,7 @@ npx "@opendirectory.dev/skills" install graphic-ebook --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

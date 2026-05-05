@@ -1,4 +1,4 @@
-# schema-markup-generator
+﻿# schema-markup-generator
 
 ![schema-markup-generator](https://github.com/user-attachments/assets/4b5e5bfb-3c33-4a20-afff-59fda19196b4)
 
@@ -14,7 +14,7 @@ npx "@opendirectory.dev/skills" install schema-markup-generator --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

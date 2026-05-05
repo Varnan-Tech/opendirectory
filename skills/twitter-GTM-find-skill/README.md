@@ -1,4 +1,4 @@
-# Twitter GTM Find Skill
+﻿# Twitter GTM Find Skill
 
 <img width="1280" height="640" alt="Generated_chart__twitter-gtm-find-cover-bw png" src="https://github.com/user-attachments/assets/618b0abe-34fc-4c3e-a345-1a3eaeb3d20b" />
 
@@ -15,7 +15,7 @@ npx "@opendirectory.dev/skills" install twitter-GTM-find-skill --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

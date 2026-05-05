@@ -5,3 +5,6 @@ coverage/
 /.sisyphus
 /.next/dev/static/chunks
 .dev/static/chunks
+.cache
+preview.html
+scripts/__pycache__/

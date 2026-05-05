@@ -1,4 +1,4 @@
-# vc-finder
+﻿# vc-finder
 
 Give the skill a product URL or description. It detects the industry and funding stage, identifies 5 comparable funded companies, searches who backed those companies (Track A), finds VCs who publish investment theses about this space (Track B), and returns a ranked sourced investor list with deep-dives and outreach hooks.
 
@@ -11,7 +11,7 @@ npx "@opendirectory.dev/skills" install vc-finder --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Click the **Code** button on this repo's GitHub page.

@@ -1,4 +1,4 @@
-# vid-motion-graphics
+﻿# vid-motion-graphics
 
 Generates multi-scene motion graphics as MP4 from a content brief. HTML/CSS animations rendered frame-by-frame in headless Chromium via Playwright, assembled with FFmpeg. No React, no AI APIs, no Python.
 
@@ -13,7 +13,7 @@ npx "@opendirectory.dev/skills" install vid-motion-graphics --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Click the **Code** button on this repo's GitHub page.

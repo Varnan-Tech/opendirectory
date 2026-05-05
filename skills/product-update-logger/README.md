@@ -1,4 +1,4 @@
-# product-update-logger
+﻿# product-update-logger
 
 Tell the skill what your product shipped. It writes a polished, living `docs/changelog.md` entry and hands you a ready-to-use content package: tweet thread, LinkedIn post, email snippet, and one-liner.
 
@@ -13,7 +13,7 @@ npx "@opendirectory.dev/skills" install product-update-logger --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Click the **Code** button on this repo's GitHub page.

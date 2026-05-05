@@ -1,4 +1,4 @@
-# reddit-post-engine
+﻿# reddit-post-engine
 
 <img width="1280" height="640" alt="reddit-post-engine" src="https://github.com/user-attachments/assets/2706f326-5fb9-46fc-851a-ec54ccf53f74" />
 
@@ -14,7 +14,7 @@ npx "@opendirectory.dev/skills" install reddit-post-engine --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

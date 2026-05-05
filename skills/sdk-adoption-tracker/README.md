@@ -1,4 +1,4 @@
-# sdk-adoption-tracker
+﻿# sdk-adoption-tracker
 
 Give this skill an SDK or library name. It searches GitHub for public repos that import it, scores each repo by company signal and activity, identifies who is building on you in production, and outputs a ranked adoption report with outreach context for high-signal company repos.
 
@@ -11,7 +11,7 @@ npx "@opendirectory.dev/skills" install sdk-adoption-tracker --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

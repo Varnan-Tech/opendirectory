@@ -1,4 +1,4 @@
-# newsletter-digest
+﻿# newsletter-digest
 
 <img width="1280" height="640" alt="newsletter-digest" src="https://github.com/user-attachments/assets/cb2879ae-eb5c-4727-a1a2-47b4462a699b" />
 
@@ -14,7 +14,7 @@ npx "@opendirectory.dev/skills" install newsletter-digest --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

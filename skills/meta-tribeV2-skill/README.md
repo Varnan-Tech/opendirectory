@@ -1,4 +1,4 @@
-# Meta Tribe Skill
+﻿# Meta Tribe Skill
 
 AI Skill that uses Meta's TRIBE v2 fMRI Model to analyze the neuroscience of video hooks, reels, and scripts. 
 
@@ -24,7 +24,7 @@ This skill provides the infrastructure to host the massive 80GB TRIBE v2 model p
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

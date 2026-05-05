@@ -1,4 +1,4 @@
-# Blog Cover Image CLI
+﻿# Blog Cover Image CLI
 
 A modern, AI-powered CLI tool designed to automatically generate high-converting, minimalist blog cover images and thumbnails using **Gemini 3.1 Flash Image Preview**. 
 
@@ -23,7 +23,7 @@ npx "@opendirectory.dev/skills" install blog-cover-image-cli --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

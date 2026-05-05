@@ -1,4 +1,4 @@
-# linkedin-job-post-to-buyer-pain-map
+﻿# linkedin-job-post-to-buyer-pain-map
 
 <img src="cover.png" width="100%" alt="LinkedIn Job Post to Buyer Pain Map — Signal Decoder for GTM Teams" />
 
@@ -128,7 +128,7 @@ MIT
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

@@ -1,4 +1,4 @@
-# npm-downloads-to-leads
+﻿# npm-downloads-to-leads
 
 Give this skill a list of npm packages. It fetches 12 weeks of download data, scores each package by growth velocity, maps maintainers to GitHub and Twitter, and outputs a ranked lead brief per breakout package: who built it, how to reach them, and what to say.
 
@@ -10,7 +10,7 @@ npx "@opendirectory.dev/skills" install npm-downloads-to-leads --target claude
 
 ### Video Tutorial
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download from GitHub
 1. Click the **Code** button on this repo's GitHub page.

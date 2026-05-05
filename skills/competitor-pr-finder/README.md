@@ -1,4 +1,4 @@
-# competitor-pr-finder
+﻿# competitor-pr-finder
 
 Give it your product URL. It finds your top 5 competitors, researches every press mention, podcast appearance, and community post across all of them, and tells you exactly which channels to pitch -- with the journalist's name, the angle that got your competitors featured, and a ready-to-send cold pitch for your product.
 
@@ -43,7 +43,7 @@ npx "@opendirectory.dev/skills" install competitor-pr-finder --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

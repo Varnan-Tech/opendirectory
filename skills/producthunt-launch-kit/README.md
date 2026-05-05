@@ -1,4 +1,4 @@
-# producthunt-launch-kit
+﻿# producthunt-launch-kit
 
 <img width="1280" height="640" alt="producthunt-launch-kit" src="https://github.com/user-attachments/assets/dc16bde9-9bc4-4022-94a8-a4db024cbd95" />
 
@@ -14,7 +14,7 @@ npx "@opendirectory.dev/skills" install producthunt-launch-kit --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

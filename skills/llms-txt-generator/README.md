@@ -1,4 +1,4 @@
-# llms-txt-generator
+﻿# llms-txt-generator
 
 <img width="1376" height="768" alt="llms-txt-generator" src="https://github.com/user-attachments/assets/7f549d0b-4d55-40a8-97c6-59510cc40b54" />
 
@@ -13,7 +13,7 @@ npx "@opendirectory.dev/skills" install llms-txt-generator --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

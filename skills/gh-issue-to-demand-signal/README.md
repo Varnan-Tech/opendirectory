@@ -1,4 +1,4 @@
-# gh-issue-to-demand-signal
+﻿# gh-issue-to-demand-signal
 
 Give the skill a competitor's public GitHub repo URL. It fetches their open issues, filters noise locally, clusters into 6 demand categories using the AI already running the skill, scores by real engagement (reactions), detects ignored demand (high reactions + no response = your opportunity), and outputs a ranked demand gap report with a GTM messaging brief.
 
@@ -11,7 +11,7 @@ npx "@opendirectory.dev/skills" install gh-issue-to-demand-signal --target claud
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Click the **Code** button on this repo's GitHub page.

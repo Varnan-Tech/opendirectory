@@ -1,4 +1,4 @@
-# graphic-case-study
+﻿# graphic-case-study
 
 Generate a professionally designed case study PDF for B2B SaaS sales and marketing. Structured around the challenge → solution → results → testimonial arc. Outputs a browser-ready HTML file + print-ready PDF. Supports 7 page section layouts and 9 business style presets.
 
@@ -10,7 +10,7 @@ npx "@opendirectory.dev/skills" install graphic-case-study --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

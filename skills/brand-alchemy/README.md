@@ -1,4 +1,4 @@
-# Brand Alchemy
+﻿# Brand Alchemy
 
 <img width="1920" height="1072" alt="brand-alchemy-skill-cover-image" src="https://github.com/user-attachments/assets/15d90c97-9eef-4eed-abb3-7ce58438adf0" />
 
@@ -13,7 +13,7 @@ npx "@opendirectory.dev/skills" install brand-alchemy --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.

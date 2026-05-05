@@ -1,4 +1,4 @@
-# Meta Ads Agentic Skill
+﻿# Meta Ads Agentic Skill
 
 <img width="1376" height="768" alt="meta-ads-skill" src="https://github.com/user-attachments/assets/baf2509b-0ee0-41ca-9555-3ad350a6824c" />
 
@@ -11,7 +11,7 @@ npx "@opendirectory.dev/skills" install meta-ads-skill --target claude
 ### Video Tutorial
 Watch this quick video to see how it's done:
 
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
