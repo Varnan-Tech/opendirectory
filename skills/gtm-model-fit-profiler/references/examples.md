@@ -6,7 +6,7 @@ These examples show the expected output quality and depth for each evaluation mo
 
 ## Example 1: Single-Model Market Research Report
 
-### GTM Model Fit Report — Gemini 2.0 Flash
+### GTM Model Fit Report — Model X
 
 #### Context
 - **Workload tested:** Market research

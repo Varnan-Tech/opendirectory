@@ -29,10 +29,10 @@ Use this skill before wiring a model into `linkedin-job-post-to-buyer-pain-map`,
 
 Confirm required env vars:
 
-Verify that the `GEMINI_API_KEY` environment variable is available to your runtime.
+Verify that the LLM evaluator is properly configured in your agent runtime.
 
-**If GEMINI_API_KEY is missing:**
-Stop. Tell the user: "GEMINI_API_KEY is required. Get it at aistudio.google.com. Add it to your .env file."
+**If the LLM evaluator is not configured:**
+Stop. Tell the user: "A configured LLM evaluator is required. Please check your agent's configuration."
 
 ---
 
@@ -42,7 +42,7 @@ Collect these inputs before proceeding.
 
 ### 2a: Model(s)
 
-- `model_a` (required): The model to evaluate. Example: "Gemini 2.0 Flash", "GPT-4o", "Claude Opus"
+- `model_a` (required): The model to evaluate. Example: "Model X", "GPT-4o", "Claude Opus"
 - `model_b` (optional): A second model for comparison mode
 
 **If the user already named the model(s) in their prompt:** Extract them. Confirm: "Model A captured: [name]." and if applicable, "Model B captured: [name]. Running in comparison mode."
@@ -118,9 +118,9 @@ Use evaluation tasks like:
 
 For each model being evaluated, build the LLM request to simulate the model's behavior on the workload tasks and then score the output.
 
-Use your configured Gemini API integration (v1 of this skill depends on Gemini as the evaluator) to simulate what the named model would produce for each task, then score the output using the rubric.
+Use your agent's configured LLM integration (this skill uses your agent's configured LLM as the evaluator) to simulate what the named model would produce for each task, then score the output using the rubric.
 
-Instruct the Gemini evaluator using this system prompt logic:
+Instruct the LLM evaluator using this system prompt logic:
 "You are a GTM model-fit evaluator. You will be given: (1) a model name, (2) a GTM workload type, (3) evaluation tasks for that workload, and (4) optionally, business context and source material. Your job is to simulate what the named model would produce for each task, then score the output using the provided rubric. Rules: (A) Be honest and specific in your scoring — do not inflate scores. (B) Every score must include a one-sentence explanation. (C) Identify failure patterns with severity ratings. (D) Separate 'looks polished' from 'is actually useful.' (E) Penalize confident nonsense and generic GTM filler. (F) Reward structured, operator-usable outputs. (G) Do NOT over-trust LLM-as-judge scores; explain your reasoning. (H) Flag input/data quality issues separately from model issues. (I) Output valid JSON only."
 
 Replace `EVALUATION_CONTEXT_HERE` with:
@@ -248,7 +248,7 @@ If your runtime supports file output, attempt to save the report to `docs/model-
 
 Use slugified model name: lowercase, replace spaces and special characters with hyphens.
 
-e.g., "Gemini 2.0 Flash" → `gemini-2-0-flash`, "Claude Opus vs GPT-4o" → `claude-opus-vs-gpt-4o`
+e.g., "Model X" → `model-x`, "Claude Opus vs GPT-4o" → `claude-opus-vs-gpt-4o`
 
 ---
 

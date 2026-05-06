@@ -24,7 +24,7 @@ Evaluate model suitability against specific GTM workloads. Get scored assessment
 
 | Requirement | Purpose | How to Set Up |
 |------------|---------|---------------|
-| Gemini API key | Model evaluation, scoring, and failure detection | aistudio.google.com → Get API key |
+| Configured LLM | Model evaluation, scoring, and failure detection | Provided by your agent environment |
 
 ## Setup
 
@@ -32,9 +32,9 @@ Evaluate model suitability against specific GTM workloads. Get scored assessment
 cp .env.example .env
 ```
 
-Fill in `GEMINI_API_KEY` (required).
+Ensure your agent environment has a configured LLM.
 
-No other dependencies. The skill runs entirely through agent instructions and Gemini API calls (Note: while this skill is designed to remain portable across the OpenDirectory agent ecosystem, v1 currently depends on Gemini as the evaluator model).
+No other dependencies. The skill runs entirely through agent instructions and uses your agent's configured LLM for evaluation.
 
 ## How It’s Different
 
@@ -50,7 +50,7 @@ This skill sits **above** those skills. It helps you decide which model to trust
 Evaluate a single model for market research:
 
 ```
-"Evaluate Gemini 2.0 Flash for market research. Business context: B2B SaaS DevOps platform. Source material: [paste support tickets]"
+"Evaluate Model X for market research. Business context: B2B SaaS DevOps platform. Source material: [paste support tickets]"
 ```
 
 Compare two models for outreach:
@@ -75,7 +75,7 @@ Specify a workload explicitly:
 
 | Input | Required | Description |
 |-------|----------|-------------|
-| `model_a` | Yes | The model to evaluate (e.g., "Gemini 2.0 Flash", "GPT-4o") |
+| `model_a` | Yes | The model to evaluate (e.g., "Model X", "GPT-4o") |
 | `model_b` | No | Second model for comparison mode |
 | `workload` | Yes | One of: `market_research`, `pricing_analysis`, `outreach` |
 | `business_context` | No | Your product/market context (e.g., "B2B SaaS for DevOps teams") |
@@ -126,7 +126,7 @@ See `references/scoring-rubric.md` for full scoring rules and workload-specific 
 
 - Need to rank models globally across all tasks → this skill evaluates per-workload only
 - Need to evaluate for non-GTM work (coding, writing, summarization) → use a general benchmark
-- Need real-time live API calls to multiple model providers → this skill uses Gemini as the evaluator
+- Need real-time live API calls to multiple model providers → this skill uses your agent's configured LLM as the evaluator
 - Need to evaluate fine-tuned or custom models → this skill profiles general-purpose models
 
 ## Plays Well With

@@ -3,33 +3,33 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Evaluate Gemini 2.0 Flash for market research. My business context: B2B SaaS DevOps platform targeting engineering managers at Series B+ companies. Source material: 5 customer support tickets — (1) 'No audit trail for task reassignments, compliance team flagged this', (2) 'Timeline view breaks at 50+ workstreams, bought separate tool for exec reporting', (3) 'Jira integration breaks after every update, team maintains separate board', (4) 'Need per-workspace permissions, global admin role is enterprise security dealbreaker', (5) 'No template library, every new project starts from scratch'.",
-      "expected_output": "Agent checks GEMINI_API_KEY (set). Captures inputs: model_a=Gemini 2.0 Flash, workload=market_research, business_context and source_material provided. Routes to market research workload. Sends source material to Gemini with scoring system instruction. Evaluates against shared and market_research criteria. Scans for universal and market research failure patterns. Produces structured report with scorecard table, strengths, failure patterns, deployment guidance, and confidence note. Attempts to save to docs/model-fit-reports/.",
+      "prompt": "Evaluate Model X for market research. My business context: B2B SaaS DevOps platform targeting engineering managers at Series B+ companies. Source material: 5 customer support tickets — (1) 'No audit trail for task reassignments, compliance team flagged this', (2) 'Timeline view breaks at 50+ workstreams, bought separate tool for exec reporting', (3) 'Jira integration breaks after every update, team maintains separate board', (4) 'Need per-workspace permissions, global admin role is enterprise security dealbreaker', (5) 'No template library, every new project starts from scratch'.",
+      "expected_output": "Agent checks that LLM evaluator is configured. Captures inputs: model_a=Model X, workload=market_research, business_context and source_material provided. Routes to market research workload. Sends source material to LLM evaluator with scoring system instruction. Evaluates against shared and market_research criteria. Scans for universal and market research failure patterns. Produces structured report with scorecard table, strengths, failure patterns, deployment guidance, and confidence note. Attempts to save to docs/model-fit-reports/.",
       "files": []
     },
     {
       "id": 2,
       "prompt": "Compare Claude Opus and GPT-4o for outreach personalization. Context: API monitoring tool for engineering teams. Source material: Job post for Senior SRE at StreamData (Series B, 120 engineers) requiring 'API observability, distributed tracing, incident response automation'. Target persona: VP of Engineering.",
-      "expected_output": "Agent checks GEMINI_API_KEY (set). Captures: model_a=Claude Opus, model_b=GPT-4o, workload=outreach. Enters comparison mode. Evaluates both models against same outreach workload prompts enriched with source material. Scores both on shared and outreach criteria. Scans for failure patterns. Produces report with side-by-side scorecard, per-model failure patterns, and comparison recommendation format. Attempts to save report.",
+      "expected_output": "Agent checks that LLM evaluator is configured. Captures: model_a=Claude Opus, model_b=GPT-4o, workload=outreach. Enters comparison mode. Evaluates both models against same outreach workload prompts enriched with source material. Scores both on shared and outreach criteria. Scans for failure patterns. Produces report with side-by-side scorecard, per-model failure patterns, and comparison recommendation format. Attempts to save report.",
       "files": []
     },
     {
       "id": 3,
       "prompt": "Evaluate GPT-4o for pricing analysis. No source material — use your default benchmarks. Business context: B2B data pipeline tool, $500/mo team plan, 85% gross margins.",
-      "expected_output": "Agent checks GEMINI_API_KEY (set). Captures: model_a=GPT-4o, workload=pricing_analysis, business_context provided, no source_material. Routes to pricing workload. Uses default benchmark prompts from references/workload-prompts.md. Evaluates against shared and pricing criteria. Scans for universal and pricing failure patterns. Produces single-model structured report with full scorecard and deployment guidance.",
+      "expected_output": "Agent checks that LLM evaluator is configured. Captures: model_a=GPT-4o, workload=pricing_analysis, business_context provided, no source_material. Routes to pricing workload. Uses default benchmark prompts from references/workload-prompts.md. Evaluates against shared and pricing criteria. Scans for universal and pricing failure patterns. Produces single-model structured report with full scorecard and deployment guidance.",
       "files": []
     },
     {
       "id": 4,
-      "prompt": "Evaluate Gemini 2.0 Flash for market research.",
-      "expected_output": "Agent detects GEMINI_API_KEY is missing from environment. Stops at Step 1. Tells the user: 'GEMINI_API_KEY is required. Get it at aistudio.google.com. Add it to your .env file.' Does not proceed to collect inputs or generate any analysis.",
+      "prompt": "Evaluate Model X for market research.",
+      "expected_output": "Agent detects LLM evaluator is not configured. Stops at Step 1. Tells the user: 'A configured LLM evaluator is required. Please check your agent's configuration.' Does not proceed to collect inputs or generate any analysis.",
       "files": [],
-      "setup": "GEMINI_API_KEY not set in environment"
+      "setup": "LLM evaluator not configured in environment"
     },
     {
       "id": 5,
       "prompt": "Evaluate Claude Sonnet for social media content creation. Source material: 10 Instagram posts from a competitor.",
-      "expected_output": "Agent checks GEMINI_API_KEY (set). Captures model_a=Claude Sonnet, workload=social media content creation. Detects that 'social media content creation' is not a supported workload. Responds clearly: 'This workload is not supported. Supported workloads are: (1) market_research, (2) pricing_analysis, (3) outreach. Please select one of these workloads.' Does not proceed with evaluation. Does not attempt to force-fit the request into an existing workload.",
+      "expected_output": "Agent checks that LLM evaluator is configured. Captures model_a=Claude Sonnet, workload=social media content creation. Detects that 'social media content creation' is not a supported workload. Responds clearly: 'This workload is not supported. Supported workloads are: (1) market_research, (2) pricing_analysis, (3) outreach. Please select one of these workloads.' Does not proceed with evaluation. Does not attempt to force-fit the request into an existing workload.",
       "files": []
     }
   ]
