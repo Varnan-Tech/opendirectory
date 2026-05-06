@@ -29,9 +29,7 @@ Use this skill before wiring a model into `linkedin-job-post-to-buyer-pain-map`,
 
 Confirm required env vars:
 
-```bash
-echo "GEMINI_API_KEY: ${GEMINI_API_KEY:+set}"
-```
+Verify that the `GEMINI_API_KEY` environment variable is available to your runtime.
 
 **If GEMINI_API_KEY is missing:**
 Stop. Tell the user: "GEMINI_API_KEY is required. Get it at aistudio.google.com. Add it to your .env file."
@@ -120,33 +118,10 @@ Use evaluation tasks like:
 
 For each model being evaluated, build the LLM request to simulate the model's behavior on the workload tasks and then score the output.
 
-```bash
-mkdir -p docs/model-fit-reports
-EVAL_REQUEST="docs/model-fit-reports/.eval-request.json"
-cat > "$EVAL_REQUEST" << 'ENDJSON'
-{
-  "system_instruction": {
-    "parts": [{
-      "text": "You are a GTM model-fit evaluator. You will be given: (1) a model name, (2) a GTM workload type, (3) evaluation tasks for that workload, and (4) optionally, business context and source material. Your job is to simulate what the named model would produce for each task, then score the output using the provided rubric. Rules: (A) Be honest and specific in your scoring — do not inflate scores. (B) Every score must include a one-sentence explanation. (C) Identify failure patterns with severity ratings. (D) Separate 'looks polished' from 'is actually useful.' (E) Penalize confident nonsense and generic GTM filler. (F) Reward structured, operator-usable outputs. (G) Do NOT over-trust LLM-as-judge scores; explain your reasoning. (H) Flag input/data quality issues separately from model issues. (I) Output valid JSON only."
-    }]
-  },
-  "contents": [{
-    "parts": [{
-      "text": "EVALUATION_CONTEXT_HERE"
-    }]
-  }],
-  "generationConfig": {
-    "temperature": 0.2,
-    "maxOutputTokens": 8192
-  }
-}
-ENDJSON
-curl -s -X POST \
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$GEMINI_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d @"$EVAL_REQUEST" \
-  | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['candidates'][0]['content']['parts'][0]['text'])"
-```
+Use your configured Gemini API integration (v1 of this skill depends on Gemini as the evaluator) to simulate what the named model would produce for each task, then score the output using the rubric.
+
+Instruct the Gemini evaluator using this system prompt logic:
+"You are a GTM model-fit evaluator. You will be given: (1) a model name, (2) a GTM workload type, (3) evaluation tasks for that workload, and (4) optionally, business context and source material. Your job is to simulate what the named model would produce for each task, then score the output using the provided rubric. Rules: (A) Be honest and specific in your scoring — do not inflate scores. (B) Every score must include a one-sentence explanation. (C) Identify failure patterns with severity ratings. (D) Separate 'looks polished' from 'is actually useful.' (E) Penalize confident nonsense and generic GTM filler. (F) Reward structured, operator-usable outputs. (G) Do NOT over-trust LLM-as-judge scores; explain your reasoning. (H) Flag input/data quality issues separately from model issues. (I) Output valid JSON only."
 
 Replace `EVALUATION_CONTEXT_HERE` with:
 - The model name (model_a, and model_b if in comparison mode)
@@ -269,14 +244,7 @@ Ensure you include all required sections: Context, Scorecard, Input/Data Quality
 
 ### Save to file
 
-```bash
-mkdir -p docs/model-fit-reports
-OUTFILE="docs/model-fit-reports/$(date +%Y-%m-%d)-MODEL_SLUG.md"
-cat > "$OUTFILE" << 'EOF'
-REPORT_CONTENT_HERE
-EOF
-echo "Model fit report saved to $OUTFILE"
-```
+If your runtime supports file output, attempt to save the report to `docs/model-fit-reports/YYYY-MM-DD-MODEL_SLUG.md`.
 
 Use slugified model name: lowercase, replace spaces and special characters with hyphens.
 
