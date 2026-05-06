@@ -18,7 +18,7 @@ Evaluate model suitability against specific GTM workloads. Get scored assessment
 - Detects failure patterns (hallucination, generic filler, fake personalization, invented pricing) with severity ratings
 - Supports head-to-head comparison mode with side-by-side scorecards
 - Produces decision-ready deployment guidance: external-safe, human-reviewed, internal-only, or not recommended
-- Saves reports to `docs/model-fit-reports/` as dated markdown files
+- Instructs the agent to save reports to `docs/model-fit-reports/` as dated markdown files
 
 ## Requirements
 
@@ -93,7 +93,7 @@ For each evaluation, the skill produces:
 4. **Deployment guidance** — separated from task-fit score, with explicit justification (external-safe / human-reviewed / internal-only / not recommended)
 5. **Confidence note** — high/medium/low confidence based on evidence quality
 
-Reports are saved to `docs/model-fit-reports/` as dated markdown files.
+The agent will attempt to save reports to `docs/model-fit-reports/` as dated markdown files.
 
 ## Scoring Model
 

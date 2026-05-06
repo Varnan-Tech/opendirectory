@@ -164,23 +164,8 @@ Replace `EVALUATION_CONTEXT_HERE` with:
 
 Read `references/scoring-rubric.md` for the full scoring model.
 
-### Shared criteria (60% weight)
-
-Score each model on:
-1. **Instruction following** — Did it follow the format, boundaries, and constraints?
-2. **Specificity** — Concrete details or generic filler?
-3. **Groundedness** — Tied to input or invented claims?
-4. **Structure** — Organized and immediately usable?
-5. **Confidence discipline** — Appropriate uncertainty when evidence is limited?
-6. **Actionability** — Can a GTM user act on this without rewriting?
-
-### Workload-specific criteria (40% weight)
-
-**Market research:** signal extraction, clustering quality, ICP relevance, insight depth, evidence discipline
-
-**Pricing analysis:** comparative accuracy, packaging reasoning, positioning insight, trade-off reasoning, recommendation quality
-
-**Outreach:** personalization relevance, message sharpness, non-generic tone, hook quality, CTA quality
+Score each model on the 6 shared criteria (60% weight) and the 5 workload-specific criteria (40% weight). 
+Explicitly read `references/scoring-rubric.md` to see the exact criteria lists and definitions.
 
 ### Calculate
 
@@ -190,12 +175,7 @@ workload_subtotal = mean of 5 workload scores
 overall_task_fit = (0.6 × shared_subtotal) + (0.4 × workload_subtotal)
 ```
 
-Task-Fit Interpretation:
-- 4.5–5.0 = excellent fit
-- 3.8–4.4 = strong fit
-- 3.0–3.7 = usable with review
-- 2.0–2.9 = weak fit
-- below 2.0 = poor fit
+Read `references/scoring-rubric.md` for the Task-Fit Interpretation labels.
 
 **Deployment Guidance Logic:**
 Compute separately from task-fit score. See `references/scoring-rubric.md` for full decision rules.
@@ -212,21 +192,7 @@ Read `references/failure-patterns.md` for the full catalog.
 
 After scoring, scan every model output for failure patterns.
 
-### Universal failure patterns (check always)
-- Hallucinated claims
-- Generic filler language
-- Unsupported certainty
-- Weak reasoning chain
-- Format drift
-- Context drift
-
-### Workload-specific failure patterns
-
-**Market research:** fake themes from thin evidence, generic persona statements, shallow clustering, no ICP mapping
-
-**Pricing analysis:** invented pricing details, surface-level comparison only, missing strategic interpretation, weak pricing recommendation logic
-
-**Outreach:** fake personalization, templated opener, overlong copy, awkward or pushy CTA
+Explicitly read `references/failure-patterns.md` to see the lists of universal and workload-specific failure patterns. Scan the model output for all relevant patterns.
 
 For each failure detected, record:
 - Pattern name
@@ -296,55 +262,10 @@ Fix any violation before presenting.
 
 Present the full report in this format:
 
-```
-## GTM Model Fit Report — [model name or Model A vs Model B]
+Format the output exactly matching the structure shown in `references/examples.md`. 
+Ensure you include all required sections: Context, Scorecard, Input/Data Quality, Strengths, Failure Patterns, Recommendation, and Confidence Note.
 
-### Context
-- **Workload tested:** [workload]
-- **Business context:** [context or "neutral GTM default"]
-- **Source material:** [description or "default benchmark prompts"]
-
-### Scorecard
-
-| Criterion | Score | Notes |
-|-----------|-------|-------|
-| **Shared Criteria** | | |
-| Instruction following | N | [one sentence] |
-| Specificity | N | [one sentence] |
-| Groundedness | N | [one sentence] |
-| Structure | N | [one sentence] |
-| Confidence discipline | N | [one sentence] |
-| Actionability | N | [one sentence] |
-| **Shared subtotal** | **N.N** | |
-| **[Workload] Criteria** | | |
-| [criterion 1] | N | [one sentence] |
-| [criterion 2] | N | [one sentence] |
-| [criterion 3] | N | [one sentence] |
-| [criterion 4] | N | [one sentence] |
-| [criterion 5] | N | [one sentence] |
-| **Workload subtotal** | **N.N** | |
-
-**Overall task-fit score: N.N — [interpretation label]**
-
-### Strengths
-- [3-5 specific bullets]
-
-### Failure Patterns
-- **[Pattern name]** — [explanation]. Severity: [low/medium/high]
-- [3-5 entries, or "No failure patterns detected."]
-
-### Recommendation
-- **Best for:** [specific GTM jobs]
-- **Weak at:** [specific areas]
-- **Avoid for:** [specific scenarios]
-- **Main risk:** [single biggest risk]
-- **Deployment recommendation:** [one of the 4 options]
-
-### Confidence Note
-[High/medium/low confidence with brief justification]
-```
-
-**For comparison mode**, use side-by-side scorecard columns and the comparison recommendation format from Step 7.
+**For comparison mode**, use side-by-side scorecard columns and the comparison recommendation format exactly as shown in Example 2 of `references/examples.md`.
 
 ### Save to file
 
