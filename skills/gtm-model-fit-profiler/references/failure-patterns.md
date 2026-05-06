@@ -6,11 +6,11 @@ This document defines all failure patterns the skill checks after scoring. Every
 
 ## Severity Scale
 
-| Severity | Definition | Impact on Recommendation |
-|----------|------------|--------------------------|
-| Low | Minor issue, does not materially affect usability | Note in report, no score adjustment |
-| Medium | Noticeable issue that reduces reliability for GTM use | Flag in report, consider downgrading recommendation by one tier |
-| High | Critical issue that makes output unsafe or misleading for GTM decisions | Flag prominently, cap recommendation at "usable with review" or lower |
+| Severity | Definition | Impact on Deployment Guidance |
+|----------|------------|-------------------------------|
+| Low | Minor issue, does not materially affect usability | Note in report, no task-fit score adjustment |
+| Medium | Noticeable issue that reduces reliability for GTM use | Flag in report, consider downgrading deployment guidance by one tier |
+| High | Critical issue that makes output unsafe or misleading for GTM decisions | Flag prominently, cap deployment guidance at `internal-only` or `not recommended` depending on context |
 
 ---
 

@@ -17,7 +17,7 @@ Evaluate model suitability against specific GTM workloads. Get scored assessment
 - Scores on 5 workload-specific criteria weighted at 40%
 - Detects failure patterns (hallucination, generic filler, fake personalization, invented pricing) with severity ratings
 - Supports head-to-head comparison mode with side-by-side scorecards
-- Produces a decision-ready recommendation: deploy, review, or avoid
+- Produces decision-ready deployment guidance: external-safe, human-reviewed, internal-only, or not recommended
 - Saves reports to `docs/model-fit-reports/` as dated markdown files
 
 ## Requirements
@@ -34,7 +34,7 @@ cp .env.example .env
 
 Fill in `GEMINI_API_KEY` (required).
 
-No other dependencies. The skill runs entirely through agent instructions and Gemini API calls.
+No other dependencies. The skill runs entirely through agent instructions and Gemini API calls (Note: while this skill is designed to remain portable across the OpenDirectory agent ecosystem, v1 currently depends on Gemini as the evaluator model).
 
 ## How It’s Different
 
@@ -90,7 +90,7 @@ For each evaluation, the skill produces:
 1. **Scorecard** — markdown table with all criteria scores and one-sentence explanations
 2. **Strengths** — 3-5 specific observations about where the model excels
 3. **Failure patterns** — detected issues with severity ratings (low/medium/high)
-4. **Recommendation** — best for, weak at, avoid for, main risk, deployment recommendation
+4. **Deployment guidance** — separated from task-fit score, with explicit justification (external-safe / human-reviewed / internal-only / not recommended)
 5. **Confidence note** — high/medium/low confidence based on evidence quality
 
 Reports are saved to `docs/model-fit-reports/` as dated markdown files.
@@ -106,11 +106,11 @@ Reports are saved to `docs/model-fit-reports/` as dated markdown files.
 
 | Range | Label | Meaning |
 |-------|-------|---------|
-| 4.5–5.0 | Excellent fit | Deploy with confidence |
-| 3.8–4.4 | Strong fit | Deploy with light review |
-| 3.0–3.7 | Usable with review | Human-in-the-loop required |
-| 2.0–2.9 | Weak fit | Significant guardrails needed |
-| Below 2.0 | Poor fit | Do not use for this workload |
+| 4.5–5.0 | Excellent fit | Highly capable for this specific workload |
+| 3.8–4.4 | Strong fit | Reliable but may need minor corrections |
+| 3.0–3.7 | Usable with review | Requires human-in-the-loop validation |
+| 2.0–2.9 | Weak fit | Struggles significantly with this workload |
+| Below 2.0 | Poor fit | Fails at core workload tasks |
 
 See `references/scoring-rubric.md` for full scoring rules and workload-specific criteria.
 
