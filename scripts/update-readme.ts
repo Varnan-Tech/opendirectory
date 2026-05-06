@@ -11,6 +11,7 @@ interface SkillEntry {
   version: string;
   path: string;
   tags?: string[];
+  category?: string;
 }
 
 const CATEGORY_ORDER = [
@@ -24,59 +25,6 @@ const CATEGORY_ORDER = [
   'Other',
 ];
 
-const NAME_TO_CATEGORY: Record<string, string> = {
-  'graphic-chart': 'Visual & Media',
-  'graphic-gif': 'Visual & Media',
-  'graphic-ebook': 'Visual & Media',
-  'graphic-slide-deck': 'Visual & Media',
-  'graphic-case-study': 'Visual & Media',
-  'vid-motion-graphics': 'Visual & Media',
-  'blog-cover-image-cli': 'Visual & Media',
-  'email-newsletter': 'Content',
-  'cook-the-blog': 'Content',
-  'noise2blog': 'Content',
-  'human-tone': 'Content',
-  'linkedin-post-generator': 'Content',
-  'tweet-thread-from-blog': 'Content',
-  'noise-to-linkedin-carousel': 'Content',
-  'newsletter-digest': 'Content',
-  'producthunt-launch-kit': 'Launch',
-  'show-hn-writer': 'Launch',
-  'oss-launch-kit': 'Launch',
-  'brand-alchemy': 'Launch',
-  'product-update-logger': 'Launch',
-  'hackernews-intel': 'GTM Intelligence',
-  'reddit-icp-monitor': 'GTM Intelligence',
-  'reddit-post-engine': 'GTM Intelligence',
-  'npm-downloads-to-leads': 'GTM Intelligence',
-  'yc-intent-radar-skill': 'GTM Intelligence',
-  'twitter-GTM-find-skill': 'GTM Intelligence',
-  'sdk-adoption-tracker': 'GTM Intelligence',
-  'gh-issue-to-demand-signal': 'GTM Intelligence',
-  'map-your-market': 'GTM Intelligence',
-  'competitor-pr-finder': 'GTM Intelligence',
-  'google-trends-api-skills': 'GTM Intelligence',
-  'meta-ads-skill': 'GTM Intelligence',
-  'meta-tribeV2-skill': 'GTM Intelligence',
-  'pricing-page-psychology-audit': 'Research',
-  'pricing-finder': 'Research',
-  'position-me': 'Research',
-  'meeting-brief-generator': 'Research',
-  'linkedin-job-post-to-buyer-pain-map': 'Research',
-  'where-your-customer-lives': 'Research',
-  'vc-finder': 'Research',
-  'vc-curated-match': 'Research',
-  'outreach-sequence-builder': 'Outreach',
-  'cold-email-verifier': 'Outreach',
-  'kill-the-standup': 'Developer Tools',
-  'dependency-update-bot': 'Developer Tools',
-  'docs-from-code': 'Developer Tools',
-  'pr-description-writer': 'Developer Tools',
-  'explain-this-pr': 'Developer Tools',
-  'claude-md-generator': 'Developer Tools',
-  'llms-txt-generator': 'Developer Tools',
-  'schema-markup-generator': 'Developer Tools',
-};
 
 const TAG_TO_CATEGORY: Record<string, string> = {
   'AI': 'Developer Tools',
@@ -89,9 +37,31 @@ const TAG_TO_CATEGORY: Record<string, string> = {
   'Social Media': 'Content',
 };
 
+function getCategoryFromPkg(skillDir: string): string | null {
+  const pkgPath = path.join(skillDir, 'package.json');
+  if (!fs.existsSync(pkgPath)) return null;
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+    if (typeof pkg.category === 'string' && CATEGORY_ORDER.includes(pkg.category)) return pkg.category;
+  } catch (_) {}
+  return null;
+}
+
 function detectCategoryFromContent(name: string, description: string): string {
+  const n = name.toLowerCase();
   const text = (name + ' ' + description).toLowerCase();
-  if (/\b(gif|mp4|motion.graphic|animation|slide.?deck|e.?book|cover.image|chart|graphic|png)\b/.test(text)) return 'Visual & Media';
+
+  // Name-prefix patterns — most reliable signal, covers all existing skills
+  if (/^(vid-|graphic-|blog-cover-image)/.test(n)) return 'Visual & Media';
+  if (/^(email-newsletter|cook-the-blog|noise2blog|human-tone|linkedin-post|tweet-thread|noise-to-linkedin|newsletter)/.test(n)) return 'Content';
+  if (/^(producthunt|show-hn|oss-launch|brand-alchemy|product-update-logger)/.test(n)) return 'Launch';
+  if (/^(hackernews|reddit-icp|reddit-post|npm-downloads|yc-intent|twitter-gtm|sdk-adoption|gh-issue|map-your-market|competitor-pr|google-trends|meta-ads|meta-tribe)/.test(n)) return 'GTM Intelligence';
+  if (/^(outreach-sequence|cold-email)/.test(n)) return 'Outreach';
+  if (/^(pricing-|position-me|meeting-brief|linkedin-job-post|where-your-customer|vc-)/.test(n)) return 'Research';
+  if (/^(kill-the-standup|dependency-update|docs-from-code|pr-description|explain-this-pr|claude-md|llms-txt|schema-markup)/.test(n)) return 'Developer Tools';
+
+  // Description-based fallback for future skills
+  if (/\b(gif|mp4|motion.graphic|animation|slide.?deck|e.?book|cover.image|chart|graphic|png|video)\b/.test(text)) return 'Visual & Media';
   if (/pull.request|\bstandup\b|\bdependency\b|llms\.txt|json.?ld|schema.markup|claude\.md|agents\.md|codebase.scan|docs.from.code/.test(text)) return 'Developer Tools';
   if (/product.hunt|show.hn|\boss.launch\b|\bbrand.strateg|\bnaming.expert\b|\blaunch.kit\b|\bproduct.update\b/.test(text)) return 'Launch';
   if (/cold.email|outreach.sequence|email.verif/.test(text)) return 'Outreach';
@@ -101,14 +71,22 @@ function detectCategoryFromContent(name: string, description: string): string {
   return 'Other';
 }
 
-function getCategory(name: string, description: string, tags?: string[]): string {
-  if (NAME_TO_CATEGORY[name]) return NAME_TO_CATEGORY[name];
+function getCategory(name: string, description: string, tags?: string[], skillDir?: string): string {
+  // 1. Explicit override in skill's own package.json
+  if (skillDir) {
+    const pkg = getCategoryFromPkg(skillDir);
+    if (pkg) return pkg;
+  }
+  // 2. Name-prefix regex — most reliable; tags are too broad to use first
+  const fromContent = detectCategoryFromContent(name, description);
+  if (fromContent !== 'Other') return fromContent;
+  // 3. Registry tags — fallback for future skills whose names don't match any pattern
   if (tags && tags.length > 0) {
     for (const tag of tags) {
       if (TAG_TO_CATEGORY[tag]) return TAG_TO_CATEGORY[tag];
     }
   }
-  return detectCategoryFromContent(name, description);
+  return 'Other';
 }
 
 function extractReadmeDescription(skillDir: string): string {
@@ -184,13 +162,15 @@ function loadAllSkills(): SkillEntry[] {
     const description = extractReadmeDescription(skillDir);
     const registryEntry = registry.find(s => s.name === name);
     const version = getVersionFromRegistry(registry, name);
+    const desc = description || registryEntry?.description || 'No description available.';
 
     return {
       name,
-      description: description || registryEntry?.description || 'No description available.',
+      description: desc,
       version,
       path: `skills/${name}`,
       tags: registryEntry?.tags,
+      category: getCategory(name, desc, registryEntry?.tags, skillDir),
     };
   }).sort((a: SkillEntry, b: SkillEntry) => a.name.localeCompare(b.name));
 }
@@ -199,7 +179,7 @@ function generateSkillsTable(skills: SkillEntry[]): string {
   const grouped = new Map<string, SkillEntry[]>();
 
   for (const skill of skills) {
-    const category = getCategory(skill.name, skill.description, skill.tags);
+    const category = skill.category ?? getCategory(skill.name, skill.description, skill.tags);
     if (!grouped.has(category)) grouped.set(category, []);
     grouped.get(category)!.push(skill);
   }
@@ -245,16 +225,34 @@ function updateReadme() {
       process.exit(1);
     }
 
-    const updatedContent = readmeContent.replace(
+    let updatedContent = readmeContent.replace(
       regex,
       `${startMarker}\n\n${table}\n\n${endMarker}`
+    );
+
+    // Sync all hardcoded skill counts
+    updatedContent = updatedContent.replace(
+      /\d+\+pre-built\+AI\+Agent\+Skills/,
+      `${skills.length}+pre-built+AI+Agent+Skills`
+    );
+    updatedContent = updatedContent.replace(
+      /\/badge\/skills-\d+-blue/,
+      `/badge/skills-${skills.length}-blue`
+    );
+    updatedContent = updatedContent.replace(
+      /Explore our growing library of \d+ specialized skills/,
+      `Explore our growing library of ${skills.length} specialized skills`
+    );
+    updatedContent = updatedContent.replace(
+      /\d+ skills across GTM/,
+      `${skills.length} skills across GTM`
     );
 
     fs.writeFileSync(README_PATH, updatedContent, 'utf-8');
 
     const grouped = new Map<string, number>();
     for (const s of skills) {
-      const cat = getCategory(s.name, s.description, s.tags);
+      const cat = s.category ?? getCategory(s.name, s.description, s.tags);
       grouped.set(cat, (grouped.get(cat) || 0) + 1);
     }
     console.log(`Successfully updated README.md with ${skills.length} skills in ${grouped.size} categories.`);
