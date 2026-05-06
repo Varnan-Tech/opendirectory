@@ -1,6 +1,6 @@
 ---
 name: gtm-model-fit-profiler
-description: Evaluates whether an AI model is well-suited for a specific GTM workload — market research, pricing/competitor analysis, or outreach personalization. Supports single-model task-fit reports and head-to-head comparisons. Scores on shared criteria (instruction following, specificity, groundedness, structure, confidence discipline, actionability) plus workload-specific criteria. Detects failure patterns (hallucination, generic filler, fake personalization, invented pricing). Use when asked to evaluate a model for GTM work, compare models for outreach, test a model for pricing analysis, assess model fit for market research, or profile a model against a GTM workload.
+description: GTM-native meta-skill that evaluates and selects the right AI model for market research, pricing analysis, and outreach.
 author: ajaycodesitbetter
 version: 1.0.0
 ---
@@ -149,6 +149,8 @@ shared_subtotal = mean of 6 shared scores
 workload_subtotal = mean of 5 workload scores
 overall_task_fit = (0.6 × shared_subtotal) + (0.4 × workload_subtotal)
 ```
+
+*(Note: Subtotals may be displayed rounded to 1 decimal for readability; all internal calculations use full precision.)*
 
 Read `references/scoring-rubric.md` for the Task-Fit Interpretation labels.
 

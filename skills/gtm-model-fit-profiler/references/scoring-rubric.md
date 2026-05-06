@@ -276,7 +276,7 @@ overall_task_fit = (0.6 × shared_subtotal) + (0.4 × workload_subtotal)
 
 1. Always calculate and display both subtotals before the overall score.
 2. If any single criterion scores 1, flag it as a critical weakness regardless of overall score.
-3. Do not round intermediate scores. Round only the final overall_task_fit to one decimal.
+3. Do not round intermediate scores for internal calculations. Subtotals may be displayed rounded to 1 decimal for readability in the scorecard, but calculate the overall score using full precision before rounding.
 4. In comparison mode, calculate scores independently — never score relative to the other model.
 
 ---
