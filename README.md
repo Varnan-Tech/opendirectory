@@ -265,7 +265,7 @@ Run these commands inside Claude Code:
   </tr>
   <tr>
     <td><a href="skills/vid-product-launch"><code>vid-product-launch</code></a></td>
-    <td>Generate a cinematic product launch video — builds anticipation with narrative storytelling, a dramatic product reveal, and a clear CTA. Designed for announcement posts, email campaigns, landing page heroes, and launch day social content.</td>
+    <td>Generate a cinematic product launch video from a product description and launch context. The video follows a 5-section narrative arc: build anticipation, reveal the product, prove the value, and close with a CTA.</td>
     <td><code>1.2.0</code></td>
   </tr>
   <tr><th colspan="3" align="left">Content</th></tr>
