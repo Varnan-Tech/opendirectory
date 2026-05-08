@@ -1,6 +1,6 @@
 ---
 name: vid-sizzle-reel
-description: Generates a high-energy sizzle reel or hype video (MP4) from brand assets and key messages. Fast-paced montage format with dynamic cuts, bold text overlays, and optional music. 4-section structure: Cold Open, Build, Peak, Land. 4 tone presets. Beat-sync cuts when music is provided. Built on HyperFrames (GSAP + headless Chromium + FFmpeg). Trigger when user says "sizzle reel", "hype video", "highlight reel", "launch hype", "conference opener", "event promo video", "investor pitch video", or "brand video montage".
+description: 'Generates a high-energy sizzle reel or hype video (MP4) from brand assets and key messages. Fast-paced montage format with dynamic cuts, bold text overlays, and optional music. 4-section structure: Cold Open, Build, Peak, Land. 4 tone presets. Beat-sync cuts when music is provided. Built on HyperFrames (GSAP + headless Chromium + FFmpeg). Trigger when user says "sizzle reel", "hype video", "highlight reel", "launch hype", "conference opener", "event promo video", "investor pitch video", or "brand video montage".'
 compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
