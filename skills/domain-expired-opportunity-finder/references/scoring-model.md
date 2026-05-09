@@ -107,9 +107,12 @@ topic close enough to the target niche to make that plausible?
 - 2–4: Weak overlap, redirect would be a stretch
 - 0–1: No meaningful topic continuity — redirect not recommended
 
-**Key Constraint:** If `intended_use` is set to `rebuild`, this dimension
-is scored but does not penalize the overall opportunity_score. If `intended_use`
-is `redirect`, this dimension's weight effectively doubles in the recommendation logic.
+**Key Constraint:** `redirect_suitability` is always included in `opportunity_score`
+regardless of `intended_use`. When `intended_use` is `rebuild`, a low
+`redirect_suitability` score does **not** trigger the `redirect_mismatch` flag
+or lower the recommendation — it is scored and summed normally. When
+`intended_use` is `redirect`, a score below 4/10 triggers the `redirect_mismatch`
+flag and caps the recommendation at `rebuild-only-review`.
 
 ---
 

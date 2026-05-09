@@ -50,7 +50,7 @@ To request audit mode, the user says: "run in audit mode" or "show all candidate
       "why_risky": "Human-readable rationale for caution, even for selected domains."
     }
   ],
-  "guardrails_disclaimer": "These results are research recommendations, not guarantees of SEO value. Redirect analysis should only be considered when strong topic continuity exists. Always perform manual due diligence before acquisition."
+  "guardrails_disclaimer": "These results are research recommendations, not guarantees of SEO value. Redirect analysis should only be considered when strong topic continuity exists between the expired domain and your target site. Search engine algorithms change frequently. Always perform manual due diligence — including checking current index status, reviewing the full backlink profile with a commercial tool, and verifying domain history — before making any acquisition decision. This skill does not endorse or facilitate manipulative SEO practices."
 }
 ```
 
@@ -181,7 +181,7 @@ Includes all fields from Shortlist Mode, plus:
       "why_risky": "Historical topic (project management SaaS) does not closely match developer tools. Redirect not recommended — topic continuity is weak."
     }
   ],
-  "guardrails_disclaimer": "These results are research recommendations, not guarantees of SEO value. Redirect analysis should only be considered when strong topic continuity exists. Always perform manual due diligence before acquisition."
+  "guardrails_disclaimer": "These results are research recommendations, not guarantees of SEO value. Redirect analysis should only be considered when strong topic continuity exists between the expired domain and your target site. Search engine algorithms change frequently. Always perform manual due diligence — including checking current index status, reviewing the full backlink profile with a commercial tool, and verifying domain history — before making any acquisition decision. This skill does not endorse or facilitate manipulative SEO practices."
 }
 ```
 

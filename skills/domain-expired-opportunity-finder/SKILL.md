@@ -1,12 +1,6 @@
 ---
 name: domain-expired-opportunity-finder
-description: >-
-  Evaluates expired domain candidates against a target niche, scores them by
-  topical relevance, historical activity level, history cleanliness, and redirect
-  suitability, then outputs a ranked shortlist with explainable reasoning and
-  risk flags. Use when asked to find expired domains, evaluate domain
-  acquisition opportunities, triage expired domain lists, assess redirect
-  candidates for SEO, or filter expired domains by niche relevance.
+description: Evaluates expired domain candidates against a target niche, scores them by topical relevance, historical activity level, and history cleanliness, then outputs a ranked shortlist with explainable reasoning and risk flags.
 compatibility: [claude-code, gemini-cli, github-copilot]
 author: ajaycodesitbetter
 version: 1.0.0
@@ -162,20 +156,24 @@ Run these checks sequentially per domain.
 
 ### 4a: Wayback CDX API — History Snapshots
 
-Query the Wayback Machine for historical snapshots:
+Query the Wayback Machine for all historical snapshots. We use `limit=100000`
+and explicit `from`/`to` parameters are intentionally omitted so that CDX
+returns snapshots from the full lifetime of the domain. The results are sorted
+ascending by timestamp (oldest first) so `first_capture` and `last_capture`
+are accurate:
 
 ```bash
-curl -s "https://web.archive.org/cdx/search/cdx?url=DOMAIN_HERE&output=json&fl=timestamp,statuscode,original&collapse=timestamp:6&limit=50" \
+curl -s "https://web.archive.org/cdx/search/cdx?url=DOMAIN_HERE&output=json&fl=timestamp,statuscode&collapse=timestamp:6&limit=100000" \
   | python3 -c "
 import sys, json
 
 try:
     data = json.load(sys.stdin)
     if len(data) <= 1:
-        print(json.dumps({'domain': 'DOMAIN_HERE', 'snapshots': 0, 'first_capture': null, 'last_capture': null, 'status_codes': {}, 'years_active': 0}))
+        print(json.dumps({'domain': 'DOMAIN_HERE', 'snapshots': 0, 'first_capture': None, 'last_capture': None, 'status_codes': {}, 'years_active': 0}))
     else:
-        rows = data[1:]  # skip header
-        timestamps = [r[0] for r in rows]
+        rows = data[1:]  # skip header row
+        timestamps = [r[0] for r in rows]  # already ascending (oldest first)
         statuses = [r[1] for r in rows]
         status_counts = {}
         for s in statuses:
@@ -221,40 +219,52 @@ Replace `LATEST_TIMESTAMP` with the most recent timestamp from Step 4a.
 
 ### 4c: RDAP Lookup — Registration Status
 
-Use the cross-platform HTTP-based RDAP standard (replaces OS-dependent WHOIS):
+Use the cross-platform HTTP-based RDAP standard (replaces OS-dependent WHOIS).
+An HTTP 404 from RDAP means the domain is not registered (i.e. it is genuinely
+available or untracked) — that is distinct from a network failure. Handle both
+cases explicitly:
 
 ```bash
 python3 -c "
-import urllib.request, json
+import urllib.request, urllib.error, json
 
 domain = 'DOMAIN_HERE'
 try:
-    req = urllib.request.Request(f'https://rdap.org/domain/{domain}', headers={'User-Agent': 'Mozilla/5.0'})
+    req = urllib.request.Request(
+        f'https://rdap.org/domain/{domain}',
+        headers={'User-Agent': 'Mozilla/5.0'}
+    )
     with urllib.request.urlopen(req, timeout=10) as response:
         data = json.loads(response.read().decode())
-        
+
     registrar = 'unknown'
     created = 'unknown'
-    
+
     for entity in data.get('entities', []):
         if 'registrar' in entity.get('roles', []):
             try:
                 registrar = entity.get('vcardArray', [[]])[1][0][3]
-            except:
+            except Exception:
                 pass
-                
+
     for event in data.get('events', []):
         if event.get('eventAction') == 'registration':
             created = event.get('eventDate', 'unknown')
-            
+
     print(json.dumps({
         'domain': domain,
         'status': 'registered',
         'registrar': registrar,
         'created': created
     }))
-except Exception as e:
-    print(json.dumps({'domain': domain, 'error': 'rdap_failed'}))
+except urllib.error.HTTPError as e:
+    if e.code == 404:
+        # Domain has no RDAP object — likely unregistered or not in RDAP coverage
+        print(json.dumps({'domain': domain, 'status': 'unregistered_or_no_rdap_object'}))
+    else:
+        print(json.dumps({'domain': domain, 'error': f'rdap_http_error_{e.code}'}))
+except Exception:
+    print(json.dumps({'domain': domain, 'error': 'rdap_lookup_failed'}))
 "
 ```
 
@@ -290,10 +300,14 @@ print(json.dumps({
 "
 ```
 
-### 4e: LLM Niche-Relevance Assessment (if LLM_API_KEY is set)
+### 4e: Gemini LLM Niche-Relevance Assessment (if LLM_API_KEY is set)
 
 If the LLM API key is configured, batch all candidates with their collected
-signals and ask for a contextual niche-relevance assessment:
+signals and ask for a contextual niche-relevance assessment.
+
+**Note:** The request/response format below uses the **Gemini API** (`generateContent`
+format). It is not compatible with OpenAI-style endpoints without modification.
+If you use a different provider, you must adapt the JSON body and response parsing.
 
 ```bash
 cat > /tmp/domain-relevance-request.json << 'ENDJSON'
@@ -320,19 +334,26 @@ Replace `DOMAIN_SIGNALS_AND_NICHE_CONTEXT_HERE` with:
 - The target niche and seed keywords
 - For each candidate: domain name, historical title, description, keyword match data
 
-Send the request using the configured LLM endpoint (default Gemini, but any
-OpenAI-compatible endpoint works with appropriate URL adjustment):
+Send the request to the Gemini API:
 
 ```bash
 curl -s -X POST \
   "${LLM_API_ENDPOINT:-https://generativelanguage.googleapis.com/v1beta}/models/${LLM_MODEL:-gemini-2.0-flash}:generateContent?key=$LLM_API_KEY" \
   -H "Content-Type: application/json" \
   -d @/tmp/domain-relevance-request.json \
-  | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['candidates'][0]['content']['parts'][0]['text'])"
+  | python3 -c "
+import sys, json
+try:
+    d = json.load(sys.stdin)
+    text = d['candidates'][0]['content']['parts'][0]['text']
+    print(text)
+except (KeyError, IndexError, json.JSONDecodeError) as e:
+    print(json.dumps({'error': 'llm_response_parse_failed', 'detail': str(e)}))
+"
 ```
 
-If the LLM call fails, log the error and continue with rule-based scoring only.
-Do not stop the workflow.
+If the LLM call or response parsing fails, log the error and continue with
+rule-based scoring only. Do not stop the workflow.
 
 After all signal collection, state:
 "Signal collection complete for [N] candidates. [M] Wayback hits, [K] RDAP lookups succeeded."
@@ -453,7 +474,11 @@ breakdowns including rejection reasons.
 **Disclaimer:** These results are research recommendations, not guarantees
 of SEO value. Redirect analysis should only be considered when strong
 topic continuity exists between the expired domain and your target site.
-Always perform manual due diligence before acquisition.
+Search engine algorithms change frequently. Always perform manual due
+diligence — including checking current index status, reviewing the full
+backlink profile with a commercial tool, and verifying domain history —
+before making any acquisition decision. This skill does not endorse or
+facilitate manipulative SEO practices.
 ```
 
 **Save the structured JSON output:**

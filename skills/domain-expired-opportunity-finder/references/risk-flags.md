@@ -99,7 +99,7 @@ candidate domain. Risk flags serve two purposes:
 
 ### `suspicious_registrar`
 - **Severity:** Medium
-- **Trigger:** WHOIS data shows the domain was registered through a registrar
+- **Trigger:** Registration data (RDAP) shows the domain was registered through a registrar
   commonly associated with bulk domain spam operations (pattern-matched against
   a known list of high-spam registrars)
 - **Effect:** Lowers confidence by one step. Adds note in `why_risky`.
