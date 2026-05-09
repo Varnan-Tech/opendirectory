@@ -1,0 +1,58 @@
+{
+  "skill_name": "domain-expired-opportunity-finder",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Find expired domain opportunities in the developer tools niche. Evaluate these candidates: devtoolsweekly.com, codeshipnews.io, stackforgeapp.com, quickseorank.net, bestcheaphosting247.com",
+      "expected_output": "Agent checks environment: confirms curl and python are available. Checks LLM_API_KEY (set). Reports scoring mode: llm-enhanced. Collects target_niche='developer tools', extracts seed keywords automatically. Normalizes 5 candidates (all valid, 0 removed). For each candidate: queries Wayback CDX API with 2-second rate limiting, fetches most recent snapshot for page title extraction, runs WHOIS lookup, performs domain string keyword analysis, sends batch to LLM for niche-relevance assessment. Scores all 5 across 6 dimensions using references/scoring-model.md. Applies risk flags per references/risk-flags.md. devtoolsweekly.com and codeshipnews.io should score highest (strong topical fit). quickseorank.net and bestcheaphosting247.com should be rejected (topic_mismatch). stackforgeapp.com should get rebuild-only-review or review. Output includes why_selected AND why_risky for each shortlisted domain. Guardrails disclaimer present at end. JSON saved to docs/expired-domain-intel/YYYY-MM-DD.json.",
+      "files": [
+        "references/scoring-model.md",
+        "references/risk-flags.md",
+        "references/output-format.md",
+        "references/guardrails.md"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Evaluate these expired domains for my AI SaaS niche: mlpipeline.io, datascience-hub.com, cheapcarinsurance99.com",
+      "expected_output": "Agent checks environment: LLM_API_KEY is NOT set. Reports: 'Running in rule-based-only mode. Set LLM_API_KEY for enhanced niche-relevance scoring.' Does not crash. Proceeds with rule-based scoring: domain string keyword matching against 'AI SaaS' and auto-extracted seed keywords, Wayback CDX history analysis, WHOIS lookups. mlpipeline.io and datascience-hub.com should score reasonably on topical relevance via keyword overlap. cheapcarinsurance99.com should be rejected with topic_mismatch flag. Confidence levels may be lower than LLM-enhanced mode due to less nuanced relevance assessment. scoring_mode field in output reads 'rule-based-only'. All other output structure remains identical. Disclaimer present.",
+      "files": [
+        "references/scoring-model.md",
+        "references/output-format.md"
+      ],
+      "setup": "LLM_API_KEY not set in environment"
+    },
+    {
+      "id": 3,
+      "prompt": "Find expired domain opportunities in the developer tools niche. Run with the example set.",
+      "expected_output": "Agent loads the built-in demo candidate set: devtoolsweekly.com, codeshipnews.io, stackforgeapp.com, quickseorank.net, bestcheaphosting247.com, cloudbuildpro.dev, reactwidgetlib.com, megadealsshop.xyz. Normalizes all 8 (all valid). Evaluates all 8. Expected results: devtoolsweekly.com, codeshipnews.io, cloudbuildpro.dev, and reactwidgetlib.com should score well (topical fit to developer tools). stackforgeapp.com should get rebuild-only-review (adjacent but not direct match). quickseorank.net, bestcheaphosting247.com, megadealsshop.xyz should be rejected (topic_mismatch and/or spam signals). Shortlist should contain 3-5 domains. Rejected count should be 3-5. Output is selective, not permissive.",
+      "files": [
+        "references/scoring-model.md",
+        "references/risk-flags.md",
+        "references/output-format.md",
+        "references/guardrails.md"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Evaluate paymentsdaily.com for the fintech niche. I want to redirect it to my fintech blog.",
+      "expected_output": "Agent sets intended_use='redirect'. Normalizes 1 candidate. Collects signals for paymentsdaily.com. If Wayback shows the domain was about payment news/fintech: topical_relevance scores high, redirect_suitability should be medium-to-high (topic continuity between payments content and fintech blog). Recommended action should be 'review' or 'high-priority-review' depending on signal quality. If Wayback shows sparse or unrelated history: redirect_suitability should be 'low', redirect_mismatch flag applied, recommendation should be 'rebuild-only-review'. Output explicitly addresses redirect suitability assessment since intended_use is 'redirect'. why_risky present even for a good candidate.",
+      "files": [
+        "references/scoring-model.md",
+        "references/risk-flags.md",
+        "references/output-format.md"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Evaluate these domains for cybersecurity niche: xyz123abc.com, q9w8e7r6.net, testdomain000.org",
+      "expected_output": "Agent normalizes 3 candidates. Collects signals. All three domains have nonsensical names with no keyword match to cybersecurity. Wayback CDX returns few or zero snapshots for all three (gibberish domains rarely have meaningful history). WHOIS may show short registration periods. Expected scoring: all three should score below 55 on opportunity_score. All three should receive topic_mismatch flag. Multiple candidates should receive unclear_history flag due to sparse Wayback data. Confidence should be 'low' for all three. All three should be recommended as 'reject'. Zero-result message presented: 'No candidates met the shortlist criteria for the cybersecurity niche.' Suggests widening keywords, trying different candidates, or running in audit mode. Guardrails disclaimer present.",
+      "files": [
+        "references/scoring-model.md",
+        "references/risk-flags.md",
+        "references/output-format.md",
+        "references/guardrails.md"
+      ]
+    }
+  ]
+}
