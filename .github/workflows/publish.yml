@@ -8,14 +8,13 @@ on:
       - 'skills/**'
       - 'packages/cli/**'
       - 'scripts/**'
-      - 'registry.json'
 
 concurrency:
   group: publish-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   publish:
@@ -41,9 +40,6 @@ jobs:
 
       - name: Build registry
         run: pnpm exec tsx scripts/build-registry.ts
-
-      - name: Build Claude Plugin manifest
-        run: pnpm exec tsx scripts/build-claude-plugin.ts
 
       - name: Build CLI (Includes copying skills)
         run: cd packages/cli && pnpm run build
