@@ -3,16 +3,26 @@
   "private": true,
   "scripts": {
     "test": "vitest",
-    "build:plugin": "tsx scripts/build-claude-plugin.ts"
+    "build:plugin": "tsx scripts/build-claude-plugin.ts",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
     "gray-matter": "^4.0.3",
+    "husky": "^9.1.7",
     "image-size": "^2.0.2",
+    "lint-staged": "^17.0.4",
     "sharp": "^0.34.5",
     "tsx": "^4.21.0",
     "typescript": "^5.0.0",
     "vitest": "^1.0.0",
     "zod": "^3.25.76"
+  },
+  "lint-staged": {
+    "skills/**": [
+      "tsx scripts/update-readme.ts",
+      "tsx scripts/update-contributing.ts",
+      "git add README.md CONTRIBUTING.md"
+    ]
   }
 }

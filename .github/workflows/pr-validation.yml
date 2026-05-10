@@ -38,6 +38,15 @@ jobs:
       - name: Validate skills structure
         run: pnpm exec tsx scripts/validate-pr.ts
 
+      - name: Enforce README and CONTRIBUTING updates
+        run: |
+          pnpm exec tsx scripts/update-readme.ts
+          pnpm exec tsx scripts/update-contributing.ts
+          if ! git diff --exit-code README.md CONTRIBUTING.md; then
+            echo "::error::README.md or CONTRIBUTING.md is out of date. Please run 'pnpm exec tsx scripts/update-readme.ts' and 'pnpm exec tsx scripts/update-contributing.ts' locally and commit the changes."
+            exit 1
+          fi
+
       - name: Test registry builder
         run: pnpm exec tsx scripts/build-registry.ts
 

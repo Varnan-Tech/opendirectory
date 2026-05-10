@@ -1,4 +1,4 @@
-node_modules/
+﻿node_modules/
 dist/
 coverage/
 *.log
@@ -8,3 +8,4 @@ coverage/
 .cache
 preview.html
 scripts/__pycache__/
+.husky/_

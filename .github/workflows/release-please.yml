@@ -1,0 +1,63 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: node
+          package-name: "@opendirectory.dev/skills"
+          path: packages/cli
+          changelog-path: CHANGELOG.md
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
+
+      # The steps below ONLY run if the Release PR was merged
+      - name: Checkout code
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        if: ${{ steps.release.outputs.release_created }}
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created }}
+        run: pnpm install
+
+      - name: Build registry & Claude Plugin
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          pnpm exec tsx scripts/build-registry.ts
+          pnpm exec tsx scripts/build-claude-plugin.ts
+
+      - name: Build CLI
+        if: ${{ steps.release.outputs.release_created }}
+        run: cd packages/cli && pnpm run build
+
+      - name: Publish to NPM
+        if: ${{ steps.release.outputs.release_created }}
+        run: cd packages/cli && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
