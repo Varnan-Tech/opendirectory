@@ -5,7 +5,7 @@
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=53+pre-built+AI+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;GTM+%7C+Marketing+%7C+Growth+Automation;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=54+pre-built+AI+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;GTM+%7C+Marketing+%7C+Growth+Automation;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
 
 <br />
@@ -13,7 +13,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-53-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-54-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-7-blueviolet.svg?style=flat-square)](#quick-start)
@@ -34,7 +34,7 @@ OpenDirectory is a central library of AI Agent Skills. Each skill is a pre-built
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*Explore our growing library of 53 specialized skills*
+*Explore our growing library of 54 specialized skills*
 
 ### 2. Pick your agent
 ```bash
@@ -218,11 +218,11 @@ Run these commands inside Claude Code:
 
 ## All Skills
 
-53 skills across GTM, growth automation, technical marketing, and developer tooling.
+54 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
-<summary><b>53 skills across 7 categories</b> — click to expand</summary>
+<summary><b>54 skills across 8 categories</b> — click to expand</summary>
 <br>
 
 <table>
@@ -503,6 +503,13 @@ Run these commands inside Claude Code:
   <tr>
     <td><a href="skills/schema-markup-generator"><code>schema-markup-generator</code></a></td>
     <td>Generate valid JSON-LD structured data for any webpage. The agent crawls the page, detects which schema types apply, and outputs a script tag ready to paste into your HTML. Optionally opens a GitHub PR with the markup injected.</td>
+    <td><code>1.0.0</code></td>
+  </tr>
+  <tr><th colspan="3" align="left">Other</th></tr>
+  <tr><th>Skill</th><th>Description</th><th>Version</th></tr>
+  <tr>
+    <td><a href="skills/domain-expired-opportunity-finder"><code>domain-expired-opportunity-finder</code></a></td>
+    <td>Evaluate expired domain candidates against your niche. Get a conservative,</td>
     <td><code>1.0.0</code></td>
   </tr>
 </table>
