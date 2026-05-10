@@ -1,9 +1,31 @@
 # domain-expired-opportunity-finder
 
-<img width="1280" height="640" alt="domain-expired-opportunity-finder" src="cover.png" />
-
 Evaluate expired domain candidates against your niche. Get a conservative,
 explainable shortlist with risk flags — not another noisy domain list.
+
+## Installation
+
+```bash
+npx "@opendirectory.dev/skills" install domain-expired-opportunity-finder --target claude
+```
+
+### Installation in Claude Desktop App
+
+#### Video Tutorial
+Watch this quick video to see how it's done:
+
+https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
+
+#### Step 1: Download the skill from GitHub
+1. Copy the URL of this specific skill folder from your browser's address bar.
+2. Go to [download-directory.github.io](https://download-directory.github.io/).
+3. Paste the URL and click **Enter** to download.
+
+#### Step 2: Install the Skill in Claude
+1. Open your **Claude desktop app**.
+2. Go to the sidebar on the left side and click on the **Customize** section.
+3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
+4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
 
 ## What It Does
 
@@ -162,7 +184,6 @@ domain-expired-opportunity-finder/
 ├── SKILL.md               # Agent workflow instructions
 ├── README.md              # This file
 ├── .env.example           # API key template (optional)
-├── cover.png              # Dark-mode cover image
 ├── evals/
 │   └── evals.json         # 5 test scenarios
 └── references/
@@ -175,23 +196,3 @@ domain-expired-opportunity-finder/
 ## License
 
 MIT
-
-## Installation in Claude Desktop App
-
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
-### Step 1: Download the skill from GitHub
-1. Copy the URL of this specific skill folder from your browser's address bar.
-2. Go to [download-directory.github.io](https://download-directory.github.io/).
-3. Paste the URL and click **Enter** to download.
-
-### Step 2: Install the Skill in Claude
-1. Open your **Claude desktop app**.
-2. Go to the sidebar on the left side and click on the **Customize** section.
-3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
-4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
-
-> **Note:** After the PR is merged, the cover image URL above will be updated to a GitHub-hosted link. The local `cover.png` file is included for preview purposes.
