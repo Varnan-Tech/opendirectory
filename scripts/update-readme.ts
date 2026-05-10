@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import matter from 'gray-matter';
 
 const SKILLS_DIR = path.join(__dirname, '../skills');
 const REGISTRY_PATH = path.join(__dirname, '../packages/cli/registry.json');
@@ -131,6 +132,17 @@ function sanitizeDesc(raw: string): string {
     .trim() || 'No description provided.';
 }
 
+function getVersionFromSkillMd(name: string): string | null {
+  const skillMdPath = path.join(SKILLS_DIR, name, 'SKILL.md');
+  if (!fs.existsSync(skillMdPath)) return null;
+  try {
+    const content = fs.readFileSync(skillMdPath, 'utf-8');
+    const { data } = matter(content);
+    if (data.version) return String(data.version);
+  } catch (_) {}
+  return null;
+}
+
 function getVersionFromRegistry(registry: SkillEntry[], name: string): string {
   const entry = registry.find(s => s.name === name);
   if (entry?.version) return entry.version;
@@ -142,6 +154,10 @@ function getVersionFromRegistry(registry: SkillEntry[], name: string): string {
       if (pkg.version) return pkg.version;
     } catch (_) {}
   }
+
+  const skillMdVersion = getVersionFromSkillMd(name);
+  if (skillMdVersion) return skillMdVersion;
+
   return '0.0.1';
 }
 
