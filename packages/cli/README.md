@@ -1,4 +1,4 @@
-﻿# @opendirectory.dev/skills
+# @opendirectory.dev/skills
 
 The official CLI for installing and managing OpenDirectory skills for AI agents (Claude, Cursor, etc.).
 
