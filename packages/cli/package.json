@@ -6,7 +6,7 @@
   "files": [
     "dist",
     "skills",
-    "README.md"
+    "registry.json"
   ],
   "bin": {
     "opendirectory": "dist/index.js"
