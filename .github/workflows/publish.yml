@@ -1,0 +1,60 @@
+name: Publish Registry and CLI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'skills/**'
+      - 'packages/cli/**'
+      - 'scripts/**'
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build registry
+        run: pnpm exec tsx scripts/build-registry.ts
+
+      - name: Build CLI (Includes copying skills)
+        run: cd packages/cli && pnpm run build
+
+      - name: Publish to NPM
+        run: |
+          cd packages/cli
+          # Get the currently published version from NPM
+          LATEST_VERSION=$(npm view @opendirectory.dev/skills version || echo "0.0.0")
+          
+          # Force our local package.json to match the NPM version, then bump it locally
+          npm version $LATEST_VERSION --no-git-tag-version --allow-same-version
+          npm version patch --no-git-tag-version
+          
+          # Publish the bumped version
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
