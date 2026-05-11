@@ -123,7 +123,11 @@ linkedin-job-post-to-buyer-pain-map/
 
 MIT
 
-## Installation in Claude Desktop App
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install linkedin-job-post-to-buyer-pain-map --target claude
+```
 
 ### Video Tutorial
 Watch this quick video to see how it's done:
