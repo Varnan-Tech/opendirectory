@@ -145,4 +145,4 @@ https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
 4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
 
-> **Note:** Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
+> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
