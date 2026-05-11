@@ -21,6 +21,10 @@ This skill provides the infrastructure to host the massive 80GB TRIBE v2 model p
 
 ## Install
 
+```bash
+npx "@opendirectory.dev/skills" install meta-tribeV2-skill --target claude
+```
+
 ### Video Tutorial
 Watch this quick video to see how it's done:
 

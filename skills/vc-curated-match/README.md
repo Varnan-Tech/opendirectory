@@ -10,8 +10,34 @@ The `vc-curated-match` is an OpenDirectory skill that connects founders and open
 
 **Positioning Note**: This skill is intentionally different from live-research investor discovery workflows. It provides deterministic, curated VC matching from a verified static dataset. It is best for fast, low-cost, repeatable first-pass investor targeting.
 
-## Prerequisites
-- Python 3.10+ (Standard Library only)
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install vc-curated-match --target claude
+```
+
+### Video Tutorial
+Watch this quick video to see how it's done:
+
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
+
+### Step 1: Download the skill from GitHub
+1. Click the **Code** button on this repo's GitHub page.
+2. Select **Download ZIP** to download the repository.
+3. Extract the ZIP file on your computer.
+
+### Step 2: Install the Skill in Claude
+1. Open your **Claude desktop app**.
+2. Go to the sidebar on the left side and click on the **Customize** section.
+3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
+4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
+
+> **Note:** Make sure you are uploading the folder that contains the `SKILL.md` file!
+
+---
+
+## Requirements
+- Python 3.10+ (Standard Library only used internally by the agent)
 
 ## Implementation Specs
 - Pulls from a static `data/vc_funds.json` dataset to guarantee data validity.
