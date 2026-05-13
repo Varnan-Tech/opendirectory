@@ -16,7 +16,7 @@
   },
   "assets": {
     "favicon": "https://www.opendirectory.dev/favicon.png",
-    "logoUrl": "https://raw.githubusercontent.com/openclaw/openclaw/refs/heads/main/docs/assets/openclaw-logo-text-dark.png",
+    "logoUrl": "https://www.opendirectory.dev/opendirectorydev.webp",
     "localPaths": {
       "favicon": "assets/favicon.png",
       "logo": "assets/logo.png"

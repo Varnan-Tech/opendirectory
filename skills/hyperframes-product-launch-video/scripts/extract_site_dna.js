@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
+import http from 'http';
 import https from 'https';
 import { URL } from 'url';
 
@@ -126,6 +127,7 @@ async function extractSiteDNA() {
 
   } catch (error) {
     console.error('[ERROR] Error extracting site DNA:', error.message);
+    process.exit(1);
   } finally {
     await browser.close();
   }
@@ -133,16 +135,33 @@ async function extractSiteDNA() {
 
 async function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
-    const file = fs.createWriteStream(dest);
-    https.get(url, (response) => {
-      if (response.statusCode !== 200) {
-        reject(new Error(`Failed to download file: ${response.statusCode}`));
-        return;
+    const protocol = url.startsWith('https') ? https : http;
+    
+    protocol.get(url, (response) => {
+      // Handle redirects
+      if ([301, 302, 303, 307, 308].includes(response.statusCode) && response.headers.location) {
+        let redirectUrl = response.headers.location;
+        if (!redirectUrl.startsWith('http')) {
+          const baseUrl = new URL(url);
+          redirectUrl = `${baseUrl.protocol}//${baseUrl.host}${redirectUrl}`;
+        }
+        return downloadFile(redirectUrl, dest).then(resolve).catch(reject);
       }
+      
+      if (response.statusCode !== 200) {
+        return reject(new Error(`Failed to download file: ${response.statusCode}`));
+      }
+      
+      const file = fs.createWriteStream(dest);
       response.pipe(file);
       file.on('finish', () => {
         file.close();
         resolve();
+      });
+      file.on('error', (err) => {
+        file.close();
+        fs.unlink(dest, () => {});
+        reject(err);
       });
     }).on('error', (err) => {
       fs.unlink(dest, () => {});
