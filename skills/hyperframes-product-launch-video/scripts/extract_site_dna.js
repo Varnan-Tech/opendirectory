@@ -77,7 +77,13 @@ async function extractSiteDNA() {
     });
 
     console.log('[INFO] Downloading assets...');
-    const assetsDir = path.join(process.cwd(), 'assets');
+    const root = process.cwd();
+    if (fs.existsSync(path.join(root, 'SKILL.md'))) {
+      console.error('[ERROR] You are running this inside the skill directory. Please run this in your target project folder.');
+      process.exit(1);
+    }
+    
+    const assetsDir = path.join(root, 'assets');
     if (!fs.existsSync(assetsDir)) {
       fs.mkdirSync(assetsDir, { recursive: true });
     }

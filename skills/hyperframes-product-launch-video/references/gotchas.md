@@ -24,8 +24,12 @@ Avoid these common pitfalls to ensure your video renders perfectly.
 
 ## 6. FFmpeg Installation
 **Problem**: Rendering fails because FFmpeg is missing from the environment.
-**Solution**: Instruct the user to install FFmpeg locally:
-```powershell
+**Solution**: Provide OS-agnostic instructions for installing FFmpeg. The renderer typically looks for `ffmpeg` in your system `PATH`.
+- **macOS:** `brew install ffmpeg`
+- **Linux:** `sudo apt install ffmpeg`
+- **Windows:** `choco install ffmpeg`
+If you cannot install it system-wide, use the local binary wrapper:
+```bash
 npm install @ffmpeg-installer/ffmpeg
 ```
-Then copy the `ffmpeg.exe` to the project root and ensure it's in the path or referenced correctly in the render script.
+Ensure your render script is configured to use the path provided by `require('@ffmpeg-installer/ffmpeg').path`.

@@ -74,15 +74,19 @@ To get started with Hyperframes and this skill in a target project, follow these
 
 ## FFmpeg Requirement
 
-FFmpeg is essential for the final video rendering process. If the render command fails due to missing FFmpeg, you can install it locally within your project:
+FFmpeg is essential for the final video rendering process. Hyperframes uses FFmpeg to stitch screenshots and audio together. It expects the `ffmpeg` binary to be available in your system's `PATH`.
 
-1. **Install the FFmpeg binary**:
+1. **System-wide Installation (Recommended)**:
+   - **macOS:** `brew install ffmpeg`
+   - **Linux:** `sudo apt install ffmpeg`
+   - **Windows:** `choco install ffmpeg`
+
+2. **Local Fallback**:
+   If you cannot install FFmpeg globally, you can install the binary locally:
    ```bash
    npm install @ffmpeg-installer/ffmpeg
    ```
-
-2. **Configure Path**:
-   Ensure the binary is accessible. You may need to copy the executable to your project root or update your environment variables to point to the `node_modules/@ffmpeg-installer` directory.
+   *Note: Ensure your build script is configured to resolve this local path using `require('@ffmpeg-installer/ffmpeg').path`.*
 
 ## Leveraging Official Skills
 
@@ -101,6 +105,7 @@ npx skills add heygen-com/hyperframes
 
 ## What's Inside & Key Features
 - **Brand DNA Extraction**: Automatically pulls colors and fonts from your site.
+  - *To run manually:* Navigate to the `scripts/` directory, run `npm install`, and execute `node extract_site_dna.js https://your-website.com`.
 - **Elite Workflow**: From brand DNA extraction to final render.
 - **Art Direction Template**: A scene-by-scene planning guide.
 - **Perfect SFX Sync**: Generates a sound design shopping list and syncs it to the millisecond.

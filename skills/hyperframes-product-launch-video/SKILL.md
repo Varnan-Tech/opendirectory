@@ -1,5 +1,5 @@
 ---
-name: product-launch-video
+name: hyperframes-product-launch-video
 description: Elite agent skill for creating premium "Product Launch Videos" using Hyperframes. Supports brand DNA extraction, scene-by-scene art direction, premium motion design (Apple-style camera, glassmorphism, typewriter physics), and perfect sound design sync. Use when asked to create a product launch video, promo video, or high-end feature announcement.
 ---
 

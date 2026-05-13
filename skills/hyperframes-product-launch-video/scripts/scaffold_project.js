@@ -3,6 +3,12 @@ import path from 'path';
 
 function scaffoldProject() {
   const root = process.cwd();
+  
+  if (fs.existsSync(path.join(root, 'SKILL.md'))) {
+    console.error('[ERROR] You are running this inside the skill directory. Please run this in your target project folder.');
+    process.exit(1);
+  }
+
   const dirs = ['assets', 'compositions', 'references', 'scripts'];
   
   console.log('[INFO] Initializing Product Launch Video project structure...');
