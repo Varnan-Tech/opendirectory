@@ -1,6 +1,6 @@
 ---
 name: twitter-GTM-find-Skill
-description: End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP) using Gemini's native Google Search Grounding. Use this skill when OpenClaw needs to find developer-first, funded startups actively hiring for GTM, DevRel, or Growth roles.
+description: End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, or optionally Hermes Tweet as a native Hermes Agent X/Twitter plugin, then validating them against an Ideal Customer Profile (ICP) using Gemini's native Google Search Grounding. Use this skill when OpenClaw needs to find developer-first, funded startups actively hiring for GTM, DevRel, or Growth roles.
 ---
 
 # Twitter GTM Find Skill

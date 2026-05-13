@@ -80,7 +80,7 @@ exports such as export followers during this workflow.
 
 Keep the pipeline's validation step intact: export the Hermes Tweet findings
 into the same candidate review shape, then run the ICP checks before any
-outreach. Post tweets, post replies, send DMs, and other automate X actions
+outreach. Post tweets, post replies, send DMs, and other automated X actions
 should stay confirmation-gated and outside unattended discovery runs.
 
 ## Output
