@@ -105,7 +105,7 @@ npx skills add heygen-com/hyperframes
 
 ## What's Inside & Key Features
 - **Brand DNA Extraction**: Automatically pulls colors and fonts from your site.
-  - *To run manually:* Navigate to the `scripts/` directory, run `npm install`, and execute `node extract_site_dna.js https://your-website.com`.
+  - *To run manually:* Navigate to the `scripts/` directory, run `npm install` (this installs playwright and automatically downloads the Chromium browser binary), and execute `node extract_site_dna.js https://your-website.com`.
 - **Elite Workflow**: From brand DNA extraction to final render.
 - **Art Direction Template**: A scene-by-scene planning guide.
 - **Perfect SFX Sync**: Generates a sound design shopping list and syncs it to the millisecond.

@@ -24,17 +24,17 @@ function scaffoldProject() {
   });
 
   const placeholders = [
-    'sfx-whoosh.wav',
-    'sfx-impact.wav',
-    'sfx-shimmer.wav',
-    'bg-music-placeholder.mp3'
+    'sfx-whoosh.txt',
+    'sfx-impact.txt',
+    'sfx-shimmer.txt',
+    'bg-music-placeholder.txt'
   ];
 
   placeholders.forEach(file => {
     const filePath = path.join(root, 'assets', file);
     if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, '');
-      console.log(`[SUCCESS] Created placeholder asset: ${file}`);
+      fs.writeFileSync(filePath, 'PLACEHOLDER - Replace with actual audio file');
+      console.log(`[SUCCESS] Created placeholder asset reference: ${file}`);
     }
   });
 
