@@ -1,0 +1,27 @@
+{
+  "colors": {
+    "primary": "lab(7.78201% -.0000149012 0)",
+    "secondary": "lab(96.52% -.0000298023 .0000119209)",
+    "background": "lab(100% 0 0)",
+    "text": "lab(2.75381 0 0)",
+    "accent": "lab(96.52% -.0000298023 .0000119209)"
+  },
+  "typography": {
+    "body": "Geist, \"Geist Fallback\", system-ui, sans-serif, system-ui, sans-serif",
+    "heading": "theaterFont, \"theaterFont Fallback\", system-ui, sans-serif"
+  },
+  "copy": {
+    "headline": "THE GTM SKILLS\nFOR YOUR AGENT.",
+    "subheadline": "The unified home for open-source GTM agent skills and automation pipelines designed for autonomous agents."
+  },
+  "assets": {
+    "favicon": "https://www.opendirectory.dev/favicon.png",
+    "logoUrl": "https://raw.githubusercontent.com/openclaw/openclaw/refs/heads/main/docs/assets/openclaw-logo-text-dark.png",
+    "localPaths": {
+      "favicon": "assets/favicon.png",
+      "logo": "assets/logo.png"
+    }
+  },
+  "extractedAt": "2026-05-05T08:26:46.907Z",
+  "sourceUrl": "https://opendirectory.dev"
+}

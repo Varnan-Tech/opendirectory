@@ -5,7 +5,7 @@
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=54+pre-built+AI+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;GTM+%7C+Marketing+%7C+Growth+Automation;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=55+pre-built+AI+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;GTM+%7C+Marketing+%7C+Growth+Automation;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
 
 <br />
@@ -13,7 +13,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-54-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-55-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-7-blueviolet.svg?style=flat-square)](#quick-start)
@@ -34,7 +34,7 @@ OpenDirectory is a central library of AI Agent Skills. Each skill is a pre-built
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*Explore our growing library of 54 specialized skills*
+*Explore our growing library of 55 specialized skills*
 
 ### 2. Pick your agent
 ```bash
@@ -218,11 +218,11 @@ Run these commands inside Claude Code:
 
 ## All Skills
 
-54 skills across GTM, growth automation, technical marketing, and developer tooling.
+55 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
-<summary><b>54 skills across 8 categories</b> — click to expand</summary>
+<summary><b>55 skills across 8 categories</b> — click to expand</summary>
 <br>
 
 <table>
@@ -257,6 +257,11 @@ Run these commands inside Claude Code:
     <td><a href="skills/graphic-slide-deck"><code>graphic-slide-deck</code></a></td>
     <td>Generate a professionally designed HTML slide deck from a brief, content notes, or an existing PowerPoint. Outputs a browser-ready presentation + optional PDF. Supports 13 named layout types and 8 business style presets.</td>
     <td><code>1.0.0</code></td>
+  </tr>
+  <tr>
+    <td><a href="skills/hyperframes-product-launch-video"><code>hyperframes-product-launch-video</code></a></td>
+    <td>A specialized AI agent skill designed for creating elite, premium product launch videos using the Hyperframes framework. This skill distills months of motion design expertise, brand DNA extraction, and technical debugging into a structured workflow that guides your AI agent.</td>
+    <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/vid-motion-graphics"><code>vid-motion-graphics</code></a></td>
