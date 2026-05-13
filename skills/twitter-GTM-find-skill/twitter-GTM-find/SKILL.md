@@ -1,6 +1,6 @@
 ---
 name: twitter-GTM-find-Skill
-description: End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP) using Gemini's native Google Search Grounding. Use this skill when OpenClaw needs to find developer-first, funded startups actively hiring for GTM, DevRel, or Growth roles.
+description: End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, or optionally Hermes Tweet as a native Hermes Agent X/Twitter plugin, then validating them against an Ideal Customer Profile (ICP) using Gemini's native Google Search Grounding. Use this skill when OpenClaw needs to find developer-first, funded startups actively hiring for GTM, DevRel, or Growth roles.
 ---
 
 # Twitter GTM Find Skill
@@ -22,6 +22,32 @@ A `.env` file must be present at the workspace root with:
 - `APIFY_API_TOKEN` (Apify account access)
 - `GEMINI_API_KEY` (Gemini 3 Flash Preview with Search Grounding)
 - `MAX_POSTS=20` (Optional limit)
+
+## Optional Hermes Tweet Input
+
+If the user is running Hermes Agent with
+[Hermes Tweet](https://github.com/Xquik-dev/hermes-tweet), you may use it as a
+native X/Twitter plugin for the discovery stage while keeping the ICP validation
+stage unchanged.
+
+Install it when needed:
+
+```bash
+hermes plugins install Xquik-dev/hermes-tweet --enable
+```
+
+With `XQUIK_API_KEY` configured, use:
+
+- `tweet_explore` to scrape/search tweets and search Twitter/X for GTM, DevRel,
+  growth, and startup hiring signals
+- `tweet_read` to read tweet replies, look up users, and monitor tweets from
+  promising companies or founders
+- `tweet_action` only for read-side exports such as export followers in this
+  discovery workflow
+
+Convert the findings into the same candidate shape used by the pipeline, then
+run the ICP checklist before ranking leads. Do not post tweets, post replies,
+send DMs, or automate X actions without explicit human confirmation.
 
 ## Outputs
 

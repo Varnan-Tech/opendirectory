@@ -60,6 +60,29 @@ To run the pipeline manually or via an agent:
    bash run_pipeline.sh
    ```
 
+## Optional Hermes Tweet Path
+
+The existing Apify pipeline remains the default end-to-end workflow. For Hermes
+users who already run
+[Hermes Tweet](https://github.com/Xquik-dev/hermes-tweet), the skill can also
+use Hermes Tweet as a native Hermes Agent X/Twitter plugin for the first
+discovery pass:
+
+```bash
+hermes plugins install Xquik-dev/hermes-tweet --enable
+```
+
+After setting `XQUIK_API_KEY`, use `tweet_explore` to scrape/search tweets or
+search Twitter/X for GTM, DevRel, growth, and startup hiring signals. Use
+`tweet_read` to read tweet replies, look up users, and monitor tweets from
+promising founders or company accounts. Use `tweet_action` only for read-side
+exports such as export followers during this workflow.
+
+Keep the pipeline's validation step intact: export the Hermes Tweet findings
+into the same candidate review shape, then run the ICP checks before any
+outreach. Post tweets, post replies, send DMs, and other automated X actions
+should stay confirmation-gated and outside unattended discovery runs.
+
 ## Output
 
 The pipeline generates two temporary files at the root of the repository (which are `.gitignore`d to prevent leaking data):
