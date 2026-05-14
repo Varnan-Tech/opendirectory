@@ -10,7 +10,7 @@ const PKG_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 
 function readPluginVersion(): string {
   const pkg = JSON.parse(fs.readFileSync(PKG_JSON_PATH, 'utf-8'));
-  if (typeof pkg.version !== 'string' || !/^\d+\.\d+\.\d+/.test(pkg.version)) {
+  if (typeof pkg.version !== 'string' || !/^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/.test(pkg.version)) {
     throw new Error(`Root package.json is missing a valid semver "version" field; got: ${JSON.stringify(pkg.version)}`);
   }
   return pkg.version;
