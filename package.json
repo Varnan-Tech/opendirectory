@@ -1,6 +1,7 @@
 {
   "name": "opendirectory-cli-root",
   "private": true,
+  "version": "1.0.1",
   "scripts": {
     "test": "vitest",
     "build:plugin": "tsx scripts/build-claude-plugin.ts",
