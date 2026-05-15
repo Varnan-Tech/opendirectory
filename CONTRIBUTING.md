@@ -46,7 +46,7 @@ skills/my-awesome-skill/
 ```
 
 #### Option B: The Advanced Skill (Highly Recommended)
-Advanced skills are production-grade tools that use external scripts (Python/Node), local databases (SQLite), or complex reference materials. This is what makes OpenDirectory powerful. Look at `skills/position-me` or `skills/stargazer` in this repository for real-world examples.
+Advanced skills are production-grade tools that use external scripts (Python/Node), local databases (SQLite), or complex reference materials. This is what makes OpenDirectory powerful. Look at `skills/position-me` in this repository for a real-world example.
 
 ```text
 skills/my-advanced-skill/
@@ -81,13 +81,9 @@ When the user asks you to generate a cold email:
 ```
 
 **2. The `README.md` File**
-This is the public face of your skill. **It MUST have a dark-mode cover image at the very top.** This image will be automatically extracted and displayed on the main OpenDirectory registry page.
-
-*Tip: You can use the `blog-cover-image-cli` skill already in this registry, or use Midjourney/ChatGPT/Flux to generate a 1280x640 dark-themed technical banner.*
+This is the public face of your skill.
 
 ```markdown
-<img src="https://link-to-your-hosted-image.png" width="100%" alt="cover" />
-
 # My Awesome Skill
 This skill helps marketers automate their cold outreach by...
 
@@ -98,6 +94,10 @@ This skill helps marketers automate their cold outreach by...
 ### Usage
 Once installed, simply type: "Use my-awesome-skill to email john@example.com"
 ```
+
+> **Important:** Every skill's `README.md` MUST include installation steps, how to install via the script, prerequisites, and usage instructions. We have a helper script at `scripts/update_skill_readmes.py` that automatically adds the standard install section (video tutorial + Claude Desktop steps) to all skill READMEs. Run it and verify each README looks correct.
+>
+> This is highly appreciated and helps users get started quickly.
 
 ### Step 5: Test Your Skill Locally
 Before submitting a Pull Request, verify that your skill compiles and installs correctly using our CLI tool.
@@ -116,7 +116,7 @@ If successful, check your `~/.config/opencode/skills/my-awesome-skill` folder to
 1. Commit your changes: `git add .` -> `git commit -m "feat: add my-awesome-skill"`
 2. Push to your fork and open a Pull Request against the main repository.
 3. **Security Scan**: Our automated GitHub Actions will strictly scan your code for formatting and malware.
-4. **AI Review**: A Gemini 3.1 Pro AI agent will review your code diff and leave comments.
+4. **AI Review**: Greptile and GitHub Copilot are going to review your PR if something is off.
 5. **Merge**: If everything passes, a human maintainer will merge your PR, and your skill will instantly be published to NPM and the Claude Marketplace!
 
 ---
@@ -129,7 +129,6 @@ If you want to contribute but aren't sure what to build, pick one of these high-
 - [ ] `who-viewed-my-talk` - Given a conference talk URL (YouTube/Luma/Sessionize), scrapes the comments, likes, and attendee list, cross-references speakers from the event's speaker page, and outputs a warm lead list of people who watched your category of content.
 - [ ] `linkedin-hiring-intent-scanner` - Searches LinkedIn job posts for roles that signal buying intent — e.g., "Head of Developer Relations", "Growth Engineer", "RevOps Manager" — at companies in a given funding stage or industry, and outputs a prioritized list with context on why each company is interesting right now.
 - [x] `npm-downloads-to-leads` - Takes a list of npm package names (yours or competitors'), pulls weekly download trends via the npm API, identifies packages with breakout velocity, and maps the maintainers to Twitter/GitHub profiles. Useful for finding evangelists before they're famous.
-- [ ] `api-error-to-faq-builder` - Pulls open issues from your GitHub repo tagged as "bug" or "question", clusters them by the error message or API endpoint mentioned, and auto-drafts a troubleshooting FAQ in Markdown. The most hated support task, automated.
 - [x] `sdk-adoption-tracker` - Given your SDK name, searches GitHub code search for public repos that import/require it, categorizes them by company/project type, and tracks week-over-week adoption velocity. Real signal of who's building on you — often invisible until you look.
 - [x] `noise-to-linkedin-carousel` - Takes a raw voice note transcript, a rough idea dump, or a messy thread of thoughts, and restructures it into a polished LinkedIn carousel script — slide-by-slide, with a hook slide, 5-7 insight slides, and a CTA slide. Designed for founders who think out loud.
 - [x] `oss-launch-kit` - Given a GitHub repo URL, generates the full launch kit: a Show HN post, a Product Hunt description, 5 Reddit posts tailored to relevant subreddits, a Twitter thread, and a "first week" community engagement plan. Built specifically for open-source product launches.
