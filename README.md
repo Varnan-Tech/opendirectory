@@ -5,7 +5,7 @@
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=55+pre-built+AI+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;GTM+%7C+Marketing+%7C+Growth+Automation;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=55+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
 
 <br />
@@ -26,7 +26,7 @@
 
 ## What is OpenDirectory?
 
-OpenDirectory is a central library of AI Agent Skills. Each skill is a pre-built set of instructions and context you install directly into your AI agent. Install a skill and your agent gains expert-level domain knowledge for complex GTM, marketing, and growth tasks.
+OpenDirectory is a library of agent skills for founders who hate marketing. Each skill is a pre-built set of instructions and context you install directly into your AI agent. Install a skill and your agent gains expert-level domain knowledge for complex GTM, marketing, and growth tasks.
 
 <br>
 
@@ -530,7 +530,7 @@ We welcome skills across GTM, growth automation, and developer tooling.
 
 > **Top contributors receive OpenDirectory swag.** Limited-edition merchandise shipped to you.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the required format and the security validation process.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the required format, the security validation process, and please ensure your skill's README includes installation steps, npx install instructions, prerequisites, and usage examples. We provide a helper script at `scripts/update_skill_readmes.py` to auto-generate the standard install section.
 
 ---
 

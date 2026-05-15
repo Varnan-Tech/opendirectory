@@ -35,7 +35,7 @@ function buildPlugin() {
   const pluginData = {
     name: "opendirectory-gtm-skills",
     version,
-    description: `A collection of ${skillCount} GTM skills for Claude Code`,
+    description: `A collection of ${skillCount} agent skills for founders who hate marketing`,
     author: { name: "Varnan" },
     homepage: "https://github.com/Varnan-Tech/opendirectory",
     repository: "https://github.com/Varnan-Tech/opendirectory",
@@ -48,13 +48,13 @@ function buildPlugin() {
 
   const marketplaceData = {
     name: "opendirectory-marketplace",
-    description: "Official marketplace for OpenDirectory skills",
+    description: "Official marketplace of opendirectory skills, for founders who hate marketing",
     owner: { name: "Varnan" },
     plugins: [
       {
         name: "opendirectory-gtm-skills",
         source: "./",
-        description: `${skillCount} GTM and Marketing Skills`
+        description: `A collection of ${skillCount} agent skills for founders who hate marketing`
       }
     ]
   };
