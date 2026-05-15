@@ -27,15 +27,6 @@ https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
 
-
-## Installation
-
-```bash
-npx "@opendirectory.dev/skills" install domain-expired-opportunity-finder --target claude
-```
-
-#
-
 ## What It Does
 
 - Accepts a target niche and a set of expired domain candidates
