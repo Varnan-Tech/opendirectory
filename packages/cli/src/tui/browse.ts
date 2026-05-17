@@ -4,13 +4,21 @@ import { printAnimatedBanner } from '../banner';
 import { loadRegistry, type Skill } from '../registry';
 import { pickTarget, CancelledError } from './target-picker';
 import { installSkill } from '../install-core';
-import { terminalWidth } from '../tty';
+import { terminalWidth, isInteractive, noColor } from '../tty';
 import { categoryFor, CATEGORY_ORDER } from '../categories';
+import { printRandomTip } from '../tips';
+import { BRAILLE_SPINNER_FRAMES, renderProgressBar } from '../animations';
 
 type BrowseMode = 'all' | 'category';
 
+const BRAND_PURPLE = '#856FE6';
+
 function truncate(text: string, len: number): string {
   return text.length > len ? text.slice(0, len - 3) + '...' : text;
+}
+
+function styledFrame(frame: string): string {
+  return noColor() ? frame : chalk.hex(BRAND_PURPLE)(frame);
 }
 
 function groupSkillsByCategory(skills: Skill[]): Record<string, Skill[]> {
@@ -32,12 +40,15 @@ function groupSkillsByCategory(skills: Skill[]): Record<string, Skill[]> {
 
 async function selectFromAll(skills: Skill[]): Promise<string[] | symbol> {
   return p.autocompleteMultiselect({
-    message: 'Type to filter · Space to select · Enter to confirm',
-    options: skills.map(skill => ({
-      value: skill.name,
-      label: skill.name,
-      hint: truncate(skill.description, 80)
-    })),
+    message: 'Type to filter (try a category like "social" or "video") · Space to select · Enter to confirm',
+    options: skills.map(skill => {
+      const cat = categoryFor(skill.name);
+      return {
+        value: skill.name,
+        label: `${skill.name} ${chalk.dim('[' + cat + ']')}`,
+        hint: truncate(skill.description, 80)
+      };
+    }),
     maxItems: 18,
     required: false
   });
@@ -56,12 +67,13 @@ async function selectFromCategories(skills: Skill[]): Promise<string[] | symbol>
     }));
   }
   p.note(
-    'Navigate with ↑/↓. Press SPACE on a category name to select EVERY skill in that group. ' +
+    'TAB jumps to the next category. SHIFT+TAB jumps back. ' +
+    'Press SPACE on a category name to select every skill in that group. ' +
     'Press SPACE on a single skill to toggle just that one. Press ENTER when done.',
-    'How to select'
+    'Keyboard shortcuts'
   );
   return p.groupMultiselect({
-    message: 'Select skills (SPACE on category = whole group, SPACE on skill = one)',
+    message: 'Select skills (TAB to jump categories, SPACE to select, ENTER to confirm)',
     options,
     maxItems: 18,
     required: true,
@@ -69,17 +81,28 @@ async function selectFromCategories(skills: Skill[]): Promise<string[] | symbol>
   });
 }
 
+function buildSpinnerOptions(): p.SpinnerOptions | undefined {
+  if (noColor()) return undefined;
+  return {
+    frames: BRAILLE_SPINNER_FRAMES,
+    delay: 80,
+    styleFrame: styledFrame
+  };
+}
+
 export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean } = {}): Promise<void> {
   try {
     await printAnimatedBanner({ hidden: opts.noBanner });
-    p.intro(chalk.hex('#856FE6').bold(' OpenDirectory ') + chalk.dim('— agent skills for founders who hate marketing'));
+    if (!opts.noBanner) printRandomTip();
+    console.log();
+    p.intro(chalk.hex(BRAND_PURPLE).bold(' OpenDirectory ') + chalk.dim('— agent skills for founders who hate marketing'));
 
     if (terminalWidth() < 60) {
       p.log.warn('Terminal is narrow — list may wrap awkwardly.');
     }
 
-    const s = p.spinner();
-    s.start('Loading skills...');
+    const s = p.spinner(buildSpinnerOptions());
+    s.start('Loading skills');
     const skills = await loadRegistry();
     s.stop(`${skills.length} skills loaded.`);
 
@@ -91,8 +114,8 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
     const mode = await p.select<BrowseMode>({
       message: 'How would you like to browse?',
       options: [
-        { value: 'category', label: 'Browse by category', hint: `${Object.keys(groupSkillsByCategory(skills)).length} categories` },
-        { value: 'all', label: 'Search all skills', hint: 'Type to filter across all skills' }
+        { value: 'category', label: 'Browse by category', hint: `${Object.keys(groupSkillsByCategory(skills)).length} categories, TAB to jump` },
+        { value: 'all', label: 'Search all skills', hint: 'Type to filter across name, description, category' }
       ],
       initialValue: 'category'
     });
@@ -122,7 +145,7 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
     }
 
     const skillNames = selectedSkills as string[];
-    p.note(`About to install: ${skillNames.join(', ')}\nTarget: ${target}`, 'Summary');
+    p.note(`Installing ${skillNames.length} skill${skillNames.length === 1 ? '' : 's'} to ${chalk.hex(BRAND_PURPLE).bold(target)}\n${skillNames.join(', ')}`, 'Summary');
 
     const proceed = await p.confirm({
       message: 'Continue?',
@@ -136,21 +159,32 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
 
     const successes: string[] = [];
     const failures: { name: string; error: string }[] = [];
+    const total = skillNames.length;
+    const startedAt = Date.now();
 
-    for (const name of skillNames) {
-      const spinner = p.spinner();
-      spinner.start(`Installing ${name}...`);
+    for (let i = 0; i < skillNames.length; i++) {
+      const name = skillNames[i];
+      const sp = p.spinner(buildSpinnerOptions());
+      const progress = renderProgressBar(i, total);
+      sp.start(`${progress}  ${name}`);
       const result = await installSkill(name, target);
+      const finalProgress = renderProgressBar(i + 1, total);
       if (result.success) {
-        spinner.stop(`✔ ${name}`);
+        sp.stop(`${finalProgress}  ${chalk.hex(BRAND_PURPLE).bold(name)} ${chalk.dim('installed')}`);
         successes.push(name);
       } else {
-        spinner.stop(`✗ ${name}: ${result.error?.message}`);
+        sp.stop(`${finalProgress}  ${chalk.red(name)} ${chalk.dim('failed:')} ${result.error?.message}`);
         failures.push({ name, error: result.error?.message || 'Unknown error' });
       }
     }
 
-    p.outro(`Installed ${successes.length}/${skillNames.length} skills.`);
+    const seconds = ((Date.now() - startedAt) / 1000).toFixed(1);
+    const outroLine = `Installed ${successes.length} of ${total} skill${total === 1 ? '' : 's'} in ${seconds}s`;
+    if (isInteractive() && !noColor()) {
+      p.outro(chalk.hex(BRAND_PURPLE).bold(outroLine));
+    } else {
+      p.outro(outroLine);
+    }
 
     if (failures.length > 0) {
       for (const f of failures) {
