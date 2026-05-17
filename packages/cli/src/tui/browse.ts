@@ -25,15 +25,16 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
       process.exit(0);
     }
 
-    const selectedSkills = await p.multiselect({
-      message: 'Select skills to install (Space to select, Enter to confirm):',
+    const selectedSkills = await p.autocompleteMultiselect({
+      message: 'Type to filter · Space to select · Enter to confirm',
       options: skills.map(skill => ({
         value: skill.name,
-        label: chalk.yellow(skill.name),
+        label: skill.name,
         hint: skill.description.length > 80
           ? skill.description.slice(0, 77) + '...'
           : skill.description
       })),
+      maxItems: 10,
       required: false
     });
 
