@@ -7,7 +7,7 @@
     "opendirectory": "dist/index.js"
   },
   "scripts": {
-    "build": "tsc && node -e \"require('fs').cpSync('../../skills', './skills', {recursive: true})\"",
+    "build": "tsc && node -e \"const fs=require('fs');fs.rmSync('./skills',{recursive:true,force:true});fs.cpSync('../../skills','./skills',{recursive:true})\"",
     "dev": "tsc -w",
     "test:e2e": "vitest run src/e2e.test.ts"
   },

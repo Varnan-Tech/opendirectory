@@ -1,16 +1,29 @@
 import gradient from 'gradient-string';
+import chalk from 'chalk';
 import { isInteractive, noColor, terminalWidth } from './tty';
 
 const BANNER_TEXT = `
- ██████╗ ██████╗ ███████╗███╗   ██╗    ██████╗ ██╗██████╗ 
-██╔═══██╗██╔══██╗██╔════╝████╗  ██║    ██╔══██╗██║██╔══██╗
-██║   ██║██████╔╝█████╗  ██╔██╗ ██║    ██║  ██║██║██████╔╝
-██║   ██║██╔═══╝ ██╔══╝  ██║╚██╗██║    ██║  ██║██║██╔══██╗
-╚██████╔╝██║     ███████╗██║ ╚████║    ██████╔╝██║██║  ██║
- ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝    ╚═════╝ ╚═╝╚═╝  ╚═╝
+ ██████  ██████  ███████ ███    ██     ██████  ██ ██████  ███████  ██████ ████████  ██████  ██████  ██    ██
+██    ██ ██   ██ ██      ████   ██     ██   ██ ██ ██   ██ ██      ██         ██    ██    ██ ██   ██  ██  ██
+██    ██ ██████  █████   ██ ██  ██     ██   ██ ██ ██████  █████   ██         ██    ██    ██ ██████    ████
+██    ██ ██      ██      ██  ██ ██     ██   ██ ██ ██   ██ ██      ██         ██    ██    ██ ██   ██    ██
+ ██████  ██      ███████ ██   ████     ██████  ██ ██   ██ ███████  ██████    ██     ██████  ██   ██    ██
 `;
 
-const BANNER_WIDTH = 60; // measured from the rendered art
+const COMPACT_BANNER = `
+ ██████  ██████  ███████ ███    ██
+██    ██ ██   ██ ██      ████   ██
+██    ██ ██████  █████   ██ ██  ██
+██    ██ ██      ██      ██  ██ ██
+ ██████  ██      ███████ ██   ████
+`;
+
+const TAGLINE = 'Agent skills for founders who hate marketing';
+const BRAND_PURPLE = '#856FE6';
+const BRAND_PURPLE_DARK = '#5B42F3';
+
+const FULL_BANNER_WIDTH = 110;
+const COMPACT_BANNER_WIDTH = 35;
 
 export interface BannerOptions {
   forceShow?: boolean;
@@ -20,20 +33,33 @@ export interface BannerOptions {
 export function printBanner(opts: BannerOptions = {}): void {
   if (opts.hidden) return;
   if (!opts.forceShow && !isInteractive()) return;
-  if (terminalWidth() < BANNER_WIDTH) {
-    // Narrow terminal: print compact fallback
+
+  const width = terminalWidth();
+
+  if (width < COMPACT_BANNER_WIDTH) {
     if (noColor()) {
-      console.log('\n  ◆ OPEN DIRECTORY\n  Skills for AI agents\n');
+      console.log('\n  OPENDIRECTORY');
+      console.log('  ' + TAGLINE + '\n');
     } else {
-      console.log('\n  ' + gradient(['#00ffff', '#ff00ff'])('◆ OPEN DIRECTORY') + '\n  Skills for AI agents\n');
+      console.log('\n  ' + chalk.hex(BRAND_PURPLE).bold('OPENDIRECTORY'));
+      console.log('  ' + chalk.dim(TAGLINE) + '\n');
     }
     return;
   }
+
+  const useCompact = width < FULL_BANNER_WIDTH;
+  const art = useCompact ? COMPACT_BANNER : BANNER_TEXT;
+  const labelLine = useCompact ? '  DIRECTORY' : null;
+
   if (noColor()) {
-    console.log(BANNER_TEXT);
-    console.log('  Skills for AI agents\n');
+    console.log(art);
+    if (labelLine) console.log(labelLine);
+    console.log('  ' + TAGLINE + '\n');
     return;
   }
-  console.log(gradient(['#00ffff', '#ff00ff']).multiline(BANNER_TEXT));
-  console.log('  Skills for AI agents\n');
+
+  const grad = gradient([BRAND_PURPLE, BRAND_PURPLE_DARK]);
+  console.log(grad.multiline(art));
+  if (labelLine) console.log(chalk.hex(BRAND_PURPLE).bold(labelLine));
+  console.log('  ' + chalk.dim(TAGLINE) + '\n');
 }

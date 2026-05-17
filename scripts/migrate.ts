@@ -29,8 +29,7 @@ const repos = [
   "https://github.com/Varnan-Tech/google-trends-api-skills",
   "https://github.com/Varnan-Tech/yc-intent-radar-skill",
   "https://github.com/Varnan-Tech/blog-cover-image-cli",
-  "https://github.com/Varnan-Tech/twitter-GTM-find-skill",
-  "https://github.com/Varnan-Tech/luma-attendees-scraper"
+  "https://github.com/Varnan-Tech/twitter-GTM-find-skill"
 ];
 
 const SKILLS_DIR = path.join(process.cwd(), 'skills');
