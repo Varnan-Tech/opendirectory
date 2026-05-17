@@ -21,9 +21,9 @@ export async function pickTarget(): Promise<string> {
 
     let label = name;
     if (isDefault) {
-      label += chalk.hex('#856FE6')(' (★ default)');
+      label += chalk.hex('#856FE6')(' (default)');
     } else if (isDetected) {
-      label += chalk.green(' (✓ detected)');
+      label += chalk.green(' (detected)');
     }
 
     return { value: name, label };

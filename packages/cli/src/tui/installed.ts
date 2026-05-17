@@ -3,13 +3,30 @@ import chalk from 'chalk';
 import { readManifest, reconcile } from '../manifest';
 import { uninstallSkill } from '../uninstall-core';
 import { updateSkill } from '../update-core';
+import { noColor } from '../tty';
+import { BRAILLE_SPINNER_FRAMES, renderProgressBar } from '../animations';
+
+const BRAND_PURPLE = '#856FE6';
+
+function styledFrame(frame: string): string {
+  return noColor() ? frame : chalk.hex(BRAND_PURPLE)(frame);
+}
+
+function buildSpinnerOptions(): p.SpinnerOptions | undefined {
+  if (noColor()) return undefined;
+  return {
+    frames: BRAILLE_SPINNER_FRAMES,
+    delay: 80,
+    styleFrame: styledFrame
+  };
+}
 
 export async function runInstalledTUI(): Promise<void> {
   try {
-    p.intro(chalk.hex('#856FE6').bold(' OpenDirectory ') + chalk.dim('— installed skills'));
+    p.intro(chalk.hex(BRAND_PURPLE).bold(' OpenDirectory ') + chalk.dim('— installed skills'));
 
-    const s = p.spinner();
-    s.start('Reconciling manifest...');
+    const s = p.spinner(buildSpinnerOptions());
+    s.start('Reconciling manifest');
     const { removed } = await reconcile();
     s.stop('Manifest reconciled.');
 
@@ -67,35 +84,40 @@ export async function runInstalledTUI(): Promise<void> {
       process.exit(0);
     }
 
+    const selections = selectedSkills as string[];
+    const total = selections.length;
     let successCount = 0;
-    const total = (selectedSkills as string[]).length;
+    const startedAt = Date.now();
 
-    for (const selection of selectedSkills as string[]) {
-      const [name, target] = selection.split('::');
-      const spinner = p.spinner();
-      
+    for (let i = 0; i < selections.length; i++) {
+      const [name, target] = selections[i].split('::');
+      const sp = p.spinner(buildSpinnerOptions());
+      const progress = renderProgressBar(i, total);
+      sp.start(`${progress}  ${action === 'uninstall' ? 'Removing' : 'Updating'} ${name}`);
+
+      let ok = false;
+      let errorMessage = '';
       if (action === 'uninstall') {
-        spinner.start(`Removing ${name}...`);
         const result = await uninstallSkill(name, target);
-        if (result.removed) {
-          spinner.stop(`✔ ${name}`);
-          successCount++;
-        } else {
-          spinner.stop(`✗ ${name}: ${result.error?.message}`);
-        }
+        ok = result.removed;
+        errorMessage = result.error?.message || '';
       } else if (action === 'update') {
-        spinner.start(`Updating ${name}...`);
         const result = await updateSkill(name, target);
-        if (result.success) {
-          spinner.stop(`✔ ${name}`);
-          successCount++;
-        } else {
-          spinner.stop(`✗ ${name}: ${result.error?.message}`);
-        }
+        ok = result.success;
+        errorMessage = result.error?.message || '';
+      }
+
+      const finalProgress = renderProgressBar(i + 1, total);
+      if (ok) {
+        sp.stop(`${finalProgress}  ${chalk.hex(BRAND_PURPLE).bold(name)} ${chalk.dim(action === 'uninstall' ? 'removed' : 'updated')}`);
+        successCount++;
+      } else {
+        sp.stop(`${finalProgress}  ${chalk.red(name)} ${chalk.dim('failed:')} ${errorMessage}`);
       }
     }
 
-    p.outro(`Done. ${successCount}/${total} succeeded.`);
+    const seconds = ((Date.now() - startedAt) / 1000).toFixed(1);
+    p.outro(chalk.hex(BRAND_PURPLE).bold(`Done. ${successCount}/${total} succeeded in ${seconds}s.`));
     process.exit(successCount > 0 ? 0 : 1);
 
   } catch (error) {
