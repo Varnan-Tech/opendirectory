@@ -9,4 +9,13 @@ coverage/
 preview.html
 scripts/__pycache__/
 .husky/_
+<<<<<<< HEAD
 /packages/cli/skills
+=======
+
+# Build artifacts — copied from root skills/ by packages/cli/package.json build script
+/packages/cli/skills
+
+# TUI research docs (not source)
+/packages/cli/docs
+>>>>>>> 7764d1e (feat(cli): add interactive TUI with clack/prompts)

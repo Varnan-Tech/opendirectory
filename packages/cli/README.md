@@ -4,77 +4,44 @@
 
 The official CLI for browsing, installing, and managing OpenDirectory skills for AI agents. Equip your AI assistant with expert-level domain knowledge for GTM, marketing, growth, and developer tooling tasks — in seconds, with zero setup.
 
-## Features
-
-- **55+ pre-built skills** — Brand strategy, cold email, content creation, PR intelligence, pricing audits, and more
-- **Multi-agent support** — Works with Claude Code, OpenCode, Codex, Gemini CLI, Anti-Gravity, OpenClaw, and Hermes
-- **Zero global install** — Runs via `npx`, always fetches the latest version
-- **No configuration** — Install any skill in under 30 seconds
-
-## Quick Start
-
-**1. Browse available skills:**
-```bash
-npx "@opendirectory.dev/skills" list
-```
-
-**2. Install a skill for your agent:**
-```bash
-npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
-```
-
-**Examples:**
-```bash
-# Install for Claude Code
-npx "@opendirectory.dev/skills" install brand-alchemy --target claude
-
-# Install for OpenCode
-npx "@opendirectory.dev/skills" install position-me --target opencode
-
-# Install for Gemini CLI
-npx "@opendirectory.dev/skills" install cold-email-verifier --target gemini
-```
-
-## Supported Agents
-
-| Agent | Flag |
-|---|---|
-| Claude Code | `--target claude` |
-| OpenCode | `--target opencode` |
-| Codex | `--target codex` |
-| Gemini CLI | `--target gemini` |
-| Anti-Gravity | `--target anti-gravity` |
-| OpenClaw | `--target openclaw` |
-| Hermes | `--target hermes` |
-
-## Requirements
-
-- **Node.js** — Download from [nodejs.org](https://nodejs.org/) if not installed
-- `npx` comes bundled with Node.js and fetches the latest version automatically
-
-## Installation Methods
-
-### Option A: npx CLI (Recommended)
-
-No global install. Always runs the latest version.
+You can run the CLI directly using `npx`:
 
 ```bash
-npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
+npx "@opendirectory.dev/skills" [command] [options]
 ```
 
-### Option B: Claude Code Plugin
+## Interactive Mode
 
-Install the entire OpenDirectory skill marketplace directly inside Claude Code:
+Run the CLI without any arguments to enter the interactive mode:
 
 ```bash
-# Add the OpenDirectory marketplace
-/plugin marketplace add Varnan-Tech/opendirectory
-
-# Install all skills at once
-/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+npx "@opendirectory.dev/skills"
 ```
 
-This gives you instant access to all 55+ skills without running individual install commands.
+The interactive mode provides a TUI (Terminal User Interface) to browse, search, and manage skills easily.
+
+## Commands
+
+- `list`: List all available skills.
+- `install <skill-name>`: Install a specific skill.
+- `update <skill-name>`: Update an installed skill.
+- `uninstall <skill-name>`: Uninstall a skill.
+- `installed`: List all installed skills.
+
+## Global Flags
+
+- `--target <target>`: Specify the target agent (e.g., `claude`, `cursor`).
+- `--plain`: Disable TUI and use plain text output. Useful for CI environments or screen readers.
+- `--no-banner`: Do not show the OpenDirectory banner.
+
+## Environment Variables
+
+- `NO_COLOR`: Disable colored output.
+- `CI`: Set to `true` to automatically enable `--plain` mode.
+
+## Accessibility
+
+The CLI is designed to be accessible. If you are using a screen reader, we recommend using the `--plain` flag for a better experience.
 
 ## Available Skills
 
