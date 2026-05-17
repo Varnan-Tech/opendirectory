@@ -55,11 +55,16 @@ async function selectFromCategories(skills: Skill[]): Promise<string[] | symbol>
       hint: truncate(skill.description, 70)
     }));
   }
+  p.note(
+    'Navigate with ↑/↓. Press SPACE on a category name to select EVERY skill in that group. ' +
+    'Press SPACE on a single skill to toggle just that one. Press ENTER when done.',
+    'How to select'
+  );
   return p.groupMultiselect({
-    message: 'Space to select · Enter to confirm · a to toggle category',
+    message: 'Select skills (SPACE on category = whole group, SPACE on skill = one)',
     options,
     maxItems: 18,
-    required: false,
+    required: true,
     selectableGroups: true
   });
 }
