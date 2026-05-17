@@ -43,7 +43,7 @@ export async function runInstalledTUI(): Promise<void> {
         value: `${skill.name}::${skill.target}`,
         label: `${skill.name} ${chalk.dim('(' + skill.target + ')')}`
       })),
-      maxItems: 10,
+      maxItems: 18,
       required: false
     });
 
