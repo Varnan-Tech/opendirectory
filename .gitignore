@@ -9,3 +9,9 @@ coverage/
 preview.html
 scripts/__pycache__/
 .husky/_
+
+# Build artifacts — copied from root skills/ by packages/cli/package.json build script
+/packages/cli/skills
+
+# TUI research docs (not source)
+/packages/cli/docs

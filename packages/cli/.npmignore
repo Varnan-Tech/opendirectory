@@ -1,3 +1,11 @@
+# Exclude source and config
+src
+tsconfig.json
+package.json.bak
+.claude
+docs
+
+# Exclude large files from skills
 skills/**/*.png
 skills/**/*.jpg
 skills/**/*.jpeg
@@ -8,3 +16,8 @@ skills/**/package-lock.json
 skills/**/yarn.lock
 skills/**/pnpm-lock.yaml
 skills/**/*.env*
+skills/**/evals
+skills/**/references
+skills/**/templates
+skills/**/assets
+**/__pycache__
