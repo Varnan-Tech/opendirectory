@@ -67,7 +67,7 @@ async function printPlainTable() {
     for (const skill of skills) {
       let desc = skill.description || '';
       if (desc.length > 100) desc = desc.substring(0, 97) + '...';
-      table.push([chalk.yellow(skill.name), desc]);
+      table.push([chalk.white.bold(skill.name), desc]);
     }
     
     console.log(table.toString());
@@ -107,7 +107,7 @@ program.command('install <skill>')
   .requiredOption('-t, --target <tool>', 'Target agent (opencode, claude, codex, gemini, anti-gravity, openclaw, hermes)')
   .action(async (skillName, opts) => {
     const spinner = ora({
-      text: `Installing ${chalk.yellow(skillName)}...`,
+      text: `Installing ${chalk.white.bold(skillName)}...`,
       isEnabled: isInteractive()
     }).start();
     const result = await installSkill(skillName, opts.target);
@@ -147,7 +147,7 @@ program.command('update <skill>')
       process.exit(1);
     }
     const spinner = ora({
-      text: `Updating ${chalk.yellow(skillName)}...`,
+      text: `Updating ${chalk.white.bold(skillName)}...`,
       isEnabled: isInteractive()
     }).start();
     const result = await updateSkill(skillName, target);
@@ -172,7 +172,7 @@ program.command('uninstall <skill>')
       process.exit(1);
     }
     const spinner = ora({
-      text: `Uninstalling ${chalk.yellow(skillName)}...`,
+      text: `Uninstalling ${chalk.white.bold(skillName)}...`,
       isEnabled: isInteractive()
     }).start();
     const result = await uninstallSkill(skillName, target);

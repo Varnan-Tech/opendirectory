@@ -41,8 +41,9 @@ export async function runInstalledTUI(): Promise<void> {
       message: `Select skills to ${action} (Space to select, Enter to confirm):`,
       options: manifest.skills.map(skill => ({
         value: `${skill.name}::${skill.target}`,
-        label: `${chalk.yellow(skill.name)} ${chalk.gray('(' + skill.target + ')')}`
+        label: `${skill.name} ${chalk.dim('(' + skill.target + ')')}`
       })),
+      maxItems: 10,
       required: false
     });
 
