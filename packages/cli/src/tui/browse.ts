@@ -9,7 +9,7 @@ import { terminalWidth } from '../tty';
 export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean } = {}): Promise<void> {
   try {
     printBanner({ hidden: opts.noBanner });
-    p.intro(chalk.bgCyan.black(' opendirectory '));
+    p.intro(chalk.hex('#856FE6').bold(' OpenDirectory ') + chalk.dim('— agent skills for founders who hate marketing'));
 
     if (terminalWidth() < 60) {
       p.log.warn('Terminal is narrow — list may wrap awkwardly.');

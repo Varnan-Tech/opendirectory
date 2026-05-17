@@ -6,7 +6,7 @@ import { updateSkill } from '../update-core';
 
 export async function runInstalledTUI(): Promise<void> {
   try {
-    p.intro(chalk.bgCyan.black(' Installed Skills '));
+    p.intro(chalk.hex('#856FE6').bold(' OpenDirectory ') + chalk.dim('— installed skills'));
 
     const s = p.spinner();
     s.start('Reconciling manifest...');

@@ -53,7 +53,7 @@ async function printPlainTable() {
     console.log(chalk.green('Successfully loaded Open Directory registry!\n'));
 
     const table = new Table({
-      head: [chalk.cyan.bold('Skill Name'), chalk.cyan.bold('Description')],
+      head: [chalk.hex('#856FE6').bold('Skill Name'), chalk.hex('#856FE6').bold('Description')],
       colWidths: [35, 75],
       wordWrap: true,
       chars: noColor() ? {
@@ -115,9 +115,9 @@ program.command('install <skill>')
     if (result.success) {
       spinner.stop();
       console.log(chalk.green(`Successfully installed ${chalk.bold(result.skillName)}!`));
-      console.log(`\n  ${chalk.cyan('Agent:')}   ${result.target}`);
-      console.log(`  ${chalk.cyan('Scope:')}   Global`);
-      console.log(`  ${chalk.cyan('Path:')}    ${result.path}\n`);
+      console.log(`\n  ${chalk.hex('#856FE6')('Agent:')}   ${result.target}`);
+      console.log(`  ${chalk.hex('#856FE6')('Scope:')}   Global`);
+      console.log(`  ${chalk.hex('#856FE6')('Path:')}    ${result.path}\n`);
     } else {
       spinner.stop();
       if (result.error?.message.includes('Unsupported target')) {
