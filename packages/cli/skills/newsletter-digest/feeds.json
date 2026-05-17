@@ -1,7 +1,0 @@
-[
-  { "url": "https://feeds.feedburner.com/TheHackersNews", "name": "The Hacker News" },
-  { "url": "https://hnrss.org/frontpage", "name": "Hacker News Front Page" },
-  { "url": "https://www.infoq.com/feed/", "name": "InfoQ" },
-  { "url": "https://changelog.com/feed", "name": "Changelog" },
-  { "url": "https://css-tricks.com/feed/", "name": "CSS-Tricks" }
-]

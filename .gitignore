@@ -15,3 +15,6 @@ scripts/__pycache__/
 
 # TUI research docs (not source)
 /packages/cli/docs
+
+# Test artifacts
+/.test-home

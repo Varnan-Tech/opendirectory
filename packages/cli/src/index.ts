@@ -190,6 +190,21 @@ program.command('uninstall <skill>')
 program.command('installed')
   .description('Manage installed skills (interactive)')
   .action(async () => {
+    if (!isInteractive() || isPiped()) {
+      const { readManifest, reconcile } = await import('./manifest.js');
+      const { removed } = await reconcile();
+      if (removed > 0) console.log('Cleaned ' + removed + ' stale entries.');
+      const manifest = await readManifest();
+      if (manifest.skills.length === 0) {
+        console.log('No skills installed. Run in a terminal to use interactive mode.');
+      } else {
+        console.log('\nInstalled skills (' + manifest.skills.length + '):');
+        for (const s of manifest.skills) {
+          console.log('  ' + s.name + '  (' + s.target + ')  ' + s.installedAt.slice(0, 10));
+        }
+      }
+      return;
+    }
     await runInstalledTUI();
   });
 
