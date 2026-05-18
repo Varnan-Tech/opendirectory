@@ -116,7 +116,7 @@ export async function runInstalledTUI(): Promise<void> {
       }
     }
 
-    const seconds = ((Date.now() - startedAt) / 1000).toFixed(1);
+    const seconds = ((Date.now() - startedAt) / 1000).toFixed(3);
     p.outro(chalk.hex(BRAND_PURPLE).bold(`Done. ${successCount}/${total} succeeded in ${seconds}s.`));
     process.exit(successCount > 0 ? 0 : 1);
 

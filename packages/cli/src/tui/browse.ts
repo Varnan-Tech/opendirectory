@@ -190,7 +190,7 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
       }
     }
 
-    const seconds = ((Date.now() - startedAt) / 1000).toFixed(1);
+    const seconds = ((Date.now() - startedAt) / 1000).toFixed(3);
     const outroLine = `Installed ${successes.length} of ${total} skill${total === 1 ? '' : 's'} in ${seconds}s`;
     if (isInteractive() && !noColor()) {
       p.outro(chalk.hex(BRAND_PURPLE).bold(outroLine));
