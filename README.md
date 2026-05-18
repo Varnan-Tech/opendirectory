@@ -477,7 +477,7 @@ Run these commands inside Claude Code:
   </tr>
   <tr>
     <td><a href="skills/where-your-customer-lives"><code>where-your-customer-lives</code></a></td>
-    <td>Give this skill a product utility and ICP. It searches Reddit, Hacker News, and DuckDuckGo for the specific communities where your customer actually gathers -- then builds a per-channel playbook: evidence your ICP is there, one entry tactic, one content angle, and specific anti-patterns.</td>
+    <td>Give this skill a product utility and ICP. It searches Reddit, Hacker News, and DuckDuckGo to find the specific communities where your customer actually gathers -- then builds a per-channel playbook: evidence your ICP is there, one entry tactic, one content angle, and specific anti-patterns.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr><th colspan="3" align="left">Developer Tools</th></tr>
