@@ -18,12 +18,6 @@ function truncate(text: string, len: number): string {
   return text.length > len ? text.slice(0, len - 3) + '...' : text;
 }
 
-function restoreStdinIfWindows(): void {
-  if (process.platform === 'win32' && process.stdin.isTTY) {
-    try { process.stdin.setRawMode(false); } catch { /* ignore */ }
-  }
-}
-
 function styledFrame(frame: string): string {
   return noColor() ? frame : chalk.hex(BRAND_PURPLE)(frame);
 }
@@ -112,7 +106,6 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
     s.start('Loading skills');
     const skills = await loadRegistry();
     s.stop(`${skills.length} skills loaded.`);
-    restoreStdinIfWindows();
 
     if (skills.length === 0) {
       p.note('No skills found in registry.', 'Empty');
@@ -190,11 +183,9 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
       const finalProgress = renderProgressBar(i + 1, total);
       if (result.success) {
         sp.stop(`${finalProgress}  ${chalk.hex(BRAND_PURPLE).bold(name)} ${chalk.dim('installed')}`);
-        restoreStdinIfWindows();
         successes.push(name);
       } else {
         sp.stop(`${finalProgress}  ${chalk.red(name)} ${chalk.dim('failed:')} ${result.error?.message}`);
-        restoreStdinIfWindows();
         failures.push({ name, error: result.error?.message || 'Unknown error' });
       }
     }
