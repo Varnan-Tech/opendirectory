@@ -2,22 +2,43 @@ import gradient from 'gradient-string';
 import chalk from 'chalk';
 import { isInteractive, noColor, terminalWidth } from './tty';
 
+const BANNER_LINE1  = ` ██████╗ ██████╗ ███████╗███╗   ██╗`;
+const BANNER_LINE2  = `██╔═══██╗██╔══██╗██╔════╝████╗  ██║`;
+const BANNER_LINE3  = `██║   ██║██████╔╝█████╗  ██╔██╗ ██║`;
+const BANNER_LINE4  = `██║   ██║██╔═══╝ ██╔══╝  ██║╚██╗██║`;
+const BANNER_LINE5  = `╚██████╔╝██║     ███████╗██║ ╚████║`;
+const BANNER_LINE6  = ` ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝`;
+
+const BANNER_LINE7  = `██████╗ ██╗██████╗ ███████╗ ██████╗████████╗ ██████╗ ██████╗ ██╗   ██╗`;
+const BANNER_LINE8  = `██╔══██╗██║██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗╚██╗ ██╔╝`;
+const BANNER_LINE9  = `██║  ██║██║██████╔╝█████╗  ██║        ██║   ██║   ██║██████╔╝ ╚████╔╝ `;
+const BANNER_LINE10 = `██║  ██║██║██╔══██╗██╔══╝  ██║        ██║   ██║   ██║██╔══██╗  ╚██╔╝  `;
+const BANNER_LINE11 = `██████╔╝██║██║  ██║███████╗╚██████╗   ██║   ╚██████╔╝██║  ██║   ██║   `;
+const BANNER_LINE12 = `╚═════╝ ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝   `;
+
 const BANNER_LINES = [
-  ` ___________ _____ _   _______ ___________ _____ _____ _____ _____________   __`,
-  `|  _  | ___ \\  ___| \\ | |  _  \\_   _| ___ \\  ___/  __ \\_   _|  _  | ___ \\ \\ / /`,
-  `| | | | |_/ / |__ |  \\| | | | | | | | |_/ / |__ | /  \\/ | | | | | | |_/ /\\ V / `,
-  `| | | |  __/|  __|| . \` | | | | | | |    /|  __|| |     | | | | | |    /  \\ /  `,
-  `\\ \\_/ / |   | |___| |\\  | |/ / _| |_| |\\ \\| |___| \\__/\\ | | \\ \\_/ / |\\ \\  | |  `,
-  ` \\___/\\_|   \\____/\\_| \\_/___/  \\___/\\_| \\_\\____/ \\____/ \\_/  \\___/\\_| \\_| \\_/  `,
+  BANNER_LINE1,
+  BANNER_LINE2,
+  BANNER_LINE3,
+  BANNER_LINE4,
+  BANNER_LINE5,
+  BANNER_LINE6,
+  '',
+  BANNER_LINE7,
+  BANNER_LINE8,
+  BANNER_LINE9,
+  BANNER_LINE10,
+  BANNER_LINE11,
+  BANNER_LINE12,
 ];
 
 const COMPACT_LINES = [
-  ` ___________ _____ _   _ `,
-  `|  _  | ___ \\  ___| \\ | |`,
-  `| | | | |_/ / |__ |  \\| |`,
-  `| | | |  __/|  __|| . \` |`,
-  `\\ \\_/ / |   | |___| |\\  |`,
-  ` \\___/\\_|   \\____/\\_| \\_/`,
+  `   ██████╗ ██████╗ `,
+  `  ██╔═══██╗██╔══██╗`,
+  `  ██║   ██║██║  ██║`,
+  `  ██║   ██║██║  ██║`,
+  `  ╚██████╔╝██████╔╝`,
+  `   ╚═════╝ ╚═════╝ `,
 ];
 
 const TAGLINE = 'agent skills for founders who hate marketing';
@@ -27,8 +48,8 @@ const BRAND_PURPLE = '#856FE6';
 const BRAND_PURPLE_DEEP = '#5B42F3';
 const BRAND_PURPLE_DIM = '#6E5BC1';
 
-const FULL_BANNER_WIDTH = 80;
-const COMPACT_BANNER_WIDTH = 26;
+const FULL_BANNER_WIDTH = 72;
+const COMPACT_BANNER_WIDTH = 22;
 
 export interface BannerOptions {
   forceShow?: boolean;
@@ -90,6 +111,7 @@ export async function printAnimatedBanner(opts: BannerOptions = {}): Promise<voi
   if (opts.hidden) return printBanner(opts);
   if (!opts.forceShow && !isInteractive()) return printBanner(opts);
   if (noColor()) return printBanner(opts);
+  if (process.platform === 'win32') return printBanner(opts);
 
   const width = terminalWidth();
   if (width < FULL_BANNER_WIDTH) {
@@ -107,7 +129,7 @@ export async function printAnimatedBanner(opts: BannerOptions = {}): Promise<voi
   console.log();
   for (let i = 0; i < phases.length; i++) {
     if (i > 0) {
-      process.stdout.write('\x1b[' + (totalLines + 1) + 'A');
+      process.stdout.write('\x1b[' + totalLines + 'A');
     }
     console.log(paintLines(BANNER_LINES, phases[i]));
     if (i < phases.length - 1) await sleep(70);

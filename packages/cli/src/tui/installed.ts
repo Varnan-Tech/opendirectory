@@ -12,6 +12,12 @@ function styledFrame(frame: string): string {
   return noColor() ? frame : chalk.hex(BRAND_PURPLE)(frame);
 }
 
+function restoreStdinIfWindows(): void {
+  if (process.platform === 'win32' && process.stdin.isTTY) {
+    try { process.stdin.setRawMode(false); } catch { /* ignore */ }
+  }
+}
+
 function buildSpinnerOptions(): p.SpinnerOptions | undefined {
   if (noColor()) return undefined;
   return {
@@ -29,6 +35,7 @@ export async function runInstalledTUI(): Promise<void> {
     s.start('Reconciling manifest');
     const { removed } = await reconcile();
     s.stop('Manifest reconciled.');
+    restoreStdinIfWindows();
 
     if (removed > 0) {
       p.log.warn(`Removed ${removed} stale entries (files were deleted manually).`);
@@ -110,9 +117,11 @@ export async function runInstalledTUI(): Promise<void> {
       const finalProgress = renderProgressBar(i + 1, total);
       if (ok) {
         sp.stop(`${finalProgress}  ${chalk.hex(BRAND_PURPLE).bold(name)} ${chalk.dim(action === 'uninstall' ? 'removed' : 'updated')}`);
+        restoreStdinIfWindows();
         successCount++;
       } else {
         sp.stop(`${finalProgress}  ${chalk.red(name)} ${chalk.dim('failed:')} ${errorMessage}`);
+        restoreStdinIfWindows();
       }
     }
 
