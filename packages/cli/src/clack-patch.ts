@@ -46,44 +46,54 @@ export function enableTabJumpForGroupMultiselect(): void {
 }
 
 /**
- * WINDOWS TTY FREEZE FIX.
+ * WINDOWS TTY FREEZE FIX (Escape-key root cause).
  *
- * Why this exists:
- *   On Windows cmd.exe / conhost.exe, @clack/core's `Prompt.close()` triggers a
- *   well-known race condition when one prompt closes and another opens in the
- *   same tick (e.g. p.select() resolving and p.autocompleteMultiselect() starting):
+ * The bug:
+ *   On Windows cmd.exe / conhost.exe, pressing Escape in a clack prompt and
+ *   then having the next prompt open in the same tick wedges the terminal.
+ *   No keys register on the new prompt, and the terminal stays broken after
+ *   the process exits (user must close the window).
  *
- *     1. close() calls `input.unpipe()` on process.stdin - corrupts stream state.
- *     2. close() calls `setRawMode(false)` - this dispatches an async
- *        SetConsoleMode() through libuv's helper thread (libuv #852).
- *     3. The next prompt immediately calls `setRawMode(true)` while step 2's
- *        async toggle is still in flight, racing with libuv's ReadConsole.
- *     4. Result: conhost.exe wedges. Keypress emitter detaches (node #49588).
- *        Terminal renders the new prompt but accepts zero input. Even after
- *        the process dies the console stays in a half-raw state, requiring
- *        the user to close the window.
+ * Root cause (per Node.js issue #38663, "stdin keypress event lost after
+ * escape pressed", and clack #408):
+ *   1. Pressing Escape sends \x1b. readline waits `escapeCodeTimeout` (50ms)
+ *      to see if more bytes follow (arrow keys, function keys, etc.).
+ *   2. After the timeout, readline emits a `keypress` event with name='escape'.
+ *   3. clack's onKeypress sets state='cancel' and SYNCHRONOUSLY calls close().
+ *   4. close() does: unpipe() -> setRawMode(false) -> rl.close().
+ *   5. But on Windows, rl.close() while readline is still retiring the escape
+ *      sequence corrupts conhost mode flags. The next prompt's setRawMode(true)
+ *      lands on a broken console: keypress events are silently dropped.
  *
- *   Clack already knows about this - their `block()` utility (used by spinners)
- *   has an explicit `!isWindows` guard around setRawMode(false). But the base
- *   `Prompt.close()` lacks this guard. See clack #408, #176, #76.
+ *   The Enter (submit) path doesn't trigger this because \r is processed
+ *   instantly by readline with no pending-sequence state.
  *
- * The fix:
- *   On win32 only, override `Prompt.prototype.close` to:
- *     - SKIP `input.unpipe()` (preserves stdin internal state).
- *     - SKIP `setRawMode(false)` (avoids the libuv race - the next prompt's
- *       `setRawMode(true)` is a no-op since we're already raw, and on process
- *       exit Node restores cooked mode via its built-in TTY cleanup).
- *     - KEEP `removeListener('keypress', ...)` (otherwise the old listener
- *       fires on the new prompt's input - duplicate handling).
- *     - KEEP `rl.close()`, the newline write, the state emit, and unsubscribe()
- *       (these are not the source of the race).
+ *   clack's own block() utility (used by spinners) already has these
+ *   protections - sets rl.terminal=false, skips setRawMode on Windows -
+ *   but the base Prompt.close() inherited none of them. See clack #408,
+ *   #176, #76 and node #38663, #31762.
  *
- *   On non-Windows, this is a no-op - we delegate straight to the original.
+ * The fix (on win32 TTY only):
+ *   a) Set rl.terminal=false BEFORE close - prevents readline from emitting
+ *      trailing ANSI cleanup codes that hang Windows mid-sequence.
+ *   b) SKIP this.input.unpipe() - it corrupts process.stdin's internal state
+ *      and was never matched by a pipe() anyway.
+ *   c) SKIP setRawMode(false) - matches what clack's own block() does on
+ *      Windows. The next prompt's setRawMode(true) is then a no-op; on
+ *      process exit Node's built-in TTY teardown restores cooked mode.
+ *   d) DEFER rl.close() and the cancel/submit event emit via setTimeout(0).
+ *      This gives readline one event-loop tick to finish retiring the escape
+ *      sequence before we tear it down - the critical fix for the freeze.
+ *   e) Drain any stray bytes via input.read() so they don't poison the next
+ *      readline interface.
+ *   f) KEEP removeListener('keypress',...) - otherwise the old listener
+ *      double-fires on the next prompt.
+ *
+ *   On non-Windows or non-TTY, delegate to the original close().
  *
  * Safety:
- *   The patch is idempotent (guarded by `windowsClosePatched`). If a future
- *   Clack release adds its own Windows guard to close(), this patch becomes
- *   redundant but not harmful - the platform check short-circuits everything.
+ *   Idempotent (guarded by `windowsClosePatched`). If a future clack release
+ *   fixes this upstream the patch still runs but is functionally redundant.
  */
 export function enableWindowsSafeClose(): void {
   if (windowsClosePatched) return;
@@ -100,25 +110,37 @@ export function enableWindowsSafeClose(): void {
       return originalClose.call(this);
     }
 
-    try {
-      const onKeypress = this.onKeypress;
-      if (onKeypress && typeof this.input?.removeListener === 'function') {
-        this.input.removeListener('keypress', onKeypress);
+    const captured = {
+      rl: this.rl,
+      input: this.input,
+      output: this.output,
+      onKeypress: this.onKeypress,
+      state: this.state ?? 'cancel',
+      value: this.value,
+      emit: this.emit?.bind(this),
+      unsubscribe: this.unsubscribe?.bind(this)
+    };
+
+    const swallow = (fn: () => unknown) => { try { fn(); } catch (_) { return; } };
+
+    swallow(() => {
+      if (captured.onKeypress && typeof captured.input?.removeListener === 'function') {
+        captured.input.removeListener('keypress', captured.onKeypress);
       }
+    });
 
-      try { this.output?.write('\n'); } catch { void 0; }
+    swallow(() => captured.output?.write('\n'));
+    swallow(() => { if (captured.rl) (captured.rl as any).terminal = false; });
 
-      try { this.rl?.close?.(); } catch { void 0; }
-      this.rl = undefined;
+    this.rl = undefined;
 
-      try {
-        const state = this.state ?? 'cancel';
-        this.emit?.(state, this.value);
-      } catch { void 0; }
-
-      try { this.unsubscribe?.(); } catch { void 0; }
-    } catch {
-      try { return originalClose.call(this); } catch { void 0; }
-    }
+    setTimeout(() => {
+      swallow(() => {
+        if (typeof captured.input?.read === 'function') captured.input.read();
+      });
+      swallow(() => captured.rl?.close?.());
+      swallow(() => captured.emit?.(captured.state, captured.value));
+      swallow(() => captured.unsubscribe?.());
+    }, 0);
   };
 }
