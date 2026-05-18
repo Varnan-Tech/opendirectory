@@ -50,7 +50,7 @@ query FetchDiscussions($owner: String!, $name: String!, $first: Int!, $after: St
         updatedAt
         isAnswered
         upvoteCount
-        comments {
+        commentsCount: comments {
           totalCount
         }
         reactions {
@@ -62,7 +62,7 @@ query FetchDiscussions($owner: String!, $name: String!, $first: Int!, $after: St
         author {
           login
         }
-        comments(first: 5) {
+        topComments: comments(first: 5) {
           nodes {
             body
             author {
@@ -196,7 +196,7 @@ def normalize(discussion, cutoff_date, min_comments, category_filter):
         return None
 
     # Comment count filter
-    comment_count = discussion["comments"]["totalCount"]
+    comment_count = discussion["commentsCount"]["totalCount"]
     if comment_count < min_comments:
         return None
 
@@ -211,7 +211,7 @@ def normalize(discussion, cutoff_date, min_comments, category_filter):
             "author": c.get("author", {}).get("login", "unknown"),
             "body": c.get("body", "")[:500],  # Truncate to keep payload lean
         }
-        for c in discussion.get("comments", {}).get("nodes", [])
+        for c in discussion.get("topComments", {}).get("nodes", [])
     ]
 
     return {
@@ -302,5 +302,8 @@ if __name__ == "__main__":
                 line = line.strip()
                 if line and not line.startswith("#") and "=" in line:
                     key, _, val = line.partition("=")
-                    os.environ.setdefault(key.strip(), val.strip())
+                    val = val.strip()
+                    if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
+                        val = val[1:-1]
+                    os.environ.setdefault(key.strip(), val)
     main()
