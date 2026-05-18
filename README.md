@@ -34,7 +34,7 @@ OpenDirectory is a library of agent skills for founders who hate marketing. Each
 ```bash
 npx "@opendirectory.dev/skills"
 ```
-*Interactive TUI browser — browse by category, search, and install in one session*
+*Interactive TUI browser - browse by category, search, and install in one session*
 
 Or list all skills:
 ```bash
