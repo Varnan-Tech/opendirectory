@@ -4,65 +4,23 @@
 
 The official CLI for browsing, installing, and managing OpenDirectory skills for AI agents. Equip your AI assistant with expert-level domain knowledge for GTM, marketing, growth, and developer tooling tasks — in seconds, with zero setup.
 
-## Features
-
-- **55+ pre-built skills** — Brand strategy, cold email, content creation, PR intelligence, pricing audits, and more
-- **Multi-agent support** — Works with Claude Code, OpenCode, Codex, Gemini CLI, Anti-Gravity, OpenClaw, and Hermes
-- **Zero global install** — Runs via `npx`, always fetches the latest version
-- **No configuration** — Install any skill in under 30 seconds
-
-## Quick Start
-
-**1. Browse available skills:**
-```bash
-npx "@opendirectory.dev/skills" list
-```
-
-**2. Install a skill for your agent:**
-```bash
-npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
-```
-
-**Examples:**
-```bash
-# Install for Claude Code
-npx "@opendirectory.dev/skills" install brand-alchemy --target claude
-
-# Install for OpenCode
-npx "@opendirectory.dev/skills" install position-me --target opencode
-
-# Install for Gemini CLI
-npx "@opendirectory.dev/skills" install cold-email-verifier --target gemini
-```
-
-## Supported Agents
-
-| Agent | Flag |
-|---|---|
-| Claude Code | `--target claude` |
-| OpenCode | `--target opencode` |
-| Codex | `--target codex` |
-| Gemini CLI | `--target gemini` |
-| Anti-Gravity | `--target anti-gravity` |
-| OpenClaw | `--target openclaw` |
-| Hermes | `--target hermes` |
-
-## Requirements
-
-- **Node.js** — Download from [nodejs.org](https://nodejs.org/) if not installed
-- `npx` comes bundled with Node.js and fetches the latest version automatically
-
-## Installation Methods
-
-### Option A: npx CLI (Recommended)
-
-No global install. Always runs the latest version.
+You can run the CLI directly using `npx`:
 
 ```bash
-npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
+npx "@opendirectory.dev/skills" [command] [options]
 ```
 
-### Option B: Claude Code Plugin
+## Interactive Mode
+
+Run the CLI without any arguments to enter the interactive TUI:
+
+```bash
+npx "@opendirectory.dev/skills"
+```
+
+The interactive mode lets you browse, search, and install skills with arrow keys, multi-select with Space, and confirm with Enter.
+
+### Claude Code Native Plugin
 
 Install the entire OpenDirectory skill marketplace directly inside Claude Code:
 
@@ -70,15 +28,53 @@ Install the entire OpenDirectory skill marketplace directly inside Claude Code:
 # Add the OpenDirectory marketplace
 /plugin marketplace add Varnan-Tech/opendirectory
 
-# Install all skills at once
+# Install a skill
 /plugin install opendirectory-gtm-skills@opendirectory-marketplace
 ```
 
 This gives you instant access to all 55+ skills without running individual install commands.
 
+## Commands
+
+- `list` — List all available skills (interactive by default; pass `--plain` for a static table).
+- `install <skill-name> --target <agent>` — Install a specific skill. The `--target` flag is required on first use; later runs reuse the saved default.
+- `update <skill-name> [--target <agent>]` — Update an installed skill (safe rollback if the new install fails).
+- `uninstall <skill-name> [--target <agent>]` — Uninstall a skill.
+- `installed` — Manage installed skills (interactive by default; pass `--plain` for a static table).
+
+## Supported Agents
+
+The CLI installs skills for the following agents (use the lowercase slug with `--target`):
+
+| Target slug   | Agent                  | Install location                |
+| ------------- | ---------------------- | ------------------------------- |
+| `claude`      | Claude Code            | `~/.claude/skills/`             |
+| `opencode`    | opencode               | `~/.config/opencode/skills/`    |
+| `codex`       | OpenAI Codex CLI       | `~/.codex/skills/`              |
+| `gemini`      | Gemini CLI             | `~/.gemini/skills/`             |
+| `anti-gravity`| Gemini AntiGravity     | `~/.gemini/antigravity/skills/` |
+| `openclaw`    | OpenClaw               | `~/.openclaw/skills/`           |
+| `hermes`      | Hermes                 | `~/.hermes/skills/`             |
+
+`--target` is **case-insensitive** (`--target Claude` and `--target CLAUDE` both work).
+
+## Flags
+
+- `--plain` — Disable TUI and use plain text output. Useful for CI, pipes, and screen readers. Also auto-enabled when stdout/stdin is not a TTY or when `CI=1`.
+- `--no-banner` — Do not show the OpenDirectory banner.
+
+## Environment Variables
+
+- `NO_COLOR` — Set to any non-empty value to disable ANSI colors (per https://no-color.org).
+- `CI` — Set to any non-empty value to force `--plain` mode automatically.
+
+## Accessibility
+
+The CLI ships with a `--plain` mode that emits a static table instead of a TUI. We recommend it for screen reader users and any CI / scripting context.
+
 ## Available Skills
 
-For the full list of 55+ skills, detailed documentation, and contribution guidelines, visit the [OpenDirectory GitHub Repository](https://github.com/Varnan-Tech/opendirectory).
+For the full list of skills, detailed documentation, and contribution guidelines, visit the [OpenDirectory GitHub repository](https://github.com/Varnan-Tech/opendirectory).
 
 ## Contributing
 
