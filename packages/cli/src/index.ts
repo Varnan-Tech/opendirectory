@@ -19,8 +19,9 @@ import { updateSkill } from './update-core';
 import { runBrowseTUI } from './tui/browse';
 import { runInstalledTUI } from './tui/installed';
 import { getDefaultTarget } from './config';
-import { enableTabJumpForGroupMultiselect } from './clack-patch';
+import { enableTabJumpForGroupMultiselect, enableWindowsSafeClose } from './clack-patch';
 
+enableWindowsSafeClose();
 enableTabJumpForGroupMultiselect();
 
 const program = new Command();
