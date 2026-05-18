@@ -13,7 +13,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-55-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-56-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-7-blueviolet.svg?style=flat-square)](#quick-start)
@@ -34,7 +34,7 @@ OpenDirectory is a library of agent skills for founders who hate marketing. Each
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*Explore our growing library of 55 specialized skills*
+*Explore our growing library of 56 specialized skills*
 
 ### 2. Pick your agent
 ```bash
@@ -218,11 +218,11 @@ Run these commands inside Claude Code:
 
 ## All Skills
 
-55 skills across GTM, growth automation, technical marketing, and developer tooling.
+56 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
-<summary><b>55 skills across 8 categories</b> — click to expand</summary>
+<summary><b>56 skills across 8 categories</b> — click to expand</summary>
 <br>
 
 <table>
@@ -515,6 +515,11 @@ Run these commands inside Claude Code:
   <tr>
     <td><a href="skills/domain-expired-opportunity-finder"><code>domain-expired-opportunity-finder</code></a></td>
     <td>Evaluate expired domain candidates against your niche. Get a conservative,</td>
+    <td><code>1.0.0</code></td>
+  </tr>
+  <tr>
+    <td><a href="skills/github-discussion-to-devrel-content"><code>github-discussion-to-devrel-content</code></a></td>
+    <td>Your users keep asking the same questions in GitHub Discussions. This skill finds those patterns, tells you which docs to fix first, and drafts the actual FAQ entries and content angles — backed by verbatim quotes and direct links to the threads that prove the gap is real.</td>
     <td><code>1.0.0</code></td>
   </tr>
 </table>
