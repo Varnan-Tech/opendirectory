@@ -30,11 +30,17 @@ OpenDirectory is a library of agent skills for founders who hate marketing. Each
 
 <br>
 
-### 1. Browse
+### 1. Browse (Interactive)
+```bash
+npx "@opendirectory.dev/skills"
+```
+*Interactive TUI browser - browse by category, search, and install in one session*
+
+Or list all skills:
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*Explore our growing library of 56 specialized skills*
+*56 specialized skills across GTM, growth, and developer tooling*
 
 ### 2. Pick your agent
 ```bash
@@ -135,7 +141,13 @@ npx "@opendirectory.dev/skills" install <skill> --target claude
 
 ## Quick Start
 
-**1. View available skills:**
+**1. Browse interactively (recommended):**
+```bash
+npx "@opendirectory.dev/skills"
+```
+*Opens a full-screen TUI browser with categories, search, and install flow*
+
+Or list all skills:
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
