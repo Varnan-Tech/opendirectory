@@ -35,8 +35,10 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | [`cook-the-blog`](skills/cook-the-blog) | Generate high-converting, deep-dive growth case studies in MDX format. | `1.0.0` |
 | [`dependency-update-bot`](skills/dependency-update-bot) | Scans your project for outdated npm, pip, Cargo, Go, or Ruby packages. | `1.0.0` |
 | [`docs-from-code`](skills/docs-from-code) | Generates and updates README. | `1.0.0` |
+| [`domain-expired-opportunity-finder`](skills/domain-expired-opportunity-finder) | No description provided. | `1.0.0` |
 | [`explain-this-pr`](skills/explain-this-pr) | Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment. | `1.0.0` |
 | [`google-trends-api-skills`](skills/google-trends-api-skills) | SEO keyword research workflow for blog generation using Google Trends data. | `2.0` |
+| [`gtm-model-fit-profiler`](skills/gtm-model-fit-profiler) | GTM-native meta-skill that evaluates and selects the right AI model for market research, pricing analysis, and outreach. | `1.0.0` |
 | [`hackernews-intel`](skills/hackernews-intel) | Monitors Hacker News for user-configured keywords, deduplicates against a local SQLite cache, and sends Slack alerts for new matching posts. | `1.0.0` |
 | [`human-tone`](skills/human-tone) | Rewrites AI-generated marketing copy to sound naturally human. | `1.0.0` |
 | [`kill-the-standup`](skills/kill-the-standup) | Reads yesterday's Linear issues and GitHub commits for the authenticated user, formats a standup update (done / doing / blockers), and posts it to... | `1.0.0` |
@@ -46,6 +48,7 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 | [`meta-ads-skill`](skills/meta-ads-skill) | Use when interacting with the Meta Ads MCP server to manage accounts, campaigns, ads, insights, and targeting, or to troubleshoot OAuth token authe... | `0.0.1` |
 | [`newsletter-digest`](skills/newsletter-digest) | Aggregates RSS feeds from the past week, synthesizes the top stories using Gemini, and publishes a newsletter digest to Ghost CMS. | `1.0.0` |
 | [`noise2blog`](skills/noise2blog) | Turns rough notes, bullet points, voice transcripts, or tweet dumps into a polished, publication-ready blog post. | `1.0.0` |
+| [`oss-launch-kit`](skills/oss-launch-kit) | No description available | `0.0.1` |
 | [`outreach-sequence-builder`](skills/outreach-sequence-builder) | Takes a buying signal and generates a personalized multi-channel outreach sequence across email, LinkedIn, and phone. | `1.0.0` |
 | [`position-me`](skills/position-me) | Elite Website Reviewer Agent for AEO, GEO, SEO, UI/UX Psychology, and Copywriting. | `0.0.1` |
 | [`pr-description-writer`](skills/pr-description-writer) | Read the current branch diff and write a complete GitHub pull request description. Create or update the PR with one command. | `1.0.0` |
