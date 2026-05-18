@@ -4,7 +4,7 @@
     {
       "id": 1,
       "prompt": "Run the github-discussion-to-devrel-content skill on the repo vercel/next.js. Use the last 90 days, minimum 3 comments, combined mode.",
-      "expected_output": "Agent instructs user to run: python scripts/fetch_discussions.py --repo vercel/next.js --days-back 90 --min-comments 3 --mode combined --output discussions_raw.json. After discussions_raw.json is provided with qualifying data, agent produces devrel-backlog.md with a Run Summary block, a Docs/FAQ Gaps section with at least 3 ranked items each containing priority_score, evidence_quote, source_url, and suggested_action, and a Content Opportunities section with at least 2 ranked items each containing content_type and why_this_matters. All items cite verbatim quotes from thread text, not paraphrases.",
+      "expected_output": "Agent instructs user to run: python scripts/fetch_discussions.py --repo vercel/next.js --days-back 90 --min-comments 3 --mode combined --output discussions_raw.json. After discussions_raw.json is provided with qualifying data, agent produces devrel-backlog.md with a Run Summary block, a Docs/FAQ Gaps section with at least 3 ranked items each containing priority_score, evidence_quote, source_url, and Draft FAQ / Doc Update, and a Content Opportunities section with at least 2 ranked items each containing content_type, Recommended Angle & Outline, and why_this_matters. All items cite verbatim quotes from thread text, not paraphrases.",
       "files": [],
       "setup": "GITHUB_TOKEN set in .env"
     },
@@ -18,7 +18,7 @@
     {
       "id": 3,
       "prompt": "Run the skill in docs-only mode on the repo supabase/supabase for the last 60 days.",
-      "expected_output": "Agent produces devrel-backlog.md with only the Docs/FAQ Gaps section. The Content Opportunities section is absent from the output. Run Summary shows mode: docs. All docs gap items include priority_score, frequency, engagement, evidence_quote, source_url, and suggested_action. Suggested actions reference specific documentation pages or sections, not generic 'improve docs' statements.",
+      "expected_output": "Agent produces devrel-backlog.md with only the Docs/FAQ Gaps section. The Content Opportunities section is absent from the output. Run Summary shows mode: docs. All docs gap items include priority_score, frequency, engagement, evidence_quote, source_url, and Draft FAQ / Doc Update. Draft FAQ / Doc Update includes a ready-to-use Markdown snippet referencing specific documentation pages or sections, not generic 'improve docs' statements.",
       "files": [],
       "setup": "GITHUB_TOKEN set in .env. Mode flag is --mode docs."
     },
