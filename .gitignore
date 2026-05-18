@@ -9,3 +9,4 @@ coverage/
 preview.html
 scripts/__pycache__/
 .husky/_
+/packages/cli/skills
