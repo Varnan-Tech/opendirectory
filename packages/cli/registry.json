@@ -280,7 +280,7 @@
   },
   {
     "name": "twitter-GTM-find-skill",
-    "description": "End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP)...",
+    "description": "Scrape X/Twitter GTM and DevRel startup jobs with Apify, or optionally TweetClaw for OpenClaw and Hermes Tweet for Hermes Agent.",
     "tags": [
       "Marketing",
       "Social Media"
