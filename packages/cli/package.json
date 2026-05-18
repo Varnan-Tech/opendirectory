@@ -1,18 +1,26 @@
 {
   "name": "@opendirectory.dev/skills",
-  "version": "0.2.0",
+  "version": "0.1.72",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
     "opendirectory": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "skills",
+    "registry.json",
+    "README.md",
+    "LICENSE"
+  ],
   "engines": {
     "node": ">=22.0.0"
   },
   "scripts": {
-    "build": "tsc && node -e \"const fs=require('fs');fs.rmSync('./skills',{recursive:true,force:true});fs.cpSync('../../skills','./skills',{recursive:true})\"",
+    "build": "node -e \"const fs=require('fs');fs.rmSync('./dist',{recursive:true,force:true});fs.rmSync('./skills',{recursive:true,force:true});fs.cpSync('../../skills','./skills',{recursive:true})\" && tsc",
     "dev": "tsc -w",
-    "test:e2e": "vitest run src/e2e.test.ts"
+    "prepack": "pnpm run build",
+    "test:e2e": "pnpm run build && vitest run src/e2e.test.ts"
   },
   "dependencies": {
     "@clack/core": "^1.3.1",

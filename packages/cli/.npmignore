@@ -1,23 +1,18 @@
-# Exclude source and config
 src
 tsconfig.json
 package.json.bak
 .claude
 docs
+vitest.config.ts
 
-# Exclude large files from skills
-skills/**/*.png
-skills/**/*.jpg
-skills/**/*.jpeg
-skills/**/*.gif
-skills/**/*.webp
-skills/**/node_modules
-skills/**/package-lock.json
-skills/**/yarn.lock
-skills/**/pnpm-lock.yaml
-skills/**/*.env*
-skills/**/evals
-skills/**/references
-skills/**/templates
-skills/**/assets
-**/__pycache__
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.env
+.env.*
+__pycache__
+*.pyc
+.git
+.github
+.DS_Store

@@ -5,21 +5,20 @@ import { ValidAgent, isValidAgent, getAgentSkillsDir } from './detect';
 import * as manifest from './manifest';
 
 export interface InstallResult {
-  skillName: string;     // resolved (may differ from input if nested)
+  skillName: string;
   target: string;
-  path: string;          // resolved target path
+  path: string;
   success: boolean;
   error?: Error;
 }
 
 export async function installSkill(skillName: string, target: string): Promise<InstallResult> {
   try {
-    // 1. Target validation
-    if (!isValidAgent(target)) {
+    const normalizedTarget = target.toLowerCase();
+    if (!isValidAgent(normalizedTarget)) {
       return { skillName, target, path: '', success: false, error: new Error(`Unsupported target '${target}'.`) };
     }
 
-    // 2. Locate the skill folder on disk
     const root = path.resolve(__dirname, '..');
     const repoDir = path.join(root, 'skills', skillName);
     let skillDir = repoDir;
@@ -28,6 +27,7 @@ export async function installSkill(skillName: string, target: string): Promise<I
     try {
       await fs.access(skillMdPath);
     } catch (e) {
+      let foundAtDepth1 = false;
       try {
         const entries = await fs.readdir(repoDir, { withFileTypes: true });
         for (const entry of entries) {
@@ -37,12 +37,13 @@ export async function installSkill(skillName: string, target: string): Promise<I
               await fs.access(possiblePath);
               skillDir = path.join(repoDir, entry.name);
               skillMdPath = possiblePath;
+              foundAtDepth1 = true;
               break;
             } catch (err) {}
           }
         }
-        if (skillDir === repoDir) {
-          for (const entry of entries) {
+        if (!foundAtDepth1) {
+          outer: for (const entry of entries) {
             if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
               const subDir = path.join(repoDir, entry.name);
               const subEntries = await fs.readdir(subDir, { withFileTypes: true });
@@ -53,7 +54,7 @@ export async function installSkill(skillName: string, target: string): Promise<I
                     await fs.access(possiblePath);
                     skillDir = path.join(subDir, subEntry.name);
                     skillMdPath = possiblePath;
-                    break;
+                    break outer;
                   } catch (err) {}
                 }
               }
@@ -61,44 +62,53 @@ export async function installSkill(skillName: string, target: string): Promise<I
           }
         }
       } catch (dirErr) {
-        return { skillName, target, path: '', success: false, error: new Error(`Repository '${skillName}' not found.`) };
+        return { skillName, target: normalizedTarget, path: '', success: false, error: new Error(`Repository '${skillName}' not found.`) };
       }
     }
 
     try {
       await fs.access(skillMdPath);
     } catch (e) {
-      return { skillName, target, path: '', success: false, error: new Error(`Skill '${skillName}' missing SKILL.md in registry.`) };
+      return { skillName, target: normalizedTarget, path: '', success: false, error: new Error(`Skill '${skillName}' missing SKILL.md in registry.`) };
     }
 
-    const actualSkillFolderName = path.basename(skillDir);
-    const finalSkillName = actualSkillFolderName === skillName ? skillName : actualSkillFolderName;
+    // Path-boundary guard: verify resolved skillDir stays inside skills/
+    const skillsRoot = path.resolve(root, 'skills');
+    const resolvedSkillDir = path.resolve(skillDir);
+    const rel = path.relative(skillsRoot, resolvedSkillDir);
+    if (rel.startsWith('..') || path.isAbsolute(rel) || rel.length === 0) {
+      return {
+        skillName,
+        target: normalizedTarget,
+        path: '',
+        success: false,
+        error: new Error(`Refusing to install '${resolvedSkillDir}': resolved path is outside the skills directory.`)
+      };
+    }
 
-    // 3. Compute destination path
-    const destPath = path.join(getAgentSkillsDir(target as ValidAgent), finalSkillName);
+    const registrySkills = await loadRegistry();
+    const registryEntry = registrySkills.find(s => s.name === skillName);
 
-    // 4. Create destination dir
+    const manifestName = registryEntry ? skillName : path.basename(skillDir);
+    const destFolderName = path.basename(skillDir);
+
+    const destPath = path.join(getAgentSkillsDir(normalizedTarget as ValidAgent), destFolderName);
+
     await fs.mkdir(destPath, { recursive: true });
 
-    // 5. Copy recursively
     await fs.cp(skillDir, destPath, { recursive: true });
 
-    // 6. Look up version from registry
-    const skills = await loadRegistry();
-    const skill = skills.find(s => s.name === finalSkillName);
-    const version = skill?.version || 'unknown';
+    const version = registryEntry?.version || 'unknown';
 
-    // 7. Update manifest
     await manifest.addInstalled({
-      name: finalSkillName,
-      target,
+      name: manifestName,
+      target: normalizedTarget,
       version,
       installedAt: new Date().toISOString(),
       path: destPath
     });
 
-    // 8. Return
-    return { skillName: finalSkillName, target, path: destPath, success: true };
+    return { skillName: manifestName, target: normalizedTarget, path: destPath, success: true };
   } catch (error: any) {
     return { skillName, target, path: '', success: false, error };
   }

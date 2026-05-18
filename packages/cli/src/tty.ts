@@ -1,6 +1,9 @@
 export function isInteractive(): boolean {
-  // True only when stdout is a real TTY AND not in CI
-  return Boolean(process.stdout.isTTY) && !process.env.CI;
+  // True only when BOTH stdout and stdin are real TTYs AND not in CI.
+  // Checking both prevents launching the TUI when stdin is redirected
+  // (e.g. `echo … | opendirectory list`) — clack would otherwise wait
+  // forever for keypresses that never arrive.
+  return Boolean(process.stdout.isTTY) && Boolean(process.stdin.isTTY) && !process.env.CI;
 }
 
 export function noColor(): boolean {
@@ -13,5 +16,6 @@ export function terminalWidth(): number {
 }
 
 export function isPiped(): boolean {
-  return !process.stdout.isTTY;
+  // Either stdout OR stdin redirected means we cannot trust a full TUI.
+  return !process.stdout.isTTY || !process.stdin.isTTY;
 }

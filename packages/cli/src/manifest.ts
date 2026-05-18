@@ -1,9 +1,9 @@
 export interface InstalledSkill {
-  name: string;        // skill name
-  target: string;      // agent (claude, opencode, etc.)
-  version: string;     // version installed (from registry at install time)
-  installedAt: string; // ISO timestamp
-  path: string;        // absolute path where skill was copied to
+  name: string;
+  target: string;
+  version: string;
+  installedAt: string;
+  path: string;
 }
 
 export interface Manifest {
@@ -14,10 +14,10 @@ export interface Manifest {
 import { resolvePath } from './fs-adapters';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import { AGENT_PATHS, ValidAgent, getAgentSkillsDir } from './detect';
 
 const MANIFEST_PATH_TILDE = '~/.opendirectory/installed.json';
 
-// CRITICAL: Node.js `fs` does NOT expand `~`. Always use resolvePath() before any fs.* call.
 function getManifestPath(): string {
   return resolvePath(MANIFEST_PATH_TILDE);
 }
@@ -26,7 +26,12 @@ export async function readManifest(): Promise<Manifest> {
   const resolved = getManifestPath();
   try {
     const content = await fs.readFile(resolved, 'utf-8');
-    return JSON.parse(content);
+    const parsed = JSON.parse(content);
+    // Structural validation: guard against corrupt/partial manifest files
+    if (parsed && typeof parsed === 'object' && Array.isArray(parsed.skills)) {
+      return parsed as Manifest;
+    }
+    return { version: 1, skills: [] };
   } catch (e) {
     return { version: 1, skills: [] };
   }
@@ -75,10 +80,45 @@ export async function reconcile(): Promise<{ removed: number; added: number }> {
     }
   }
 
-  if (removed > 0) {
+  let added = 0;
+  const knownPaths = new Set(validSkills.map(s => path.resolve(s.path)));
+
+  for (const agentName of Object.keys(AGENT_PATHS) as ValidAgent[]) {
+    const skillsDir = getAgentSkillsDir(agentName);
+    let entries: import('node:fs').Dirent[];
+    try {
+      entries = await fs.readdir(skillsDir, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      const fullPath = path.resolve(skillsDir, entry.name);
+      if (knownPaths.has(fullPath)) continue;
+
+      try {
+        await fs.access(path.join(fullPath, 'SKILL.md'));
+      } catch {
+        continue;
+      }
+
+      validSkills.push({
+        name: entry.name,
+        target: agentName,
+        version: 'unknown',
+        installedAt: new Date(0).toISOString(),
+        path: fullPath,
+      });
+      knownPaths.add(fullPath);
+      added++;
+    }
+  }
+
+  if (removed > 0 || added > 0) {
     manifest.skills = validSkills;
     await writeManifest(manifest);
   }
 
-  return { removed, added: 0 };
+  return { removed, added };
 }

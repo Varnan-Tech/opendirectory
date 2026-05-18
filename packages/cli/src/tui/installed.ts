@@ -57,7 +57,7 @@ export async function runInstalledTUI(): Promise<void> {
     const selectedSkills = await p.multiselect({
       message: `Select skills to ${action} (Space to select, Enter to confirm):`,
       options: manifest.skills.map(skill => ({
-        value: `${skill.name}::${skill.target}`,
+        value: JSON.stringify({ name: skill.name, target: skill.target }),
         label: `${skill.name} ${chalk.dim('(' + skill.target + ')')}`
       })),
       maxItems: 18,
@@ -90,7 +90,7 @@ export async function runInstalledTUI(): Promise<void> {
     const startedAt = Date.now();
 
     for (let i = 0; i < selections.length; i++) {
-      const [name, target] = selections[i].split('::');
+      const { name, target } = JSON.parse(selections[i]);
       const sp = p.spinner(buildSpinnerOptions());
       const progress = renderProgressBar(i, total);
       sp.start(`${progress}  ${action === 'uninstall' ? 'Removing' : 'Updating'} ${name}`);
@@ -118,7 +118,7 @@ export async function runInstalledTUI(): Promise<void> {
 
     const seconds = ((Date.now() - startedAt) / 1000).toFixed(3);
     p.outro(chalk.hex(BRAND_PURPLE).bold(`Done. ${successCount}/${total} succeeded in ${seconds}s.`));
-    process.exit(successCount > 0 ? 0 : 1);
+    process.exit(successCount === total ? 0 : 1);
 
   } catch (error) {
     p.log.error(String(error));
