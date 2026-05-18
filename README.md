@@ -30,11 +30,17 @@ OpenDirectory is a library of agent skills for founders who hate marketing. Each
 
 <br>
 
-### 1. Browse
+### 1. Browse (Interactive)
+```bash
+npx "@opendirectory.dev/skills"
+```
+*Interactive TUI browser — browse by category, search, and install in one session*
+
+Or list all skills:
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*Explore our growing library of 56 specialized skills*
+*56 specialized skills across GTM, growth, and developer tooling*
 
 ### 2. Pick your agent
 ```bash
@@ -135,7 +141,13 @@ npx "@opendirectory.dev/skills" install <skill> --target claude
 
 ## Quick Start
 
-**1. View available skills:**
+**1. Browse interactively (recommended):**
+```bash
+npx "@opendirectory.dev/skills"
+```
+*Opens a full-screen TUI browser with categories, search, and install flow*
+
+Or list all skills:
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
@@ -465,7 +477,7 @@ Run these commands inside Claude Code:
   </tr>
   <tr>
     <td><a href="skills/where-your-customer-lives"><code>where-your-customer-lives</code></a></td>
-    <td>Give this skill a product utility and ICP. It searches Reddit, Hacker News, and DuckDuckGo to find the specific communities where your customer actually gathers -- then builds a per-channel playbook: evidence your ICP is there, one entry tactic, one content angle, and specific anti-patterns.</td>
+    <td>Give this skill a product utility and ICP. It searches Reddit, Hacker News, and DuckDuckGo for the specific communities where your customer actually gathers -- then builds a per-channel playbook: evidence your ICP is there, one entry tactic, one content angle, and specific anti-patterns.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr><th colspan="3" align="left">Developer Tools</th></tr>
