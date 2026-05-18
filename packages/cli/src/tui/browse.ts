@@ -1,5 +1,6 @@
 import * as p from '@clack/prompts';
 import chalk from 'chalk';
+import { setTimeout } from 'timers/promises';
 import { printAnimatedBanner } from '../banner';
 import { loadRegistry, type Skill } from '../registry';
 import { pickTarget, CancelledError } from './target-picker';
@@ -9,7 +10,7 @@ import { categoryFor, CATEGORY_ORDER } from '../categories';
 import { printRandomTip } from '../tips';
 import { BRAILLE_SPINNER_FRAMES, renderProgressBar } from '../animations';
 
-type BrowseMode = 'all' | 'category';
+const BACK = Symbol('back');
 
 const BRAND_PURPLE = '#856FE6';
 
@@ -38,9 +39,18 @@ function groupSkillsByCategory(skills: Skill[]): Record<string, Skill[]> {
   return ordered;
 }
 
-async function selectFromAll(skills: Skill[]): Promise<string[] | symbol> {
+function buildSpinnerOptions(): p.SpinnerOptions | undefined {
+  if (noColor()) return undefined;
+  return {
+    frames: BRAILLE_SPINNER_FRAMES,
+    delay: 80,
+    styleFrame: styledFrame
+  };
+}
+
+async function searchAllSkills(skills: Skill[]): Promise<string[] | symbol> {
   return p.autocompleteMultiselect({
-    message: 'Type to filter (try a category like "social" or "video") · Space to select · Enter to confirm',
+    message: 'Type to filter (try a category like "social" or "video")  Space to select  Enter to confirm',
     options: skills.map(skill => {
       const cat = categoryFor(skill.name);
       return {
@@ -54,7 +64,7 @@ async function selectFromAll(skills: Skill[]): Promise<string[] | symbol> {
   });
 }
 
-async function selectFromCategories(skills: Skill[]): Promise<string[] | symbol> {
+async function browseByCategory(skills: Skill[]): Promise<string[] | symbol> {
   const grouped = groupSkillsByCategory(skills);
   const options: Record<string, Array<{ value: string; label: string; hint?: string }>> = {};
   for (const [cat, list] of Object.entries(grouped)) {
@@ -66,28 +76,23 @@ async function selectFromCategories(skills: Skill[]): Promise<string[] | symbol>
       hint: truncate(skill.description, 70)
     }));
   }
+
   p.note(
-    'TAB jumps to the next category. SHIFT+TAB jumps back. ' +
-    'Press SPACE on a category name to select every skill in that group. ' +
-    'Press SPACE on a single skill to toggle just that one. Press ENTER when done.',
+    'TAB jumps between categories  SPACE on category = select all in group' +
+    '  Enter = confirm  ESC = back',
     'Keyboard shortcuts'
   );
-  return p.groupMultiselect({
-    message: 'Select skills (TAB to jump categories, SPACE to select, ENTER to confirm)',
+
+  const selected = await p.groupMultiselect({
+    message: 'Tab switches category  Space toggles  Enter confirms  ESC goes back',
     options,
     maxItems: 18,
-    required: true,
+    required: false,
     selectableGroups: true
   });
-}
 
-function buildSpinnerOptions(): p.SpinnerOptions | undefined {
-  if (noColor()) return undefined;
-  return {
-    frames: BRAILLE_SPINNER_FRAMES,
-    delay: 80,
-    styleFrame: styledFrame
-  };
+  if (p.isCancel(selected)) return BACK;
+  return selected as string[];
 }
 
 export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean } = {}): Promise<void> {
@@ -95,7 +100,6 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
     await printAnimatedBanner({ hidden: opts.noBanner });
     if (!opts.noBanner) printRandomTip();
     console.log();
-    p.intro(chalk.hex(BRAND_PURPLE).bold(' OpenDirectory ') + chalk.dim('— agent skills for founders who hate marketing'));
 
     if (terminalWidth() < 60) {
       p.log.warn('Terminal is narrow — list may wrap awkwardly.');
@@ -111,41 +115,52 @@ export async function runBrowseTUI(opts: { target?: string; noBanner?: boolean }
       process.exit(0);
     }
 
-    const mode = await p.select<BrowseMode>({
-      message: 'How would you like to browse?',
-      options: [
-        { value: 'category', label: 'Browse by category', hint: `${Object.keys(groupSkillsByCategory(skills)).length} categories, TAB to jump` },
-        { value: 'all', label: 'Search all skills', hint: 'Type to filter across name, description, category' }
-      ],
-      initialValue: 'category'
-    });
-
-    if (p.isCancel(mode)) {
-      p.cancel('Cancelled.');
-      process.exit(0);
-    }
-
-    const selectedSkills = mode === 'all'
-      ? await selectFromAll(skills)
-      : await selectFromCategories(skills);
-
-    if (p.isCancel(selectedSkills)) {
-      p.cancel('Cancelled.');
-      process.exit(0);
-    }
-
-    if (!selectedSkills || (selectedSkills as string[]).length === 0) {
-      p.cancel('No skills selected.');
-      process.exit(0);
-    }
-
     let target = opts.target;
+    let skillNames: string[] | null = null;
+
+    modeLoop:
+    while (true) {
+      await setTimeout(10);
+      const mode = await p.select({
+        message: 'How would you like to browse?',
+        options: [
+          { value: 'category', label: 'Browse by category', hint: 'search + group by category' },
+          { value: 'all', label: 'Search all skills', hint: 'filter across name, description, category' },
+          { value: 'exit', label: 'Exit' }
+        ],
+        initialValue: 'category'
+      });
+
+      if (p.isCancel(mode) || mode === 'exit') {
+        p.cancel('Exiting.');
+        process.exit(0);
+      }
+
+      if (mode === 'category') {
+        while (true) {
+          const result = await browseByCategory(skills);
+          if (result === BACK) continue modeLoop;
+          if ((result as string[]).length === 0) continue;
+          skillNames = result as string[];
+          break modeLoop;
+        }
+      } else {
+        const result = await searchAllSkills(skills);
+        if (p.isCancel(result)) continue;
+        if ((result as string[]).length === 0) continue;
+        skillNames = result as string[];
+        break;
+      }
+    }
+
     if (!target) {
       target = await pickTarget();
     }
 
-    const skillNames = selectedSkills as string[];
-    p.note(`Installing ${skillNames.length} skill${skillNames.length === 1 ? '' : 's'} to ${chalk.hex(BRAND_PURPLE).bold(target)}\n${skillNames.join(', ')}`, 'Summary');
+    p.note(
+      `Installing ${skillNames.length} skill${skillNames.length === 1 ? '' : 's'} to ${chalk.hex(BRAND_PURPLE).bold(target)}\n${skillNames.join(', ')}`,
+      'Summary'
+    );
 
     const proceed = await p.confirm({
       message: 'Continue?',
