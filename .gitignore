@@ -1,4 +1,4 @@
-﻿node_modules/
+node_modules/
 dist/
 coverage/
 *.log
@@ -9,13 +9,26 @@ coverage/
 preview.html
 scripts/__pycache__/
 .husky/_
-<<<<<<< HEAD
-/packages/cli/skills
-=======
 
-# Build artifacts — copied from root skills/ by packages/cli/package.json build script
+# Stale build artifacts in CLI package
 /packages/cli/skills
 
 # TUI research docs (not source)
 /packages/cli/docs
->>>>>>> 7764d1e (feat(cli): add interactive TUI with clack/prompts)
+
+# Test home directory
+/.test-home
+
+# Clack source analysis (cloned during debugging)
+/clack_src
+
+# Skills development artifacts
+skills/**/node_modules
+skills/**/__pycache__
+*.pyc
+
+# Review processing artifacts
+review-feedback-*.txt
+review-analysis-*.txt
+comments_*.{txt,json}
+*.fix-summary.md
