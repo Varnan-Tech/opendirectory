@@ -1,0 +1,12 @@
+{
+  "name": "hyperframes-product-launch-video-scripts",
+  "version": "1.0.0",
+  "description": "Helper scripts for the hyperframes-product-launch-video skill.",
+  "type": "module",
+  "scripts": {
+    "postinstall": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.42.1"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "skill_name": "graphic-slide-deck",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a 12-slide Series A investor deck for a B2B analytics SaaS called DataPulse. Audience: Series A VCs. Key message: we turn warehouse data into revenue decisions in under 5 minutes. Style: midnight-editorial. Output: HTML + PDF.",
+      "expected_output": "All 3 required fields present -- skips Step 1. Asks all 9 questions in Step 2 grouped into Content / Design / Output categories. After answers: reads style-presets.md midnight-editorial tokens (Instrument Serif + Inter, #D8F90A accent, #111111 bg). Reads viewport-base.css from frontend-slides exact path -- includes FULL verbatim contents in style block. Reads html-template.md -- uses SlidePresentation class with navDotsContainer.innerHTML='' before nav dot loop. Reads animation-patterns.md. Generates single HTML, 12 slides, all using class='slide'. Structure plan includes stat-highlight as unmissable slide (traction metrics) -- confirmed with user before generating. Step 4 drafts per-slide copy first: stat-highlight has ZERO body copy, only number+label pairs. HTML generation: all font sizes use clamp(), midnight-editorial tokens applied consistently, stat numbers at clamp(3.5rem, 12vw, 9rem) in #D8F90A. Self-QA passes all 18 checklist items. Writes deck/datapulse-slides/index.html. Per-slide files written: deck/datapulse-slides/slide-001.html through slide-012.html, each with full style block + individual slide section + no SlidePresentation JS. PDF export called: bash /Users/ksd/Desktop/Varnan_skills/frontend-slides/scripts/export-pdf.sh deck/datapulse-slides/index.html deck/datapulse.pdf. No HTML in chat. Summary shown with file paths, navigation instructions, and deck checklist.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Make me a sales deck for our project management tool. Audience: operations directors at 50-200 person companies. Key message: cut project reporting time by 80%.",
+      "expected_output": "All 3 required fields present -- skips Step 1. Asks 9 questions in Step 2. User answers style='show me options'. Generates 3 single-slide HTML previews (style-a.html clean-slate, style-b.html mint-pixel-corporate, style-c.html matt-gray for sales context), saves to .claude-design/previews/, opens each automatically. Asks user to pick. After pick: reads chosen style preset tokens. Step 3: sales deck structure -- title-hero, quote-callout (pain), text-left-image-right (solution), image-grid (screenshots), stat-highlight (80% time reduction -- unmissable), comparison-table, text-full (next steps), closing-cta. Confirms structure with user. Step 4: per-slide copy with no forbidden words. stat-highlight copy: '80%' metric with 'Reporting time cut' label -- nothing else. Step 5 HTML: stat-highlight slide uses clamp(3.5rem, 12vw, 9rem) for the 80% number, ZERO body copy competing with it, counter animation applied (one dramatic moment). Default output=HTML+PDF so PDF export runs. .claude-design/previews/ deleted after generation. Summary shown with slide count, file paths, and deck checklist.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Make me some slides.",
+      "expected_output": "Purpose, audience, and topic all missing. Does NOT read any reference files. Does NOT generate any HTML, structure plan, or outline. Asks exactly: 'To get started, I need three things: 1. Purpose -- what is this deck for? (investor pitch / sales call / conference talk / internal presentation / onboarding / other) 2. Audience -- who will see it? (VCs, prospects, your team, executives, conference room, LinkedIn) 3. Topic or content -- paste notes, a URL, a brief description, or upload a file'. Stops and waits. After user provides all three, proceeds to Step 2 and asks all 9 grouped questions in one message.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Build a 15-slide conference talk about LLM evaluation frameworks. Audience: ML engineers at a NeurIPS workshop. Key message: evals are product decisions, not research artifacts. Style: brutalist. Aspect ratio: 1:1. Output: HTML + PDF + deploy.",
+      "expected_output": "Skips Step 1. Asks 9 questions in Step 2. After answers: reads brutalist style preset tokens -- Archivo Black 900, #FF3300 accent, #FFFFFF bg, zero border-radius everywhere, heavy 3px solid black borders. Aspect ratio 1:1: CSS custom property --slide-height: min(100vh, 100vw) applied on .slide, not default 100vh. Structure: 15 slides including section-dividers for talk chapters, quote-callout for key insight, stat-highlight as unmissable slide. Confirms structure with user before content draft. Step 5 HTML: Archivo Black confirmed loaded via Google Fonts @import. All borders are 3px solid #000000. Zero border-radius anywhere in the HTML. stat-highlight in #FF3300 accent. Animation: blur-in (400ms) as default entrance for conference talk; ONE slide uses gradient mesh background (dramatic moment). Per-slide HTML files generated (slide-001 through slide-015). PDF export called: bash /Users/ksd/Desktop/Varnan_skills/frontend-slides/scripts/export-pdf.sh deck/llm-evals-slides/index.html deck/llm-evals.pdf. Deploy called: bash /Users/ksd/Desktop/Varnan_skills/frontend-slides/scripts/deploy.sh deck/llm-evals-slides/. Summary shows live URL, file paths, all navigation instructions.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Convert my existing PowerPoint to a beautiful slide deck. File: quarterly-review.pptx. Style: matt-gray. Board presentation.",
+      "expected_output": "Purpose=internal/board, audience=board, content=from file. Skips Step 1 (all 3 fields derivable). Asks 9 questions in Step 2. Runs python /Users/ksd/Desktop/Varnan_skills/frontend-slides/scripts/extract-pptx.py quarterly-review.pptx /tmp/extracted-pptx/ to extract content. Presents extracted slide titles and content for user confirmation. After confirmation: skips Step 3-4 content planning (extracted content drives the structure). Assigns layout types to extracted slides based on content type (slides with bullet lists → text-full, slides with single large numbers → stat-highlight, title slide → title-hero, etc.). Reads matt-gray preset tokens: DM Sans 700/400, #2563EB accent, white bg, 4px left border signature element. Step 5 HTML: all slides from extracted content, class='slide' on each, DM Sans loaded via @import, all font sizes clamp()-based. Per-slide files generated. No PDF requested in original prompt -- Step 8 summary asks: 'Want a PDF export as well?' before showing final checklist.",
+      "files": []
+    }
+  ]
+}

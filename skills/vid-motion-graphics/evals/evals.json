@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "prompt": "Create a 9-second motion graphic. Brief: 'Q4 revenue hit $4.2M — 85% growth year-over-year. Three drivers: new enterprise deals, churn dropped to 1.2%, successful price increase. CTA: see full report at acme.com/q4'. Style: data-pulse. Aspect: 1:1.",
+    "expected": "4 scenes (title-card, stat-reveal for $4.2M, bullet-list for 3 drivers, cta-card), no animation-delay anywhere, all scene @keyframes as % of 9s total, window.__videoReady set inside document.fonts.ready.then(), data-pulse CSS tokens, export produces MP4 via export-video.sh --duration 9"
+  },
+  {
+    "id": 2,
+    "prompt": "Create a short video. Brief: 'Introducing our new API. 10× faster. 99.99% uptime. Free tier available.' Style: bold-type. Aspect: 9:16. Duration: 2s per scene.",
+    "expected": "3 scenes (title-card for intro, stat-reveal for 10×, cta-card for free tier), 9:16 = body width:1080px height:1920px, bold-type CSS tokens (Bebas Neue, --accent: #FF2B00), no animation-delay, 6s total duration, --width 1080 --height 1920 in export command"
+  },
+  {
+    "id": 3,
+    "prompt": "Make an animated reel. Brief: 'Sarah Chen, Head of Engineering. 12 years experience. Led 3 platform migrations. Currently hiring for senior roles.' Style: editorial-light.",
+    "expected": "3 scenes (title-card for name/title, bullet-list for experience points, cta-card for hiring CTA), editorial-light tokens (Playfair Display, --bg: #FAFAF8), document.fonts.ready pattern, animation-fill-mode: both on all animated elements"
+  },
+  {
+    "id": 4,
+    "prompt": "Create a video. Brief: '\"This tool saved us 20 hours a week\" — startup founder. Now used by 500+ teams.' Style: minimal-clean. Aspect: 16:9.",
+    "expected": "2 scenes (quote-card for testimonial, stat-reveal or title-card for 500+ teams), 16:9 = body width:1920px height:1080px, minimal-clean tokens (Cormorant Garamond, --bg: #F5F4F0), --width 1920 --height 1080 in export command"
+  },
+  {
+    "id": 5,
+    "prompt": "make a video",
+    "expected": "content_brief is missing. Ask: 'To create the video, I need a content brief — what should the video communicate? Example: ...' Do NOT generate any HTML. Do NOT proceed to Step 2. Wait for response."
+  }
+]

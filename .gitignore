@@ -1,7 +1,11 @@
-node_modules/
+﻿node_modules/
 dist/
 coverage/
 *.log
 /.sisyphus
 /.next/dev/static/chunks
 .dev/static/chunks
+.cache
+preview.html
+scripts/__pycache__/
+.husky/_

@@ -1,0 +1,35 @@
+{
+  "skill_name": "email-newsletter",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a newsletter about how AI is changing B2B sales. Audience: VPs of Sales at 100-500 person SaaS companies. CTA: join our upcoming webinar. Tone: direct and confident. Platform: Beehiiv. Brand color: #856FE6.",
+      "expected_output": "Topic + audience + CTA present -- skips Step 1. Asks all 19 questions in Step 2 grouped into Content / Brand / Design / Platform categories, since company name, CTA URL, city, display font, button style, personalization, and issue context were not provided. After user answers: reads templates/dark-newsletter.html as base (dark background default, Instrument Serif default, no custom hex). Design direction is derived internally (not stated to user) -- technical+data-forward from the data-heavy content. Hero headline 8 words or fewer in Instrument Serif 56px with Georgia fallback. Brand strip uses #856FE6. Stat callout has border-left:4px solid #856FE6. Step badges stay #D8F90A (purple luminance too low). Category label color #856FE6. Accent discipline: #856FE6 appears in exactly 3 places. CTA pill button uses #D8F90A with #0A0A0A text. If company_name provided in answers: replaces [YOUR BRAND] and [COMPANY NAME]. If cta_url provided: replaces [CTA_URL]. Footer uses %%unsubscribe_url%% (Beehiiv). HTML saved to docs/newsletters/ai-b2b-sales-[date].html. Chat shows only subject lines + send checklist -- no HTML code fence.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Draft an email newsletter for our summer product launch. Audience: existing customers aged 25-40 who bought last year. CTA: shop the collection. Tone: playful. Platform: Mailchimp.",
+      "expected_output": "Topic + audience + CTA present -- skips Step 1. Asks all 19 questions in Step 2 (company name, brand color, CTA URL, city, display font, button style, background, visual style, personalization, etc. not provided). After answers: uses templates/dark-newsletter.html (playful tone = dark, not formal). Design direction internal -- bold+campaign for a product launch. Hero headline energetic, 8 words or fewer, no I/We/Our. CTA pill button in hero uses #D8F90A. Yellow CTA callout card present as visual anchor. If company_name and cta_url provided: replace placeholders. Footer uses *|UNSUB|* (Mailchimp). mc:edit attributes added to editable <td> sections. No em dashes. No banned words. 3 subject lines generated. HTML saved to docs/newsletters/summer-product-launch-[date].html. No HTML in chat.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Write a newsletter.",
+      "expected_output": "Topic, audience, and CTA are all missing. Does NOT open any template or generate any HTML. Asks for all three in Step 1 exactly: 'To get started, I need three things: 1. Topic 2. Audience 3. Primary CTA'. Stops and waits. After user provides all three, proceeds to Step 2 and asks all 19 questions in one message grouped into Content / Brand / Design / Platform categories.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Write a monthly developer digest newsletter. Topic: notable open source releases this month. Audience: senior engineers and engineering managers. CTA: read the full digest. Platform: Resend. Tone: educational.",
+      "expected_output": "Topic + audience + CTA present -- skips Step 1. Asks all 19 questions in Step 2 (company name, brand color, CTA URL, city, background, display font, button style, visual style, personalization, issue context, length not provided). After answers: reads templates/dark-newsletter.html (dark default, Instrument Serif default). Design direction internal -- technical+data-forward for developer digest. Step cards section included for numbered releases. Hero headline uses Instrument Serif 56px with Georgia fallback. If company_name provided: replaces placeholders. Resend unsubscribe variable {unsubscribeUrl} in footer. Note in send checklist that React Email .tsx output available on request for Resend. No HTML in chat -- saved to docs/newsletters/developer-digest-[date].html. 3 subject lines generated.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Write a formal investor update newsletter. Audience: our seed-round investors. CTA: read the full update. Tone: formal. Platform: Loops. Brand color: #1A3A5C.",
+      "expected_output": "Topic + audience + CTA present -- skips Step 1. Asks all 19 questions in Step 2 (company name, CTA URL, city, background, display font, button style, visual style, personalization, length, issue context not provided). After answers: reads templates/light-newsletter.html (formal tone triggers light template). Design direction internal -- editorial for formal investor update. Brand color #1A3A5C is dark (low luminance, near-black) -- used for header strip and stat border only, NOT for step badges or CTA button. CTA button uses #111111 on light template. If company_name provided: replaces [YOUR BRAND] and [COMPANY NAME]. Footer uses {{unsubscribe_url}} (Loops syntax). Hero headline in Instrument Serif 48-56px, Georgia fallback. No step cards (formal tone, investor update doesn't suit numbered cards). Saved to docs/newsletters/investor-update-[date].html.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "skill_name": "graphic-ebook",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a 6-page ebook titled 'The B2B SaaS Guide to Reducing Churn'. Audience: Customer Success Managers at 50–500 person SaaS companies. CTA: book a demo. Style: clean-slate. Brand: DataPulse.",
+      "expected_output": "All 4 required fields present — skips Step 1. Asks 9 questions in Step 2. Reads clean-slate tokens (Plus Jakarta Sans, #0F172A accent, white bg, rounded cards 16px). Reads viewport-base.css verbatim. Adds `-webkit-print-color-adjust: exact` globally. 6-page structure: [cover] + [toc] + [chapter-intro] + [text-column] + [stat-grid] + [closing-cta]. Body text at clamp(0.875rem, 1.25vw, 1.05rem) with line-height 1.75, max-width min(65ch,100%). No 2 consecutive text-column pages. Chapter-intro has .chapter-number-deco (opacity 0.06). Every page except cover has .page-footer with page number + brand name. Per-page HTML files written (page-01.html → page-06.html). PDF export --portrait called. Summary with checklist shown.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Make me an ebook.",
+      "expected_output": "topic, audience, desired_action, content all missing. Does NOT read any reference files. Does NOT generate any HTML, structure plan, or outline. Asks exactly: 'To create your ebook, I need four things: 1. Topic 2. Audience 3. Desired action 4. Content'. Stops and waits. After user provides all four, proceeds to Step 2 and asks all 9 grouped questions in one message.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Create a 3-page lead magnet ebook: '5 Signs Your RevOps Stack is Broken'. Target: RevOps Managers. CTA: download our RevOps audit template. Style: midnight-editorial. Draft from scratch.",
+      "expected_output": "Skips Step 1. Asks 9 questions. 3-page structure: [cover] + [stat-grid (5 signs as stats or stat-callout layout)] + [closing-cta]. midnight-editorial tokens: Instrument Serif display, Inter body, #D8F90A accent, #111111 bg. Cover title leads with tension ('5 Signs Your RevOps Stack is Broken' ≤10 words). No TOC (3 pages). Stats at clamp(2.5rem, 7vw, 5rem) min. No footer on cover, footer on pages 2–3. Closing CTA has email + URL (both required). Per-page HTML (3 files). PDF --portrait export. Summary shown.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Build a 10-page deep dive ebook: 'The Complete Guide to Product-Led Growth'. Audience: SaaS founders and heads of product. Style: product-minimal. CTA: join our PLG community newsletter. Brand: Cortex.",
+      "expected_output": "Skips Step 1. Asks 9 questions. 10-page structure: [cover] + [toc] + 3× [chapter-intro + text-column or text-sidebar] + [quote-callout] + [key-takeaways] + [closing-cta]. product-minimal tokens: Syne display, IBM Plex Sans body, #8B5CF6 violet accent. Visual rhythm enforced: no 2 consecutive text-column pages. Body text max-width min(65ch,100%), line-height 1.75. Chapter numbers as .chapter-number-deco (opacity 0.06). Page footers on pages 2–10. Three-point CTA embedded (intro + mid + closing). 10 per-page HTML files. PDF --portrait export. Summary shown.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Create a 6-page ebook about reducing customer onboarding time. Style: show me options. Audience: Head of Customer Success. CTA: book a demo.",
+      "expected_output": "Skips Step 1. Asks 9 questions. User answers style='show me options': generates 3 cover-page HTML previews saved to .claude-design/previews/style-a.html, style-b.html, style-c.html, opens each automatically, asks user to pick. After pick: reads chosen preset tokens from references/style-presets.md. 6-page structure: [cover] + [toc] + [chapter-intro] + [text-sidebar (with .callout--stat)] + [quote-callout] + [closing-cta]. text-sidebar uses typed callout class (not generic bold box). .claude-design/previews/ deleted after generation. PDF --portrait export. Summary shown.",
+      "files": []
+    }
+  ]
+}

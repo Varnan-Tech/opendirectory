@@ -1,0 +1,120 @@
+[
+  {
+    "id": "eval_001",
+    "name": "B2B SaaS developer tool -- full happy path",
+    "description": "A CI/CD developer tool with Firecrawl available. Validates the full 10-step workflow: fetch, competitor discovery, user confirmation, 3-track PR research, channel tiering, journalist lookup, cold pitch drafts, and saved output.",
+    "input": {
+      "prompt": "Find my PR targets: https://buildkite.com",
+      "env": {
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Fetches product page via Firecrawl",
+      "Product analysis: taxonomy maps to software > DevTools > CI/CD automation",
+      "Phase 1 discovers 5 CI/CD or DevTools competitors (e.g. CircleCI, GitHub Actions, GitLab CI, Harness, Drone)",
+      "Step 5 shows competitor list and pauses for user confirmation",
+      "Phase 2 runs 3-track search (editorial, podcast, community) for all 5 confirmed competitors = 15 searches",
+      "Step 7 pattern analysis produces tier_1_channels with at least 1 tech editorial (TechCrunch, InfoQ, The New Stack, etc.)",
+      "Step 8 journalist lookup runs for each Tier 1 editorial channel",
+      "Cold pitch drafts reference buildkite.com-specific differentiators from the fetched page",
+      "Output saved to docs/pr-intel/buildkite-[date].md",
+      "No em dashes in output",
+      "No banned buzzwords in cold pitches"
+    ],
+    "expected_output": "Full PR intel report with Tier 1 deep dives, cold pitch drafts with subject lines, Tier 2 quick hits, 3 bonus hooks, saved to docs/pr-intel/"
+  },
+  {
+    "id": "eval_002",
+    "name": "Consumer social app -- different publication set, no B2B enterprise press",
+    "description": "A consumer mobile social app. Validates that the skill maps to consumer taxonomy, finds consumer-focused competitors, and surfaces consumer press (not enterprise publications).",
+    "input": {
+      "prompt": "Find PR targets for: https://www.bereal.com",
+      "env": {
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Fetches product page successfully",
+      "Taxonomy maps to consumer > social media (NOT B2B SaaS or DevTools)",
+      "Competitors are consumer social apps (Snapchat, Instagram, VSCO, Locket, etc.)",
+      "Track A editorial results come from consumer press (The Verge, Mashable, TechCrunch consumer, Wired lifestyle)",
+      "No B2B enterprise publications (e.g. VentureBeat enterprise, InfoQ, The New Stack) appear in Tier 1",
+      "Track C community results include consumer subreddits (r/technology, r/socialmedia, etc.)",
+      "Cold pitch drafts reference consumer social angles (authenticity, Gen Z, photo sharing), not enterprise ROI",
+      "At least 1 podcast found in results (tech culture or consumer tech podcast)"
+    ],
+    "expected_output": "PR intel report with consumer-focused editorial, podcast, and community channels -- no enterprise B2B publications in Tier 1"
+  },
+  {
+    "id": "eval_003",
+    "name": "Description-only input (no URL) -- skips fetch, uses description for analysis",
+    "description": "User pastes a product description with no URL. Validates that Steps 3-4 are skipped and competitor discovery uses the pasted description as the product context.",
+    "input": {
+      "prompt": "Find PR targets for my startup. We make AI-powered code review tools for enterprise engineering teams. Seed stage, US-focused.",
+      "env": {
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Detects no URL in the input",
+      "Skips Step 3: no fetch attempt is made",
+      "Skips the Firecrawl/Tavily extract path entirely",
+      "AI derives product analysis from the description: taxonomy maps to software > DevTools > code review automation",
+      "competitor discovery query uses description-derived taxonomy",
+      "Competitors are AI code review tools (CodeRabbit, Reviewpad, SonarQube, Codacy, Snyk Code, etc.)",
+      "Full 3-track PR research runs normally using discovered competitors",
+      "data_quality_flags in output includes note: 'Product analysis from user description, not live page'",
+      "Stage noted as 'Seed (stated by user)' in analysis"
+    ],
+    "expected_output": "Full PR intel using description-derived taxonomy, with data_quality_flags noting source"
+  },
+  {
+    "id": "eval_004",
+    "name": "User edits competitor list at Step 5 -- edited list used for Phase 2",
+    "description": "Validates that when the user removes a competitor and adds a custom one at the confirmation step, Phase 2 runs on the edited list, not the original discovered list.",
+    "input": {
+      "prompt": "Find PR targets: https://linear.app",
+      "user_edits_competitors_at_step_5": true,
+      "edit_description": "Remove one discovered competitor, add 'Shortcut' as custom addition",
+      "env": {
+        "TAVILY_API_KEY": "set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Phase 1 discovers 5 competitors and shows them",
+      "Step 5 presents the list and waits for confirmation",
+      "AI updates /tmp/cprf-competitors-confirmed.json with the EDITED list (including user-added competitor)",
+      "Phase 2 uses the edited confirmed list (not the original discovered list)",
+      "The user-added competitor ('Shortcut') appears in /tmp/cprf-competitors-confirmed.json",
+      "PR research runs for exactly the edited set",
+      "Track results for user-added competitor appear in /tmp/cprf-pr-raw.json"
+    ],
+    "expected_output": "PR intel based on the user-confirmed (edited) competitor list, not the originally discovered candidates"
+  },
+  {
+    "id": "eval_005",
+    "name": "TAVILY_API_KEY missing -- immediate stop at Step 1",
+    "description": "Validates that the skill stops at Step 1 with exact setup instructions when Tavily key is absent.",
+    "input": {
+      "prompt": "Find PR targets: https://notion.so",
+      "env": {
+        "TAVILY_API_KEY": "not set",
+        "FIRECRAWL_API_KEY": "set"
+      }
+    },
+    "expected_behavior": [
+      "Step 1 detects TAVILY_API_KEY is missing",
+      "Stops immediately at Step 1",
+      "Tells the user: 'TAVILY_API_KEY is required to research competitor press coverage and journalist contacts. There is no fallback for this. Get it at app.tavily.com. Free tier: 1000 credits/month (about 40 full runs). Add it to your .env file.'",
+      "Does NOT fetch the product page",
+      "Does NOT run any Tavily searches",
+      "Does NOT attempt competitor discovery or PR research"
+    ],
+    "expected_output": "Immediate stop at Step 1 with exact error message including the URL to get the key. No partial output generated."
+  }
+]

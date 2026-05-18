@@ -1,0 +1,102 @@
+[
+  {
+    "id": "eval_001",
+    "name": "Known competitive category -- devops tools",
+    "description": "Full pipeline run on a well-established category with many competitors. Verifies subreddit detection, pain clustering, ICP profiling, market map, and positioning framework all work end-to-end.",
+    "input": {
+      "prompt": "Map my market: I build developer observability tools. Competitors: Datadog, Grafana, New Relic",
+      "env": {}
+    },
+    "expected_behavior": [
+      "Detects subreddits: r/devops, r/sysadmin, r/kubernetes (or similar infrastructure communities)",
+      "Searches Reddit with queries: 'developer observability', 'Datadog', 'Grafana', 'New Relic', 'observability alternative'",
+      "Finds 30+ Reddit signals and 20+ HN signals",
+      "G2 scrape returns 5+ vendors for 'developer-observability' or similar slug",
+      "GitHub Issues search finds issues on Datadog or Grafana GitHub repos",
+      "Pain clusters include at least: cost/pricing, complexity, alert fatigue",
+      "ICP identified as DevOps engineers or SREs from subreddit distribution",
+      "Market size assessed as competitive and growing (many vendors + active discussion)",
+      "Positioning angles use verbatim language from the pain data",
+      "No em dashes in output",
+      "No banned words in output",
+      "All pain quotes exist in raw_pains JSON"
+    ],
+    "expected_output": "Full market map with 5+ pain clusters, ICP card citing specific subreddits, market map with 3+ vendors, 3 messaging angles using market language. Saved to docs/market-maps/."
+  },
+  {
+    "id": "eval_002",
+    "name": "Niche category with thin data",
+    "description": "Very niche category that returns fewer than 10 pain signals. Verifies graceful stop with no fabricated content.",
+    "input": {
+      "prompt": "Map my market: quantum cryptography key distribution middleware",
+      "env": {}
+    },
+    "expected_behavior": [
+      "Runs search queries for 'quantum cryptography key distribution middleware'",
+      "Returns fewer than 10 total signals",
+      "Stops at Step 3 with message: 'Fewer than 10 pain signals found for this category. The market may be too niche for Reddit/HN coverage, or the category keywords need adjustment. Try broader keywords or add competitor names.'",
+      "Does NOT proceed to clustering or ICP profiling",
+      "Does NOT fabricate pain points or invent community discussion",
+      "Does NOT write an output file with empty or invented data"
+    ],
+    "expected_output": "Graceful stop message with suggestion to use broader keywords. No output file created."
+  },
+  {
+    "id": "eval_003",
+    "name": "Competitor names only -- no category keyword",
+    "description": "User provides only competitor names. Skill must infer the category and run the full pipeline.",
+    "input": {
+      "prompt": "Map my market. My competitors are: Stripe, Braintree, Adyen",
+      "env": {}
+    },
+    "expected_behavior": [
+      "Infers category as 'payments' or 'payment processing' from competitor names",
+      "Detects subreddits: r/webdev, r/programming, r/entrepreneur, r/ecommerce",
+      "Runs full pipeline with inferred category",
+      "Competitor searches find posts mentioning 'Stripe pricing', 'Braintree alternative', etc.",
+      "Pain clusters include pricing, integration complexity, international payments",
+      "ICP includes developers and founders from subreddit distribution",
+      "Positioning framework uses language from payment-related pain posts"
+    ],
+    "expected_output": "Full market map with inferred category clearly labeled. ICP and pains anchored to payment-space subreddits."
+  },
+  {
+    "id": "eval_004",
+    "name": "Product description only -- no category or competitors",
+    "description": "User provides only a product description. Skill must extract category keywords and run full pipeline.",
+    "input": {
+      "prompt": "Map my market. I'm building a tool that helps small HR teams automate employee onboarding paperwork.",
+      "env": {}
+    },
+    "expected_behavior": [
+      "Extracts category keywords: 'HR automation' or 'employee onboarding' from description",
+      "No competitor names provided -- GitHub Issues search runs on category query only",
+      "Detects subreddits: r/humanresources, r/smallbusiness, r/remotework",
+      "Finds pain signals about HR paperwork, onboarding complexity, compliance",
+      "ICP identified as HR managers at small companies from subreddit distribution",
+      "Market map shows whatever vendors G2 returns for HR or onboarding category",
+      "Positioning angles speak to HR manager language, not engineering language"
+    ],
+    "expected_output": "Market map anchored to HR/onboarding space. ICP as HR practitioners at SMBs. Pain themes around compliance, time cost, employee experience."
+  },
+  {
+    "id": "eval_005",
+    "name": "Very competitive category -- CRM",
+    "description": "Highly saturated market with 100+ vendors on G2 and hundreds of Reddit posts. Verifies top-60 filtering works and market saturation is noted in positioning.",
+    "input": {
+      "prompt": "Map my market. Category: CRM software. Competitors: Salesforce, HubSpot, Pipedrive",
+      "env": {}
+    },
+    "expected_behavior": [
+      "Finds 100+ total pain signals",
+      "Script returns all signals but AI clustering receives only top 60 by pain_score",
+      "Pain clusters include: Salesforce pricing, complexity, migration difficulty, sales rep adoption",
+      "ICP segmented: enterprise (Salesforce complaints) vs SMB (HubSpot complaints) noted as distinct segments",
+      "G2 scrape returns 50+ vendors",
+      "Market size assessment notes saturation: many vendors, mature market",
+      "Positioning angles focus on differentiation from incumbents, not parity",
+      "Output notes: 'Market is saturated -- positioning must address why NOT the big players'"
+    ],
+    "expected_output": "Market map with clear saturation signal. ICP segmented by company size. Positioning anchored to gaps in incumbent offerings, not feature lists."
+  }
+]

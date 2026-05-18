@@ -21,7 +21,6 @@ const repos = [
   "https://github.com/Varnan-Tech/explain-this-pr",
   "https://github.com/Varnan-Tech/dependency-update-bot",
   "https://github.com/Varnan-Tech/claude-md-generator",
-  "https://github.com/Varnan-Tech/stargazer",
   "https://github.com/Varnan-Tech/docs-from-code",
   "https://github.com/Varnan-Tech/meta-ads-skill",
   "https://github.com/Varnan-Tech/llms-txt-generator",

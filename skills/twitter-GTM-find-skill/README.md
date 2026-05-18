@@ -1,10 +1,34 @@
-# Twitter GTM Find Skill
+﻿# Twitter GTM Find Skill
 
 <img width="1280" height="640" alt="Generated_chart__twitter-gtm-find-cover-bw png" src="https://github.com/user-attachments/assets/618b0abe-34fc-4c3e-a345-1a3eaeb3d20b" />
 
 This repository contains the `twitter-GTM-find/` AI Skill. 
 
 This pipeline automates the discovery of highly-targeted, Developer-First startups hiring for Go-To-Market (GTM), Developer Relations (DevRel), and Growth roles by scraping Twitter (via Apify) and automatically verifying the startups' funding and product type using Gemini's native Google Search Grounding.
+
+## Install
+
+```bash
+npx "@opendirectory.dev/skills" install twitter-GTM-find-skill --target claude
+```
+
+### Video Tutorial
+Watch this quick video to see how it's done:
+
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
+
+### Step 1: Download the skill from GitHub
+1. Copy the URL of this specific skill folder from your browser's address bar.
+2. Go to [download-directory.github.io](https://download-directory.github.io/).
+3. Paste the URL and click **Enter** to download.
+
+### Step 2: Install the Skill in Claude
+1. Open your **Claude desktop app**.
+2. Go to the sidebar on the left side and click on the **Customize** section.
+3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
+4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
+
+> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
 
 ## The Skill Directory
 
@@ -36,28 +60,31 @@ To run the pipeline manually or via an agent:
    bash run_pipeline.sh
    ```
 
+## Optional Hermes Tweet Path
+
+The existing Apify pipeline remains the default end-to-end workflow. For Hermes
+users who already run
+[Hermes Tweet](https://github.com/Xquik-dev/hermes-tweet), the skill can also
+use Hermes Tweet as a native Hermes Agent X/Twitter plugin for the first
+discovery pass:
+
+```bash
+hermes plugins install Xquik-dev/hermes-tweet --enable
+```
+
+After setting `XQUIK_API_KEY`, use `tweet_explore` to scrape/search tweets or
+search Twitter/X for GTM, DevRel, growth, and startup hiring signals. Use
+`tweet_read` to read tweet replies, look up users, and monitor tweets from
+promising founders or company accounts. Use `tweet_action` only for read-side
+exports such as export followers during this workflow.
+
+Keep the pipeline's validation step intact: export the Hermes Tweet findings
+into the same candidate review shape, then run the ICP checks before any
+outreach. Post tweets, post replies, send DMs, and other automated X actions
+should stay confirmation-gated and outside unattended discovery runs.
+
 ## Output
 
 The pipeline generates two temporary files at the root of the repository (which are `.gitignore`d to prevent leaking data):
 - `radar-jobs.json`: The initial raw batch of scraped tech jobs.
 - `openclaw-icp-jobs.json`: The final, strict ICP-validated list of highly funded, developer-first startups hiring right now.
-
-## Installation in Claude Desktop App
-
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
-### Step 1: Download the skill from GitHub
-1. Copy the URL of this specific skill folder from your browser's address bar.
-2. Go to [download-directory.github.io](https://download-directory.github.io/).
-3. Paste the URL and click **Enter** to download.
-
-### Step 2: Install the Skill in Claude
-1. Open your **Claude desktop app**.
-2. Go to the sidebar on the left side and click on the **Customize** section.
-3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
-4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
-
-> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!

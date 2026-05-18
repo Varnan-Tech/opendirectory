@@ -1,0 +1,35 @@
+{
+  "skill_name": "graphic-case-study",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a 2-page case study for Acme Corp. They were spending 20 hours per week on manual reporting. We automated it. They saved 80% of that time and reduced reporting errors by 95%. Use midnight-editorial style.",
+      "expected_output": "All 4 required fields present -- skips Step 1. Asks 9 questions in Step 2. After answers: reads midnight-editorial tokens (Instrument Serif + Inter, #D8F90A accent, #111111 bg). Reads viewport-base.css verbatim, adds A4 portrait overrides. 2-page structure: Page 1 = [cover] + [challenge-solution]; Page 2 = [results] + [closing-cta]. Results page: hero stat '80%' in #D8F90A at clamp(3rem, 8vw, 5.5rem), '95%' as secondary stat at clamp(2.5rem, 7vw, 5rem) in secondary color. No forbidden words. IntersectionObserver for .reveal animations. Per-page HTML files written. PDF export called with --portrait flag. Summary shows file paths, page count, checklist.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Make me some case study.",
+      "expected_output": "customer_name, challenge, solution, results all missing. Does NOT read any reference files. Does NOT generate any HTML, structure plan, or outline. Asks exactly: 'To create your case study, I need four things: 1. Customer name 2. Challenge 3. Solution 4. Results'. Stops and waits. After user provides all four, proceeds to Step 2 and asks all 9 grouped questions in one message.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Create a 1-page case study summary card for Vertex IO. They had 3-day sales cycle delays due to manual qualification. DataPulse automated it. Result: 60% faster qualification, $1.2M additional pipeline closed in Q1. Style: clean-slate.",
+      "expected_output": "Skips Step 1. Asks 9 questions. 1-pager structure: single [cover-compact] page with all content condensed (headline + challenge 2 sentences + solution 2 sentences + 3 inline stats + CTA at bottom). clean-slate tokens: Plus Jakarta Sans 800, #0F172A accent, white bg, rounded cards 16px, badge pills (#E0F2FE). Hero stat '60%' in #0F172A at clamp(3rem, 8vw, 5.5rem). '$1.2M' as secondary stat. Viewport-base.css included verbatim. A4 portrait overrides applied. Per-page (just 1) HTML written. PDF export --portrait called. Summary shown with checklist.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Build a 4-page detailed case study for Stride Labs. Industry: fintech. Challenge: manual compliance reporting took 40 hours/week. Solution: automated audit trail + real-time dashboards. Results: 40-hour reduction per week, 0 compliance failures in 18 months, 3x faster audits. Quote from their CFO: 'We went from dreading audits to sailing through them.' Style: warm-earth.",
+      "expected_output": "Skips Step 1. Asks 9 questions. Reads warm-earth preset tokens: Lora display font, Source Sans 3 body, #D4622A accent, #FDF6EF bg, #2C1A0E cover bg. 4-page structure: Page 1 [cover] | Page 2 [overview]+[challenge] | Page 3 [solution]+[results] | Page 4 [testimonial]+[closing-cta]. Challenge page has drop cap via ::first-letter on opening paragraph (Lora, clamp(3rem,7vw,5rem), #D4622A). Results: hero metric '40 hours/week' in #D4622A at hero stat size. '0 compliance failures' and '3x faster' as secondary stats. Testimonial: CFO quote quoted exactly, <=40 words. Closing CTA has email + URL. 4 per-page HTML files generated. PDF export --portrait called. Summary shown.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Create a 2-page case study. Anonymize the customer -- just say 'Global Logistics Provider'. Challenge: supply chain visibility gaps causing $500K/month in delays. Solution: real-time tracking integration. Results: $400K/month savings, 87% reduction in delay incidents. Style: show me options.",
+      "expected_output": "Skips Step 1. Asks 9 questions. User answers style='show me options': generates 3 cover-page-only HTML previews saved to .claude-design/previews/style-a.html, style-b.html, style-c.html, opens each automatically, asks user to pick. After pick: reads chosen preset tokens from references/style-presets.md. Customer name used as 'Global Logistics Provider' throughout (anonymized per request). 2-page structure: Page 1 = [cover]+[challenge-solution]; Page 2 = [results]+[closing-cta] (no testimonial -- not provided). Hero metric '$400K/month' in accent color at hero stat size. '87%' as secondary stat. No testimonial section since not provided. .claude-design/previews/ deleted after generation. PDF export --portrait called. Summary shown.",
+      "files": []
+    }
+  ]
+}

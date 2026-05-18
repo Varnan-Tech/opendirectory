@@ -1,6 +1,6 @@
 # Meta Ads Report Templates
 
-Use these markdown templates when generating reports and summaries for users.
+Use these markdown templates when generating reports and summaries for users. These templates are designed to be populated using the structured data from the `meta-ads` CLI's JSON output (`--output json`).
 
 ## 1. Executive Summary Template
 
@@ -10,11 +10,12 @@ Use these markdown templates when generating reports and summaries for users.
 ##  Executive Summary
 [2-3 sentences summarizing the overall performance. E.g., "Account performance remained stable this week with a 5% increase in ROAS, primarily driven by the new Retargeting campaign. However, top-of-funnel CPA has started to rise."]
 
-##  Key Metrics
+##  Key Metrics (Source: `meta ads insights get`)
 - **Spend:** $[Amount] ([+/-]% vs previous period)
 - **Revenue/Conversions:** [Amount] ([+/-]% vs previous period)
 - **CPA:** $[Amount] ([+/-]% vs previous period)
 - **ROAS:** [Amount]x ([+/-]% vs previous period)
+- **CTR:** [Amount]% ([+/-]% vs previous period)
 
 ##  Key Findings
 - **Highlight 1:** [E.g., Campaign X is driving 60% of total conversions at a very efficient CPA.]
@@ -35,7 +36,7 @@ Use these markdown templates when generating reports and summaries for users.
 ##  The Issue
 [Briefly state the problem. E.g., "CPA increased from $20 to $35 starting on [Date]."]
 
-##  Root Cause Analysis
+##  Root Cause Analysis (Source: `meta ads insights get --level [level]`)
 - **Campaign Level:** [Identify which campaign(s) caused the spike.]
 - **Ad Set Level:** [Identify specific ad sets. Did a lookalike audience degrade? Did a specific placement get expensive?]
 - **Ad Level:** [Identify ad fatigue, drop in CTR, increase in CPM, or decrease in conversion rate.]

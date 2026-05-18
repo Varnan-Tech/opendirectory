@@ -1,0 +1,118 @@
+[
+  {
+    "id": "eval_001",
+    "name": "Popular OSS repo: full pipeline with 100+ issues, all 6 categories populated",
+    "description": "A large, active public repo with hundreds of open issues. Validates the full 8-step workflow, noise filtering, demand scoring, all 6 categories appearing in output, and correct sorting.",
+    "input": {
+      "prompt": "Scan competitor GitHub issues: https://github.com/facebook/react",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Parses owner=facebook, repo=react correctly",
+      "Fetches 2 pages of issues from GitHub REST API",
+      "Checks X-RateLimit-Remaining after first page fetch",
+      "Filters out pull requests (pull_request key present), bot-authored issues, chore/deps/bump title patterns, zero-reaction + zero-comment issues",
+      "Issue count after filtering is above 10 -- proceeds to clustering",
+      "demand_score computed as (reactions_plus1 * 2) + (comments * 0.5) for each issue",
+      "ignored_demand field set to true only for issues with reactions >= 10, age_days >= 180, and no planned label",
+      "Skill prints filtered issues and asks the AI to classify them into 6 categories",
+      "AI writes /tmp/ghd-clusters.json with classified_issues, cluster_themes, and category_counts",
+      "All 6 categories appear in category_counts",
+      "Top-10 list sorted by demand_score descending",
+      "Skill prints top 3 clusters and asks the AI to write a messaging brief",
+      "AI writes /tmp/ghd-brief.json with exactly 3 positioning_angles, 3 outreach_hooks, 3 cluster_headlines",
+      "Every outreach hook contains a quoted verbatim issue title",
+      "Output saved to docs/demand-signals/facebook-react-[date].md",
+      "No em dashes in any output section"
+    ],
+    "expected_output": "Full demand gap report with leaderboard, ignored demand section, top-10, cluster deep dives, messaging brief, and GTM angles"
+  },
+  {
+    "id": "eval_002",
+    "name": "Small or inactive repo: graceful stop after Step 4",
+    "description": "A repo with very few open issues or a niche project where most issues have zero reactions. After noise filtering, fewer than 10 issues remain. Validates graceful stop with a clear explanation.",
+    "input": {
+      "prompt": "Analyze issues in this repo: https://github.com/nicowillis/tiny-test-repo",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Fetches issues successfully",
+      "Noise filter removes most issues (zero engagement, bot patterns, etc.)",
+      "After filtering, fewer than 10 issues remain",
+      "Stops at Step 4 -- does NOT proceed to clustering",
+      "Tells the user exactly how many issues were found and how many were filtered",
+      "Explains why fewer than 10 issues is insufficient for reliable clustering",
+      "Suggests trying a larger or more community-engaged repo",
+      "No partial output generated"
+    ],
+    "expected_output": "Graceful stop message with issue counts, noise breakdown, and suggestion to try a different repo"
+  },
+  {
+    "id": "eval_003",
+    "name": "Private or non-existent repo: stops at Step 3 with exact error",
+    "description": "User provides a URL for a repo that either does not exist (404) or is private (403). Validates that the skill stops at Step 3 with a clear, actionable error message.",
+    "input": {
+      "prompt": "Find demand gaps in https://github.com/nonexistent-org/nonexistent-repo-xyz",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Parses owner/repo from URL",
+      "Attempts GitHub API fetch",
+      "GitHub returns 404",
+      "Stops immediately at Step 3",
+      "Tells the user: 'Repo not found. Check the URL or slug and try again. Private repos are not accessible without authentication and explicit repo scope.'",
+      "Does NOT attempt noise filtering",
+      "Does NOT proceed to clustering"
+    ],
+    "expected_output": "Immediate stop at Step 3 with 404 error message. No partial analysis generated."
+  },
+  {
+    "id": "eval_004",
+    "name": "owner/repo slug input (no full URL): parses correctly and runs full pipeline",
+    "description": "User provides an owner/repo slug instead of a full GitHub URL (e.g. 'vercel/next.js' instead of 'https://github.com/vercel/next.js'). Validates that the slug parsing path works correctly.",
+    "input": {
+      "prompt": "What are users asking for in vercel/next.js?",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Step 2 detects no 'github.com' URL in the input",
+      "Falls into the owner/repo slug parsing path",
+      "Correctly splits 'vercel/next.js' into owner=vercel, repo=next.js",
+      "Writes 'vercel/next.js' to /tmp/ghd-target.txt",
+      "Step 3 fetches from https://api.github.com/repos/vercel/next.js/issues successfully",
+      "Full pipeline runs to completion",
+      "Output filename uses 'vercel-next.js' as the repo slug",
+      "No error about invalid URL format"
+    ],
+    "expected_output": "Full demand gap report identical in format to a full URL run. Slug parsing is transparent to the output."
+  },
+  {
+    "id": "eval_005",
+    "name": "No GITHUB_TOKEN, rate limit hit: stops with reset time and token instructions",
+    "description": "User has no GITHUB_TOKEN and has already hit the 60/hr unauthenticated rate limit. Validates that the skill detects the rate limit header and stops with the reset time and token setup instructions.",
+    "input": {
+      "prompt": "What are users asking for in facebook/react?",
+      "env": {
+        "GITHUB_TOKEN": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Step 1 notes GITHUB_TOKEN is not set and warns about 60 req/hr limit",
+      "Step 3 attempts GitHub API fetch without token",
+      "GitHub API returns X-RateLimit-Remaining: 0 header",
+      "Skill detects the header value after the first page fetch",
+      "Stops immediately with message: exact reset time (converted from X-RateLimit-Reset timestamp) and instructions to add GITHUB_TOKEN at github.com/settings/tokens",
+      "Does NOT attempt page 2 fetch",
+      "Does NOT proceed to noise filtering or clustering"
+    ],
+    "expected_output": "Stop at Step 3 with rate limit message, reset time, and GitHub token setup link. No analysis generated."
+  }
+]

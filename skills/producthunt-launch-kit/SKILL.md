@@ -1,6 +1,6 @@
 ---
 name: producthunt-launch-kit
-description: ''
+description: Use when the user asks to prepare a Product Hunt launch or generate Product Hunt listing assets. Generates tagline variants under 60 chars, a 500-char description, a maker comment, launch-day tweet thread, LinkedIn post, and a 4-email launch sequence.
 compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0

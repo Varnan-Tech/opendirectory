@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pydantic
+nilearn
+pandas
+yt-dlp
+tribev2 @ git+https://github.com/facebookresearch/tribev2.git

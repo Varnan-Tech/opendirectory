@@ -1,6 +1,6 @@
 ---
 name: claude-md-generator
-description: ''
+description: Use when the user asks to generate or update a project's CLAUDE or AGENTS context file from a codebase scan. Writes a focused file under 100 lines containing only the non-obvious build commands, conventions, and gotchas Claude Code needs.
 compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0

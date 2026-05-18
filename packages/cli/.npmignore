@@ -1,0 +1,10 @@
+skills/**/*.png
+skills/**/*.jpg
+skills/**/*.jpeg
+skills/**/*.gif
+skills/**/*.webp
+skills/**/node_modules
+skills/**/package-lock.json
+skills/**/yarn.lock
+skills/**/pnpm-lock.yaml
+skills/**/*.env*
