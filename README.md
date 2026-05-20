@@ -120,7 +120,7 @@ npx "@opendirectory.dev/skills" install <skill> --target claude
     <td valign="top">
       <a href="skills/twitter-GTM-find-skill"><b>twitter-GTM-find-skill</b></a>
       <br>
-      End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify.
+      Find X/Twitter GTM hiring signals with Apify, plus optional TweetClaw discovery for OpenClaw.
     </td>
   </tr>
   <tr>
@@ -418,7 +418,7 @@ Run these commands inside Claude Code:
   </tr>
   <tr>
     <td><a href="skills/twitter-GTM-find-skill"><code>twitter-GTM-find-skill</code></a></td>
-    <td>This repository contains the twitter-GTM-find/ AI Skill.</td>
+    <td>Find developer-first GTM, DevRel, and Growth hiring signals from X/Twitter, then verify funding and product fit.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
