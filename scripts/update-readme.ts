@@ -43,7 +43,7 @@ function getCategoryFromPkg(skillDir: string): string | null {
   if (!fs.existsSync(pkgPath)) return null;
   try {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
-    if (typeof pkg.category === 'string' && CATEGORY_ORDER.includes(pkg.category)) return pkg.category;
+    if (typeof pkg.category === 'string' && pkg.category.trim()) return pkg.category.trim();
   } catch (_) {}
   return null;
 }
@@ -200,11 +200,14 @@ function generateSkillsTable(skills: SkillEntry[]): string {
     grouped.get(category)!.push(skill);
   }
 
-  const usedCategories = CATEGORY_ORDER.filter(c => (grouped.get(c)?.length ?? 0) > 0);
+  // Include all categories that have skills - both predefined and custom
+  // Sort custom categories alphabetically for stable README output
+  const allCategories = [...CATEGORY_ORDER, ...[...grouped.keys()].filter(c => !CATEGORY_ORDER.includes(c)).sort((a, b) => a.localeCompare(b))];
+  const usedCategories = allCategories.filter(c => (grouped.get(c)?.length ?? 0) > 0);
 
   let html = `<summary><b>${skills.length} skills across ${usedCategories.length} categories</b> — click to expand</summary>\n<br>\n\n<table>\n`;
 
-  for (const category of CATEGORY_ORDER) {
+  for (const category of allCategories) {
     const categorySkills = grouped.get(category);
     if (!categorySkills || categorySkills.length === 0) continue;
 
