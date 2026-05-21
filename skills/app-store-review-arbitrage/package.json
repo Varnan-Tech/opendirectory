@@ -1,0 +1,6 @@
+{
+  "name": "app-store-review-arbitrage",
+  "version": "1.0.0",
+  "description": "Fetches low-star App Store and Google Play reviews, clusters them into broken-promise patterns, and generates a ranked copy brief.",
+  "category": "GTM Intelligence"
+}

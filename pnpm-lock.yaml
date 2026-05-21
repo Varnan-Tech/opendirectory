@@ -76,6 +76,8 @@ importers:
         specifier: ^1.6.1
         version: 1.6.1(@types/node@25.6.0)
 
+  skills/app-store-review-arbitrage: {}
+
   skills/blog-cover-image-cli:
     dependencies:
       '@google/genai':

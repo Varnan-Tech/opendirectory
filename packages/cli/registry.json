@@ -1,9 +1,11 @@
 [
   {
     "name": "app-store-review-arbitrage",
-    "description": "Fetches low-star App Store and Google Play reviews, clusters them into broken-promise patterns, and generates a ranked copy brief with positioning opportunities.",
-    "tags": [],
-    "author": "ajaycodesitbetter",
+    "description": "Fetches low-star App Store and Google Play reviews, clusters them into broken-promise patterns, and generates a ranked copy brief with positioning...",
+    "tags": [
+      "Copywriting"
+    ],
+    "author": "opendirectory",
     "version": "1.0.0",
     "path": "skills/app-store-review-arbitrage"
   },

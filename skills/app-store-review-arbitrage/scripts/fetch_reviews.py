@@ -13,9 +13,9 @@ Options:
     --country CC        2-letter country code (default: extracted from URL or 'us')
 
 Dependencies (pip install):
-    app-store-scraper
     google-play-scraper
 
+App Store path uses stdlib urllib — no third-party package required.
 No API keys required. All data sources are free and public.
 """
 
