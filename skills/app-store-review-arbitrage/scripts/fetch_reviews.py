@@ -395,7 +395,8 @@ def collect(url: str, count: int = 200, country_override: str | None = None,
             result = json.load(f)
         
         # Re-evaluate Gate 1
-        stats = result.get("collection_stats", {})
+        result.setdefault("collection_stats", {})
+        stats = result["collection_stats"]
         if stats.get("low_star_count", 0) < 10:
             msg = (
                 f"\n[GATE 1 — LOW SIGNAL] Only {stats.get('low_star_count', 0)} low-star review(s) "
