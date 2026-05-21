@@ -13,7 +13,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-57-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-58-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-7-blueviolet.svg?style=flat-square)](#quick-start)
@@ -230,11 +230,11 @@ Run these commands inside Claude Code:
 
 ## All Skills
 
-57 skills across GTM, growth automation, technical marketing, and developer tooling.
+58 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
-<summary><b>57 skills across 8 categories</b> — click to expand</summary>
+<summary><b>58 skills across 8 categories</b> — click to expand</summary>
 <br>
 
 <table>
