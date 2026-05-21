@@ -56,7 +56,7 @@ function buildRegistry() {
 
   const skillFolders = fs.readdirSync(SKILLS_DIR).filter(file => {
     return fs.statSync(path.join(SKILLS_DIR, file)).isDirectory();
-  });
+  }).sort(); // deterministic order across all OS/filesystems
 
   const registry: Skill[] = [];
 
