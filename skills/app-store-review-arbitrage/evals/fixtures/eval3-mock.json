@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "app_name": "TestApp — Low Signal Fixture",
+    "developer": "Test Developer",
+    "platform": "app_store",
+    "app_id": "0000000000",
+    "average_rating": 4.6,
+    "total_ratings": 7,
+    "store_description": "A simple utility app for testing purposes.",
+    "fetched_at": "2026-05-21"
+  },
+  "all_reviews": [
+    {"rating": 5, "body": "Great app, works perfectly.", "title": "Love it", "date": "2026-05-01", "platform": "app_store"},
+    {"rating": 5, "body": "Does exactly what it says.", "title": "Useful", "date": "2026-04-20", "platform": "app_store"},
+    {"rating": 1, "body": "App crashes immediately on launch.", "title": "Broken", "date": "2026-05-10", "platform": "app_store"},
+    {"rating": 2, "body": "Slow and buggy. Not worth it.", "title": "Disappointing", "date": "2026-04-15", "platform": "app_store"},
+    {"rating": 3, "body": "Okay but missing features I need.", "title": null, "date": "2026-03-01", "platform": "app_store"},
+    {"rating": 1, "body": "Crashes when I open settings.", "title": "Crashes", "date": "2026-04-28", "platform": "app_store"},
+    {"rating": 2, "body": "Does not sync correctly.", "title": "Sync broken", "date": "2026-05-05", "platform": "app_store"}
+  ],
+  "low_star_reviews": [
+    {"rating": 1, "body": "App crashes immediately on launch.", "title": "Broken", "date": "2026-05-10", "platform": "app_store"},
+    {"rating": 2, "body": "Slow and buggy. Not worth it.", "title": "Disappointing", "date": "2026-04-15", "platform": "app_store"},
+    {"rating": 3, "body": "Okay but missing features I need.", "title": null, "date": "2026-03-01", "platform": "app_store"},
+    {"rating": 1, "body": "Crashes when I open settings.", "title": "Crashes", "date": "2026-04-28", "platform": "app_store"},
+    {"rating": 2, "body": "Does not sync correctly.", "title": "Sync broken", "date": "2026-05-05", "platform": "app_store"}
+  ],
+  "collection_stats": {
+    "total_fetched": 7,
+    "low_star_count": 5,
+    "platform": "app_store",
+    "package": "FIXTURE",
+    "date_range": {"oldest": "2026-03-01", "newest": "2026-05-10"}
+  },
+  "_fixture_note": "This file simulates a low-signal app with only 5 low-star reviews. Gate 1 requires minimum 10. The skill should stop before clustering and output the diagnostic message."
+}

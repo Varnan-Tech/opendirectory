@@ -1,0 +1,111 @@
+{
+  "version": "1.0",
+  "skill": "app-store-review-arbitrage",
+  "description": "Structural eval scenarios. Expectations test output shape and gate behavior — not exact content, since live review data changes daily.",
+  "evals": [
+    {
+      "id": "eval-1-notion-ios",
+      "description": "High-signal productivity app. Notion iOS has 80k+ ratings and documented sync complaints. Expects multiple High-tier clusters, at least one broken promise detected, full copy-ready output.",
+      "input": {
+        "app_url": "https://apps.apple.com/us/app/notion-notes-tasks-ai/id1232780281",
+        "product_context": null
+      },
+      "expectations": {
+        "collection": {
+          "platform": "app_store",
+          "package": "app-store-scraper",
+          "low_star_count_min": 10,
+          "gate_triggered": null
+        },
+        "clustering": {
+          "cluster_count_min": 3,
+          "min_tier_reached": "High",
+          "cluster_names_use_reviewer_language": true,
+          "verbatim_quotes_per_cluster_min": 2,
+          "all_quotes_rating_max": 3
+        },
+        "broken_promise": {
+          "section_2_present": true,
+          "section_2_degraded": "may_vary",
+          "note": "Section 2 populated state depends on current store description and review distribution. Both states are valid; test only that Section 2 is present in some state."
+        },
+        "copy": {
+          "h1_count_min": 3,
+          "ad_copy_directions": 3,
+          "all_copy_has_cluster_citation": true,
+          "no_banned_words": true,
+          "no_fabricated_percentages": true
+        },
+        "format": {
+          "sections_present": ["Section 1", "Section 2", "Section 3", "Section 4", "Section 5", "Data Quality Notes"],
+          "output_file_created": true
+        }
+      }
+    },
+    {
+      "id": "eval-2-robinhood-gplay",
+      "description": "Finance app on Google Play. Tests the Google Play collection path, moderate complaint volume. Section 2 must be present in either populated or degraded state — never absent.",
+      "input": {
+        "app_url": "https://play.google.com/store/apps/details?id=com.robinhood.android",
+        "product_context": null
+      },
+      "expectations": {
+        "collection": {
+          "platform": "google_play",
+          "package": "google-play-scraper",
+          "low_star_count_min": 10,
+          "gate_triggered": null
+        },
+        "clustering": {
+          "cluster_count_min": 2,
+          "min_tier_reached": "High",
+          "verbatim_quotes_per_cluster_min": 2,
+          "all_quotes_rating_max": 3
+        },
+        "broken_promise": {
+          "section_2_present": true,
+          "section_2_degraded": "allowed — either populated table or one of the two degraded state notes",
+          "note": "GP metadata fetch may or may not return a full description. Both states are valid."
+        },
+        "copy": {
+          "h1_count_min": 3,
+          "ad_copy_directions": 3,
+          "all_copy_has_cluster_citation": true,
+          "no_banned_words": true
+        },
+        "format": {
+          "sections_present": ["Section 1", "Section 2", "Section 3", "Section 4", "Section 5", "Data Quality Notes"],
+          "output_file_created": true
+        }
+      }
+    },
+    {
+      "id": "eval-3-low-signal-gate",
+      "description": "Tests Gate 1 (minimum 10 low-star reviews). Skill must stop before LLM analysis and output the diagnostic message. No output brief file should be created. Uses a mock fixture — see evals/fixtures/eval3-mock.json and evals/README.md.",
+      "input": {
+        "app_url": "FIXTURE",
+        "fixture_file": "evals/fixtures/eval3-mock.json",
+        "product_context": null,
+        "note": "Pass the fixture file as --input to fetch_reviews.py to simulate a low-signal app without a live URL."
+      },
+      "expectations": {
+        "collection": {
+          "low_star_count_exact": 5,
+          "gate_triggered": "gate_1_low_signal"
+        },
+        "clustering": {
+          "cluster_count": 0,
+          "note": "No LLM clustering step should run"
+        },
+        "copy": {
+          "output_file_created": false,
+          "note": "No brief should be written to docs/review-briefs/"
+        },
+        "gate_message": {
+          "contains_actual_review_count": true,
+          "contains_minimum_required": true
+        }
+      }
+    }
+  ]
+}
