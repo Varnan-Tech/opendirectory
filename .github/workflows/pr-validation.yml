@@ -47,8 +47,13 @@ jobs:
             exit 1
           fi
 
-      - name: Test registry builder
-        run: pnpm exec tsx scripts/build-registry.ts
+      - name: Enforce registry.json is in sync with skills/
+        run: |
+          pnpm exec tsx scripts/build-registry.ts
+          if ! git diff --exit-code packages/cli/registry.json; then
+            echo "::error::packages/cli/registry.json is out of sync with the skills/ directory. Please run 'pnpm exec tsx scripts/build-registry.ts' locally and commit the regenerated file."
+            exit 1
+          fi
 
       - name: Build CLI
         run: cd packages/cli && pnpm run build
