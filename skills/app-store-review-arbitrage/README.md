@@ -8,7 +8,7 @@ No API key. No paid tools. One URL in, one ready-to-use brief out.
 
 ## What It Does
 
-1. Collects up to 200 public reviews from App Store or Google Play — free, no API key, no login required
+1. Collects up to 200 public reviews from App Store or Google Play — free, no API key, no login required. *(Note: App Store apps may sometimes return 0 reviews due to Apple RSS API limitations; Google Play is the primary supported path.)*
 2. Filters to 1–3 star reviews and scores each by severity (star rating) and recency — the most recent failures get the highest weight
 3. Clusters complaints into 4–6 named themes using the reviewers' own language — no abstracted labels like "stability issues"
 4. Detects broken promises: cross-references the competitor's own store description against the complaint clusters and flags where their marketing overclaims reality

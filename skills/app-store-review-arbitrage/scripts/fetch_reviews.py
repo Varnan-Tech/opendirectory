@@ -255,10 +255,11 @@ def fetch_reviews_appstore(app_id: str, app_slug: str, count: int = 200,
             print("  No reviews returned. Retrying with country='us'...", file=sys.stderr)
             return fetch_reviews_appstore(app_id, app_slug, count, "us")
 
-        raise RuntimeError(
-            f"iTunes RSS API returned 0 reviews for app_id={app_id}. "
-            "The app may have no reviews or be region-restricted."
+        print(
+            f"  [WARNING] iTunes RSS API returned 0 reviews for app_id={app_id}. "
+            "The app may have no reviews or be region-restricted.", file=sys.stderr
         )
+        return []
 
     print(f"  Collected {len(reviews)} raw reviews from App Store.", file=sys.stderr)
     return reviews
@@ -463,6 +464,9 @@ def collect(url: str, count: int = 200, country_override: str | None = None,
         "package": package_name,
         "date_range": date_range,
     }
+
+    if platform == "app_store" and len(all_reviews) == 0:
+        stats["warning"] = "iTunes RSS returned 0 reviews"
 
     print(f"  Total reviews   : {stats['total_fetched']}", file=sys.stderr)
     print(f"  Low-star (1–3★) : {stats['low_star_count']}", file=sys.stderr)

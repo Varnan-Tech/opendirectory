@@ -14,8 +14,9 @@
         "collection": {
           "platform": "app_store",
           "package": "app-store-scraper",
-          "low_star_count_min": 10,
-          "gate_triggered": null
+          "low_star_count_min": 0,
+          "gate_triggered": "may_trigger_gate_1_if_0_reviews",
+          "warning_field": "iTunes RSS returned 0 reviews (allowed)"
         },
         "clustering": {
           "cluster_count_min": 3,

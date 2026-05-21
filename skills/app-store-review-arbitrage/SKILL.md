@@ -68,7 +68,7 @@ python3 scripts/fetch_reviews.py "{app_url}" --output {tmpdir}/asr-raw.json
 *(Note: Replace `{tmpdir}` with your operating system's temp directory, e.g., `/tmp` on macOS/Linux or `C:\Temp` on Windows).*
 
 This fetches both the store description metadata and the reviews.
-- **App Store:** iTunes API — free, no auth
+- **App Store:** iTunes API — free, no auth. App Store reviews are fetched via Apple's public iTunes RSS feed. Some apps return 0 reviews due to Apple's API limitations — in that case the skill continues with available data and logs a warning. Google Play is the primary supported path.
 - **Google Play:** `google-play-scraper` package — free, no auth
 
 If the script fails, read the error from stderr. Common causes:
