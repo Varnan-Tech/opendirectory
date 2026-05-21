@@ -22,11 +22,11 @@ Convert a competitor's App Store or Google Play URL into a one-session GTM brief
 
 ## Critical Rules (read before Step 1)
 
-These rules apply throughout all steps. Violating any of them fails Self-QA (Step 7).
+These rules apply throughout all steps. Violating any of them fails Self-QA (Step 6).
 
 1. **Every quote must be verbatim.** No paraphrase, no grammar correction, no cleaning. Exact reviewer words only.
 2. **No fabricated statistics.** Do not write "40% faster" or "2× more reliable" unless a reviewer explicitly used similar language. The Self-QA step checks for uncited percentages.
-3. **Cluster names must use reviewer language.** Study the anti-pattern table in Step 4.
+3. **Cluster names must use reviewer language.** Study the anti-pattern table in Step 3.
 4. **Every headline and ad copy direction must cite its source cluster.** Format: `[cluster: "cluster-name"]`.
 5. **Section 2 is always present** in the output — even when degraded. Never skip or omit it.
 6. **No banned words** in any generated copy: powerful, robust, seamless, innovative, game-changing, streamline, leverage, revolutionize, transform.
@@ -52,9 +52,9 @@ Accept a natural language prompt containing one app URL. Extract the URL.
 | Google Play | `package_name` | Value of `id=` query parameter |
 | Google Play | `app_slug` | Last segment of package name (e.g., `com.robinhood.android` → `robinhood`) |
 
-Persist the extracted values — you will need them for the output filename in Step 8.
+Persist the extracted values — you will need them for the output filename in Step 7.
 
-If `product_context` was provided in the user's prompt (what their own product does), store it — used to personalise copy in Step 6.
+If `product_context` was provided in the user's prompt (what their own product does), store it — used to personalise copy in Step 5.
 
 ---
 
@@ -84,15 +84,15 @@ The script will print collection progress to stderr. Wait for it to complete. Af
 ```
 
 **Check the exit code:**
-- Exit 0 → collection succeeded, check `metadata.store_description`. If null: note this — Section 2 will use the degraded state. Proceed to Step 4.
+- Exit 0 → collection succeeded, check `metadata.store_description`. If null: note this — Section 2 will use the degraded state. Proceed to Step 3.
 - Exit 1 → error (read stderr message, surface it to user, stop)
 - Exit 2 → **Gate 1 triggered** (< 10 low-star reviews found)
 
-**Gate 1 — Low signal stop:** If the script exits with code 2, read the `gate_message` from `{tmpdir}/asr-raw.json` and surface it to the user verbatim. Do not proceed to Step 4. Do not produce a partial brief.
+**Gate 1 — Low signal stop:** If the script exits with code 2, read the `gate_message` from `{tmpdir}/asr-raw.json` and surface it to the user verbatim. Do not proceed to Step 3. Do not produce a partial brief.
 
 ---
 
-## Step 4 — Complaint Clustering
+## Step 3 — Complaint Clustering
 
 Load `low_star_reviews` from `{tmpdir}/asr-raw.json`.
 
@@ -164,7 +164,7 @@ Write clusters to `{tmpdir}/asr-clusters.json`:
 
 ---
 
-## Step 5 — Broken Promise Detection
+## Step 4 — Broken Promise Detection
 
 **This is the step that differentiates this skill from every existing tool. It must run as a distinct, named step.**
 
@@ -172,7 +172,7 @@ Load:
 - `metadata.store_description` from `{tmpdir}/asr-raw.json`
 - All clusters from `{tmpdir}/asr-clusters.json`
 
-**If `store_description` is null:** Set `store_description_available: false`. Write `{tmpdir}/asr-promises.json` with empty `broken_promises` array and `detection_note` as specified below. Proceed to Step 6.
+**If `store_description` is null:** Set `store_description_available: false`. Write `{tmpdir}/asr-promises.json` with empty `broken_promises` array and `detection_note` as specified below. Proceed to Step 5.
 
 **If store description is available:**
 
@@ -208,9 +208,9 @@ See `references/broken-promise.md` for anti-patterns (what NOT to flag).
 
 ---
 
-## Step 6 — Generate Copy
+## Step 5 — Generate Copy
 
-Using clusters from Step 4 and broken promises from Step 5, generate Sections 3–5 of the brief.
+Using clusters from Step 3 and broken promises from Step 4, generate Sections 3–5 of the brief.
 
 **Copy rules (apply to all three sections):**
 - Every headline and direction must cite its source cluster: `[cluster: "cluster-name"]`
@@ -233,12 +233,12 @@ Evidence: [N] reviewers reported [verbatim complaint summary]
 ```
 
 **Section 5 — Anti-Claim Warnings:**
-- One warning per broken promise from Step 5
+- One warning per broken promise from Step 4
 - If Section 2 is degraded: single note (see `references/brief-format.md` for exact wording)
 
 ---
 
-## Step 7 — Self-QA
+## Step 6 — Self-QA
 
 Before saving, verify the generated brief against these checks. If any check fails, fix the specific item and re-verify — do not save a failing brief.
 
@@ -256,7 +256,7 @@ Before saving, verify the generated brief against these checks. If any check fai
 
 ---
 
-## Step 8 — Save Output
+## Step 7 — Save Output
 
 Assemble the full brief per the format in `references/brief-format.md`.
 
