@@ -28,6 +28,7 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 
 | Skill Name | Description | Version |
 |---|---|---|
+| [`app-store-review-arbitrage`](skills/app-store-review-arbitrage) | No description provided. | `1.0.0` |
 | [`blog-cover-image-cli`](skills/blog-cover-image-cli) | Use when the user asks to generate a blog cover image, thumbnail, or article header. | `1.0.17` |
 | [`claude-md-generator`](skills/claude-md-generator) | Read the codebase. Write a CLAUDE.md that tells Claude exactly what it needs: no more, no less. | `1.0.0` |
 | [`cold-email-verifier`](skills/cold-email-verifier) | Use when the user wants to verify cold emails, enrich a lead list, or autonomously guess email addresses from a CSV using ValidEmail. | `0.0.1` |

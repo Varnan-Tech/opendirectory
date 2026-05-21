@@ -1,5 +1,13 @@
 [
   {
+    "name": "app-store-review-arbitrage",
+    "description": ">",
+    "tags": [],
+    "author": "Unknown",
+    "version": "1.0.0",
+    "path": "skills/app-store-review-arbitrage"
+  },
+  {
     "name": "blog-cover-image-cli",
     "description": "Use when the user asks to generate a blog cover image, thumbnail, or article header.",
     "tags": [],
