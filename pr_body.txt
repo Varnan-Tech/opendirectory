@@ -1,0 +1,32 @@
+## Summary
+
+Adds `app-store-review-arbitrage` — a new skill that fetches low-star reviews from App Store and Google Play, clusters them into broken-promise patterns, and generates a ranked copy brief with positioning opportunities for founders and growth teams.
+
+## What this skill does
+
+- Fetches reviews via Google Play Scraper (primary) and iTunes RSS API (best-effort)
+- Filters to low-star reviews (1–3?) and clusters them into recurring pain themes
+- Scores each cluster by frequency, recency, and engagement
+- Outputs a 5-section copy brief: broken promises, competitor gaps, positioning angles, objection handlers, and a self-QA check
+- Three safety gates prevent hallucination on thin data
+
+## Why it's different
+
+- `gh-issue-to-demand-signal` mines GitHub issues for developer demand — this mines app store reviews for buyer pain and copy angles. Different platform, different audience, different output.
+- `noise-to-linkedin-carousel` repurposes existing content — this generates net-new positioning briefs from raw review data.
+- No existing skill in this repo touches app store reviews or produces copy briefs.
+
+## Technical notes
+
+- Google Play path: fully end-to-end tested, returns correct schema (50 reviews, exit code 0 confirmed live)
+- App Store path: uses direct iTunes RSS API via stdlib `urllib.request` (zero dependencies). Apple's RSS feed returns 0 reviews for some apps — handled gracefully with a warning field + Gate 1 halt instead of crashing
+- Python 3.9+ compatible (`from __future__ import annotations`)
+- Cross-platform paths (`tempfile.gettempdir()` instead of `/tmp/`)
+- 5 evals covering standard run, gate triggers, metadata-only mode, and App Store graceful degradation
+
+## Files changed
+
+- `skills/app-store-review-arbitrage/` — full skill implementation
+- `README.md` — registry table updated
+- `CONTRIBUTING.md` — checklist updated
+- `packages/cli/registry.json` — skill registered

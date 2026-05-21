@@ -193,7 +193,7 @@ def fetch_metadata_gplay(package_name: str) -> dict:
 # Review collection
 # ---------------------------------------------------------------------------
 
-def fetch_reviews_appstore(app_id: str, app_slug: str, count: int = 200,
+def fetch_reviews_appstore(app_id: str, count: int = 200,
                            country: str = "us") -> list:
     """
     Collect App Store reviews using iTunes RSS JSON API.
@@ -230,7 +230,7 @@ def fetch_reviews_appstore(app_id: str, app_slug: str, count: int = 200,
                 if "author" in e and "im:rating" in e:
                     reviews.append({
                         "rating": int(e["im:rating"]["label"]),
-                        "review": e["content"]["label"],
+                        "review": e.get("content", {}).get("label", ""),
                         "title": e.get("title", {}).get("label"),
                         "date": e.get("updated", {}).get("label")
                     })
@@ -239,7 +239,7 @@ def fetch_reviews_appstore(app_id: str, app_slug: str, count: int = 200,
             if "author" in e and "im:rating" in e:
                 reviews.append({
                     "rating": int(e["im:rating"]["label"]),
-                    "review": e["content"]["label"],
+                    "review": e.get("content", {}).get("label", ""),
                     "title": e.get("title", {}).get("label"),
                     "date": e.get("updated", {}).get("label")
                 })
@@ -366,6 +366,8 @@ def compute_date_range(reviews: list) -> dict:
     if not reviews:
         return {"oldest": None, "newest": None}
     dates = [r["date"] for r in reviews if r.get("date")]
+    if not dates:
+        return {"oldest": None, "newest": None}
     dates.sort()
     return {"oldest": dates[0], "newest": dates[-1]}
 
@@ -446,7 +448,7 @@ def collect(url: str, count: int = 200, country_override: str | None = None,
 
     # Step 3: Fetch and normalize reviews
     if platform == "app_store":
-        raw = fetch_reviews_appstore(app_id, app_slug, count=count, country=country)
+        raw = fetch_reviews_appstore(app_id, count=count, country=country)
         all_reviews = normalize_appstore(raw)
         package_name = "itunes-rss-api"
     else:
@@ -533,7 +535,7 @@ def main():
         sys.exit(1)
 
     # Gate 1 triggered — still write output so SKILL.md can read the gate message
-    gate_triggered = result.get("collection_stats", {}).get("gate_triggered")
+    gate_triggered = result.setdefault("collection_stats", {}).get("gate_triggered")
 
     output_json = json.dumps(result, indent=2, default=str)
 

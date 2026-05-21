@@ -5,12 +5,18 @@
 <br />
 
 <div align="center">
-  <strong>A curated registry and CLI for AI Agent Skills, meticulously designed for Go-To-Market (GTM), Technical Marketing, and growth automation.</strong>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=55+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
+
+<br />
 
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
+[![Skills](https://img.shields.io/badge/skills-56-blue.svg?style=flat-square)](skills/)
+[![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
+[![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
+[![Agents](https://img.shields.io/badge/agents-7-blueviolet.svg?style=flat-square)](#quick-start)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
@@ -20,9 +26,211 @@
 
 ## What is OpenDirectory?
 
-OpenDirectory is a central library that allows you to add new capabilities, or superpowers, to your AI agents. Instead of teaching your AI how to perform complex marketing or growth tasks from scratch, you can simply download a pre-built skill from our catalog and install it directly into your project.
+OpenDirectory is a library of agent skills for founders who hate marketing. Each skill is a pre-built set of instructions and context you install directly into your AI agent. Install a skill and your agent gains expert-level domain knowledge for complex GTM, marketing, and growth tasks.
 
-## Available Skills
+<br>
+
+### 1. Browse (Interactive)
+```bash
+npx "@opendirectory.dev/skills"
+```
+*Interactive TUI browser - browse by category, search, and install in one session*
+
+Or list all skills:
+```bash
+npx "@opendirectory.dev/skills" list
+```
+*56 specialized skills across GTM, growth, and developer tooling*
+
+### 2. Pick your agent
+```bash
+--target claude
+```
+*Supports Claude, OpenCode, Codex, Gemini, Anti-Gravity, OpenClaw, Hermes*
+
+### 3. Install
+```bash
+npx "@opendirectory.dev/skills" install <skill> --target claude
+```
+*Equips your agent with specialized knowledge, tools, and prompts for the task*
+
+---
+
+## Popular Agent Skills
+
+<div align="center"><sub>Ranked by artifact quality and practical value. Install any skill in under 30 seconds.</sub></div>
+
+<br>
+
+<table>
+  <tr>
+    <td valign="top" width="50%">
+      <a href="skills/blog-cover-image-cli"><b>blog-cover-image-cli</b></a>
+      <br>
+      1200×630px blog cover with self-healing QA loop, retries up to 3× with vision feedback.
+    </td>
+    <td valign="top" width="50%">
+      <a href="skills/brand-alchemy"><b>brand-alchemy</b></a>
+      <br>
+      World-class brand strategist and naming expert.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <a href="skills/cold-email-verifier"><b>cold-email-verifier</b></a>
+      <br>
+      Verify cold emails, enrich lead lists, or autonomously guess email addresses from a CSV.
+    </td>
+    <td valign="top">
+      <a href="skills/cook-the-blog"><b>cook-the-blog</b></a>
+      <br>
+      Generate high-converting, deep-dive growth case studies in MDX format.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <a href="skills/email-newsletter"><b>email-newsletter</b></a>
+      <br>
+      Drafts and designs a complete HTML email newsletter from a topic or content brief.
+    </td>
+    <td valign="top">
+      <a href="skills/human-tone"><b>human-tone</b></a>
+      <br>
+      Rewrites AI marketing copy against 18 GTM slop patterns with before/after audit notes.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <a href="skills/meta-tribeV2-skill"><b>meta-tribeV2-skill</b></a>
+      <br>
+      Analyzes video hooks and scripts using Meta's TRIBE v2 fMRI model for neuro-marketing breakdown.
+    </td>
+    <td valign="top">
+      <a href="skills/npm-downloads-to-leads"><b>npm-downloads-to-leads</b></a>
+      <br>
+      Velocity scoring on npm download data surfaces breakout maintainers with personalized outreach briefs.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <a href="skills/position-me"><b>position-me</b></a>
+      <br>
+      Elite Website Reviewer Agent for AEO, GEO, SEO, UI/UX Psychology, and Copywriting.
+    </td>
+    <td valign="top">
+      <a href="skills/twitter-GTM-find-skill"><b>twitter-GTM-find-skill</b></a>
+      <br>
+      Find X/Twitter GTM hiring signals with Apify, plus optional TweetClaw discovery for OpenClaw.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <a href="skills/yc-intent-radar-skill"><b>yc-intent-radar-skill</b></a>
+      <br>
+      Scrape daily job listings from YCombinator's Workatastartup platform without duplicates.
+    </td>
+    <td valign="top">
+      <a href="skills/pricing-page-psychology-audit"><b>pricing-page-psychology-audit</b></a>
+      <br>
+      Audits any SaaS pricing page against 12 pricing psychology principles with ranked improvement reports.
+    </td>
+  </tr>
+</table>
+
+---
+
+## Quick Start
+
+**1. Browse interactively (recommended):**
+```bash
+npx "@opendirectory.dev/skills"
+```
+*Opens a full-screen TUI browser with categories, search, and install flow*
+
+Or list all skills:
+```bash
+npx "@opendirectory.dev/skills" list
+```
+
+**2. Pick your agent:**
+
+| Agent | Flag |
+|---|---|
+| Claude Code | `--target claude` |
+| OpenCode | `--target opencode` |
+| Codex | `--target codex` |
+| Gemini CLI | `--target gemini` |
+| Anti-Gravity | `--target anti-gravity` |
+| OpenClaw | `--target openclaw` |
+| Hermes | `--target hermes` |
+
+**3. Install a skill:**
+```bash
+npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
+```
+
+> **Requires Node.js.** Download from [nodejs.org](https://nodejs.org/) if not installed. `npx` fetches and runs the latest version automatically; no global install needed.
+
+<br>
+
+
+```bash
+npx "@opendirectory.dev/skills" install show-hn-writer --target claude
+```
+<div align="center">
+
+<sub>Replace <code>show-hn-writer</code> with any skill name. Replace <code>claude</code> with your agent.</sub>
+
+</div>
+
+---
+
+## Installation
+
+### Option A: npx CLI (Recommended)
+
+No global install. Always runs the latest version.
+
+```bash
+npx "@opendirectory.dev/skills" install <skill-name> --target claude
+```
+
+### Option B: Claude Desktop App
+
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
+
+**Step 1: Download the skill**
+
+1. Copy the skill folder URL from this GitHub repo.
+2. Go to [download-directory.github.io](https://download-directory.github.io/).
+3. Paste the URL and press **Enter** to download the ZIP.
+
+**Step 2: Install in Claude**
+
+1. Open your **Claude desktop app**.
+2. Go to the sidebar and click **Customize**.
+3. Click the **Skills** tab, then click the **+** button.
+4. Choose **Upload a skill** and drag in the `.zip` file or the extracted folder.
+
+For some skills, the `SKILL.md` file sits inside a subfolder. Always upload the specific folder containing `SKILL.md`.
+
+### Option C: Claude Code Native
+
+Run these commands inside Claude Code:
+
+```bash
+# Add the OpenDirectory marketplace
+/plugin marketplace add Varnan-Tech/opendirectory
+
+# Install a skill
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+---
+
+## All Skills
+
+56 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
@@ -60,82 +268,17 @@ OpenDirectory is a central library that allows you to add new capabilities, or s
 
 <!-- SKILLS_LIST_END -->
 
-## Prerequisites
-
-Before you begin, you must have Node.js installed on your computer. Node.js provides the necessary tools to download and run these skills.
-
-1. Visit [nodejs.org](https://nodejs.org/).
-2. Download and install the version labeled Recommended For Most Users.
-3. Once installed, you will have access to a tool called terminal or command prompt on your computer, which you will use for the following steps.
-
-## Installation (Zero-Install Required)
-
-Because we use `npx`, there is no need to install the OpenDirectory tool itself. `npx` is a magic command that comes with Node.js. When you type `npx "@opendirectory.dev/skills"`, your computer automatically downloads the registry in the background and runs it instantly.
-
-## Native Installation (Claude Code Only)
-
-Users who exclusively use Anthropic's Claude Code can add OpenDirectory as a native community marketplace directly inside their Claude interface. This allows you to install skills using Claude's built-in plugin system.
-
-Run the following commands inside your Claude Code terminal:
-
-```bash
-# Add the OpenDirectory marketplace
-/plugin marketplace add Varnan-Tech/opendirectory
-
-# Install a skill directly
-/plugin install opendirectory-gtm-skills@opendirectory-marketplace
-```
-
-## Step 1: View Available Skills
-
-To see the full list of available skills, open your terminal and run the following command:
-
-```bash
-npx "@opendirectory.dev/skills" list
-```
-
-This command will display a list of all skills currently available in the OpenDirectory registry.
-
-## Step 2: Choose Your Agent
-
-OpenDirectory supports several different AI agents. When you install a skill, you need to tell the system which agent you are using by using the `--target` flag.
-
-Supported agents include:
-
-*   **Claude Code**: Use `--target claude`
-*   **OpenCode**: Use `--target opencode`
-*   **Codex**: Use `--target codex`
-*   **Gemini CLI**: Use `--target gemini`
-*   **Anti-Gravity**: Use `--target anti-gravity`
-*   **OpenClaw**: Use `--target openclaw`
-*   **Hermes**: Use `--target hermes`
-
-## Step 3: Install a Skill
-
-Once you have found a skill you want to use, run the following command in your terminal, replacing `<skill-name>` with the name of the skill and `<your-agent>` with the agent you chose in Step 2:
-
-```bash
-npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>
-```
-
-This command installs the skill into your agent's global configuration directory, making it available across all your projects.
-
-## How to Use the Skills
-
-After the installation is complete, your AI agent is ready to use the new skill. Simply open your AI agent (such as Claude Code) within your project folder and give it a command related to the skill.
-
-For example, if you installed a skill for SEO analysis, you might say:
-"Use the SEO analysis skill to check the homepage of my website."
-
-## Why NPX?
-
-We use a tool called `npx` to manage these skills. This ensures that every time you run a command, you are automatically using the most recent version of the skill and the latest security updates. You never have to worry about manually updating your software.
+---
 
 ## How to Contribute
 
-We welcome contributions from the community. If you have built an innovative GTM, Technical Marketing, or growth automation skill, we encourage you to share it with the ecosystem.
+We welcome skills across GTM, growth automation, and developer tooling.
 
-Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on the strict format required for new skills and our security validation process.
+> **Top contributors receive OpenDirectory swag.** Limited-edition merchandise shipped to you.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the required format, the security validation process, and please ensure your skill's README includes installation steps, npx install instructions, prerequisites, and usage examples. We provide a helper script at `scripts/update_skill_readmes.py` to auto-generate the standard install section.
+
+---
 
 ## Top Contributors
 
@@ -143,7 +286,9 @@ Please refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on th
   <img src="https://contrib.rocks/image?repo=Varnan-Tech/opendirectory" />
 </a>
 
-A massive thank you to everyone who has helped build the OpenDirectory ecosystem! Join us by checking out the [CONTRIBUTING.md](CONTRIBUTING.md) guide.
+Thank you to every contributor. See [CONTRIBUTING.md](CONTRIBUTING.md) to get involved.
+
+---
 
 ## License
 
