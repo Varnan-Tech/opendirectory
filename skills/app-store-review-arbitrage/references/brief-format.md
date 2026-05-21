@@ -212,7 +212,7 @@ Always appended after Section 5. Not a numbered section — a plain footer.
 
 - All complaint quotes are verbatim from collected reviews — no paraphrase, no editing
 - Store description fetched: [YYYY-MM-DD] | Status: [available/unavailable]
-- Collection package: [app-store-scraper | google-play-scraper]
+- Collection package: [itunes-rss-api | google-play-scraper]
 - Reviews collected: [N] total | [N] low-star (1–3★) used for analysis
 - Complaint weight formula: `(4 - rating) × recency_factor` — see references/scoring.md
 - [If Gate 3 triggered]: LOW CONFIDENCE — only [N] clusters met minimum evidence threshold

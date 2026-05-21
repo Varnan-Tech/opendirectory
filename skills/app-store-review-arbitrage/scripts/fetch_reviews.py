@@ -438,7 +438,7 @@ def collect(url: str, count: int = 200, country_override: str | None = None,
                 "total_fetched": 0,
                 "low_star_count": 0,
                 "platform": platform,
-                "package": "app-store-scraper" if platform == "app_store" else "google-play-scraper",
+                "package": "itunes-rss-api" if platform == "app_store" else "google-play-scraper",
                 "metadata_only": True,
                 "date_range": {"oldest": None, "newest": None},
             },
@@ -448,7 +448,7 @@ def collect(url: str, count: int = 200, country_override: str | None = None,
     if platform == "app_store":
         raw = fetch_reviews_appstore(app_id, app_slug, count=count, country=country)
         all_reviews = normalize_appstore(raw)
-        package_name = "app-store-scraper"
+        package_name = "itunes-rss-api"
     else:
         raw = fetch_reviews_gplay(app_id, count=count)
         all_reviews = normalize_gplay(raw)
