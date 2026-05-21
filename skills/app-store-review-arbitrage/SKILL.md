@@ -1,15 +1,6 @@
 ---
 name: app-store-review-arbitrage
-description: >
-  Given a competitor's App Store or Google Play URL, collects their public
-  low-star reviews using free Python packages (no API key required), detects
-  broken promises by cross-referencing store description claims against
-  complaint patterns, and outputs a founder-ready brief with ranked complaint
-  clusters, a broken promise map, landing page headlines, and ad copy
-  directions — all cited from verbatim reviews.
-  Use when asked to: analyze competitor app reviews, find ad copy angles
-  from competitor complaints, detect where a competitor's marketing
-  overclaims, or generate landing page copy from app store evidence.
+description: "Fetches low-star App Store and Google Play reviews, clusters them into broken-promise patterns, and generates a ranked copy brief with positioning opportunities."
 version: 1.0.0
 compatibility: [claude-code, gemini-cli, github-copilot]
 ---
