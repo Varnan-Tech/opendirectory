@@ -13,7 +13,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-56-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-57-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-7-blueviolet.svg?style=flat-square)](#quick-start)
@@ -230,11 +230,11 @@ Run these commands inside Claude Code:
 
 ## All Skills
 
-56 skills across GTM, growth automation, technical marketing, and developer tooling.
+57 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
-<summary><b>56 skills across 8 categories</b> — click to expand</summary>
+<summary><b>57 skills across 8 categories</b> — click to expand</summary>
 <br>
 
 <table>
@@ -303,6 +303,11 @@ Run these commands inside Claude Code:
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
+    <td><a href="skills/github-discussion-to-devrel-content"><code>github-discussion-to-devrel-content</code></a></td>
+    <td>Your users keep asking the same questions in GitHub Discussions. This skill finds those patterns, tells you which docs to fix first, and drafts the actual FAQ entries and content angles — backed by verbatim quotes and direct links to the threads that prove the gap is real.</td>
+    <td><code>1.0.0</code></td>
+  </tr>
+  <tr>
     <td><a href="skills/human-tone"><code>human-tone</code></a></td>
     <td>AI assistants write terrible marketing copy. They rely on generic filler words, force everything into lists of three, and bury your actual product under layers of hype.</td>
     <td><code>1.0.0</code></td>
@@ -325,6 +330,11 @@ Run these commands inside Claude Code:
   <tr>
     <td><a href="skills/noise2blog"><code>noise2blog</code></a></td>
     <td>Paste your rough notes, bullet points, voice transcript, or tweet dump and get a publication-ready blog post.</td>
+    <td><code>1.0.0</code></td>
+  </tr>
+  <tr>
+    <td><a href="skills/store-listing-optimizer"><code>store-listing-optimizer</code></a></td>
+    <td>Turn your competitor's complaints into your competitive advantage.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
@@ -527,11 +537,6 @@ Run these commands inside Claude Code:
   <tr>
     <td><a href="skills/domain-expired-opportunity-finder"><code>domain-expired-opportunity-finder</code></a></td>
     <td>Evaluate expired domain candidates against your niche. Get a conservative,</td>
-    <td><code>1.0.0</code></td>
-  </tr>
-  <tr>
-    <td><a href="skills/github-discussion-to-devrel-content"><code>github-discussion-to-devrel-content</code></a></td>
-    <td>Your users keep asking the same questions in GitHub Discussions. This skill finds those patterns, tells you which docs to fix first, and drafts the actual FAQ entries and content angles — backed by verbatim quotes and direct links to the threads that prove the gap is real.</td>
     <td><code>1.0.0</code></td>
   </tr>
 </table>

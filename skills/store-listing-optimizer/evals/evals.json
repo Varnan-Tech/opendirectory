@@ -1,0 +1,19 @@
+{
+  "name": "store-listing-optimizer",
+  "evals": [
+    {
+      "id": "optimizing-productivity-app",
+      "description": "Tests if the agent successfully rewrites a basic Notes app listing using a competitor brief from a slow, bloated competitor (e.g., Evernote).",
+      "inputs": {
+        "current_listing": "fixtures/current_listing.md",
+        "competitor_brief": "fixtures/competitor_brief.md"
+      },
+      "expected_outputs": [
+        "Identifies 'Slow load times' and 'Bloated features' as key pain points.",
+        "Outputs an iOS Title under 30 characters.",
+        "Outputs an Android Short Description under 80 characters.",
+        "Uses a Ju-Jitsu hook emphasizing speed and simplicity without naming the competitor."
+      ]
+    }
+  ]
+}

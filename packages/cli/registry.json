@@ -21,9 +21,8 @@
   },
   {
     "name": "claude-md-generator",
-    "description": "Read the codebase. Write a CLAUDE.md that tells Claude exactly what it needs: no more, no less.",
+    "description": "Use when the user asks to generate or update a project's CLAUDE or AGENTS context file from a codebase scan.",
     "tags": [
-      "Copywriting",
       "Developer Tools"
     ],
     "author": "OpenDirectory",
@@ -39,6 +38,14 @@
     "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/cold-email-verifier"
+  },
+  {
+    "name": "competitor-pr-finder",
+    "description": "Give it your product URL or description.",
+    "tags": [],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/competitor-pr-finder"
   },
   {
     "name": "cook-the-blog",
@@ -67,6 +74,25 @@
     "path": "skills/docs-from-code"
   },
   {
+    "name": "domain-expired-opportunity-finder",
+    "description": "Evaluates expired domain candidates against a target niche, scores them by topical relevance, historical activity level, and history cleanliness, t...",
+    "tags": [],
+    "author": "ajaycodesitbetter",
+    "version": "1.0.0",
+    "path": "skills/domain-expired-opportunity-finder"
+  },
+  {
+    "name": "email-newsletter",
+    "description": "Drafts and designs a complete HTML email newsletter from a topic or content brief.",
+    "tags": [
+      "Email",
+      "Copywriting"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/email-newsletter"
+  },
+  {
     "name": "explain-this-pr",
     "description": "Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment.",
     "tags": [
@@ -78,6 +104,27 @@
     "path": "skills/explain-this-pr"
   },
   {
+    "name": "gh-issue-to-demand-signal",
+    "description": "Takes a competitor's public GitHub repo URL, fetches their open issues via the GitHub REST API, filters noise locally, clusters issues into 6 deman...",
+    "tags": [
+      "Developer Tools"
+    ],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/gh-issue-to-demand-signal"
+  },
+  {
+    "name": "github-discussion-to-devrel-content",
+    "description": "Find recurring confusion in your repo's GitHub Discussions, rank it by urgency, and draft the actual docs fixes and content angles — with verbatim...",
+    "tags": [
+      "Copywriting",
+      "Developer Tools"
+    ],
+    "author": "ajaycodesitbetter",
+    "version": "1.0.0",
+    "path": "skills/github-discussion-to-devrel-content"
+  },
+  {
     "name": "google-trends-api-skills",
     "description": "SEO keyword research workflow for blog generation using Google Trends data.",
     "tags": [
@@ -87,6 +134,52 @@
     "author": "farizanjum",
     "version": "2.0",
     "path": "skills/google-trends-api-skills"
+  },
+  {
+    "name": "graphic-case-study",
+    "description": "Generates a professionally designed case study PDF for B2B SaaS sales and marketing.",
+    "tags": [
+      "Marketing"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/graphic-case-study"
+  },
+  {
+    "name": "graphic-chart",
+    "description": "Generates data visualization charts (bar, line, area, pie, doughnut, scatter, radar, treemap) as PNG using Apache ECharts v6.",
+    "tags": [],
+    "author": "OpenDirectory",
+    "version": "2.0.0",
+    "path": "skills/graphic-chart"
+  },
+  {
+    "name": "graphic-ebook",
+    "description": "Creates professionally designed B2B SaaS e-books in HTML + CSS, exported as print-ready PDF.",
+    "tags": [],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/graphic-ebook"
+  },
+  {
+    "name": "graphic-gif",
+    "description": "Creates animated looping GIFs from CSS animations (default) or AI image-to-video.",
+    "tags": [
+      "AI"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/graphic-gif"
+  },
+  {
+    "name": "graphic-slide-deck",
+    "description": "Generates a professionally designed HTML slide deck from a brief or content.",
+    "tags": [
+      "Copywriting"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/graphic-slide-deck"
   },
   {
     "name": "hackernews-intel",
@@ -108,6 +201,14 @@
     "path": "skills/human-tone"
   },
   {
+    "name": "hyperframes-product-launch-video",
+    "description": "Elite agent skill for creating premium \"Product Launch Videos\" using Hyperframes.",
+    "tags": [],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/hyperframes-product-launch-video"
+  },
+  {
     "name": "kill-the-standup",
     "description": "Reads yesterday's Linear issues and GitHub commits for the authenticated user, formats a standup update (done / doing / blockers), and posts it to...",
     "tags": [
@@ -116,6 +217,16 @@
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/kill-the-standup"
+  },
+  {
+    "name": "linkedin-job-post-to-buyer-pain-map",
+    "description": "Takes pasted LinkedIn job posts or hiring descriptions and converts them into a structured buyer pain map with inferred pains, capability gaps, buy...",
+    "tags": [
+      "Social Media"
+    ],
+    "author": "ajaycodesitbetter",
+    "version": "1.0.0",
+    "path": "skills/linkedin-job-post-to-buyer-pain-map"
   },
   {
     "name": "linkedin-post-generator",
@@ -140,6 +251,18 @@
     "path": "skills/llms-txt-generator"
   },
   {
+    "name": "map-your-market",
+    "description": "Given a product description, category keywords, or competitor names (any combination), searches Reddit, Hacker News, GitHub Issues, G2, and Google...",
+    "tags": [
+      "SEO",
+      "Branding",
+      "Developer Tools"
+    ],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/map-your-market"
+  },
+  {
     "name": "meeting-brief-generator",
     "description": "Takes a company name and optional contact, runs targeted research via Tavily, synthesizes a 1-page pre-call brief with Gemini, and optionally saves...",
     "tags": [
@@ -152,11 +275,21 @@
   },
   {
     "name": "meta-ads-skill",
-    "description": "Use when interacting with the Meta Ads MCP server to manage accounts, campaigns, ads, insights, and targeting, or to troubleshoot OAuth token authe...",
+    "description": "Use when interacting with the Meta Ads CLI to manage accounts, campaigns, ads, and insights. Act as an Expert Media Buyer.",
     "tags": [],
     "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/meta-ads-skill"
+  },
+  {
+    "name": "meta-tribeV2-skill",
+    "description": "Analyzes video hooks and scripts using Meta's TRIBE v2 fMRI model, providing a neuro-marketing breakdown of scroll-stopping power and retention risk.",
+    "tags": [
+      "Marketing"
+    ],
+    "author": "Varnan-Tech",
+    "version": "1.0.0",
+    "path": "skills/meta-tribeV2-skill"
   },
   {
     "name": "newsletter-digest",
@@ -165,6 +298,14 @@
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/newsletter-digest"
+  },
+  {
+    "name": "noise-to-linkedin-carousel",
+    "description": "Transforms messy, unstructured source material (transcripts, rough notes, etc.",
+    "tags": [],
+    "author": "ajaycodesitbetter",
+    "version": "1.0.0",
+    "path": "skills/noise-to-linkedin-carousel"
   },
   {
     "name": "noise2blog",
@@ -176,6 +317,24 @@
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/noise2blog"
+  },
+  {
+    "name": "npm-downloads-to-leads",
+    "description": "Takes a list of npm package names (yours or competitors'), fetches 12 weeks of daily download data from the npm API, computes a breakout velocity s...",
+    "tags": [
+      "Branding"
+    ],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/npm-downloads-to-leads"
+  },
+  {
+    "name": "oss-launch-kit",
+    "description": "Higher-level OSS launch orchestrator that analyzes repos, selects channels, and coordinates launch plans.",
+    "tags": [],
+    "author": "OpenDirectory",
+    "version": "0.2.0",
+    "path": "skills/oss-launch-kit"
   },
   {
     "name": "outreach-sequence-builder",
@@ -201,7 +360,7 @@
   },
   {
     "name": "pr-description-writer",
-    "description": "Read the current branch diff and write a complete GitHub pull request description. Create or update the PR with one command.",
+    "description": "Use when the user asks to write, draft, generate, or update a GitHub pull request description for the current branch.",
     "tags": [
       "Copywriting",
       "Developer Tools"
@@ -209,6 +368,14 @@
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/pr-description-writer"
+  },
+  {
+    "name": "pricing-finder",
+    "description": "Tell it what your product is (URL or description) and it finds 5 competitors globally, fetches their actual pricing pages, extracts every tier and...",
+    "tags": [],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/pricing-finder"
   },
   {
     "name": "pricing-page-psychology-audit",
@@ -221,12 +388,17 @@
     "path": "skills/pricing-page-psychology-audit"
   },
   {
+    "name": "product-update-logger",
+    "description": "Tell the skill what your product shipped.",
+    "tags": [],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/product-update-logger"
+  },
+  {
     "name": "producthunt-launch-kit",
-    "description": "Generate every asset you need for a Product Hunt launch: listing copy, maker comment, and day-one social posts.",
-    "tags": [
-      "Social Media",
-      "Copywriting"
-    ],
+    "description": "Use when the user asks to prepare a Product Hunt launch or generate Product Hunt listing assets.",
+    "tags": [],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/producthunt-launch-kit"
@@ -251,13 +423,23 @@
   },
   {
     "name": "schema-markup-generator",
-    "description": "You are an SEO engineer specialising in structured data.",
-    "tags": [
-      "SEO"
-    ],
+    "description": "Use when the user asks to generate JSON-LD or structured data markup for a webpage.",
+    "tags": [],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/schema-markup-generator"
+  },
+  {
+    "name": "sdk-adoption-tracker",
+    "description": "Given your SDK or library name, searches GitHub code search for public repos that import or require it, classifies each repo as company org, affili...",
+    "tags": [
+      "SEO",
+      "Branding",
+      "Developer Tools"
+    ],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/sdk-adoption-tracker"
   },
   {
     "name": "show-hn-writer",
@@ -266,6 +448,16 @@
     "author": "Varnan / Paras Madan",
     "version": "2.0.0",
     "path": "skills/show-hn-writer"
+  },
+  {
+    "name": "store-listing-optimizer",
+    "description": "Rewrites your App Store or Google Play description to explicitly pre-empt competitor flaws (based on review complaints) and optimize for ASO.",
+    "tags": [
+      "Copywriting"
+    ],
+    "author": "opendirectory",
+    "version": "1.0.0",
+    "path": "skills/store-listing-optimizer"
   },
   {
     "name": "tweet-thread-from-blog",
@@ -280,7 +472,7 @@
   },
   {
     "name": "twitter-GTM-find-skill",
-    "description": "Scrape X/Twitter GTM and DevRel startup jobs with Apify, or optionally TweetClaw for OpenClaw and Hermes Tweet for Hermes Agent.",
+    "description": "End-to-end pipeline for scraping X/Twitter for GTM/DevRel tech startup jobs using Apify, or optionally TweetClaw for OpenClaw and Hermes Tweet for...",
     "tags": [
       "Marketing",
       "Social Media"
@@ -288,6 +480,62 @@
     "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/twitter-GTM-find-skill"
+  },
+  {
+    "name": "vc-curated-match",
+    "description": "Accepts a product description and URL to algorithmically identify relevant Venture Capital investors targeting exactly that stage, industry, and ni...",
+    "tags": [],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/vc-curated-match"
+  },
+  {
+    "name": "vc-finder",
+    "description": "Takes a startup product URL or description, detects the industry and funding stage, identifies 5 comparable funded companies, searches who invested...",
+    "tags": [
+      "SEO"
+    ],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/vc-finder"
+  },
+  {
+    "name": "vid-motion-graphics",
+    "description": "Generates motion graphics videos (MP4) from a content brief.",
+    "tags": [
+      "Copywriting"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/vid-motion-graphics"
+  },
+  {
+    "name": "vid-product-launch",
+    "description": "Generates a cinematic product launch video (MP4) from a product description and launch context.",
+    "tags": [],
+    "author": "OpenDirectory",
+    "version": "1.2.0",
+    "path": "skills/vid-product-launch"
+  },
+  {
+    "name": "vid-sizzle-reel",
+    "description": "Generates a high-energy sizzle reel or hype video (MP4) from brand assets and key messages.",
+    "tags": [
+      "Branding"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/vid-sizzle-reel"
+  },
+  {
+    "name": "where-your-customer-lives",
+    "description": "Given a product utility and ICP, researches the internet to find the specific channels.",
+    "tags": [
+      "SEO"
+    ],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/where-your-customer-lives"
   },
   {
     "name": "yc-intent-radar-skill",
