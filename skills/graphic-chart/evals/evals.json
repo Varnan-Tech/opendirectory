@@ -1,0 +1,30 @@
+{
+  "skill_name": "graphic-chart",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a line chart. Title: 'From $12k to $95k ARR in 12 Months'. Data: [12, 18, 22, 25, 31, 38, 44, 52, 61, 68, 78, 95] (Jan–Dec 2024, in thousands). Highlight December in gold. Source: Internal CRM. Style: terminal. Dimensions: 1080x1080.",
+      "expected_output": "type: 'line', animation: {duration: 0, onComplete: () => window.__chartReady = true}, chartjs-plugin-annotation CDN loaded after Chart.js (UMD auto-registers — no Chart.register call), annotation box on 'Dec' label with callout showing '95', electric-burst-style dark tokens applied (terminal mapped to electric-burst or midnight-editorial), title states growth story not just description, source shown in footer, no CSS on canvas element, deviceScaleFactor: 2 in export script → 2160×2160 output PNG."
+    },
+    {
+      "id": 2,
+      "prompt": "Create a bar chart. Title: 'Q4 Outperformed Every Quarter'. Data: Q1=420, Q2=510, Q3=480, Q4=780. Highlight Q4. Style: electric-burst.",
+      "expected_output": "type: 'bar', borderRadius: 4 on dataset (non-negotiable), borderSkipped: false, annotation box xMin:'Q4' xMax:'Q4' with label callout, annotation CDN script loaded after Chart.js (UMD auto-registers — no Chart.register call), electric-burst tokens (Space Grotesk display, DM Sans body, #09090B bg, #FACC15 accent), window.__chartReady set in animation.onComplete, no animation: false, no CSS on canvas."
+    },
+    {
+      "id": 3,
+      "prompt": "Create an area chart. Revenue by month: 5, 8, 12, 10, 15, 22, 28, 25, 32, 38, 45, 52. Style: clean-slate.",
+      "expected_output": "type: 'line' (NOT 'area'), fill: 'origin' on dataset, backgroundColor rgba at 0.15 opacity, NO annotation plugin loaded (no highlight param), clean-slate tokens (Plus Jakarta Sans, white bg, #3B82F6 accent), animation: {duration: 0, onComplete: ...} present, maintainAspectRatio: false, position: relative on container."
+    },
+    {
+      "id": 4,
+      "prompt": "Create a pie chart. Market share: Product A 45%, Product B 28%, Product C 17%, Other 10%. Style: midnight-editorial.",
+      "expected_output": "type: 'pie', backgroundColor is palette array (not single color), legend position: 'right', NO chartjs-plugin-annotation script loaded (pie not supported), midnight-editorial tokens (Instrument Serif display, Inter body, #111111 bg, #D8F90A accent), 4 segments (under 7 max), hoverOffset: 6, no CSS on canvas."
+    },
+    {
+      "id": 5,
+      "prompt": "make a chart",
+      "expected_output": "chart_type AND data both missing. Does NOT read any reference files. Does NOT generate HTML. Asks exactly for both: chart type (bar/line/area/pie/doughnut/scatter/radar/treemap) and data (JSON or CSV). Waits for user response."
+    }
+  ]
+}

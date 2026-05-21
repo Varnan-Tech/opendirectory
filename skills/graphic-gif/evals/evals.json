@@ -1,0 +1,30 @@
+{
+  "skill_name": "graphic-gif",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create an animated GIF, css-animated, typewriter effect. Text: '73% of B2B buyers read 3+ pieces of content before contacting sales.' Each character types out one at a time. Style: terminal. 3 seconds, 12fps, loop=true.",
+      "expected_output": "Reads terminal preset (JetBrains Mono, #00FF41 accent, #0D1117 bg). Steps(N) set to exact character count of the text string. animation-play-state: paused injected before frame capture. Frame count = floor(3.0 * 12) = 36. Web Animations API seeks to 0ms, 83.3ms, 166.6ms... per frame. gifenc assembles 36 frames at 83ms delay. repeat=0 for infinite loop. gifsicle -O3 --lossy=80 --colors 128 optimization pass. Output: [slug]/animation.gif, ~300-800KB. Summary shown with checklist."
+    },
+    {
+      "id": 2,
+      "prompt": "Animated GIF with counter animation. Numbers count from 0 to 500. Show label 'monthly active users'. Style: electric-burst. 2 seconds, 15fps.",
+      "expected_output": "@property --num declared with syntax: '<integer>' and initial-value: 0. counter-reset: num var(--num) on counter element. ::after { content: counter(num) }. @keyframes countUp from --num: 0 to --num: 500. Frame count = floor(2.0 * 15) = 30. Seeks 0ms, 66.7ms... up to ~1933ms (NOT 2000ms — excludes endpoint). electric-burst tokens applied (Space Grotesk, #FACC15 accent). Output: animation.gif."
+    },
+    {
+      "id": 3,
+      "prompt": "Make a pulsing GIF for a CTA button. Text: 'Book a demo →'. Pulse/breathing effect. Style: clean-slate. 2 seconds, 12fps.",
+      "expected_output": "pulse @keyframes with scale(1) at 0%/100% and scale(1.06) at 50%. animation-iteration-count: infinite on .pulse-item. Frame count = floor(2.0 * 12) = 24. Seeks 0ms, 83.3ms... up to ~1916ms (NOT 2000ms). clean-slate tokens (Plus Jakarta Sans, #0F172A accent, white bg). repeat=0 for infinite loop. Output: animation.gif."
+    },
+    {
+      "id": 4,
+      "prompt": "Create a loop-scroll ticker GIF. Items: 'Reduce Churn · Increase NRR · Boost LTV · Drive Expansion'. Infinite scroll from right to left. Style: brutalist. 4 seconds, 10fps.",
+      "expected_output": "Content duplicated exactly: [4 items] [4 items] = 8 total items in HTML. translateX(0) to translateX(-50%) with linear timing and infinite iteration. Frame count = floor(4.0 * 10) = 40. Seeks 0ms, 100ms, 200ms... up to 3900ms (NOT 4000ms). brutalist tokens (Space Mono, #FF0000 accent, white bg). gifsicle optimization. Output: animation.gif."
+    },
+    {
+      "id": 5,
+      "prompt": "make a gif",
+      "expected_output": "prompt field is missing motion description. Does NOT read any reference files. Does NOT generate any HTML. Asks exactly: 'What should the GIF show? Describe the content AND the motion (e.g., Stats count up: 73% of buyers...) Key settings (all optional, defaults shown): animation_type, duration, fps, loop, style, dimensions, optimization.' Stops and waits for user response."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "skill_name": "github-discussion-to-devrel-content",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Run the github-discussion-to-devrel-content skill on the repo vercel/next.js. Use the last 90 days, minimum 3 comments, combined mode.",
+      "expected_output": "Agent instructs user to run: python scripts/fetch_discussions.py --repo vercel/next.js --days-back 90 --min-comments 3 --mode combined --output discussions_raw.json. After discussions_raw.json is provided with qualifying data, agent produces devrel-backlog.md with a Run Summary block, a Docs/FAQ Gaps section with at least 3 ranked items each containing priority_score, evidence_quote, source_url, and Draft FAQ / Doc Update, and a Content Opportunities section with at least 2 ranked items each containing content_type, Recommended Angle & Outline, and why_this_matters. All items cite verbatim quotes from thread text, not paraphrases.",
+      "files": [],
+      "setup": "GITHUB_TOKEN set in .env"
+    },
+    {
+      "id": 2,
+      "prompt": "Run the skill on a small repo that only has 3 qualifying discussions. Use default settings.",
+      "expected_output": "After running fetch_discussions.py, the output discussions_raw.json has low_signal: true. The agent outputs the Low Signal Warning block with the exact count of qualifying discussions, explains the threshold is 5, and provides three actionable suggestions (reduce --min-comments, increase --days-back, remove --category filter). The agent does NOT proceed to generate a backlog or fabricate patterns.",
+      "files": [],
+      "setup": "GITHUB_TOKEN set in .env. discussions_raw.json pre-loaded with low_signal: true and total_qualifying: 3."
+    },
+    {
+      "id": 3,
+      "prompt": "Run the skill in docs-only mode on the repo supabase/supabase for the last 60 days.",
+      "expected_output": "Agent produces devrel-backlog.md with only the Docs/FAQ Gaps section. The Content Opportunities section is absent from the output. Run Summary shows mode: docs. All docs gap items include priority_score, frequency, engagement, evidence_quote, source_url, and Draft FAQ / Doc Update. Draft FAQ / Doc Update includes a ready-to-use Markdown snippet referencing specific documentation pages or sections, not generic 'improve docs' statements.",
+      "files": [],
+      "setup": "GITHUB_TOKEN set in .env. Mode flag is --mode docs."
+    },
+    {
+      "id": 4,
+      "prompt": "Run the skill filtered to only the Q&A category on the repo prisma/prisma.",
+      "expected_output": "fetch_discussions.py is called with --category Q&A. Only discussions in the Q&A category appear in discussions_raw.json. The agent's Run Summary shows category_filter: Q&A. All clustered items are drawn from Q&A threads only. Items from other categories (Show and Tell, Ideas) do not appear in the output.",
+      "files": [],
+      "setup": "GITHUB_TOKEN set in .env. Category filter applied."
+    },
+    {
+      "id": 5,
+      "prompt": "The GITHUB_TOKEN environment variable is not set. User tries to run fetch_discussions.py.",
+      "expected_output": "Script exits immediately with a clear error message: 'ERROR: GITHUB_TOKEN environment variable is not set.' followed by instructions on how to set it and a link to generate a token at https://github.com/settings/tokens. Script exits with a non-zero exit code. No partial output or silent failure. The agent relays this error to the user and does not attempt to proceed with analysis.",
+      "files": [],
+      "setup": "GITHUB_TOKEN is NOT set in environment or .env file."
+    }
+  ]
+}

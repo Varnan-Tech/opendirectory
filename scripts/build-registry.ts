@@ -119,10 +119,13 @@ function buildRegistry() {
           metadata.name = metadata.name === folder ? (pkg.name || metadata.name) : metadata.name;
           metadata.description = metadata.description || pkg.description;
           metadata.version = metadata.version || pkg.version;
-          metadata.author = metadata.author || (typeof pkg.author === 'string' ? pkg.author : pkg.author?.name);
+          metadata.author = metadata.author || (typeof pkg.author === 'string' ? pkg.author : pkg.author?.name) || 'opendirectory';
         } catch (e) {
           console.warn(`Warning: Failed to parse package.json in ${folder}`);
+          metadata.author = metadata.author || 'opendirectory';
         }
+      } else {
+        metadata.author = metadata.author || 'opendirectory';
       }
     }
 
@@ -136,6 +139,22 @@ function buildRegistry() {
       }
     }
     metadata.name = folder;
+
+    // Auto-generate tags based on description keywords if tags are empty
+    if (!metadata.tags || metadata.tags.length === 0) {
+      const lowerDesc = metadata.description.toLowerCase();
+      const generatedTags = [];
+      if (lowerDesc.includes('seo') || lowerDesc.includes('search')) generatedTags.push('SEO');
+      if (lowerDesc.includes('market') || lowerDesc.includes('gtm') || lowerDesc.includes('growth')) generatedTags.push('Marketing');
+      if (lowerDesc.includes('brand') || lowerDesc.includes('nam') || lowerDesc.includes('identity')) generatedTags.push('Branding');
+      if (lowerDesc.includes('email') || lowerDesc.includes('outreach')) generatedTags.push('Email');
+      if (lowerDesc.includes('social') || lowerDesc.includes('linkedin') || lowerDesc.includes('twitter') || lowerDesc.includes('tweet')) generatedTags.push('Social Media');
+      if (lowerDesc.includes('ai ') || lowerDesc.includes(' llm') || lowerDesc.includes('prompt')) generatedTags.push('AI');
+      if (lowerDesc.includes('write') || lowerDesc.includes('copy') || lowerDesc.includes('content') || lowerDesc.includes('blog')) generatedTags.push('Copywriting');
+      if (lowerDesc.includes('code') || lowerDesc.includes('github') || lowerDesc.includes('pr ')) generatedTags.push('Developer Tools');
+      
+      metadata.tags = generatedTags;
+    }
 
     const result = SkillSchema.safeParse(metadata);
     if (result.success) {

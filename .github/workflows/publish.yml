@@ -1,6 +1,7 @@
 name: Publish Registry and CLI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -8,10 +9,13 @@ on:
       - 'skills/**'
       - 'packages/cli/**'
       - 'scripts/**'
-      - 'registry.json'
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   publish:
@@ -28,7 +32,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
@@ -38,32 +42,20 @@ jobs:
       - name: Build registry
         run: pnpm exec tsx scripts/build-registry.ts
 
-      - name: Update README with skills list
-        run: pnpm exec tsx scripts/update-readme.ts
-
-      - name: Update CONTRIBUTING with claimed skills
-        run: pnpm exec tsx scripts/update-contributing.ts
-
-      - name: Bump CLI version
-        run: |
-          cd packages/cli
-          LATEST_VERSION=$(npm view @opendirectory.dev/skills version || echo "0.0.0")
-          npm version $LATEST_VERSION --no-git-tag-version --allow-same-version
-          npm version patch --no-git-tag-version
-
-      - name: Commit updated README, CONTRIBUTING, and package.json
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: auto-update skills list and bump version [skip ci]"
-          file_pattern: "README.md CONTRIBUTING.md packages/cli/package.json"
-
-      - name: Build Claude Plugin manifest
-        run: pnpm exec tsx scripts/build-claude-plugin.ts
-
       - name: Build CLI (Includes copying skills)
         run: cd packages/cli && pnpm run build
 
       - name: Publish to NPM
-        run: cd packages/cli && npm publish --access public
+        run: |
+          cd packages/cli
+          # Get the currently published version from NPM
+          LATEST_VERSION=$(npm view @opendirectory.dev/skills version || echo "0.0.0")
+          
+          # Force our local package.json to match the NPM version, then bump it locally
+          npm version $LATEST_VERSION --no-git-tag-version --allow-same-version
+          npm version patch --no-git-tag-version
+          
+          # Publish the bumped version
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

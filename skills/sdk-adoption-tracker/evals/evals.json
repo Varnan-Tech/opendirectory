@@ -1,0 +1,108 @@
+[
+  {
+    "id": "eval_001",
+    "name": "npm SDK with real company adopters",
+    "description": "Full pipeline run on a well-known npm SDK with 20+ public repos. Verifies company org detection, scoring, enrichment, and brief generation all work end-to-end.",
+    "input": {
+      "prompt": "Find who is using my SDK on GitHub: stripe",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Detects ecosystem as npm from the SDK name",
+      "Builds 4 query patterns: require(\"stripe\"), require('stripe'), from \"stripe\", from 'stripe'",
+      "Fetches up to 100 results per pattern, deduplicates by repo full_name",
+      "Filters forks and repos whose name starts with 'stripe' as noise",
+      "Classifies repos with owner.type == Organization as company_org",
+      "Fetches full repo metadata, owner profile, and top contributors for non-noise repos",
+      "Computes adoption_score using formula from scoring-guide.md",
+      "AI generates adoption briefs for repos with score >= 80",
+      "Every repo in the brief exists in the raw code search results",
+      "Every company name comes from the GitHub org.name or user.company API field",
+      "Every contributor handle comes from the contributors API response",
+      "Saves output to docs/sdk-adopters/stripe-YYYY-MM-DD.md and .json"
+    ],
+    "expected_output": "Report with at least 1 company_org repo, adoption velocity metrics, and at least 1 adoption brief with company name, top contributor handle, and outreach message."
+  },
+  {
+    "id": "eval_002",
+    "name": "Python SDK ecosystem detection",
+    "description": "Verifies auto-detection of Python ecosystem from snake_case package name and correct query pattern construction.",
+    "input": {
+      "prompt": "Track adoption of my Python library: boto3",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Detects ecosystem as python from snake_case name with no hyphens or slashes",
+      "Builds 3 query patterns: 'import boto3', 'from boto3 import', 'from boto3.'",
+      "Does NOT use npm-style require() patterns",
+      "Fetches results and deduplicates repos",
+      "Classifies repos by tier using the same scoring formula",
+      "Proceeds through Steps 4-8 normally"
+    ],
+    "expected_output": "Report showing Python repos importing boto3, with correct ecosystem label in the output header."
+  },
+  {
+    "id": "eval_003",
+    "name": "Very new SDK not yet indexed",
+    "description": "Handles the case where a brand-new SDK returns 0 results from GitHub code search because indexing takes 1-4 weeks.",
+    "input": {
+      "prompt": "Find who is using my new SDK: my-brand-new-sdk-2026",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Runs code search queries successfully (no API error)",
+      "Receives 0 results from all pattern queries",
+      "Does NOT proceed to Steps 4-8",
+      "Stops with a clear message: 'No repos found importing my-brand-new-sdk-2026. GitHub code search indexing takes 1-4 weeks for new packages.'",
+      "Does not write any output files",
+      "Does not hallucinate any repo results"
+    ],
+    "expected_output": "Graceful stop message with indexing explanation. No output file created."
+  },
+  {
+    "id": "eval_004",
+    "name": "GITHUB_TOKEN missing",
+    "description": "Verifies the skill stops immediately at Step 1 when GITHUB_TOKEN is not set, with a clear actionable error message.",
+    "input": {
+      "prompt": "Who is using my SDK: express",
+      "env": {
+        "GITHUB_TOKEN": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Step 1 setup check detects GITHUB_TOKEN is missing",
+      "Stops immediately with error: 'GITHUB_TOKEN is required for code search.'",
+      "Includes instruction: 'Add a token at github.com/settings/tokens (no scopes needed for public repos).'",
+      "Explains why: unauthenticated code search hits 3 req/min secondary rate limit",
+      "Does NOT proceed to Step 2 or any API calls",
+      "Exit code 1 (or equivalent failure signal)"
+    ],
+    "expected_output": "Error message at Step 1 with token setup instructions. No API calls made."
+  },
+  {
+    "id": "eval_005",
+    "name": "All results are tutorial noise",
+    "description": "Handles the case where code search returns results but all repos are tutorials, examples, or forks -- no production adopters.",
+    "input": {
+      "prompt": "Find who is using my SDK: todo-app",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Runs code search and finds repos",
+      "Step 4 classification marks all repos as tutorial_noise (name/description contain tutorial keywords)",
+      "No repos remain after filtering tutorial_noise",
+      "Does NOT proceed to Step 5 enrichment or Step 6 AI brief generation",
+      "Stops with message: 'All repos found appear to be tutorials or examples. No production adopters detected in public GitHub.'",
+      "Does not hallucinate production users"
+    ],
+    "expected_output": "Graceful stop with explanation. Breakdown table shows tutorial_noise count but 0 company/solo repos."
+  }
+]

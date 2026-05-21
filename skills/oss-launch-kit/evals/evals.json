@@ -1,0 +1,44 @@
+[
+  {
+    "repo": "cli/cli",
+    "full": "cli-cli.full.md",
+    "description": "Strong CLI tool",
+    "expectations": [
+      "**Project Maturity**: HIGH",
+      "Show HN fitness is HIGH",
+      "Includes Channel Strategy & Positioning section",
+      "Timeline includes Show HN"
+    ]
+  },
+  {
+    "repo": "octocat/Hello-World",
+    "full": "octocat-hello-world.full.md",
+    "description": "Weak project",
+    "expectations": [
+      "**Project Maturity**: LOW",
+      "> [!CAUTION]",
+      "This project is not launch-ready yet",
+      "Show HN and Product Hunt are NOT recommended",
+      "Channel Strategy & Positioning section is absent",
+      "Coordinated Launch Timeline is absent"
+    ]
+  },
+  {
+    "repo": "pydantic/pydantic",
+    "full": "pydantic-pydantic.full.md",
+    "description": "Mature library",
+    "expectations": [
+      "**Project Maturity**: HIGH",
+      "Show HN fitness is HIGH"
+    ]
+  },
+  {
+    "repo": "vercel/next.js",
+    "full": "vercel-next-js.full.md",
+    "description": "Polished framework",
+    "expectations": [
+      "**Project Maturity**: HIGH",
+      "Product Hunt fitness is HIGH"
+    ]
+  }
+]

@@ -21,7 +21,6 @@ const repos = [
   "https://github.com/Varnan-Tech/explain-this-pr",
   "https://github.com/Varnan-Tech/dependency-update-bot",
   "https://github.com/Varnan-Tech/claude-md-generator",
-  "https://github.com/Varnan-Tech/stargazer",
   "https://github.com/Varnan-Tech/docs-from-code",
   "https://github.com/Varnan-Tech/meta-ads-skill",
   "https://github.com/Varnan-Tech/llms-txt-generator",
@@ -30,8 +29,7 @@ const repos = [
   "https://github.com/Varnan-Tech/google-trends-api-skills",
   "https://github.com/Varnan-Tech/yc-intent-radar-skill",
   "https://github.com/Varnan-Tech/blog-cover-image-cli",
-  "https://github.com/Varnan-Tech/twitter-GTM-find-skill",
-  "https://github.com/Varnan-Tech/luma-attendees-scraper"
+  "https://github.com/Varnan-Tech/twitter-GTM-find-skill"
 ];
 
 const SKILLS_DIR = path.join(process.cwd(), 'skills');

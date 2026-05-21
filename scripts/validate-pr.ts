@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import matter from 'gray-matter';
 
 const skillsDir = path.join(process.cwd(), 'skills');
@@ -156,3 +157,10 @@ function validateSkills() {
 }
 
 validateSkills();
+
+console.log('\nValidating skill descriptions...');
+try {
+  execSync('pnpm exec tsx scripts/validate-skill-descriptions.ts', { stdio: 'inherit' });
+} catch (e) {
+  process.exit(1);
+}

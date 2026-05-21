@@ -1,13 +1,19 @@
 name: PR Validation
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
 
+concurrency:
+  group: pr-validation-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,14 +26,26 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
 
+      - name: Validate skill descriptions
+        run: pnpm exec tsx scripts/validate-skill-descriptions.ts
+
       - name: Validate skills structure
         run: pnpm exec tsx scripts/validate-pr.ts
+
+      - name: Enforce README and CONTRIBUTING updates
+        run: |
+          pnpm exec tsx scripts/update-readme.ts
+          pnpm exec tsx scripts/update-contributing.ts
+          if ! git diff --exit-code README.md CONTRIBUTING.md; then
+            echo "::error::README.md or CONTRIBUTING.md is out of date. Please run 'pnpm exec tsx scripts/update-readme.ts' and 'pnpm exec tsx scripts/update-contributing.ts' locally and commit the changes."
+            exit 1
+          fi
 
       - name: Test registry builder
         run: pnpm exec tsx scripts/build-registry.ts
@@ -36,5 +54,5 @@ jobs:
         run: cd packages/cli && pnpm run build
 
       - name: Run E2E tests
+        timeout-minutes: 10
         run: cd packages/cli && pnpm run test:e2e
-

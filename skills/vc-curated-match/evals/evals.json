@@ -1,0 +1,43 @@
+{
+  "evals": [
+    {
+      "id": "devtool-oss-seed",
+      "description": "Open source CLI DevTool, Seed stage, US",
+      "input": {
+        "description": "An open source developer tool that helps engineers automate cloud infrastructure management from the command line",
+        "url": "https://github.com/example/infra-cli",
+        "stage": "Seed",
+        "geography": "US"
+      },
+      "expected_top_tags": ["DevTools", "Open Source", "Infrastructure"],
+      "expected_top_funds": ["Heavybit", "boldstart ventures", "OSS Capital"],
+      "output_file": "evals/devtool-oss-seed.md"
+    },
+    {
+      "id": "ai-b2b-saas-seed",
+      "description": "AI-powered B2B SaaS platform for sales automation, Seed stage, US",
+      "input": {
+        "description": "An AI-powered B2B SaaS platform that helps sales teams automate outreach and qualify leads faster",
+        "url": "https://example-ai-sales.com",
+        "stage": "Seed",
+        "geography": "US"
+      },
+      "expected_top_tags": ["AI", "B2B SaaS"],
+      "expected_top_funds": ["Sequoia Capital", "Andreessen Horowitz (a16z)", "Y Combinator"],
+      "output_file": "evals/ai-b2b-saas-seed.md"
+    },
+    {
+      "id": "fintech-india-preseed",
+      "description": "Payment API, Fintech, E-commerce, Pre-seed stage, India",
+      "input": {
+        "description": "A payment infrastructure API for e-commerce businesses in India",
+        "url": "https://example-fintech.in",
+        "stage": "Pre-seed",
+        "geography": "India"
+      },
+      "expected_top_tags": ["FinTech", "Data", "E-commerce"],
+      "expected_top_funds": ["Accel India", "Peak XV Partners", "Nexus Venture Partners"],
+      "output_file": "evals/fintech-india-preseed.md"
+    }
+  ]
+}

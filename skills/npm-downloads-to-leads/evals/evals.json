@@ -1,0 +1,119 @@
+[
+  {
+    "id": "eval_001",
+    "name": "Mixed package list: scoped + unscoped, breakout + steady + declining",
+    "description": "A list of packages across different growth stages and including one scoped package. Validates full pipeline: scoped URL encoding, velocity ranking, only breakout/watching packages get GitHub enrichment, correct tier classification.",
+    "input": {
+      "prompt": "Find leads from these npm packages: esbuild, @hono/hono, lodash, zod, deprecated-old-pkg. We build a TypeScript developer tooling platform.",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Parses 5 package names including scoped @hono/hono",
+      "Step 3 URL-encodes @hono/hono as %40hono%2Fhono for the npm API call",
+      "Fetches 12 weeks of daily download data per package",
+      "Step 4 computes velocity scores using (growth_ratio * acceleration * noise_factor * 100) formula",
+      "Packages sorted by velocity_score descending in output",
+      "Only breakout and watching packages have GitHub profiles fetched in Step 5",
+      "lodash classified as 'established' (>500K/week) -- no GitHub enrichment attempted",
+      "deprecated-old-pkg shows low or declining velocity -- classified as 'steady' or 'too_early'",
+      "Lead briefs name the specific package and TypeScript developer tooling context",
+      "Suggested first messages are specific to each maintainer's package -- not generic",
+      "Output saved to docs/npm-leads/[date].md",
+      "No em dashes anywhere in output"
+    ],
+    "expected_output": "Velocity leaderboard with 5 packages, lead briefs for breakout/watching packages only, scoped package correctly handled, suggested messages reference TypeScript developer tooling context"
+  },
+  {
+    "id": "eval_002",
+    "name": "Single breakout package: full lead brief with GitHub and Twitter",
+    "description": "A single package in clear breakout trajectory (1K to 15K weekly over 8 weeks). Validates that the full 8-step pipeline runs, a lead brief is generated, and GitHub + Twitter contact info is correctly sourced from the API.",
+    "input": {
+      "prompt": "Analyze npm momentum for: zod",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Fetches 12 weeks of download data for zod",
+      "Computes velocity score and classifies tier",
+      "Step 5 fetches npm registry metadata: description, keywords, maintainers, repository URL",
+      "Extracts GitHub owner from repository.url field",
+      "Fetches GitHub user profile for extracted owner",
+      "lead brief growth_summary uses exact numbers from npm API -- not rounded or modified",
+      "maintainer_handle comes from GitHub API response username field",
+      "twitter field uses twitter_username from GitHub API -- writes 'not found on GitHub' if field is null",
+      "why_now references specific weeks and growth numbers from the data",
+      "suggested_message names zod specifically and does not use placeholder text",
+      "Self-QA step verifies GitHub handle was in API response before including in output"
+    ],
+    "expected_output": "Full lead brief for zod with exact download numbers, verified GitHub handle, Twitter if set on GitHub profile, specific why_now and suggested_message"
+  },
+  {
+    "id": "eval_003",
+    "name": "Package that does not exist: continues with remaining packages",
+    "description": "One package name in the list does not exist on npm (returns 404). Validates that the skill notes it in data_quality_flags and continues analyzing the remaining packages without aborting.",
+    "input": {
+      "prompt": "Track npm trends for: vite, this-package-does-not-exist-xyz123, esbuild",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Step 3 gets 404 from npm API for 'this-package-does-not-exist-xyz123'",
+      "Skill does NOT abort -- continues with vite and esbuild",
+      "Not-found package gets status='not_found' in scored data with velocity_score=0",
+      "data_quality_flags includes note about the 404 package",
+      "Output presents velocity leaderboard for vite and esbuild",
+      "Output section shows which package was skipped and why",
+      "No crash or incomplete output due to the missing package"
+    ],
+    "expected_output": "Velocity leaderboard for 2 packages (vite, esbuild), data_quality_flags noting the 404, no crash or abort"
+  },
+  {
+    "id": "eval_004",
+    "name": "GITHUB_TOKEN missing, rate limit hit during Step 5",
+    "description": "No GITHUB_TOKEN is set and the unauthenticated rate limit (60/hr) is exhausted partway through Step 5. Validates graceful degradation: presents velocity leaderboard from npm data, skips remaining GitHub enrichments, flags in data_quality_flags.",
+    "input": {
+      "prompt": "Find breakout npm packages: pkg-a, pkg-b, pkg-c, pkg-d, pkg-e, pkg-f, pkg-g, pkg-h, pkg-i, pkg-j, pkg-k",
+      "env": {
+        "GITHUB_TOKEN": "not set"
+      }
+    },
+    "expected_behavior": [
+      "Step 1 warns about 60 req/hr unauthenticated limit",
+      "Step 5 begins GitHub profile fetches for breakout/watching packages",
+      "After some fetches, X-RateLimit-Remaining drops to 5 or below",
+      "Skill detects gh_rate_remaining <= 5 and stops further GitHub enrichments",
+      "Skill does NOT abort the whole run",
+      "Packages enriched before the rate limit hit have GitHub data",
+      "Packages after the rate limit hit have github_users=[] in their profile",
+      "data_quality_flags includes note about GitHub rate limit hit and how many profiles were skipped",
+      "Velocity leaderboard is complete (from npm data, unaffected by GitHub rate limit)",
+      "Lead briefs for packages without GitHub data show 'GitHub profile: not found' instead of invented data"
+    ],
+    "expected_output": "Complete velocity leaderboard, partial GitHub enrichment, data_quality_flags noting rate limit hit, no invented contact info for un-enriched packages"
+  },
+  {
+    "id": "eval_005",
+    "name": "All packages below noise floor: graceful stop at Step 4",
+    "description": "All provided packages have fewer than 500 weekly downloads. Validates the graceful stop at Step 4 with a clear message -- no GitHub enrichment or lead briefs are attempted.",
+    "input": {
+      "prompt": "Analyze these npm packages: my-tiny-util, another-small-pkg, micro-helper-lib",
+      "env": {
+        "GITHUB_TOKEN": "set"
+      }
+    },
+    "expected_behavior": [
+      "Step 3 fetches download data for all 3 packages",
+      "Step 4 computes velocity scores -- all packages get tier='too_early' (recent_4_avg < 500)",
+      "Step 4 detects no breakout and no watching packages",
+      "Stops at Step 4 with message: 'All packages are below the 500 weekly downloads threshold for reliable velocity analysis. Try packages with more community adoption.'",
+      "Does NOT proceed to Step 5 (no GitHub enrichment attempted)",
+      "Does NOT generate lead briefs",
+      "Output shows the download numbers for each package so the user understands why they were below threshold"
+    ],
+    "expected_output": "Graceful stop at Step 4 with download counts, clear threshold explanation, no partial output or GitHub API calls"
+  }
+]

@@ -1,6 +1,6 @@
 {
   "name": "opendirectory-marketplace",
-  "description": "Official marketplace for OpenDirectory skills",
+  "description": "Official marketplace of opendirectory skills, for founders who hate marketing",
   "owner": {
     "name": "Varnan"
   },
@@ -8,7 +8,7 @@
     {
       "name": "opendirectory-gtm-skills",
       "source": "./",
-      "description": "28+ GTM and Marketing Skills"
+      "description": "A collection of 55 agent skills for founders who hate marketing"
     }
   ]
 }

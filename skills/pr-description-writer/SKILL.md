@@ -1,6 +1,6 @@
 ---
 name: pr-description-writer
-description: ''
+description: Use when the user asks to write, draft, generate, or update a GitHub pull request description for the current branch. Reads the branch diff and commit messages, writes a structured PR body (summary, changes, testing), and optionally creates or updates the PR via the gh CLI.
 compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0

@@ -10,15 +10,30 @@
   {
     "name": "blog-cover-image-cli",
     "description": "Use when the user asks to generate a blog cover image, thumbnail, or article header.",
-    "tags": [],
-    "author": "",
+    "tags": [
+      "Copywriting"
+    ],
+    "author": "opendirectory",
     "version": "1.0.17",
     "path": "skills/blog-cover-image-cli"
   },
   {
+    "name": "brand-alchemy",
+    "description": "World-class brand strategist and naming expert.",
+    "tags": [
+      "Branding"
+    ],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/brand-alchemy"
+  },
+  {
     "name": "claude-md-generator",
     "description": "Read the codebase. Write a CLAUDE.md that tells Claude exactly what it needs: no more, no less.",
-    "tags": [],
+    "tags": [
+      "Copywriting",
+      "Developer Tools"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/claude-md-generator"
@@ -26,15 +41,19 @@
   {
     "name": "cold-email-verifier",
     "description": "Use when the user wants to verify cold emails, enrich a lead list, or autonomously guess email addresses from a CSV using ValidEmail.",
-    "tags": [],
-    "author": "Unknown",
+    "tags": [
+      "Email"
+    ],
+    "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/cold-email-verifier"
   },
   {
     "name": "cook-the-blog",
     "description": "Generate high-converting, deep-dive growth case studies in MDX format.",
-    "tags": [],
+    "tags": [
+      "Marketing"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/cook-the-blog"
@@ -58,7 +77,10 @@
   {
     "name": "explain-this-pr",
     "description": "Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment.",
-    "tags": [],
+    "tags": [
+      "Copywriting",
+      "Developer Tools"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/explain-this-pr"
@@ -66,7 +88,10 @@
   {
     "name": "google-trends-api-skills",
     "description": "SEO keyword research workflow for blog generation using Google Trends data.",
-    "tags": [],
+    "tags": [
+      "SEO",
+      "Copywriting"
+    ],
     "author": "farizanjum",
     "version": "2.0",
     "path": "skills/google-trends-api-skills"
@@ -82,15 +107,20 @@
   {
     "name": "human-tone",
     "description": "Rewrites AI-generated marketing copy to sound naturally human.",
-    "tags": [],
-    "author": "Unknown",
+    "tags": [
+      "Marketing",
+      "Copywriting"
+    ],
+    "author": "opendirectory",
     "version": "1.0.0",
     "path": "skills/human-tone"
   },
   {
     "name": "kill-the-standup",
     "description": "Reads yesterday's Linear issues and GitHub commits for the authenticated user, formats a standup update (done / doing / blockers), and posts it to...",
-    "tags": [],
+    "tags": [
+      "Developer Tools"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/kill-the-standup"
@@ -98,7 +128,11 @@
   {
     "name": "linkedin-post-generator",
     "description": "Converts any content, blog post URL, pasted article, GitHub PR description, or a description of something built, into a formatted LinkedIn post wit...",
-    "tags": [],
+    "tags": [
+      "Social Media",
+      "Copywriting",
+      "Developer Tools"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/linkedin-post-generator"
@@ -106,7 +140,9 @@
   {
     "name": "llms-txt-generator",
     "description": "Generates and maintains a standards-compliant llms.",
-    "tags": [],
+    "tags": [
+      "AI"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/llms-txt-generator"
@@ -114,7 +150,10 @@
   {
     "name": "meeting-brief-generator",
     "description": "Takes a company name and optional contact, runs targeted research via Tavily, synthesizes a 1-page pre-call brief with Gemini, and optionally saves...",
-    "tags": [],
+    "tags": [
+      "SEO",
+      "Branding"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/meeting-brief-generator"
@@ -123,7 +162,7 @@
     "name": "meta-ads-skill",
     "description": "Use when interacting with the Meta Ads MCP server to manage accounts, campaigns, ads, insights, and targeting, or to troubleshoot OAuth token authe...",
     "tags": [],
-    "author": "Unknown",
+    "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/meta-ads-skill"
   },
@@ -138,7 +177,10 @@
   {
     "name": "noise2blog",
     "description": "Turns rough notes, bullet points, voice transcripts, or tweet dumps into a polished, publication-ready blog post.",
-    "tags": [],
+    "tags": [
+      "Social Media",
+      "Copywriting"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/noise2blog"
@@ -146,7 +188,10 @@
   {
     "name": "outreach-sequence-builder",
     "description": "Takes a buying signal and generates a personalized multi-channel outreach sequence across email, LinkedIn, and phone.",
-    "tags": [],
+    "tags": [
+      "Email",
+      "Social Media"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/outreach-sequence-builder"
@@ -154,23 +199,42 @@
   {
     "name": "position-me",
     "description": "Elite Website Reviewer Agent for AEO, GEO, SEO, UI/UX Psychology, and Copywriting.",
-    "tags": [],
-    "author": "Unknown",
+    "tags": [
+      "SEO",
+      "Copywriting"
+    ],
+    "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/position-me"
   },
   {
     "name": "pr-description-writer",
     "description": "Read the current branch diff and write a complete GitHub pull request description. Create or update the PR with one command.",
-    "tags": [],
+    "tags": [
+      "Copywriting",
+      "Developer Tools"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/pr-description-writer"
   },
   {
+    "name": "pricing-page-psychology-audit",
+    "description": "Audits any SaaS pricing page URL against 12 pricing psychology principles and outputs a ranked improvement report with specific rewrite suggestions...",
+    "tags": [
+      "Copywriting"
+    ],
+    "author": "ajaycodesitbetter",
+    "version": "1.0.0",
+    "path": "skills/pricing-page-psychology-audit"
+  },
+  {
     "name": "producthunt-launch-kit",
     "description": "Generate every asset you need for a Product Hunt launch: listing copy, maker comment, and day-one social posts.",
-    "tags": [],
+    "tags": [
+      "Social Media",
+      "Copywriting"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/producthunt-launch-kit"
@@ -186,7 +250,9 @@
   {
     "name": "reddit-post-engine",
     "description": "Writes and optionally posts a Reddit post for any subreddit, following that subreddit's specific culture and rules.",
-    "tags": [],
+    "tags": [
+      "Copywriting"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/reddit-post-engine"
@@ -194,7 +260,9 @@
   {
     "name": "schema-markup-generator",
     "description": "You are an SEO engineer specialising in structured data.",
-    "tags": [],
+    "tags": [
+      "SEO"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/schema-markup-generator"
@@ -210,16 +278,22 @@
   {
     "name": "tweet-thread-from-blog",
     "description": "Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA.",
-    "tags": [],
+    "tags": [
+      "Social Media",
+      "Copywriting"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/tweet-thread-from-blog"
   },
   {
     "name": "twitter-GTM-find-skill",
-    "description": "End-to-end pipeline for scraping Twitter for GTM/DevRel tech startup jobs using Apify, and validating them against an Ideal Customer Profile (ICP)...",
-    "tags": [],
-    "author": "Unknown",
+    "description": "Scrape X/Twitter GTM and DevRel startup jobs with Apify, or optionally TweetClaw for OpenClaw and Hermes Tweet for Hermes Agent.",
+    "tags": [
+      "Marketing",
+      "Social Media"
+    ],
+    "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/twitter-GTM-find-skill"
   },
@@ -227,7 +301,7 @@
     "name": "yc-intent-radar-skill",
     "description": "Scrape daily job listings from YCombinator's Workatastartup platform without duplicates.",
     "tags": [],
-    "author": "Unknown",
+    "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/yc-intent-radar-skill"
   }
