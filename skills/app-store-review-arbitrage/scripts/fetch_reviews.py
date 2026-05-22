@@ -228,8 +228,13 @@ def fetch_reviews_appstore(app_id: str, count: int = 200,
         if isinstance(entries, list):
             for e in entries:
                 if "author" in e and "im:rating" in e:
+                    raw_rating = e.get("im:rating", {}).get("label")
+                    try:
+                        rating = int(raw_rating) if raw_rating is not None else None
+                    except (TypeError, ValueError):
+                        rating = None
                     reviews.append({
-                        "rating": int(e["im:rating"]["label"]),
+                        "rating": rating,
                         "review": e.get("content", {}).get("label", ""),
                         "title": e.get("title", {}).get("label"),
                         "date": e.get("updated", {}).get("label")
@@ -237,8 +242,13 @@ def fetch_reviews_appstore(app_id: str, count: int = 200,
         elif isinstance(entries, dict):
             e = entries
             if "author" in e and "im:rating" in e:
+                raw_rating = e.get("im:rating", {}).get("label")
+                try:
+                    rating = int(raw_rating) if raw_rating is not None else None
+                except (TypeError, ValueError):
+                    rating = None
                 reviews.append({
-                    "rating": int(e["im:rating"]["label"]),
+                    "rating": rating,
                     "review": e.get("content", {}).get("label", ""),
                     "title": e.get("title", {}).get("label"),
                     "date": e.get("updated", {}).get("label")
