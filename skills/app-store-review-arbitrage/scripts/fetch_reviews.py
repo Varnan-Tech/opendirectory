@@ -253,7 +253,11 @@ def fetch_reviews_appstore(app_id: str, count: int = 200,
         # Retry with 'us' if the original country returned nothing
         if country != "us":
             print("  No reviews returned. Retrying with country='us'...", file=sys.stderr)
-            return fetch_reviews_appstore(app_id, app_slug, count, "us")
+            return fetch_reviews_appstore(
+                app_id,
+                count=count,
+                country="us",
+            )
 
         print(
             f"  [WARNING] iTunes RSS API returned 0 reviews for app_id={app_id}. "
@@ -306,6 +310,8 @@ def fetch_reviews_gplay(package_name: str, count: int = 200) -> list:
 
 def _date_to_str(value) -> str:
     """Convert a datetime, date, or ISO string to YYYY-MM-DD string."""
+    if value is None:
+        return None
     if isinstance(value, datetime):
         return value.strftime("%Y-%m-%d")
     if isinstance(value, date):
