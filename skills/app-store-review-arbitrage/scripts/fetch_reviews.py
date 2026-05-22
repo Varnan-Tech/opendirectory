@@ -343,7 +343,7 @@ def normalize_appstore(raw_reviews: list) -> list:
     normalized = []
     for r in raw_reviews:
         normalized.append({
-            "rating": int(r.get("rating", 0)),
+            "rating": int(r.get("rating") or 0),
             "body": str(r.get("review", "") or ""),
             "title": r.get("title") or None,
             "date": _date_to_str(r.get("date", "")),
