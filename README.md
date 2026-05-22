@@ -243,7 +243,7 @@ Run these commands inside Claude Code:
   <tr>
     <td><a href="skills/blog-cover-image-cli"><code>blog-cover-image-cli</code></a></td>
     <td>A modern, AI-powered CLI tool designed to automatically generate high-converting, minimalist blog cover images and thumbnails using Gemini 3.1 Flash Image Preview.</td>
-    <td><code>1.0.17</code></td>
+    <td><code>0.0.1</code></td>
   </tr>
   <tr>
     <td><a href="skills/graphic-case-study"><code>graphic-case-study</code></a></td>
