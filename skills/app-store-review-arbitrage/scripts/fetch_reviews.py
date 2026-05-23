@@ -44,7 +44,6 @@ def parse_url(url: str) -> dict:
             "platform": "app_store" | "google_play",
             "app_url": str,
             "app_id": str,           # numeric string (App Store) or package name (GP)
-            "app_slug": str | None,  # URL slug (App Store) or None (GP)
             "country": str,          # 2-letter code extracted from URL or None
         }
 
@@ -62,10 +61,6 @@ def parse_url(url: str) -> dict:
             )
         app_id = id_match.group(1)
 
-        # Extract slug (optional — used for output filename)
-        slug_match = re.search(r"/app/([^/]+)/id", url)
-        app_slug = slug_match.group(1) if slug_match else f"app-{app_id}"
-
         # Extract country code (optional — e.g., /us/, /gb/, /in/)
         country_match = re.search(r"apps\.apple\.com/([a-z]{2})/", url)
         country = country_match.group(1) if country_match else None
@@ -74,7 +69,6 @@ def parse_url(url: str) -> dict:
             "platform": "app_store",
             "app_url": url,
             "app_id": app_id,
-            "app_slug": app_slug,
             "country": country,
         }
 
@@ -87,14 +81,11 @@ def parse_url(url: str) -> dict:
                 "Expected format: https://play.google.com/store/apps/details?id=com.example.app"
             )
         package_name = pkg_match.group(1).split("&")[0]  # strip trailing params
-        # Derive a slug from the last segment of the package name
-        app_slug = package_name.split(".")[-1]
 
         return {
             "platform": "google_play",
             "app_url": url,
             "app_id": package_name,
-            "app_slug": app_slug,
             "country": None,
         }
 
@@ -428,13 +419,11 @@ def collect(url: str, count: int = 200, country_override: str | None = None,
     parsed = parse_url(url)
     platform = parsed["platform"]
     app_id = parsed["app_id"]
-    app_slug = parsed["app_slug"]
     country = country_override or parsed.get("country") or "us"
 
     print(f"\n[app-store-review-arbitrage] Starting collection", file=sys.stderr)
     print(f"  Platform : {platform}", file=sys.stderr)
     print(f"  App ID   : {app_id}", file=sys.stderr)
-    print(f"  Slug     : {app_slug}", file=sys.stderr)
 
     # Step 2: Fetch metadata
     print("  Fetching store metadata...", file=sys.stderr)
@@ -547,6 +536,9 @@ def main():
             metadata_only=args.metadata_only,
             input_fixture=args.input,
         )
+    except FileNotFoundError as e:
+        print(f"\n[ERROR] Fixture file not found: {e}", file=sys.stderr)
+        sys.exit(1)
     except (ValueError, RuntimeError, ImportError) as e:
         print(f"\n[ERROR] {e}", file=sys.stderr)
         sys.exit(1)

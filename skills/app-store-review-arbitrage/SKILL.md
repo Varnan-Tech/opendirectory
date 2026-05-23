@@ -38,10 +38,8 @@ Accept a natural language prompt containing one app URL. Extract the URL.
 | Platform | What to extract | How |
 |---|---|---|
 | App Store | Numeric `app_id` | Digits after `/id` in the URL |
-| App Store | `app_slug` | URL segment before `/id` |
 | App Store | `country` | 2-letter code after `apps.apple.com/` (e.g., `us`, `gb`) |
 | Google Play | `package_name` | Value of `id=` query parameter |
-| Google Play | `app_slug` | Last segment of package name (e.g., `com.robinhood.android` → `robinhood`) |
 
 Persist the extracted values — you will need them for the output filename in Step 7.
 
@@ -253,7 +251,7 @@ Assemble the full brief per the format in `references/brief-format.md`.
 
 Save to:
 ```
-docs/review-briefs/[app-slug]-[YYYY-MM-DD].md
+docs/review-briefs/[app-id]-[YYYY-MM-DD].md
 ```
 
 Create the `docs/review-briefs/` directory if it does not exist.
