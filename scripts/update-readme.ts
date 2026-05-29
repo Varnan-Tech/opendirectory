@@ -251,27 +251,27 @@ function updateReadme() {
 
     // Sync all hardcoded skill counts
     updatedContent = updatedContent.replace(
-      /\d+\+pre-built\+AI\+Agent\+Skills/,
+      /\d+\+pre-built\+AI\+Agent\+Skills/g,
       `${skills.length}+pre-built+AI+Agent+Skills`
     );
     updatedContent = updatedContent.replace(
-      /\/badge\/skills-\d+-blue/,
+      /\/badge\/skills-\d+-blue/g,
       `/badge/skills-${skills.length}-blue`
     );
     updatedContent = updatedContent.replace(
-      /Explore our growing library of \d+ specialized skills/,
+      /Explore our growing library of \d+ specialized skills/g,
       `Explore our growing library of ${skills.length} specialized skills`
     );
     updatedContent = updatedContent.replace(
-      /\d+ skills across GTM/,
+      /\d+ skills across GTM/g,
       `${skills.length} skills across GTM`
     );
     updatedContent = updatedContent.replace(
-      /lines=\d+\+Agent\+Skills/,
+      /lines=\d+\+Agent\+Skills/g,
       `lines=${skills.length}+Agent+Skills`
     );
     updatedContent = updatedContent.replace(
-      /\d+ specialized skills across GTM/,
+      /\d+ specialized skills across GTM/g,
       `${skills.length} specialized skills across GTM`
     );
 
