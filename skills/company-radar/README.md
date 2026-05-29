@@ -125,7 +125,7 @@ Runs the radar and compares scores with the previous run to show deltas.
 
 The skill produces a single structured markdown report containing:
 
-- **Executive Summary** -- landscape-level synthesis, ranked rankings, key alerts
+- **Executive Summary** -- landscape-level synthesis, ranked companies, key alerts
 - **Heat Score Leaderboard** -- table of all tracked companies sorted by score
 - **Per-Company Deep Dives** -- full signal detail per channel, heat score breakdown, AI executive briefing
 - **Alerts Summary** -- notable signals grouped by severity

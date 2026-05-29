@@ -82,7 +82,7 @@ If `TAVILY_API_KEY` is missing: stop and tell the user. Without it, company prof
 
 Collect from the conversation:
 - `companies`: list of company names/URLs to track (required, min 1, max 10 per run)
-- `output_preference`: "full report" (default) or "alert-only" or "briefing-only"
+- `output_preference`: "full report" (default), "alert-only", "briefing-only", or "heat-score-only" (leaderboard table + scores only, no deep dives)
 - `timeframe`: "realtime" (default) or "last-week" or "last-month"
 
 **If the user gives a single company name:** still run full radar pipeline. Single-company radars are valid -- get the full profile.
