@@ -16,9 +16,9 @@ Baseline credibility and community validation.
 | Product Hunt Votes | 5 | `min(5, (votes / 100) * 5)` | PH search / API |
 
 **Interpretation:**
-- 15+ stars (15 pts): Established community-validated product
-- 5-15 stars (7-14 pts): Growing traction
-- <5 stars (<7 pts): Early stage or low community traction
+- 5,000+ stars (15 pts): Established community-validated product
+- 1,500-5,000 stars (5-14 pts): Growing traction
+- <1,500 stars (<5 pts): Early stage or low community traction
 
 ### 2. Shipping (0-25)
 Product velocity and development activity.

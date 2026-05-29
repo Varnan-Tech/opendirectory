@@ -40,7 +40,7 @@ function scoreSocial(signals) {
     tweets_24h: Math.min(5, (Number(signals.tweets_24h) || 0) * 1),
     mentions: Math.min(5, (Number(signals.mentions) || 0) * 2),
     reddit_posts: Math.min(3, (Number(signals.reddit_posts) || 0) * 1.5),
-    reddit_score: Math.min(2, ((Number(signals.reddit_score) || 0) / 100) * 2),
+    reddit_score: Math.max(0, Math.min(2, ((Number(signals.reddit_score) || 0) / 100) * 2)),
     hn_stories: Math.min(4, (Number(signals.hn_stories) || 0) * 2),
     hn_points: Math.min(3, ((Number(signals.hn_points) || 0) / 200) * 3),
     youtube_videos: Math.min(3, (Number(signals.youtube_videos) || 0) * 1)
@@ -84,6 +84,7 @@ function generateAlerts(name, dims, signals) {
 
 function computeCompany(company) {
   const { name, signals } = company;
+  if (!signals) return { name, heat_score: 0, level: 'Dormant', dimensions: { authority: {score:0,max:25,breakdown:{}}, shipping: {score:0,max:25,breakdown:{}}, social: {score:0,max:25,breakdown:{}}, growth: {score:0,max:25,breakdown:{}} }, alerts: [] };
   const authority = scoreAuthority(signals);
   const shipping = scoreShipping(signals);
   const social = scoreSocial(signals);
@@ -109,7 +110,7 @@ function main() {
   const fileIndex = args.indexOf('--file');
 
   if (fileIndex !== -1 && args[fileIndex + 1]) {
-    const input = parseInput(readFileSync(args[fileIndex + 1], 'utf-8'));
+    let raw; try { raw = readFileSync(args[fileIndex + 1], 'utf-8'); } catch (e) { console.error('Cannot read file: ' + args[fileIndex + 1] + ' (' + e.message + ')'); process.exit(1); } const input = parseInput(raw);
     const companies = input.companies || [input];
     const result = {
       generated_at: new Date().toISOString(),
