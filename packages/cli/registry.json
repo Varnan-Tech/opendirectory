@@ -50,6 +50,18 @@
     "path": "skills/cold-email-verifier"
   },
   {
+    "name": "company-radar",
+    "description": "Competitive intelligence orchestrator tracking companies across 8+ platforms (GitHub, Twitter, Reddit, HN, PH, YC Jobs) with heat scores and AI bri...",
+    "tags": [
+      "Social Media",
+      "AI",
+      "Developer Tools"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/company-radar"
+  },
+  {
     "name": "competitor-pr-finder",
     "description": "Give it your product URL or description.",
     "tags": [],
