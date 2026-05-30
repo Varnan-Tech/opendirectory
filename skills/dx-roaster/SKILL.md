@@ -65,7 +65,7 @@ Read these files (each may be absent — note absence):
 
 If `repo` is a URL, also fetch via `gh`:
 ```bash
-gh api repos/<owner>/<repo> --jq '{stars: .stargazers_count, forks: .forks_count, contributors: .subscribers_count, pushed_at, description, homepage, topics, default_branch}'
+gh api repos/<owner>/<repo> --jq '{stars: .stargazers_count, forks: .forks_count, watchers: .subscribers_count, pushed_at, description, homepage, topics, default_branch}'
 gh api repos/<owner>/<repo>/commits --jq '.[0].commit.author.date' | head -1
 gh api repos/<owner>/<repo>/contributors --paginate --jq '[.[] | .login] | length'
 ```
