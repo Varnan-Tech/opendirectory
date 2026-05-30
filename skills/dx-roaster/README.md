@@ -14,6 +14,11 @@ This is not a security scan or a linter. It judges the same thing a stranger wou
 npx "@opendirectory.dev/skills" install dx-roaster --target claude
 ```
 
+### Video Tutorial
+Watch this quick video to see how it's done:
+
+https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
+
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
