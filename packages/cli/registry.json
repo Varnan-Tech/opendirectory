@@ -104,6 +104,16 @@
     "path": "skills/domain-expired-opportunity-finder"
   },
   {
+    "name": "dx-roaster",
+    "description": "Brutally honest developer-experience audit for a GitHub repo.",
+    "tags": [
+      "Developer Tools"
+    ],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/dx-roaster"
+  },
+  {
     "name": "email-newsletter",
     "description": "Drafts and designs a complete HTML email newsletter from a topic or content brief.",
     "tags": [
