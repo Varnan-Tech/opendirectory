@@ -1,6 +1,6 @@
 ﻿# linkedin-job-post-to-buyer-pain-map
 
-<img src="cover.png" width="100%" alt="LinkedIn Job Post to Buyer Pain Map — Signal Decoder for GTM Teams" />
+<img src="cover.png" width="100%" alt="LinkedIn Job Post to Buyer Pain Map - Signal Decoder for GTM Teams" />
 
 Turn LinkedIn job posts into an actionable buyer pain map with signal strength, urgency, and outreach angles for each account.
 
@@ -61,8 +61,8 @@ Handoff to outreach:
 
 Each job post should include at minimum:
 - **Company name** and **job title** (required)
-- **Job description text** — the full pasted content (required)
-- Location, seniority, team/function, URL (optional — inferred if missing)
+- **Job description text** - the full pasted content (required)
+- Location, seniority, team/function, URL (optional - inferred if missing)
 
 Posts can be pasted as plain text, numbered lists, or structured JSON objects.
 
@@ -70,10 +70,10 @@ Posts can be pasted as plain text, numbered lists, or structured JSON objects.
 
 For each company analyzed, the skill produces:
 
-1. **Summary** — headline, overall score, score breakdown with explanations, stage guess, buy-vs-build posture
-2. **Buyer Pain Map** — primary and secondary pains, each with label, description, and cited evidence
-3. **Outreach Angles** — 1–3 angles with narrative and talk-track bullets
-4. **Handoff** — structured block for outreach-sequence-builder (account summary, key pain, personas, tone)
+1. **Summary** - headline, overall score, score breakdown with explanations, stage guess, buy-vs-build posture
+2. **Buyer Pain Map** - primary and secondary pains, each with label, description, and cited evidence
+3. **Outreach Angles** - 1–3 angles with narrative and talk-track bullets
+4. **Handoff** - structured block for outreach-sequence-builder (account summary, key pain, personas, tone)
 
 Reports are saved to `docs/pain-maps/` as dated markdown files.
 
@@ -129,20 +129,31 @@ MIT
 npx "@opendirectory.dev/skills" install linkedin-job-post-to-buyer-pain-map --target claude
 ```
 
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
-
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
 3. Paste the URL and click **Enter** to download.
 
 ### Step 2: Install the Skill in Claude
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
 4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
+
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
+

@@ -1,6 +1,6 @@
 # github-discussion-to-devrel-content
 
-Your users keep asking the same questions in GitHub Discussions. This skill finds those patterns, tells you which docs to fix first, and drafts the actual FAQ entries and content angles — backed by verbatim quotes and direct links to the threads that prove the gap is real.
+Your users keep asking the same questions in GitHub Discussions. This skill finds those patterns, tells you which docs to fix first, and drafts the actual FAQ entries and content angles - backed by verbatim quotes and direct links to the threads that prove the gap is real.
 
 You get two ranked lists: documentation holes with ready-to-paste fix drafts, and content opportunities with specific angles and outlines. Unanswered community pain gets flagged as urgent.
 
@@ -12,17 +12,15 @@ You get two ranked lists: documentation holes with ready-to-paste fix drafts, an
 npx "@opendirectory.dev/skills" install --target claude github-discussion-to-devrel-content
 ```
 
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
 3. Paste the URL and click **Enter** to download.
 
 ### Step 2: Install the Skill in Claude
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
@@ -30,11 +28,23 @@ https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
 
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
+
 ---
 
 ## What It Does
 
-- Scans your own repo's Discussions (not competitors' — that's `gh-issue-to-demand-signal`)
+- Scans your own repo's Discussions (not competitors' - that's `gh-issue-to-demand-signal`)
 - Clusters recurring confusion by underlying concept, not surface keywords
 - Ranks each cluster by frequency, engagement, recency, and unanswered rate
 - Drafts the actual FAQ / doc fix as a Markdown snippet you can paste into your docs
@@ -44,8 +54,8 @@ https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
 
 ## What It Does NOT Do
 
-- Does not mine competitor repos — use `gh-issue-to-demand-signal` for outbound GTM signals
-- Does not write full-length blog posts or published docs pages — use `noise2blog` to expand a draft into a finished asset
+- Does not mine competitor repos - use `gh-issue-to-demand-signal` for outbound GTM signals
+- Does not write full-length blog posts or published docs pages - use `noise2blog` to expand a draft into a finished asset
 - Does not post to LinkedIn, Twitter, or any platform
 - Does not predict SEO, engagement, or content performance outcomes
 - Does not access private repositories
@@ -56,8 +66,8 @@ https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
 
 | Requirement | Purpose | How to Get |
 |---|---|---|
-| GitHub Personal Access Token | Fetch discussions via GraphQL API | [github.com/settings/tokens](https://github.com/settings/tokens) — enable `read:discussion` scope |
-| Python 3.10+ | Run the fetcher script | No external packages required — stdlib only |
+| GitHub Personal Access Token | Fetch discussions via GraphQL API | [github.com/settings/tokens](https://github.com/settings/tokens) - enable `read:discussion` scope |
+| Python 3.10+ | Run the fetcher script | No external packages required - stdlib only |
 
 No paid APIs. No third-party SaaS. Free GitHub accounts work.
 
@@ -74,7 +84,7 @@ cp .env.example .env
 
 ## How to Use
 
-### Step 1 — Fetch Discussions
+### Step 1 - Fetch Discussions
 
 ```bash
 # Basic usage (last 90 days, all categories, min 3 comments)
@@ -95,7 +105,7 @@ python scripts/fetch_discussions.py --repo https://github.com/owner/repo
 
 Output: `discussions_raw.json` in the working directory.
 
-### Step 2 — Run the Skill
+### Step 2 - Run the Skill
 
 Once `discussions_raw.json` is present, tell your agent:
 
@@ -109,7 +119,7 @@ Or:
 "Analyze discussions_raw.json and generate devrel-backlog.md"
 ```
 
-Output: `devrel-backlog.md` — a ranked Markdown report ready to commit.
+Output: `devrel-backlog.md` - a ranked Markdown report ready to commit.
 
 ---
 
@@ -131,9 +141,9 @@ Output: `devrel-backlog.md` — a ranked Markdown report ready to commit.
 
 `devrel-backlog.md` contains:
 
-**Run Summary** — repo, date, discussions analyzed, clusters found, mode.
+**Run Summary** - repo, date, discussions analyzed, clusters found, mode.
 
-**Docs / FAQ Gaps** — Up to 7 ranked items. Each includes:
+**Docs / FAQ Gaps** - Up to 7 ranked items. Each includes:
 - Priority score (0–100, relative ranking within this run)
 - Frequency and engagement metrics
 - A verbatim evidence quote from the thread
@@ -141,7 +151,7 @@ Output: `devrel-backlog.md` — a ranked Markdown report ready to commit.
 - A ready-to-paste **Draft FAQ / Doc Update** as a Markdown snippet
 - ⚠️ URGENT badge if the community pain is unresolved
 
-**Content Opportunities** — Up to 7 ranked items. Each includes:
+**Content Opportunities** - Up to 7 ranked items. Each includes:
 - A working content title and type (blog post, tutorial, FAQ entry, Twitter thread, video script)
 - Why this matters for the founder
 - A verbatim evidence quote and source link

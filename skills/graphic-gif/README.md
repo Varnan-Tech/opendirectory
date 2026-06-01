@@ -15,6 +15,17 @@ npx "@opendirectory.dev/skills" install graphic-gif --target claude
 
 ---
 
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
 ## What it does
 
 - Asks for a prompt (content + motion description) and optional settings
@@ -30,7 +41,7 @@ npx "@opendirectory.dev/skills" install graphic-gif --target claude
 
 > "Create an animated GIF, css-animated, typewriter effect. Text: '73% of B2B buyers read 3+ pieces of content before contacting sales.' Each character types out one at a time. Style: terminal. 3 seconds, 12fps, loop=true."
 
-Output: `animation.gif` — dark background, JetBrains Mono font, green cursor, character-by-character reveal.
+Output: `animation.gif` - dark background, JetBrains Mono font, green cursor, character-by-character reveal.
 
 ---
 
@@ -62,7 +73,7 @@ Output: `animation.gif` — dark background, JetBrains Mono font, green cursor, 
 
 | Parameter | Required | Default | Description |
 |---|---|---|---|
-| prompt | Yes | — | Content description AND motion brief |
+| prompt | Yes | - | Content description AND motion brief |
 | animation_type | No | css-animated | css-animated / ai-generated |
 | duration | No | 3.0 | Animation duration in seconds |
 | fps | No | 12 | Frames per second (higher = smoother, larger file) |
@@ -86,13 +97,13 @@ Typical file size: 150KB–1.5MB depending on animation type, duration, and opti
 
 ## Dependencies
 
-**Node.js** — required. Install from [nodejs.org](https://nodejs.org) or `brew install node`.
+**Node.js** - required. Install from [nodejs.org](https://nodejs.org) or `brew install node`.
 
 Everything else is bundled inside this skill or installed automatically on first run:
-- `scripts/export-gif.sh` — orchestrator script
-- `scripts/capture-and-encode.mjs` — Playwright frame capture + gifenc assembly
-- `gifenc` + `sharp` (or `jimp`) + `playwright` — auto-installed via npm on first run
-- **gifsicle** — optional but recommended for 35–50% smaller files: `brew install gifsicle`
+- `scripts/export-gif.sh` - orchestrator script
+- `scripts/capture-and-encode.mjs` - Playwright frame capture + gifenc assembly
+- `gifenc` + `sharp` (or `jimp`) + `playwright` - auto-installed via npm on first run
+- **gifsicle** - optional but recommended for 35–50% smaller files: `brew install gifsicle`
 
 **For AI-generated GIFs (optional):**
 - Kling API key in environment: `KLING_API_KEY`

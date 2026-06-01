@@ -10,23 +10,34 @@ Generates multi-scene motion graphics as MP4 from a content brief. HTML/CSS anim
 npx "@opendirectory.dev/skills" install vid-motion-graphics --target claude
 ```
 
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
-
 ### Step 1: Download the skill from GitHub
 1. Click the **Code** button on this repo's GitHub page.
 2. Select **Download ZIP** to download the repository.
 3. Extract the ZIP file on your computer.
 
 ### Step 2: Install the Skill in Claude
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
 4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
 
 > **Note:** Make sure you are uploading the folder that contains the `SKILL.md` file!
+
+
+
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 
 ## What it does
 
@@ -73,7 +84,7 @@ https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 ## Usage
 
 ```
-Create a 9-second motion graphic. Brief: 'Q4 revenue hit $4.2M — 85% growth.
+Create a 9-second motion graphic. Brief: 'Q4 revenue hit $4.2M - 85% growth.
 Three drivers: enterprise deals, churn 1.2%, price increase.
 CTA: acme.com/q4'. Style: data-pulse. Aspect: 1:1.
 ```
@@ -86,4 +97,4 @@ bash scripts/export-video.sh chart/[slug]/video.html --duration 9
 
 ## Differentiator vs SkillsMP
 
-All top SkillsMP motion-graphic skills require Remotion (React build step) or AI video APIs (Runway, Kling — cost + rate limits). This skill uses the proven HTML/CSS → Playwright → FFmpeg pipeline from the `graphic-gif` family: zero new dependencies, pixel-perfect output, full CSS control.
+All top SkillsMP motion-graphic skills require Remotion (React build step) or AI video APIs (Runway, Kling - cost + rate limits). This skill uses the proven HTML/CSS → Playwright → FFmpeg pipeline from the `graphic-gif` family: zero new dependencies, pixel-perfect output, full CSS control.

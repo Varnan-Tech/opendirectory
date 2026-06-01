@@ -3,7 +3,7 @@
 # pricing-page-psychology-audit
 
 > Paste any SaaS pricing page URL. Get a full audit against 12 pricing
-> psychology principles — with scores, specific rewrites, and your Top 3
+> psychology principles - with scores, specific rewrites, and your Top 3
 > Quick Wins ranked by impact.
 
 [![opendirectory](https://img.shields.io/badge/opendirectory-skill-blue)](https://opendirectory.dev)
@@ -18,17 +18,15 @@
 npx "@opendirectory.dev/skills" install pricing-page-psychology-audit --target claude
 ```
 
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
 3. Paste the URL and click **Enter** to download.
 
 ### Step 2: Install the Skill in Claude
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
@@ -36,10 +34,20 @@ https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
 
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 
 ## What It Does
 
-Most SaaS pricing pages leave money on the table — not because of bad pricing,
+Most SaaS pricing pages leave money on the table - not because of bad pricing,
 but because of bad psychology. This skill scrapes any pricing page and audits it
 against 12 proven pricing psychology principles used by companies like Notion,
 Linear, and Vercel.
@@ -64,7 +72,7 @@ Linear, and Vercel.
 **Output includes:**
 - ✅ / ⚠️ / ❌ score per principle
 - Specific rewrite suggestions per tier
-- **Top 3 Quick Wins** — highest-leverage changes, prioritized by impact vs effort
+- **Top 3 Quick Wins** - highest-leverage changes, prioritized by impact vs effort
 
 ---
 
@@ -106,17 +114,13 @@ pip install requests beautifulsoup4
 npx @opendirectory.dev/skills install pricing-page-psychology-audit
 ```
 
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
-
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
 3. Paste the URL and click **Enter** to download.
 
 ### Step 2: Install the Skill in Claude
+
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
@@ -154,14 +158,14 @@ https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 ## Audit Results
 
-### 1. Anchoring — ✅ Pass
+### 1. Anchoring - ✅ Pass
 **What we found:** Enterprise plan is listed last but priced highest at
 custom pricing, creating an anchor that makes the $16/seat Business plan
 feel accessible.
 **Suggestion:** Consider moving Enterprise to first position for stronger
 anchoring effect.
 
-### 2. Decoy Effect — ⚠️ Needs Work
+### 2. Decoy Effect - ⚠️ Needs Work
 **What we found:** The Business tier exists between Free and Enterprise
 but is not clearly positioned as the "sweet spot."
 **Suggestion:** Add a "Most Popular" badge to Business and increase visual
@@ -173,17 +177,17 @@ size to activate the decoy effect.
 
 ## 🏆 Top 3 Quick Wins
 
-**Quick Win #1 — CTA Button Copy**
+**Quick Win #1 - CTA Button Copy**
 Current: "Get started"
-Rewrite to: "Start shipping faster — free"
+Rewrite to: "Start shipping faster - free"
 Why: Action-outcome CTAs convert 14% higher than generic "Get started" copy.
 
-**Quick Win #2 — Social Proof Placement**
+**Quick Win #2 - Social Proof Placement**
 Current: Logos shown on a separate /customers page
 Rewrite to: Add 3 customer logos directly below the pricing tiers
 Why: Social proof near the decision point reduces purchase anxiety.
 
-**Quick Win #3 — Guarantee / Trust Signal**
+**Quick Win #3 - Guarantee / Trust Signal**
 Current: No guarantee mentioned on pricing page
 Rewrite to: Add "30-day money-back guarantee. No questions asked." below CTAs
 Why: Guarantees have been shown to increase conversion by up to 21%.
@@ -206,4 +210,4 @@ pricing-page-psychology-audit/
 
 ## License
 
-MIT — Built by [@ajaycodesitbetter](https://github.com/ajaycodesitbetter)
+MIT - Built by [@ajaycodesitbetter](https://github.com/ajaycodesitbetter)

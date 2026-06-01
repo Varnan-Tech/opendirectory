@@ -1,7 +1,7 @@
 # domain-expired-opportunity-finder
 
 Evaluate expired domain candidates against your niche. Get a conservative,
-explainable shortlist with risk flags — not another noisy domain list.
+explainable shortlist with risk flags - not another noisy domain list.
 
 ## Install
 
@@ -9,23 +9,32 @@ explainable shortlist with risk flags — not another noisy domain list.
 npx "@opendirectory.dev/skills" install domain-expired-opportunity-finder --target claude
 ```
 
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
 3. Paste the URL and click **Enter** to download.
 
 ### Step 2: Install the Skill in Claude
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
 4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
+
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 
 ## What It Does
 
@@ -44,7 +53,7 @@ https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
 - Does not promise rankings or guarantee SEO outcomes
 - Does not encourage PBN construction or deceptive redirects
 - Does not replace commercial tools like Ahrefs or DomCop for bulk discovery
-- Does not produce black-box scores — every recommendation is auditable
+- Does not produce black-box scores - every recommendation is auditable
 
 ## Requirements
 
@@ -100,7 +109,7 @@ Run with the built-in demo set:
 | `candidate_domains` | array | No | Domains to evaluate (prompted if not provided) |
 | `discovery_source` | string | No | Where candidates came from |
 | `min_ref_domains` | integer | No | Minimum referring-domain threshold (default: 10) |
-| `max_risk_level` | string | No | `low`, `medium`, `high` — controls filtering aggressiveness |
+| `max_risk_level` | string | No | `low`, `medium`, `high` - controls filtering aggressiveness |
 | `intended_use` | string | No | `rebuild`, `redirect`, or `either` (default: `either`) |
 
 ## Output Example
@@ -162,7 +171,7 @@ Full flag definitions: `references/risk-flags.md`
 
 | Label | Meaning |
 |---|---|
-| `high-priority-review` | Strong match, low risk — review first |
+| `high-priority-review` | Strong match, low risk - review first |
 | `review` | Worth investigating, mixed or incomplete evidence |
 | `rebuild-only-review` | Good for rebuild, not suitable for redirect |
 | `reject` | Does not meet quality or relevance threshold |

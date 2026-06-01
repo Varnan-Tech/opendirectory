@@ -15,6 +15,17 @@ npx "@opendirectory.dev/skills" install graphic-chart --target claude
 
 ---
 
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
 ## What it does
 
 - Takes chart type + data (JSON or CSV) as input
@@ -30,7 +41,7 @@ npx "@opendirectory.dev/skills" install graphic-chart --target claude
 
 > "Create a line chart. Title: 'From $12k to $95k ARR in 12 Months'. Data: [12, 18, 22, 25, 31, 38, 44, 52, 61, 68, 78, 95] (Jan–Dec 2024, in thousands). Highlight December in gold. Source: Internal CRM. Style: electric-burst. Dimensions: 1080x1080."
 
-Output: `chart.png` — dark canvas, electric yellow December highlight with callout, growth title.
+Output: `chart.png` - dark canvas, electric yellow December highlight with callout, growth title.
 
 ---
 
@@ -65,16 +76,16 @@ Output: `chart.png` — dark canvas, electric yellow December highlight with cal
 
 | Parameter | Required | Default | Description |
 |---|---|---|---|
-| chart_type | Yes | — | bar / line / area / pie / doughnut / scatter / radar / treemap |
-| data | Yes | — | JSON array or CSV |
-| title | No | — | States the insight (≤10 words) |
-| subtitle | No | — | 1-sentence context line |
+| chart_type | Yes | - | bar / line / area / pie / doughnut / scatter / radar / treemap |
+| data | Yes | - | JSON array or CSV |
+| title | No | - | States the insight (≤10 words) |
+| subtitle | No | - | 1-sentence context line |
 | style | No | clean-slate | Visual style preset |
 | dimensions | No | 1080x1080 | WxH in pixels |
-| x_label | No | — | X-axis label |
-| y_label | No | — | Y-axis label |
-| source | No | — | Data source for footer attribution |
-| highlight | No | — | Data label/value to annotate (e.g. "Q4", "Dec") |
+| x_label | No | - | X-axis label |
+| y_label | No | - | Y-axis label |
+| source | No | - | Data source for footer attribution |
+| highlight | No | - | Data label/value to annotate (e.g. "Q4", "Dec") |
 
 ---
 
@@ -91,14 +102,14 @@ Default output: `1080×1080` viewport → `2160×2160` PNG (@2× deviceScaleFact
 
 ## Dependencies
 
-**Node.js** — required. Install from [nodejs.org](https://nodejs.org) or `brew install node`.
+**Node.js** - required. Install from [nodejs.org](https://nodejs.org) or `brew install node`.
 
 Bundled inside this skill:
-- `scripts/export-chart.sh` — orchestrator script
-- `scripts/screenshot-chart.mjs` — Playwright capture script
+- `scripts/export-chart.sh` - orchestrator script
+- `scripts/screenshot-chart.mjs` - Playwright capture script
 
 Auto-installed on first run via npm:
-- `playwright` — headless Chromium for screenshot
+- `playwright` - headless Chromium for screenshot
 - Chromium browser binary (~200MB, downloaded once and cached)
 
 No API keys required.

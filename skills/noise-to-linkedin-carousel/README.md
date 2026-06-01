@@ -2,7 +2,7 @@
 
 # noise-to-linkedin-carousel
 
-**noise-to-linkedin-carousel** turns rough notes, transcripts, and idea dumps into a LinkedIn-ready carousel content pack with a strong hook, clear slide-by-slide structure, and a CTA — built for founders, GTM teams, and technical marketers who think faster than they write.
+**noise-to-linkedin-carousel** turns rough notes, transcripts, and idea dumps into a LinkedIn-ready carousel content pack with a strong hook, clear slide-by-slide structure, and a CTA - built for founders, GTM teams, and technical marketers who think faster than they write.
 
 ## Install
 
@@ -10,17 +10,15 @@
 npx "@opendirectory.dev/skills" install noise-to-linkedin-carousel --target claude
 ```
 
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
-
 ### Step 1: Download the skill from GitHub
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
 3. Paste the URL and click **Enter** to download.
 
 ### Step 2: Install the Skill in Claude
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
 3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
@@ -28,6 +26,16 @@ https://github.com/user-attachments/assets/ee98a1b5-ebc4-452f-bbfb-c434f2935067
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
 
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 
 ## Why This Skill?
 
@@ -60,7 +68,7 @@ npx "@opendirectory.dev/skills" install noise-to-linkedin-carousel --target anti
 Once installed, you can simply message your agent with noisy source material. 
 
 **Example Prompt:**
-> I recorded this rough voice note about why most devtools marketing fails. It’s a rant, not a clean outline. Here’s the transcript — turn this into a LinkedIn carousel I can hand to my designer:  
+> I recorded this rough voice note about why most devtools marketing fails. It’s a rant, not a clean outline. Here’s the transcript - turn this into a LinkedIn carousel I can hand to my designer:  
 >  
 > “okay so basically what i realized is that most devtools fail because they market features not use cases like everyone lists api endpoints and configs but nobody explains when you’d actually use this thing in production you know what i mean and founders think more features will solve it but the buyer just wants to know what problem disappears after they install you and how fast they get there”
 

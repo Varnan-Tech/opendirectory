@@ -10,6 +10,19 @@ Stop guessing which communities to post in. Get signal-traced evidence.
 npx "@opendirectory.dev/skills" install where-your-customer-lives --target claude
 ```
 
+
+
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
 ## What It Does
 
 - Accepts: product description + ICP role + ICP pain + competitors (any combination)

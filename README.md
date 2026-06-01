@@ -197,7 +197,7 @@ npx "@opendirectory.dev/skills" install <skill-name> --target claude
 
 ### Option B: Claude Desktop App
 
-https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
 
 **Step 1: Download the skill**
 
@@ -225,6 +225,15 @@ Run these commands inside Claude Code:
 # Install a skill
 /plugin install opendirectory-gtm-skills@opendirectory-marketplace
 ```
+
+### Option D: Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [opendirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
 
 ---
 
@@ -304,7 +313,7 @@ Run these commands inside Claude Code:
   </tr>
   <tr>
     <td><a href="skills/github-discussion-to-devrel-content"><code>github-discussion-to-devrel-content</code></a></td>
-    <td>Your users keep asking the same questions in GitHub Discussions. This skill finds those patterns, tells you which docs to fix first, and drafts the actual FAQ entries and content angles — backed by verbatim quotes and direct links to the threads that prove the gap is real.</td>
+    <td>Your users keep asking the same questions in GitHub Discussions. This skill finds those patterns, tells you which docs to fix first, and drafts the actual FAQ entries and content angles - backed by verbatim quotes and direct links to the threads that prove the gap is real.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
@@ -324,7 +333,7 @@ Run these commands inside Claude Code:
   </tr>
   <tr>
     <td><a href="skills/noise-to-linkedin-carousel"><code>noise-to-linkedin-carousel</code></a></td>
-    <td>noise-to-linkedin-carousel turns rough notes, transcripts, and idea dumps into a LinkedIn-ready carousel content pack with a strong hook, clear slide-by-slide structure, and a CTA — built for founders, GTM teams, and technical marketers who think faster than they write.</td>
+    <td>noise-to-linkedin-carousel turns rough notes, transcripts, and idea dumps into a LinkedIn-ready carousel content pack with a strong hook, clear slide-by-slide structure, and a CTA - built for founders, GTM teams, and technical marketers who think faster than they write.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>

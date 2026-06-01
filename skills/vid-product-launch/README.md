@@ -20,6 +20,7 @@ npx "@opendirectory.dev/skills" install vid-product-launch --target claude
 3. Extract the ZIP file on your computer.
 
 ### Step 2: Install in Claude
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
 1. Open your Claude desktop app.
 2. Go to the sidebar and click Customize.
 3. Click the Skills tab, then click the + button.
@@ -28,6 +29,17 @@ npx "@opendirectory.dev/skills" install vid-product-launch --target claude
 Upload the folder that contains the `SKILL.md` file.
 
 ---
+
+### Step 3: Install in Manus AI
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 
 ## How It Works
 
