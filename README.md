@@ -46,7 +46,7 @@ npx "@opendirectory.dev/skills" list
 ```bash
 --target claude
 ```
-*Supports Claude, OpenCode, Codex, Gemini, Anti-Gravity, OpenClaw, Hermes*
+*Supports Claude, OpenCode, Codex, Gemini, Anti-Gravity, OpenClaw, Hermes, Manus AI*
 
 ### 3. Install
 ```bash
