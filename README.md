@@ -232,7 +232,7 @@ Run these commands inside Claude Code:
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 
-1. Open the skill you want from the [opendirectory homepage](https://opendirectory.dev).
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
 2. In the install panel, select the **Manus AI** tab.
 3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
 4. Confirm the import inside Manus AI.
@@ -245,7 +245,6 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 
 <!-- SKILLS_LIST_START -->
 
-<summary><b>60 skills across 8 categories</b> — click to expand</summary>
 <br>
 
 <table>
