@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/assets/opendirectory_banner.webp" width="100%" alt="OpenDirectory Banner" />
+  <img src="docs/assets/opendirectory_banner.webp" width="100%" alt="opendirectory Banner" />
 </div>
 
 <br />
@@ -197,7 +197,7 @@ npx "@opendirectory.dev/skills" install <skill-name> --target claude
 
 ### Option B: Claude Desktop App
 
-<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls style="width: 100%"></video>
 
 **Step 1: Download the skill**
 
@@ -227,6 +227,8 @@ Run these commands inside Claude Code:
 ```
 
 ### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls style="width: 100%"></video>
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 
@@ -417,7 +419,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
   </tr>
   <tr>
     <td><a href="skills/meta-ads-skill"><code>meta-ads-skill</code></a></td>
-    <td>npx "@opendirectory.dev/skills" install meta-ads-skill --target claude</td>
+    <td>No global install. Always runs the latest version.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>

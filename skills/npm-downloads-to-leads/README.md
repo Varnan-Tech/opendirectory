@@ -3,19 +3,19 @@
 Give this skill a list of npm packages. It fetches 12 weeks of download data, scores each package by growth velocity, maps maintainers to GitHub and Twitter, and outputs a ranked lead brief per breakout package: who built it, how to reach them, and what to say.
 
 ## Install
+### Option A: npx CLI (Recommended)
+
+No global install. Always runs the latest version.
 
 ```bash
 npx "@opendirectory.dev/skills" install npm-downloads-to-leads --target claude
 ```
 
-### Step 1: Download from GitHub
-1. Click the **Code** button on this repo's GitHub page.
-2. Select **Download ZIP**.
-3. Extract the ZIP on your computer.
+### Option B: Claude Desktop App
 
-### Step 2: Install in Claude
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls style="width: 100%"></video>
 
-<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+**Step 2: Install in Claude**
 
 1. Open the **Claude desktop app**.
 2. Go to **Customize** in the sidebar.
@@ -24,9 +24,19 @@ npx "@opendirectory.dev/skills" install npm-downloads-to-leads --target claude
 
 Note: Upload the folder that contains the `SKILL.md` file.
 
+### Option C: Claude Code Native
 
+Run this command inside Claude Code:
 
-### Step 3: Install in Manus AI
+```bash
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls style="width: 100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fnpm-downloads-to-leads&utm_source=opendirectory)
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 

@@ -5,14 +5,31 @@ Give this skill a product utility and ICP. It searches Reddit, Hacker News, and 
 Stop guessing which communities to post in. Get signal-traced evidence.
 
 ## Install
+### Option A: npx CLI (Recommended)
+
+No global install. Always runs the latest version.
 
 ```bash
 npx "@opendirectory.dev/skills" install where-your-customer-lives --target claude
 ```
 
+### Option B: Claude Desktop App
 
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls style="width: 100%"></video>
 
-### Step 3: Install in Manus AI
+### Option C: Claude Code Native
+
+Run this command inside Claude Code:
+
+```bash
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls style="width: 100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fwhere-your-customer-lives&utm_source=opendirectory)
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 

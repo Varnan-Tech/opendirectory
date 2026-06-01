@@ -5,19 +5,25 @@
 Generate a standards-compliant `llms.txt` file for any website. Makes your site fully readable and citable by AI agents the GEO (Generative Engine Optimization) equivalent of having a great sitemap.
 
 ## Install
+### Option A: npx CLI (Recommended)
+
+No global install. Always runs the latest version.
 
 ```bash
 npx "@opendirectory.dev/skills" install llms-txt-generator --target claude
 ```
 
-### Step 1: Download the skill from GitHub
+### Option B: Claude Desktop App
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls style="width: 100%"></video>
+
+**Step 1: Download the skill from GitHub**
+
 1. Copy the URL of this specific skill folder from your browser's address bar.
 2. Go to [download-directory.github.io](https://download-directory.github.io/).
 3. Paste the URL and click **Enter** to download.
 
-### Step 2: Install the Skill in Claude
-
-<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+**Step 2: Install in Claude**
 
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
@@ -26,7 +32,19 @@ npx "@opendirectory.dev/skills" install llms-txt-generator --target claude
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
 
-### Step 3: Install in Manus AI
+### Option C: Claude Code Native
+
+Run this command inside Claude Code:
+
+```bash
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls style="width: 100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fllms-txt-generator&utm_source=opendirectory)
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 

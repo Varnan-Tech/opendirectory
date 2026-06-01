@@ -3,19 +3,25 @@
 Give the skill a competitor's public GitHub repo URL. It fetches their open issues, filters noise locally, clusters into 6 demand categories using the AI already running the skill, scores by real engagement (reactions), detects ignored demand (high reactions + no response = your opportunity), and outputs a ranked demand gap report with a GTM messaging brief.
 
 ## Install
+### Option A: npx CLI (Recommended)
+
+No global install. Always runs the latest version.
 
 ```bash
 npx "@opendirectory.dev/skills" install gh-issue-to-demand-signal --target claude
 ```
 
-### Step 1: Download the skill from GitHub
+### Option B: Claude Desktop App
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls style="width: 100%"></video>
+
+**Step 1: Download the skill from GitHub**
+
 1. Click the **Code** button on this repo's GitHub page.
 2. Select **Download ZIP** to download the repository.
 3. Extract the ZIP file on your computer.
 
-### Step 2: Install the Skill in Claude
-
-<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+**Step 2: Install in Claude**
 
 1. Open your **Claude desktop app**.
 2. Go to the sidebar on the left side and click on the **Customize** section.
@@ -24,7 +30,19 @@ npx "@opendirectory.dev/skills" install gh-issue-to-demand-signal --target claud
 
 > **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
 
-### Step 3: Install in Manus AI
+### Option C: Claude Code Native
+
+Run this command inside Claude Code:
+
+```bash
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls style="width: 100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fgh-issue-to-demand-signal&utm_source=opendirectory)
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 

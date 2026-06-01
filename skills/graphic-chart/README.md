@@ -3,19 +3,31 @@
 Generate publication-quality data visualization charts as PNG using Chart.js v4. 8 chart types, 5 style presets, annotation highlights.
 
 ## Install
+### Option A: npx CLI (Recommended)
+
+No global install. Always runs the latest version.
 
 ```bash
 npx "@opendirectory.dev/skills" install graphic-chart --target claude
 ```
 
-### Manual Install (2 steps)
+### Option B: Claude Desktop App
 
-1. Copy the URL of this skill folder, paste it at [download-directory.github.io](https://download-directory.github.io/), download the zip.
-2. Open Claude desktop app → sidebar → **Customize** → **Skills** → **+** → **Upload a skill** → drop the extracted folder.
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls style="width: 100%"></video>
 
----
+### Option C: Claude Code Native
 
-### Step 3: Install in Manus AI
+Run this command inside Claude Code:
+
+```bash
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls style="width: 100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fgraphic-chart&utm_source=opendirectory)
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 
