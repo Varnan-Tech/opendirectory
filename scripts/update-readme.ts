@@ -205,7 +205,7 @@ function generateSkillsTable(skills: SkillEntry[]): string {
   const allCategories = [...CATEGORY_ORDER, ...[...grouped.keys()].filter(c => !CATEGORY_ORDER.includes(c)).sort((a, b) => a.localeCompare(b))];
   const usedCategories = allCategories.filter(c => (grouped.get(c)?.length ?? 0) > 0);
 
-  let html = `<summary><b>${skills.length} skills across ${usedCategories.length} categories</b> — click to expand</summary>\n<br>\n\n<table>\n`;
+  let html = `<br>\n\n<table>\n`;
 
   for (const category of allCategories) {
     const categorySkills = grouped.get(category);

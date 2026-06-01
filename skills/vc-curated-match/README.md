@@ -4,12 +4,6 @@
 
 [![opendirectory](https://img.shields.io/badge/opendirectory-skill-blue)](https://opendirectory.dev)
 
-## Overview
-
-The `vc-curated-match` is an OpenDirectory skill that connects founders and open-source creators with highly relevant Venture Capital firms. It relies on a static, curated list of real VC funds to prevent LLM hallucinations, ensuring all recommendations and rationales are grounded in actual fund thesis data.
-
-**Positioning Note**: This skill is intentionally different from live-research investor discovery workflows. It provides deterministic, curated VC matching from a verified static dataset. It is best for fast, low-cost, repeatable first-pass investor targeting.
-
 ## Install
 ### Option A: npx CLI (Recommended)
 

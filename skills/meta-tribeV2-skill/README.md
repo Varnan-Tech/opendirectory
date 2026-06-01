@@ -8,17 +8,6 @@ Instead of guessing what makes a hook engaging using prompt engineering, this sk
 
 ---
 
-## What This Skill Does
-
-This skill provides the infrastructure to host the massive 80GB TRIBE v2 model pipeline and gives your AI Agent the ability to:
-1. Process video, audio, or text scripts.
-2. Intercept and optimize the media (downscaling video to 360p at 10fps to avoid hour-long bottleneck processing times).
-3. Process the content through V-JEPA (Vision), W2V-BERT (Acoustics), and LLaMA 3.2 3B (Linguistics).
-4. Predict human brain fMRI activity across the Yeo-7 networks.
-5. Generate an actionable, human-readable neuroscience report without the jargon.
-
----
-
 ## Install
 ### Option A: npx CLI (Recommended)
 

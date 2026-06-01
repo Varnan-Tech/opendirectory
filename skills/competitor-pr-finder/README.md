@@ -2,38 +2,6 @@
 
 Give it your product URL. It finds your top 5 competitors, researches every press mention, podcast appearance, and community post across all of them, and tells you exactly which channels to pitch -- with the journalist's name, the angle that got your competitors featured, and a ready-to-send cold pitch for your product.
 
-## What It Does
-
-1. Fetches your product page (Firecrawl or Tavily extract)
-2. Analyzes your product: taxonomy, differentiators, ICP
-3. Discovers 5 competitor companies via Tavily search
-4. **Asks you to confirm the competitor list** before running research
-5. Runs three-track PR research across all 5 competitors:
-   - **Track A (Editorial):** News articles, feature pieces, funded announcements
-   - **Track B (Podcasts):** Founder interviews, guest appearances, episode mentions
-   - **Track C (Communities):** Reddit threads, HN posts, ProductHunt launches
-6. Tiers channels by how many competitors appeared in each (Tier 1 = 3+ competitors)
-7. Looks up the journalist or host name for each Tier 1 channel
-8. Generates a cold pitch draft per Tier 1 channel: subject line + 3-4 sentence body
-
-## Output
-
-A PR intel report saved to `docs/pr-intel/[product-slug]-[date].md` containing:
-
-- **Tier 1 channels** (proven beats for your space) with journalist name, story angle, and cold pitch draft
-- **Tier 2 channels** (quick hits table -- channels that covered 2 of 5 competitors)
-- **Tier 3 channels** (discovery list -- one mention only)
-- **3 bonus hooks** -- pitch angles none of your competitors have used
-
-## Requirements
-
-| Tool | Required | Purpose | Free Tier |
-|---|---|---|---|
-| Tavily API | Yes | Competitor discovery, PR research, journalist lookup | 1000 credits/month (~40 runs) |
-| Firecrawl API | No | Fetch JS-rendered product pages | 500 credits/month |
-
-If Firecrawl is not set, Tavily extract is used as a fallback.
-
 ## Install
 ### Option A: npx CLI (Recommended)
 

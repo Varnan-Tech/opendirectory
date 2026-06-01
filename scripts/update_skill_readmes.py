@@ -64,7 +64,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 """
 
 INSTALL_EXISTS_RE = re.compile(
-    r"(?:^|\n)##\s*Install(?:ation)?\s*\n\n```bash\s*\nnpx \"@opendirectory\.dev/skills\" install",
+    r"### Option D: Manus AI",
     re.MULTILINE,
 )
 
@@ -74,7 +74,7 @@ def has_install_section(content: str) -> bool:
 
 
 def inject_install_section(content: str, skill_name: str) -> str:
-    snippet = INSTALL_SNIPPET_TMPL.format(skill_name=skill_name, manus_link=_manus_link(skill_name))
+    snippet = INSTALL_SNIPPET_TMPL.format(skill_name=skill_name, manus_link=_manus_link(skill_name), CLAUDE_VIDEO_URL=CLAUDE_VIDEO_URL, MANUS_VIDEO_URL=MANUS_VIDEO_URL)
     match = re.search(r"^## ", content, re.MULTILINE)
     if match:
         return content[:match.start()] + snippet + "\n\n" + content[match.start():]

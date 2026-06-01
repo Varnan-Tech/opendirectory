@@ -6,32 +6,30 @@ No API key. No paid tools. One URL in, one ready-to-use brief out.
 
 ---
 
-## What It Does
+## Install
 
-1. Collects up to 200 public reviews from App Store or Google Play — free, no API key, no login required. *(Note: App Store apps may sometimes return 0 reviews due to Apple RSS API limitations; Google Play is the primary supported path.)*
-2. Filters to 1–3 star reviews and scores each by severity (star rating) and recency — the most recent failures get the highest weight
-3. Clusters complaints into 4–6 named themes using the reviewers' own language — no abstracted labels like "stability issues"
-4. Detects broken promises: cross-references the competitor's own store description against the complaint clusters and flags where their marketing overclaims reality
-5. Outputs a copy-ready brief: complaint leaderboard with verbatim quotes, broken promise map, landing page H1 variants, ad copy directions, and anti-claim warnings
+### Option A: npx CLI (Recommended)
 
----
-
-## Prerequisites
-
-- Python 3.9+
-- One pip package (free, open source, no API key):
-  ```bash
-  pip install google-play-scraper
-  ```
-- An AI agent: Claude Code, Gemini CLI, GitHub Copilot, or any compatible tool
-
----
-
-## Installation
+No global install. Always runs the latest version.
 
 ```bash
-npx opendirectory add app-store-review-arbitrage
+npx "@opendirectory.dev/skills" install app-store-review-arbitrage --target claude
 ```
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls style="width: 100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fapp-store-review-arbitrage&utm_source=opendirectory)
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 
 ---
 
