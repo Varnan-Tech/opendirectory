@@ -5,6 +5,7 @@ from urllib.parse import quote
 
 START_MARKER = "<!-- OPENDIRECTORY_INSTALL_START -->"
 END_MARKER = "<!-- OPENDIRECTORY_INSTALL_END -->"
+DECORATIVE_HTML_TAG_RE = re.compile(r"</?(?:div|br|p|span|center)(?:\s+[^>]*)?>", re.IGNORECASE)
 
 MANAGED_INSTALL_RE = re.compile(
     rf"^{re.escape(START_MARKER)}.*?^{re.escape(END_MARKER)}\s*",
@@ -26,7 +27,7 @@ def has_meaningful_intro(content: str) -> bool:
         stripped = line.strip().lstrip("\ufeff")
         if not stripped:
             continue
-        if stripped.startswith("<img"):
+        if stripped.startswith("<img") or DECORATIVE_HTML_TAG_RE.fullmatch(stripped):
             continue
         if stripped.startswith("![") or stripped.startswith("[!["):
             continue
@@ -66,6 +67,21 @@ def remove_generic_install_sections(content: str) -> str:
         if is_generic_install_section(heading, body):
             result = result[:start].rstrip() + "\n\n" + result[end:].lstrip()
     return result
+
+
+def remove_managed_install_section(content: str) -> str:
+    if MANAGED_INSTALL_RE.search(content):
+        return MANAGED_INSTALL_RE.sub("", content, count=1)
+
+    marker_index = content.find(START_MARKER)
+    if marker_index == -1:
+        return content
+
+    for start, _end, heading, _body in top_level_sections(content):
+        if start > marker_index and not is_install_heading(heading):
+            return content[:marker_index].rstrip() + "\n\n" + content[start:].lstrip()
+
+    return content[:marker_index].rstrip() + "\n"
 
 
 def normalize_remaining_installation_headings(content: str) -> str:
@@ -167,8 +183,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 
 def inject_install_section(content: str, skill_name: str) -> str:
     block = build_install_block(skill_name)
-    if MANAGED_INSTALL_RE.search(content):
-        content = MANAGED_INSTALL_RE.sub("", content, count=1)
+    content = remove_managed_install_section(content)
 
     content = remove_generic_install_sections(content)
     content = normalize_remaining_installation_headings(content)
