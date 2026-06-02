@@ -231,6 +231,8 @@ Run these commands inside Claude Code:
 
 <video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls width="100%"></video>
 
+This example button opens Manus AI with the `blog-cover-image-cli` skill attached.
+
 [**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fblog-cover-image-cli&utm_source=opendirectory)
 
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
