@@ -235,11 +235,9 @@ Run these commands inside Claude Code:
 
 https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4
 
-[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fblog-cover-image-cli&utm_source=opendirectory)
-
 Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
 
-1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+1. Open the skill you want from the [opendirectory homepage](https://opendirectory.dev).
 2. In the install panel, select the **Manus AI** tab.
 3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
 4. Confirm the import inside Manus AI.
@@ -253,9 +251,6 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 60 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
-
-<summary><b>60 skills across 8 categories</b> — click to expand</summary>
-<br>
 
 <table>
   <tr><th colspan="3" align="left">Visual &amp; Media</th></tr>
