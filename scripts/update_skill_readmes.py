@@ -94,10 +94,10 @@ def normalize_remaining_installation_headings(content: str) -> str:
             leading_space_count = len(line) - len(line.lstrip())
             leading_space = line[:leading_space_count]
             updated = line.lstrip()
-            updated = updated.replace("Installation", "Setup")
-            updated = updated.replace("installation", "setup")
-            updated = updated.replace("Install", "Set up")
-            updated = updated.replace("install", "set up")
+            updated = re.sub(r"\bInstallation\b", "Setup", updated)
+            updated = re.sub(r"\binstallation\b", "setup", updated)
+            updated = re.sub(r"\bInstall\b", "Set up", updated)
+            updated = re.sub(r"\binstall\b", "set up", updated)
             lines.append(leading_space + updated)
         else:
             lines.append(line)
@@ -157,9 +157,10 @@ npx "@opendirectory.dev/skills" install {skill_name} --target claude
 
 ### Option C: Claude Code Native
 
-Run this command inside Claude Code:
+Run these commands inside Claude Code:
 
-```text
+```bash
+/plugin marketplace add Varnan-Tech/opendirectory
 /plugin install opendirectory-gtm-skills@opendirectory-marketplace
 ```
 

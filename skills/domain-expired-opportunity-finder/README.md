@@ -35,9 +35,10 @@ npx "@opendirectory.dev/skills" install domain-expired-opportunity-finder --targ
 
 ### Option C: Claude Code Native
 
-Run this command inside Claude Code:
+Run these commands inside Claude Code:
 
-```text
+```bash
+/plugin marketplace add Varnan-Tech/opendirectory
 /plugin install opendirectory-gtm-skills@opendirectory-marketplace
 ```
 
