@@ -5,7 +5,7 @@
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=60+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=60+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI%2C+Manus+AI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
 
 <br />
@@ -16,7 +16,7 @@
 [![Skills](https://img.shields.io/badge/skills-60-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
-[![Agents](https://img.shields.io/badge/agents-7-blueviolet.svg?style=flat-square)](#quick-start)
+[![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
@@ -46,7 +46,7 @@ npx "@opendirectory.dev/skills" list
 ```bash
 --target claude
 ```
-*Supports Claude, OpenCode, Codex, Gemini, Anti-Gravity, OpenClaw, Hermes*
+*Supports Claude, OpenCode, Codex, Gemini, Anti-Gravity, OpenClaw, Hermes, and Manus AI*
 
 ### 3. Install
 ```bash
@@ -225,6 +225,22 @@ Run these commands inside Claude Code:
 # Install a skill
 /plugin install opendirectory-gtm-skills@opendirectory-marketplace
 ```
+
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls width="100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fblog-cover-image-cli&utm_source=opendirectory)
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 
 ---
 
@@ -408,7 +424,7 @@ Run these commands inside Claude Code:
   </tr>
   <tr>
     <td><a href="skills/meta-ads-skill"><code>meta-ads-skill</code></a></td>
-    <td>npx "@opendirectory.dev/skills" install meta-ads-skill --target claude</td>
+    <td>The Meta Ads Skill is a comprehensive, production-ready  skill designed to give LLMs and AI agents expert-level capabilities to orchestrate the official Meta Ads Python CLI.</td>
     <td><code>0.0.1</code></td>
   </tr>
   <tr>

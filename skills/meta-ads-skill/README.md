@@ -2,30 +2,6 @@
 
 <img width="1376" height="768" alt="meta-ads-skill" src="https://github.com/user-attachments/assets/baf2509b-0ee0-41ca-9555-3ad350a6824c" />
 
-## Install
-
-```bash
-npx "@opendirectory.dev/skills" install meta-ads-skill --target claude
-```
-
-### Video Tutorial
-Watch this quick video to see how it's done:
-
-https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
-
-### Step 1: Download the skill from GitHub
-1. Copy the URL of this specific skill folder from your browser's address bar.
-2. Go to [download-directory.github.io](https://download-directory.github.io/).
-3. Paste the URL and click **Enter** to download.
-
-### Step 2: Install the Skill in Claude
-1. Open your **Claude desktop app**.
-2. Go to the sidebar on the left side and click on the **Customize** section.
-3. Click on the **Skills** tab, then click on the **+** (plus) icon button to create a new skill.
-4. Choose the option to **Upload a skill**, and drag and drop the `.zip` file (or you can extract it and drop the folder, both work).
-
-> **Note:** For some skills (like `position-me`), the `SKILL.md` file might be located inside a subfolder. Always make sure you are uploading the specific folder that contains the `SKILL.md` file!
-
 ## Overview
 
 The **Meta Ads Skill** is a comprehensive, production-ready  skill designed to give LLMs and AI agents expert-level capabilities to orchestrate the official **Meta Ads Python CLI**.
@@ -33,6 +9,61 @@ The **Meta Ads Skill** is a comprehensive, production-ready  skill designed to g
 By using this skill, an agent transforms into an **Expert Media Buyer**. It will know exactly how to explore ad structures, troubleshoot campaign performance (like CPA spikes), discover new audiences, and format massive Meta APIs JSON payloads into beautiful, readable markdown reports.
 
 ---
+
+<!-- OPENDIRECTORY_INSTALL_START -->
+## Install
+
+### Option A: npx CLI (Recommended)
+
+No global install. Always runs the latest version.
+
+```bash
+npx "@opendirectory.dev/skills" install meta-ads-skill --target claude
+```
+
+### Option B: Claude Desktop App
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
+**Step 1: Download the skill from GitHub**
+
+1. Copy the URL of this specific skill folder from your browser's address bar.
+2. Go to [download-directory.github.io](https://download-directory.github.io/).
+3. Paste the URL and click **Enter** to download.
+
+**Step 2: Install in Claude**
+
+1. Open your **Claude desktop app**.
+2. Go to the sidebar on the left side and click on the **Customize** section.
+3. Click on the **Skills** tab, then click on the **+** button to create a new skill.
+4. Choose **Upload a skill**, then drag and drop the `.zip` file or extracted folder.
+
+> **Note:** For some skills, the `SKILL.md` file might be located inside a subfolder. Always upload the specific folder that contains the `SKILL.md` file.
+
+### Option C: Claude Code Native
+
+Run this command inside Claude Code:
+
+```text
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+### Option D: Manus AI
+
+<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls width="100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fmeta-ads-skill&utm_source=opendirectory)
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [OpenDirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+<!-- OPENDIRECTORY_INSTALL_END -->
+
 
 ## For Agents: How to Use This Skill Efficiently
 
@@ -49,11 +80,11 @@ This skill is designed using a **Progressive Disclosure (Hub-and-Spoke)** archit
 
 ---
 
-## Installation & Setup
+## Setup
 
 To use this skill, you must install the official Meta Ads CLI and configure your credentials.
 
-### 1. Install the CLI
+### 1. Set up the CLI
 The skill relies on the `meta-ads` Python package:
 ```bash
 pip install meta-ads
