@@ -1,3 +1,7 @@
+
+
+
+
 <div align="center">
   <img src="docs/assets/opendirectory_banner.webp" width="100%" alt="OpenDirectory Banner" />
 </div>
@@ -229,9 +233,7 @@ Run these commands inside Claude Code:
 
 ### Option D: Manus AI
 
-<video src="https://www.opendirectory.dev/ManusAI-one-click-installation-demo.webm" controls width="100%"></video>
-
-This example button opens Manus AI with the `blog-cover-image-cli` skill attached.
+https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4
 
 [**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fblog-cover-image-cli&utm_source=opendirectory)
 
