@@ -1,0 +1,8 @@
+{
+  "brand_name": "Linear",
+  "competitors": ["Jira", "Asana", "Height", "Monday"],
+  "category": "project management tool for developers",
+  "buyer_intent_prompts": [],
+  "target_llms": ["openai", "anthropic", "google", "perplexity"],
+  "website_url": "https://linear.app"
+}

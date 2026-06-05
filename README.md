@@ -402,6 +402,11 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
     <td><code>0.0.1</code></td>
   </tr>
   <tr>
+    <td><a href="skills/geo-gap-fixer"><code>geo-gap-fixer</code></a></td>
+    <td>Audit how often LLMs recommend your brand vs. competitors — then get a concrete action plan to fix the gaps.</td>
+    <td><code>1.0.0</code></td>
+  </tr>
+  <tr>
     <td><a href="skills/gh-issue-to-demand-signal"><code>gh-issue-to-demand-signal</code></a></td>
     <td>Give the skill a competitor's public GitHub repo URL. It fetches their open issues, filters noise locally, clusters into 6 demand categories using the AI already running the skill, scores by real engagement (reactions), detects ignored demand (high reactions + no response = your opportunity), and outputs a ranked demand gap report with a GTM messaging brief.</td>
     <td><code>0.0.1</code></td>
