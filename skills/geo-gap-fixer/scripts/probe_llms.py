@@ -216,22 +216,25 @@ def _retry(fn: Callable, provider_name: str) -> dict | None:
     return None
 
 
+_openai_client = None
 def probe_openai(prompt_text: str) -> dict | None:
     """Send prompt to OpenAI gpt-4o. Returns None if key missing or error."""
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return None
 
-    try:
-        from openai import OpenAI
-    except ImportError:
-        print("  [WARN] openai package not installed. pip install openai")
-        return None
+    global _openai_client
+    if _openai_client is None:
+        try:
+            from openai import OpenAI
+            _openai_client = OpenAI(api_key=api_key)
+        except ImportError:
+            print("  [WARN] openai package not installed. pip install openai")
+            return None
 
     def _call() -> dict | None:
         try:
-            client = OpenAI(api_key=api_key)
-            response = client.chat.completions.create(
+            response = _openai_client.chat.completions.create(
                 model="gpt-4o",
                 messages=[
                     {"role": "system", "content": SYSTEM_PROMPT},
@@ -253,22 +256,25 @@ def probe_openai(prompt_text: str) -> dict | None:
     return _retry(_call, "openai")
 
 
+_anthropic_client = None
 def probe_anthropic(prompt_text: str) -> dict | None:
     """Send prompt to Anthropic claude-sonnet-4-6."""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         return None
 
-    try:
-        import anthropic
-    except ImportError:
-        print("  [WARN] anthropic package not installed. pip install anthropic")
-        return None
+    global _anthropic_client
+    if _anthropic_client is None:
+        try:
+            import anthropic
+            _anthropic_client = anthropic.Anthropic(api_key=api_key)
+        except ImportError:
+            print("  [WARN] anthropic package not installed. pip install anthropic")
+            return None
 
     def _call() -> dict | None:
         try:
-            client = anthropic.Anthropic(api_key=api_key)
-            response = client.messages.create(
+            response = _anthropic_client.messages.create(
                 model="claude-sonnet-4-6",
                 max_tokens=2048,
                 system=SYSTEM_PROMPT,
@@ -287,22 +293,25 @@ def probe_anthropic(prompt_text: str) -> dict | None:
     return _retry(_call, "anthropic")
 
 
+_google_client = None
 def probe_google(prompt_text: str) -> dict | None:
     """Send prompt to Google gemini-2.5-flash."""
     api_key = os.environ.get("GOOGLE_API_KEY")
     if not api_key:
         return None
 
-    try:
-        from google import genai
-    except ImportError:
-        print("  [WARN] google-genai package not installed. pip install google-genai")
-        return None
+    global _google_client
+    if _google_client is None:
+        try:
+            from google import genai
+            _google_client = genai.Client(api_key=api_key)
+        except ImportError:
+            print("  [WARN] google-genai package not installed. pip install google-genai")
+            return None
 
     def _call() -> dict | None:
         try:
-            client = genai.Client(api_key=api_key)
-            response = client.models.generate_content(
+            response = _google_client.models.generate_content(
                 model="gemini-2.5-flash",
                 contents=f"{SYSTEM_PROMPT}\n\n{prompt_text}",
             )
@@ -319,25 +328,28 @@ def probe_google(prompt_text: str) -> dict | None:
     return _retry(_call, "google")
 
 
+_perplexity_client = None
 def probe_perplexity(prompt_text: str) -> dict | None:
     """Send prompt to Perplexity sonar-pro via OpenAI-compatible API."""
     api_key = os.environ.get("PERPLEXITY_API_KEY")
     if not api_key:
         return None
 
-    try:
-        from openai import OpenAI
-    except ImportError:
-        print("  [WARN] openai package not installed. pip install openai")
-        return None
-
-    def _call() -> dict | None:
+    global _perplexity_client
+    if _perplexity_client is None:
         try:
-            client = OpenAI(
+            from openai import OpenAI
+            _perplexity_client = OpenAI(
                 api_key=api_key,
                 base_url="https://api.perplexity.ai",
             )
-            response = client.chat.completions.create(
+        except ImportError:
+            print("  [WARN] openai package not installed. pip install openai")
+            return None
+
+    def _call() -> dict | None:
+        try:
+            response = _perplexity_client.chat.completions.create(
                 model="sonar-pro",
                 messages=[
                     {"role": "system", "content": SYSTEM_PROMPT},
@@ -406,10 +418,14 @@ def main():
             skipped.append(llm)
 
     if len(available) < 1 and not args.dry_run:
-        print("\n[ERROR] No API keys found. Set at least 2 of:")
+        print("\n[ERROR] No API keys found. Set at least 1 of the following to proceed:")
         for llm, key in PROVIDER_ENV_KEYS.items():
             print(f"  export {key}=...")
         sys.exit(1)
+
+    if len(available) == 1 and not args.dry_run:
+        print(f"\n[WARN] Only 1 API key found ({available[0]}). Coverage will be limited.")
+        print("  For a comprehensive GEO audit, we strongly recommend using 2 or more providers.")
 
     print(f"\n  Providers:   {', '.join(available)}")
     if skipped:

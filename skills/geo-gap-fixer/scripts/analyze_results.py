@@ -41,7 +41,7 @@ POSITIVE_KEYWORDS = [
 ]
 
 NEGATIVE_KEYWORDS = [
-    "limited", "lacks", "however", "downside", "expensive", "complex",
+    "limited", "lacks", "downside", "expensive", "complex",
     "steep learning curve", "missing", "outdated", "slow", "clunky",
     "basic", "restrictive", "difficult", "confusing", "poor",
     "frustrating", "buggy", "unreliable", "overpriced",
@@ -261,7 +261,7 @@ def analyze(raw_data: dict) -> dict:
         # Check if brand's domain is cited
         if website_url:
             brand_domain = re.sub(r'^https?://(www\.)?', '', website_url).split('/')[0].lower()
-            if brand_domain and any(brand_domain in d for d in cited_domains):
+            if brand_domain and any(d == brand_domain or d.endswith("." + brand_domain) for d in cited_domains):
                 brand_cited_count += 1
 
         # 8. Competitor mentions list
@@ -318,7 +318,7 @@ def analyze(raw_data: dict) -> dict:
     if website_url:
         brand_domain = re.sub(r'^https?://(www\.)?', '', website_url).split('/')[0].lower()
         for gap in citation_gaps:
-            if brand_domain and brand_domain in gap["domain"]:
+            if brand_domain and (gap["domain"] == brand_domain or gap["domain"].endswith("." + brand_domain)):
                 gap["is_brand_domain"] = True
 
     # Deduplicate competitor language
