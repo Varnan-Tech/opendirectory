@@ -185,8 +185,7 @@ def build_citation_gaps(gaps: list, meta: dict) -> str:
         is_brand = "✅ Yes" if gap.get("is_brand_domain") else "❌ No"
         lines.append(f"| {domain} | {count} | {is_brand} |")
 
-    brand_cited = any(g.get("is_brand_domain") for g in gaps)
-    if not brand_cited and meta.get("website_url"):
+    if not meta.get("brand_domain_cited", False) and meta.get("website_url"):
         lines.append(
             f"\n⚠️ **Your domain ({meta['website_url']}) was never cited by any LLM.**\n"
         )
@@ -264,8 +263,8 @@ def build_action_plan(analysis: dict) -> str:
             )
 
     # Schema markup if no citations
-    brand_cited = any(g.get("is_brand_domain") for g in gaps)
-    if not brand_cited:
+    brand_cited = meta.get("brand_domain_cited", False)
+    if not brand_cited and meta.get("website_url"):
         high.append(
             "- [ ] **Add schema markup**: FAQPage, SoftwareApplication, Organization — "
             "your domain is not being cited by any LLM"

@@ -83,7 +83,7 @@ Open `report/geo_audit_report.md` for your action plan.
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `brand_name` | string | ✅ | Your brand name (e.g., "Linear") |
-| `competitors` | list | ✅ | 1–5 competitor brand names |
+| `competitors` | list | ✅ | 1–10 competitor brand names |
 | `category` | string | ✅ | Product category (e.g., "project management tool for developers") |
 | `buyer_intent_prompts` | list | ❌ | Custom prompts. Empty = auto-generate from templates |
 | `target_llms` | list | ❌ | Which LLMs to probe. Default: all 4 |

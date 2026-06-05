@@ -317,9 +317,22 @@ def analyze(raw_data: dict) -> dict:
 
     if website_url:
         brand_domain = re.sub(r'^https?://(www\.)?', '', website_url).split('/')[0].lower()
+        brand_gap_found = False
         for gap in citation_gaps:
             if brand_domain and (gap["domain"] == brand_domain or gap["domain"].endswith("." + brand_domain)):
                 gap["is_brand_domain"] = True
+                brand_gap_found = True
+        
+        if brand_domain and not brand_gap_found:
+            actual_count = 0
+            for d, c in all_cited_domains.items():
+                if d == brand_domain or d.endswith("." + brand_domain):
+                    actual_count += c
+            citation_gaps.append({
+                "domain": brand_domain,
+                "cited_count": actual_count,
+                "is_brand_domain": True,
+            })
 
     # Deduplicate competitor language
     for comp in competitor_language:
@@ -335,6 +348,9 @@ def analyze(raw_data: dict) -> dict:
             "total_responses": total_responses,
             "providers_used": meta["providers_used"],
             "timestamp": datetime.now(timezone.utc).isoformat(),
+            "brand_domain_cited": brand_cited_count > 0,
+            "brand_domain_citation_count": brand_cited_count,
+            "responses_per_provider": dict(total_prompts_per_provider),
         },
         "share_of_voice": share_of_voice,
         "prompt_results": prompt_results,
