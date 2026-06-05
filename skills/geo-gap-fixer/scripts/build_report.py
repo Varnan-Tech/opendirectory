@@ -200,9 +200,10 @@ def build_action_plan(analysis: dict) -> str:
     losses = analysis["losses"]
     gaps = analysis["citation_gaps"]
     comp_lang = analysis["competitor_language"]
-    brand = analysis["meta"]["brand"]
-    competitors = analysis["meta"]["competitors"]
-    category = analysis["meta"]["category"]
+    meta = analysis["meta"]
+    brand = meta["brand"]
+    competitors = meta["competitors"]
+    category = meta["category"]
 
     brand_data = sov.get(brand, {})
     mr = brand_data.get("mention_rate", 0)
