@@ -88,6 +88,8 @@ def build_share_of_voice(sov: dict, brand: str) -> str:
         health = "🟢 **Healthy** — LLMs consistently recommend you"
     elif mr >= 0.3 and wr >= 0.1:
         health = "🟡 **At Risk** — Visible but not dominant; targeted fixes needed"
+    elif mr >= 0.3:
+        health = "🟡 **At Risk** — Mentioned but rarely ranked first; improve win rate"
     else:
         health = "🔴 **Critical** — LLMs rarely mention you; major GEO overhaul needed"
 
