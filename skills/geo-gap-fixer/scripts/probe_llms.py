@@ -203,16 +203,42 @@ def _classify_template(template: str) -> str:
 # ── Provider Adapters ───────────────────────────────────────────────────────
 
 
+def _is_transient(exc: Exception) -> bool:
+    """Check if an exception represents a transient (retryable) error."""
+    status = getattr(exc, 'status_code', None) or getattr(exc, 'status', None)
+    # Some SDKs use 'code' or nest status in response
+    if status is None:
+        resp = getattr(exc, 'response', None)
+        if resp is not None:
+            status = getattr(resp, 'status_code', None) or getattr(resp, 'status', None)
+    if isinstance(status, int):
+        return status == 429 or 500 <= status <= 599
+    # ConnectionError, Timeout, etc. are transient
+    exc_name = type(exc).__name__.lower()
+    return any(k in exc_name for k in ('timeout', 'connection', 'temporary', 'unavailable'))
+
+
 def _retry(fn: Callable, provider_name: str) -> dict | None:
-    """Retry a provider call with exponential backoff on transient errors."""
+    """Retry a provider call with exponential backoff on transient errors only.
+
+    Permanent errors (e.g. 401 Unauthorized) propagate immediately
+    instead of wasting retry attempts.
+    """
     for attempt in range(MAX_RETRIES + 1):
-        result = fn()
-        if result is not None:
-            return result
-        if attempt < MAX_RETRIES:
-            wait = RETRY_BACKOFF ** (attempt + 1)
-            print(f"    → retrying {provider_name} in {wait:.0f}s (attempt {attempt + 2}/{MAX_RETRIES + 1})")
-            time.sleep(wait)
+        try:
+            result = fn()
+            if result is not None:
+                return result
+            # fn returned None without raising — treat as non-retryable
+            return None
+        except Exception as e:
+            if _is_transient(e) and attempt < MAX_RETRIES:
+                wait = RETRY_BACKOFF ** (attempt + 1)
+                print(f"    → transient error ({e}); retrying {provider_name} in {wait:.0f}s (attempt {attempt + 2}/{MAX_RETRIES + 1})")
+                time.sleep(wait)
+            else:
+                print(f"  [WARN] {provider_name} error (not retrying): {e}")
+                return None
     return None
 
 
@@ -233,25 +259,21 @@ def probe_openai(prompt_text: str) -> dict | None:
             return None
 
     def _call() -> dict | None:
-        try:
-            response = _openai_client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": prompt_text},
-                ],
-                max_tokens=2048,
-                temperature=0.0,  # Deterministic output
-            )
-            text = response.choices[0].message.content or ""
-            return {
-                "provider": "openai",
-                "model": "gpt-4o",
-                "response": text[:MAX_RESPONSE_CHARS],
-            }
-        except Exception as e:
-            print(f"  [WARN] OpenAI error: {e}")
-            return None
+        response = _openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt_text},
+            ],
+            max_tokens=2048,
+            temperature=0.0,  # Deterministic output
+        )
+        text = response.choices[0].message.content or ""
+        return {
+            "provider": "openai",
+            "model": "gpt-4o",
+            "response": text[:MAX_RESPONSE_CHARS],
+        }
 
     return _retry(_call, "openai")
 
@@ -273,22 +295,18 @@ def probe_anthropic(prompt_text: str) -> dict | None:
             return None
 
     def _call() -> dict | None:
-        try:
-            response = _anthropic_client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=2048,
-                system=SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": prompt_text}],
-            )
-            text = response.content[0].text if response.content else ""
-            return {
-                "provider": "anthropic",
-                "model": "claude-sonnet-4-6",
-                "response": text[:MAX_RESPONSE_CHARS],
-            }
-        except Exception as e:
-            print(f"  [WARN] Anthropic error: {e}")
-            return None
+        response = _anthropic_client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=2048,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": prompt_text}],
+        )
+        text = response.content[0].text if response.content else ""
+        return {
+            "provider": "anthropic",
+            "model": "claude-sonnet-4-6",
+            "response": text[:MAX_RESPONSE_CHARS],
+        }
 
     return _retry(_call, "anthropic")
 
@@ -310,20 +328,16 @@ def probe_google(prompt_text: str) -> dict | None:
             return None
 
     def _call() -> dict | None:
-        try:
-            response = _google_client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=f"{SYSTEM_PROMPT}\n\n{prompt_text}",
-            )
-            text = response.text or ""
-            return {
-                "provider": "google",
-                "model": "gemini-2.5-flash",
-                "response": text[:MAX_RESPONSE_CHARS],
-            }
-        except Exception as e:
-            print(f"  [WARN] Google error: {e}")
-            return None
+        response = _google_client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=f"{SYSTEM_PROMPT}\n\n{prompt_text}",
+        )
+        text = response.text or ""
+        return {
+            "provider": "google",
+            "model": "gemini-2.5-flash",
+            "response": text[:MAX_RESPONSE_CHARS],
+        }
 
     return _retry(_call, "google")
 
@@ -348,23 +362,19 @@ def probe_perplexity(prompt_text: str) -> dict | None:
             return None
 
     def _call() -> dict | None:
-        try:
-            response = _perplexity_client.chat.completions.create(
-                model="sonar-pro",
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": prompt_text},
-                ],
-            )
-            text = response.choices[0].message.content or ""
-            return {
-                "provider": "perplexity",
-                "model": "sonar-pro",
-                "response": text[:MAX_RESPONSE_CHARS],
-            }
-        except Exception as e:
-            print(f"  [WARN] Perplexity error: {e}")
-            return None
+        response = _perplexity_client.chat.completions.create(
+            model="sonar-pro",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt_text},
+            ],
+        )
+        text = response.choices[0].message.content or ""
+        return {
+            "provider": "perplexity",
+            "model": "sonar-pro",
+            "response": text[:MAX_RESPONSE_CHARS],
+        }
 
     return _retry(_call, "perplexity")
 

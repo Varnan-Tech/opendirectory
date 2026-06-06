@@ -47,9 +47,10 @@ NEGATIVE_KEYWORDS = [
     "frustrating", "buggy", "unreliable", "overpriced",
 ]
 
-# Pre-compile word-boundary patterns for sentiment keywords
-_POS_PATTERNS = [re.compile(r'\b' + re.escape(kw) + r'\b') for kw in POSITIVE_KEYWORDS]
-_NEG_PATTERNS = [re.compile(r'\b' + re.escape(kw) + r'\b') for kw in NEGATIVE_KEYWORDS]
+# Pre-compile lookaround patterns for sentiment keywords
+# Use lookarounds instead of \b so names with non-word chars (e.g. "C++") work
+_POS_PATTERNS = [re.compile(r'(?<!\w)' + re.escape(kw) + r'(?!\w)') for kw in POSITIVE_KEYWORDS]
+_NEG_PATTERNS = [re.compile(r'(?<!\w)' + re.escape(kw) + r'(?!\w)') for kw in NEGATIVE_KEYWORDS]
 
 # URL extraction regex
 URL_PATTERN = re.compile(r'https?://(?:[a-zA-Z0-9\-._~:/?#\[\]@!$&\'()*+,;=%])+')
@@ -61,12 +62,14 @@ URL_PATTERN = re.compile(r'https?://(?:[a-zA-Z0-9\-._~:/?#\[\]@!$&\'()*+,;=%])+'
 def find_mentions(text: str, names: list[str]) -> dict[str, list[int]]:
     """
     Find all mentions of each name in the text.
-    Returns {name: [char_positions]} using word-boundary matching.
+    Returns {name: [char_positions]} using lookaround matching.
+    Uses (?<!\\w) and (?!\\w) instead of \\b so brand names with
+    non-word characters (e.g. "C++", "Acme.io") are detected correctly.
     """
     mentions = {}
     text_lower = text.lower()
     for name in names:
-        pattern = re.compile(r'\b' + re.escape(name.lower()) + r'\b')
+        pattern = re.compile(r'(?<!\w)' + re.escape(name.lower()) + r'(?!\w)')
         positions = [m.start() for m in pattern.finditer(text_lower)]
         if positions:
             mentions[name] = positions
@@ -94,9 +97,10 @@ def compute_sentiment(text: str, name: str) -> dict:
     """
     Compute sentiment for a specific brand/name within the text.
     Uses keyword proximity scoring: look within ±200 chars of each mention.
+    Counts keyword frequency via findall() for more accurate weighted scores.
     """
     text_lower = text.lower()
-    pattern = re.compile(r'\b' + re.escape(name.lower()) + r'\b')
+    pattern = re.compile(r'(?<!\w)' + re.escape(name.lower()) + r'(?!\w)')
     match_positions = [m.start() for m in pattern.finditer(text_lower)]
 
     if not match_positions:
@@ -111,15 +115,29 @@ def compute_sentiment(text: str, name: str) -> dict:
 
     context = " ".join(context_chars)
 
-    pos_found = [POSITIVE_KEYWORDS[i] for i, p in enumerate(_POS_PATTERNS) if p.search(context)]
-    neg_found = [NEGATIVE_KEYWORDS[i] for i, p in enumerate(_NEG_PATTERNS) if p.search(context)]
+    # Use findall() for frequency-weighted scoring instead of binary search()
+    pos_found = []
+    pos_count = 0
+    for i, p in enumerate(_POS_PATTERNS):
+        hits = len(p.findall(context))
+        if hits > 0:
+            pos_found.append(POSITIVE_KEYWORDS[i])
+            pos_count += hits
 
-    total = len(pos_found) + len(neg_found)
+    neg_found = []
+    neg_count = 0
+    for i, p in enumerate(_NEG_PATTERNS):
+        hits = len(p.findall(context))
+        if hits > 0:
+            neg_found.append(NEGATIVE_KEYWORDS[i])
+            neg_count += hits
+
+    total = pos_count + neg_count
     if total == 0:
         score = 0.0
         label = "neutral"
     else:
-        score = round((len(pos_found) - len(neg_found)) / total, 2)
+        score = round((pos_count - neg_count) / total, 2)
         if score > 0.2:
             label = "positive"
         elif score < -0.2:
@@ -144,9 +162,12 @@ def extract_citations(text: str) -> list[str]:
         match = re.match(r'https?://([^/\s?#]+)', url)
         if match:
             domain = match.group(1).lower()
+            # Strip trailing punctuation that the URL regex may have captured
+            domain = domain.rstrip('.!?,;:')
             # Remove common prefixes
             domain = re.sub(r'^www\.', '', domain)
-            domains.add(domain)
+            if domain:  # guard against empty string after stripping
+                domains.add(domain)
     return sorted(domains)
 
 
@@ -156,7 +177,7 @@ def extract_framing(text: str, name: str) -> list[str]:
     Captures adjectives and short phrases within ±60 chars.
     """
     text_lower = text.lower()
-    pattern = re.compile(r'\b' + re.escape(name.lower()) + r'\b')
+    pattern = re.compile(r'(?<!\w)' + re.escape(name.lower()) + r'(?!\w)')
     phrases = set()
 
     for match in pattern.finditer(text_lower):

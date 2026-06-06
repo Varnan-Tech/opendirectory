@@ -9,26 +9,60 @@ In 2026, buyers discover tools by asking ChatGPT, Claude, Gemini, and Perplexity
 
 > One skill run replaces a $200/month AI-monitoring SaaS subscription.
 
----
+<!-- OPENDIRECTORY_INSTALL_START -->
+## Install
 
-## Quickstart
+### Option A: npx CLI (Recommended)
 
-**1. Clone and Configure**
+No global install. Always runs the latest version.
+
 ```bash
-cp .env.example .env
-cp config.example.json config.json
-```
-Edit `config.json` with your brand, competitors, and category. Edit `.env` with at least 2 API keys (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, `PERPLEXITY_API_KEY`).
-
-**2. Run the Pipeline**
-```bash
-python scripts/probe_llms.py      # Probes LLM APIs
-python scripts/analyze_results.py # Analyzes mentions & sentiment
-python scripts/build_report.py    # Generates the GEO report
+npx "@opendirectory.dev/skills" install geo-gap-fixer --target claude
 ```
 
-**3. Read the Report**
-Open `report/geo_audit_report.md` for your action plan.
+### Option B: Claude Desktop App
+
+<video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
+
+**Step 1: Download the skill from GitHub**
+
+1. Copy the URL of this specific skill folder from your browser's address bar.
+2. Go to [download-directory.github.io](https://download-directory.github.io/).
+3. Paste the URL and click **Enter** to download.
+
+**Step 2: Install in Claude**
+
+1. Open your **Claude desktop app**.
+2. Go to the sidebar on the left side and click on the **Customize** section.
+3. Click on the **Skills** tab, then click on the **+** button to create a new skill.
+4. Choose **Upload a skill**, then drag and drop the `.zip` file or extracted folder.
+
+> **Note:** For some skills, the `SKILL.md` file might be located inside a subfolder. Always upload the specific folder that contains the `SKILL.md` file.
+
+### Option C: Claude Code Native
+
+Run these commands inside Claude Code:
+
+```bash
+/plugin marketplace add Varnan-Tech/opendirectory
+/plugin install opendirectory-gtm-skills@opendirectory-marketplace
+```
+
+### Option D: Manus AI
+
+<video src="https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4" controls width="100%"></video>
+
+[**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fgeo-gap-fixer&utm_source=opendirectory)
+
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [opendirectory homepage](https://opendirectory.dev).
+2. In the install panel, select the **Manus AI** tab.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+<!-- OPENDIRECTORY_INSTALL_END -->
 
 ---
 
