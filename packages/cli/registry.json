@@ -136,6 +136,17 @@
     "path": "skills/explain-this-pr"
   },
   {
+    "name": "geo-gap-fixer",
+    "description": "Audit how often LLMs recommend your brand vs competitors and generate a GEO action plan.",
+    "tags": [
+      "Branding",
+      "AI"
+    ],
+    "author": "ajaycodesitbetter",
+    "version": "1.0.0",
+    "path": "skills/geo-gap-fixer"
+  },
+  {
     "name": "gh-issue-to-demand-signal",
     "description": "Takes a competitor's public GitHub repo URL, fetches their open issues via the GitHub REST API, filters noise locally, clusters issues into 6 deman...",
     "tags": [

@@ -1,0 +1,16 @@
+{
+  "name": "geo-gap-fixer",
+  "version": "1.0.0",
+  "description": "Audit how often LLMs recommend your brand vs competitors and generate a GEO action plan",
+  "category": "GTM Intelligence",
+  "tags": [
+    "geo",
+    "seo",
+    "llm",
+    "brand-visibility",
+    "competitive-analysis",
+    "content-strategy"
+  ],
+  "author": "ajaycodesitbetter",
+  "license": "MIT"
+}
