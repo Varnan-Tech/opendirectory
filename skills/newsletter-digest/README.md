@@ -58,6 +58,14 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 4. Confirm the import inside Manus AI.
 
 > If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
+### Option E: skills.sh
+
+```bash
+npx skills add Varnan-Tech/opendirectory --skill newsletter-digest
+```
+
+Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
 <!-- OPENDIRECTORY_INSTALL_END -->
 
 

@@ -2,13 +2,6 @@
 
 **Audit how often LLMs recommend your brand vs. competitors — then get a concrete action plan to fix the gaps.**
 
-## Why this skill exists
-In 2026, buyers discover tools by asking ChatGPT, Claude, Gemini, and Perplexity *"what's the best X for Y?"* — not by Googling. If LLMs consistently recommend a competitor instead of you, your traditional SEO rank is irrelevant.
-
-**geo-gap-fixer** is a free, open-source agent skill for GTM Intelligence that audits your Generative Engine Optimization (GEO) share-of-voice. It probes the LLMs, analyzes who gets recommended, and outputs a prioritized content backlog to fix the gaps.
-
-> One skill run replaces a $200/month AI-monitoring SaaS subscription.
-
 <!-- OPENDIRECTORY_INSTALL_START -->
 ## Install
 
@@ -62,7 +55,23 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 4. Confirm the import inside Manus AI.
 
 > If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
+### Option E: skills.sh
+
+```bash
+npx skills add Varnan-Tech/opendirectory --skill geo-gap-fixer
+```
+
+Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
 <!-- OPENDIRECTORY_INSTALL_END -->
+
+
+## Why this skill exists
+In 2026, buyers discover tools by asking ChatGPT, Claude, Gemini, and Perplexity *"what's the best X for Y?"* — not by Googling. If LLMs consistently recommend a competitor instead of you, your traditional SEO rank is irrelevant.
+
+**geo-gap-fixer** is a free, open-source agent skill for GTM Intelligence that audits your Generative Engine Optimization (GEO) share-of-voice. It probes the LLMs, analyzes who gets recommended, and outputs a prioritized content backlog to fix the gaps.
+
+> One skill run replaces a $200/month AI-monitoring SaaS subscription.
 
 ---
 
