@@ -22,6 +22,7 @@
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+[![skills.sh](https://img.shields.io/badge/skills.sh-listed-brightgreen.svg?style=flat-square)](https://www.skills.sh/Varnan-Tech/opendirectory)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -243,6 +244,22 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 4. Confirm the import inside Manus AI.
 
 > If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
+
+### Option E: skills.sh
+
+```bash
+npx skills add Varnan-Tech/opendirectory
+```
+
+Installs all skills and auto-detects your coding agent (Claude Code, Codex, Gemini CLI, OpenCode, and more). To install a single skill:
+
+```bash
+npx skills add Varnan-Tech/opendirectory --skill <skill-name>
+```
+
+Browse OpenDirectory on skills.sh: [skills.sh/Varnan-Tech/opendirectory](https://www.skills.sh/Varnan-Tech/opendirectory)
+
+> Requires Node.js. Add `--global` to install to `~/.claude/skills/` instead of the current project.
 
 ---
 
