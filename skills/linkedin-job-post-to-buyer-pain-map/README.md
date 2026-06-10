@@ -21,7 +21,7 @@ npx "@opendirectory.dev/skills" install linkedin-job-post-to-buyer-pain-map --ta
 npx skills add Varnan-Tech/opendirectory --skill linkedin-job-post-to-buyer-pain-map
 ```
 
-Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
+Requires Node.js. Add `--global` to install to `~/.claude/skills/` instead of the current project.
 
 ### Option C: Claude Desktop App
 

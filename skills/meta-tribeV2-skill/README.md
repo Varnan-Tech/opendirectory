@@ -25,7 +25,7 @@ npx "@opendirectory.dev/skills" install meta-tribeV2-skill --target claude
 npx skills add Varnan-Tech/opendirectory --skill meta-tribeV2-skill
 ```
 
-Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
+Requires Node.js. Add `--global` to install to `~/.claude/skills/` instead of the current project.
 
 ### Option C: Claude Desktop App
 

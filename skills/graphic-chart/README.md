@@ -19,7 +19,7 @@ npx "@opendirectory.dev/skills" install graphic-chart --target claude
 npx skills add Varnan-Tech/opendirectory --skill graphic-chart
 ```
 
-Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
+Requires Node.js. Add `--global` to install to `~/.claude/skills/` instead of the current project.
 
 ### Option C: Claude Desktop App
 

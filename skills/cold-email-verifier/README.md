@@ -23,7 +23,7 @@ npx "@opendirectory.dev/skills" install cold-email-verifier --target claude
 npx skills add Varnan-Tech/opendirectory --skill cold-email-verifier
 ```
 
-Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
+Requires Node.js. Add `--global` to install to `~/.claude/skills/` instead of the current project.
 
 ### Option C: Claude Desktop App
 
