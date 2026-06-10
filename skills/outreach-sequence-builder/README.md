@@ -16,7 +16,15 @@ No global install. Always runs the latest version.
 npx "@opendirectory.dev/skills" install outreach-sequence-builder --target claude
 ```
 
-### Option B: Claude Desktop App
+### Option B: skills.sh
+
+```bash
+npx skills add Varnan-Tech/opendirectory --skill outreach-sequence-builder
+```
+
+Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
+
+### Option C: Claude Desktop App
 
 <video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
 
@@ -35,7 +43,7 @@ npx "@opendirectory.dev/skills" install outreach-sequence-builder --target claud
 
 > **Note:** For some skills, the `SKILL.md` file might be located inside a subfolder. Always upload the specific folder that contains the `SKILL.md` file.
 
-### Option C: Claude Code Native
+### Option D: Claude Code Native
 
 Run these commands inside Claude Code:
 
@@ -44,7 +52,7 @@ Run these commands inside Claude Code:
 /plugin install opendirectory-gtm-skills@opendirectory-marketplace
 ```
 
-### Option D: Manus AI
+### Option E: Manus AI
 
 <video src="https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4" controls width="100%"></video>
 
@@ -58,14 +66,6 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 4. Confirm the import inside Manus AI.
 
 > If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
-
-### Option E: skills.sh
-
-```bash
-npx skills add Varnan-Tech/opendirectory --skill outreach-sequence-builder
-```
-
-Auto-detects your installed agent. Adds `--global` to install for all projects instead of the current one.
 <!-- OPENDIRECTORY_INSTALL_END -->
 
 
