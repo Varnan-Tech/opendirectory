@@ -22,6 +22,7 @@
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+[![skills.sh](https://img.shields.io/badge/skills.sh-listed-brightgreen.svg?style=flat-square)](https://www.skills.sh/Varnan-Tech/opendirectory)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -199,7 +200,23 @@ No global install. Always runs the latest version.
 npx "@opendirectory.dev/skills" install <skill-name> --target claude
 ```
 
-### Option B: Claude Desktop App
+### Option B: skills.sh
+
+```bash
+npx skills add Varnan-Tech/opendirectory
+```
+
+Installs all skills and auto-detects your coding agent (Claude Code, Codex, Gemini CLI, OpenCode, and more). To install a single skill:
+
+```bash
+npx skills add Varnan-Tech/opendirectory --skill <skill-name>
+```
+
+Browse OpenDirectory on skills.sh: [skills.sh/Varnan-Tech/opendirectory](https://www.skills.sh/Varnan-Tech/opendirectory)
+
+> Requires Node.js. Add `--global` to install to `~/.claude/skills/` instead of the current project.
+
+### Option C: Claude Desktop App
 
 https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
@@ -218,7 +235,7 @@ https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c
 
 For some skills, the `SKILL.md` file sits inside a subfolder. Always upload the specific folder containing `SKILL.md`.
 
-### Option C: Claude Code Native
+### Option D: Claude Code Native
 
 Run these commands inside Claude Code:
 
@@ -231,7 +248,7 @@ Run these commands inside Claude Code:
 ```
 
 
-### Option D: Manus AI
+### Option E: Manus AI
 
 https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4
 

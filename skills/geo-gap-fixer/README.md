@@ -2,13 +2,6 @@
 
 **Audit how often LLMs recommend your brand vs. competitors — then get a concrete action plan to fix the gaps.**
 
-## Why this skill exists
-In 2026, buyers discover tools by asking ChatGPT, Claude, Gemini, and Perplexity *"what's the best X for Y?"* — not by Googling. If LLMs consistently recommend a competitor instead of you, your traditional SEO rank is irrelevant.
-
-**geo-gap-fixer** is a free, open-source agent skill for GTM Intelligence that audits your Generative Engine Optimization (GEO) share-of-voice. It probes the LLMs, analyzes who gets recommended, and outputs a prioritized content backlog to fix the gaps.
-
-> One skill run replaces a $200/month AI-monitoring SaaS subscription.
-
 <!-- OPENDIRECTORY_INSTALL_START -->
 ## Install
 
@@ -20,7 +13,15 @@ No global install. Always runs the latest version.
 npx "@opendirectory.dev/skills" install geo-gap-fixer --target claude
 ```
 
-### Option B: Claude Desktop App
+### Option B: skills.sh
+
+```bash
+npx skills add Varnan-Tech/opendirectory --skill geo-gap-fixer
+```
+
+Requires Node.js. Add `--global` to install to `~/.claude/skills/` instead of the current project.
+
+### Option C: Claude Desktop App
 
 <video src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c" controls width="100%"></video>
 
@@ -39,7 +40,7 @@ npx "@opendirectory.dev/skills" install geo-gap-fixer --target claude
 
 > **Note:** For some skills, the `SKILL.md` file might be located inside a subfolder. Always upload the specific folder that contains the `SKILL.md` file.
 
-### Option C: Claude Code Native
+### Option D: Claude Code Native
 
 Run these commands inside Claude Code:
 
@@ -48,7 +49,7 @@ Run these commands inside Claude Code:
 /plugin install opendirectory-gtm-skills@opendirectory-marketplace
 ```
 
-### Option D: Manus AI
+### Option E: Manus AI
 
 <video src="https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4" controls width="100%"></video>
 
@@ -63,6 +64,14 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 
 > If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 <!-- OPENDIRECTORY_INSTALL_END -->
+
+
+## Why this skill exists
+In 2026, buyers discover tools by asking ChatGPT, Claude, Gemini, and Perplexity *"what's the best X for Y?"* — not by Googling. If LLMs consistently recommend a competitor instead of you, your traditional SEO rank is irrelevant.
+
+**geo-gap-fixer** is a free, open-source agent skill for GTM Intelligence that audits your Generative Engine Optimization (GEO) share-of-voice. It probes the LLMs, analyzes who gets recommended, and outputs a prioritized content backlog to fix the gaps.
+
+> One skill run replaces a $200/month AI-monitoring SaaS subscription.
 
 ---
 
