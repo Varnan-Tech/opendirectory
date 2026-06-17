@@ -50,6 +50,19 @@
         "Does not flag cosmetic style issues as findings",
         "Provides file:line references for the findings"
       ]
+    },
+    {
+      "id": 4,
+      "name": "codebase-mode-risk-first",
+      "prompt": "Review my codebase. It's a small Express service, two files:\n\n```javascript\n// routes/notes.js\nrouter.get('/notes/:id', async (req, res) => {\n  const note = await db.query(`SELECT * FROM notes WHERE id = ${req.params.id}`);\n  res.json(note);\n});\nrouter.delete('/notes/:id', async (req, res) => {\n  await db.query('DELETE FROM notes WHERE id = $1', [req.params.id]);\n  res.sendStatus(204);\n});\n```\n\n```javascript\n// routes/users.js\nrouter.get('/users/:id', requireAuth, async (req, res) => {\n  const u = await db.query('SELECT id, name FROM users WHERE id = $1', [req.params.id]);\n  res.json(u);\n});\n```",
+      "expected_output": "Reviews by risk across both files. Flags the SQL injection in routes/notes.js (template-string query) as Critical. Flags the missing auth/ownership check on the notes routes (users.js uses requireAuth, notes.js does not, so anyone can read or delete any note) as High. Groups findings by file. Reports coverage. Does not drown the result in style nitpicks.",
+      "assertions": [
+        "Flags the SQL injection in routes/notes.js (interpolated req.params.id) at Critical severity",
+        "Flags the missing authentication/authorization on the notes routes (inconsistent with users.js requireAuth, enabling read/delete of any note)",
+        "Groups findings by file or subsystem rather than one flat list",
+        "Includes a coverage note describing what was reviewed",
+        "Does not pad the review with formatting or naming nitpicks"
+      ]
     }
   ]
 }

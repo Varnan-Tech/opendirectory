@@ -70,7 +70,8 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 
 Most review bots flood a PR with cosmetic comments and miss the one bug that breaks production. Only about 31% of bot-flagged issues lead to a real change before merge. This skill flips that ratio.
 
-- Scopes to the diff. It reviews the changed lines and the context needed to judge them. It does not comment on code you did not touch.
+- Works in two modes. Diff mode reviews a PR, branch, or change and scopes to the touched lines. Codebase mode audits a whole repo, directory, or file by risk and reports what it covered.
+- Scopes to the diff in diff mode. It reviews the changed lines and the context needed to judge them. It does not comment on code you did not touch.
 - Reads intent. It checks the PR title, ticket, and commits, then judges whether the code does what the change intended.
 - Reviews in gating order: correctness, then security, then performance, then simplification.
 - Runs two passes. A broad pass captures every candidate. A filter pass drops anything weak, out of scope, or not worth acting on.
@@ -95,16 +96,22 @@ It ends with a verdict: Ready to Merge, Needs Attention, or Needs Work, plus cou
 
 ## Usage
 
-Ask your agent to review a change:
+Diff mode, to review a change:
 
 - "Review this PR before I merge it."
 - "Check this diff for security and performance issues."
 - "Is this code fine to ship?"
 
-The skill reads the diff with `git diff`, or you can paste the code directly.
+Codebase mode, to audit existing code:
+
+- "Review my codebase."
+- "Audit this repo for security issues."
+- "Review the routes/ directory."
+
+The skill reads the diff with `git diff`, walks the repo with `git ls-files`, or works on code you paste directly.
 
 ## Structure
 
-- `SKILL.md` is the review process.
-- `references/` holds the per-dimension detail, loaded by name: `correctness.md`, `security.md`, `performance.md`, `simplification.md`, `output.md`.
+- `SKILL.md` is the review process and the mode selection.
+- `references/` holds the detail, loaded by name: `correctness.md`, `security.md`, `performance.md`, `simplification.md`, `codebase.md`, `output.md`.
 - `evals/evals.json` holds test cases with assertions.

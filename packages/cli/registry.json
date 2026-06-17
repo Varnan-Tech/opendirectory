@@ -41,8 +41,10 @@
   },
   {
     "name": "code-reviewer",
-    "description": "Language-agnostic, low-false-positive review of a diff or pull request.",
-    "tags": [],
+    "description": "Language-agnostic, low-false-positive code review.",
+    "tags": [
+      "Developer Tools"
+    ],
     "author": "OpenDirectory",
     "version": "1.0.0",
     "path": "skills/code-reviewer"

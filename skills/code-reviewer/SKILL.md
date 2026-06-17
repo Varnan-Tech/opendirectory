@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Language-agnostic, low-false-positive review of a diff or pull request. Scopes to the changed code, checks correctness, security, performance, and unnecessary complexity, then returns severity-ranked findings with file:line evidence and a concrete fix. Use when asked to review code, review a PR or diff, run a security or performance audit, check a change before merging or deploying, or asked whether code looks okay. Trigger on "review this code", "review my PR", "check this diff", "security audit", "is this code fine", or sharing a diff to judge, even without the words "code review".
+description: Language-agnostic, low-false-positive code review. Reviews a diff or pull request, or audits a whole codebase, directory, or single file. Checks correctness, security, performance, and unnecessary complexity, then returns severity-ranked findings with file:line evidence and a concrete fix. Use when asked to review code, review a PR or diff, audit a codebase or repo, run a security or performance audit, check a change before merging or deploying, or asked whether code looks okay. Trigger on "review this code", "review my PR", "check this diff", "audit my codebase", "review the repo", "security audit", or "is this code fine", even without the words "code review".
 compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
@@ -15,21 +15,29 @@ substantive change, and the dominant failure mode is "flood the PR with nitpicks
 bug." So the bias of this skill is **precision over recall: prefer reporting nothing over reporting a
 weak finding.** When the change is clean, say so and stop.
 
-## Scope: review the change, not the codebase
+## Scope: decide what to review first
 
-Review **only the changed lines and the code needed to judge them.** Do not comment on pre-existing
-code the author didn't touch, and do not propose unrelated refactors — that noise is exactly what
-makes reviews ignored. The exception is when a change *reveals* a latent bug in adjacent code that it
-now exercises; flag that, with the connection stated.
+Two modes. Read the request and pick one; when it's ambiguous, default to diff mode because it's the
+higher-precision job. Everything after this section (two-pass, dimensions, severity, output) applies
+to both.
 
-First, get the change and the intent:
-- Diff: `git diff <base>...<head>` (or the PR diff). If reviewing uncommitted work, `git diff` / `git diff --staged`.
+**Diff mode (default)** — a PR, branch, commit, staged work, or "review this change before I merge."
+Review **only the changed lines and the code needed to judge them.** Don't comment on pre-existing
+code the author didn't touch, and don't propose unrelated refactors — that noise is exactly what
+makes reviews ignored. The one exception: a change that *reveals* a latent bug in adjacent code it now
+exercises; flag that, with the connection stated. Get the change and the intent:
+- Diff: `git diff <base>...<head>` (or the PR diff). For uncommitted work, `git diff` / `git diff --staged`.
 - Intent: read the PR title/description, linked ticket, and commit messages. Most real bugs are
   *intent vs. implementation* mismatches — the code is internally fine but does the wrong thing. You
-  cannot catch those without knowing what the change was supposed to do.
-- Context: for any function/type/endpoint the diff changes, check its callers and other usages
-  (`grep`/repo search). Cross-file drift — a contract changed on one side only — is invisible if you
-  read the diff in isolation.
+  can't catch those without knowing what the change was supposed to do.
+- Context: for any function/type/endpoint the diff changes, check its callers (`grep`/repo search).
+  A contract changed on one side only is invisible if you read the diff in isolation.
+
+**Codebase mode** — "review my codebase / repo / this directory / this file," an audit, or a security
+pass over a whole project. There's no diff to anchor to, so you review by risk rather than line by
+line, and you report what you covered. Read [references/codebase.md](references/codebase.md) before
+starting; it covers how to map the project, prioritize high-risk surfaces, and report coverage
+honestly.
 
 ## The two-pass method
 
@@ -39,9 +47,10 @@ once. Split it — this is simpler and measurably more precise:
 1. **Pass A — capture.** Go dimension by dimension (below) and list *every* candidate concern,
    generously. Don't self-censor yet.
 2. **Pass B — filter.** For each candidate ask: *Is it real?* (can you point to the concrete failure
-   or cost), *Is it in scope?* (touches changed code), *Would I act on it?* (block the merge, or
-   genuinely improve the code). Drop everything that fails. Drop pure style/formatting/naming
-   preferences unless they cause an actual bug or real confusion. What survives is the review.
+   or cost), *Is it in scope?* (in the code under review — the diff, or the files in a codebase pass),
+   *Would I act on it?* (block the merge, or genuinely improve the code). Drop everything that fails.
+   Drop pure style/formatting/naming preferences unless they cause an actual bug or real confusion.
+   What survives is the review.
 
 ## Dimensions, in gating order
 
