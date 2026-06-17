@@ -40,6 +40,14 @@
     "path": "skills/claude-md-generator"
   },
   {
+    "name": "code-reviewer",
+    "description": "Language-agnostic, low-false-positive review of a diff or pull request.",
+    "tags": [],
+    "author": "OpenDirectory",
+    "version": "1.0.0",
+    "path": "skills/code-reviewer"
+  },
+  {
     "name": "cold-email-verifier",
     "description": "Use when the user wants to verify cold emails, enrich a lead list, or autonomously guess email addresses from a CSV using ValidEmail.",
     "tags": [

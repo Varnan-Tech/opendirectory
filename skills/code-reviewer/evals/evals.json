@@ -1,0 +1,55 @@
+{
+  "skill_name": "code-reviewer",
+  "evals": [
+    {
+      "id": 0,
+      "name": "real-bug-not-nitpick",
+      "prompt": "Review this change before I merge it:\n\n```python\n# auth/users.py (diff)\ndef get_user(uid):\n    q = f\"SELECT * FROM users WHERE id = {uid}\"   # uid comes from request.args\n    row = db.execute(q).fetchone()\n    return row\n```\n\nThe variable `uid` is the raw value from `request.args['id']`.",
+      "expected_output": "Flags the SQL injection as Critical with a parameterized-query fix and file:line. Does NOT nitpick the short name `uid` or `q`, or other style. Verdict: Needs Work.",
+      "assertions": [
+        "Reports a SQL injection / injection finding at Critical (or highest) severity",
+        "Provides a concrete fix using a parameterized/bound query",
+        "Does NOT raise a variable-naming or formatting style complaint as a finding",
+        "Includes a file:line reference and quoted evidence",
+        "Ends with a verdict indicating the change should not merge as-is (Needs Work or equivalent)"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "clean-diff-no-false-positives",
+      "prompt": "Can you review this small change? I think it's fine but want a second pair of eyes.\n\n```javascript\n// utils/format.js (diff)\nexport function formatPrice(cents) {\n  if (!Number.isInteger(cents) || cents < 0) {\n    throw new TypeError('cents must be a non-negative integer');\n  }\n  return `$${(cents / 100).toFixed(2)}`;\n}\n```",
+      "expected_output": "Recognizes the code is correct (validates input, handles the edge). Returns Ready to Merge with no findings, or at most a single optional Low. Does NOT manufacture findings to look thorough.",
+      "assertions": [
+        "Concludes the change is essentially clean / Ready to Merge",
+        "Reports zero Critical/High/Medium findings",
+        "Does not invent speculative or cosmetic findings to appear thorough",
+        "States plainly that there are no blocking issues"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "over-engineering-yagni",
+      "prompt": "Review this new code I'm adding for a feature that sends one type of notification (email):\n\n```typescript\n// notify/index.ts (new file)\ninterface NotificationStrategy { send(to: string, body: string): Promise<void>; }\n\nclass EmailNotificationStrategy implements NotificationStrategy {\n  async send(to: string, body: string) { await emailClient.send(to, body); }\n}\n\nclass NotificationFactory {\n  static create(type: string): NotificationStrategy {\n    switch (type) {\n      case 'email': return new EmailNotificationStrategy();\n      default: throw new Error('unknown type');\n    }\n  }\n}\n\nexport async function notify(to: string, body: string) {\n  const s = NotificationFactory.create('email');\n  await s.send(to, body);\n}\n```\n\nThere is only email today and no concrete plan for other channels.",
+      "expected_output": "Flags the over-engineering / YAGNI: interface + factory + strategy for a single implementation with no second channel planned. Suggests inlining to a simple function, behavior-preserving. Severity Medium (not Critical/High). Does not claim a functional bug that isn't there.",
+      "assertions": [
+        "Identifies the single-implementation interface/factory/strategy as unnecessary complexity (YAGNI / over-engineering)",
+        "Suggests a simpler behavior-preserving form (e.g., inline to a plain function calling emailClient.send)",
+        "Assigns it Medium or Low severity, not Critical or High",
+        "Does not fabricate a correctness/security bug that the code does not have"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "n-plus-one-and-intent",
+      "prompt": "Please review this PR. PR title: 'Return active users with their latest order total'.\n\n```go\n// handlers/users.go (diff)\nfunc ActiveUsers(db *sql.DB) ([]UserDTO, error) {\n    rows, _ := db.Query(\"SELECT id, name FROM users WHERE active = true\")\n    var out []UserDTO\n    for rows.Next() {\n        var u UserDTO\n        rows.Scan(&u.ID, &u.Name)\n        total, _ := orderTotal(db, u.ID) // runs a SELECT per user\n        u.OrderTotal = total\n        out = append(out, u)\n    }\n    return out, nil\n}\n```",
+      "expected_output": "Flags the N+1 query (orderTotal called per user in the loop) at scale, with a JOIN/batch fix. Also flags the ignored errors from db.Query and rows.Scan (correctness). Correctness/perf findings, not style. Verdict reflects fixable issues.",
+      "assertions": [
+        "Identifies the N+1 query pattern (per-user query inside the loop) as a performance finding",
+        "Suggests batching / JOIN / single-query fix",
+        "Flags at least one ignored error (the discarded err from Query or Scan) as a correctness issue",
+        "Does not flag cosmetic style issues as findings",
+        "Provides file:line references for the findings"
+      ]
+    }
+  ]
+}
