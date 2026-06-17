@@ -90,7 +90,7 @@ End with a one-line **verdict** and counts:
 - **Needs Attention** — Medium findings; mergeable with judgment.
 - **Needs Work** — any Critical/High.
 
-`✅ Ready to Merge` · `🔴 Critical: 0  🟠 High: 0  🟡 Medium: 2  ⚪ Low: 1`
+`🟡 Needs Attention` · `🔴 Critical: 0  🟠 High: 0  🟡 Medium: 2  ⚪ Low: 1`
 
 If the change is clean, say so plainly — "No blocking issues; behavior matches intent." Don't
 manufacture findings to look thorough. A short, correct review is the best outcome.
