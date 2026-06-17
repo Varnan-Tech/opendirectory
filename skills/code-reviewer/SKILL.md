@@ -84,13 +84,6 @@ definitions + the finding template + verdict rules: [references/output.md](refer
 
 Emit findings in this shape (the fix is what makes a review actionable rather than just critical):
 
-```
-### [SEVERITY] <short title>
-**File:** path/to/file.ext:LINE
-**Issue:** what's wrong + the concrete consequence
-**Evidence:** the offending line(s), quoted
-**Fix:** the corrected code, or a precise change
-```
 
 End with a one-line **verdict** and counts:
 - **Ready to Merge** — nothing above Low.
