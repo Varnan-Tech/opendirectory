@@ -402,6 +402,14 @@
     "path": "skills/position-me"
   },
   {
+    "name": "pql-framework",
+    "description": "No description available",
+    "tags": [],
+    "author": "opendirectory",
+    "version": "0.0.1",
+    "path": "skills/pql-framework"
+  },
+  {
     "name": "pr-description-writer",
     "description": "Use when the user asks to write, draft, generate, or update a GitHub pull request description for the current branch.",
     "tags": [
@@ -579,6 +587,14 @@
     "author": "opendirectory",
     "version": "0.0.1",
     "path": "skills/where-your-customer-lives"
+  },
+  {
+    "name": "win-loss-analyzer",
+    "description": "Build and run a structured win/loss analysis program for B2B SaaS and developer-first companies.",
+    "tags": [],
+    "author": "Varnan",
+    "version": "1.0.0",
+    "path": "skills/win-loss-analyzer"
   },
   {
     "name": "yc-intent-radar-skill",

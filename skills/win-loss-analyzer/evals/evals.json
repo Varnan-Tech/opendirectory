@@ -1,0 +1,29 @@
+{
+  "skill_name": "win-loss-analyzer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our CRM shows 60% of our losses are due to pricing but my gut says that's not the full story. We're losing to Competitor X a lot but we don't really know why. How do I set up a win/loss program to find out what's actually happening?",
+      "expected_output": "Explain CRM self-report bias (reps pick 'price' as face-saving); set up buyer-direct interview program with deal selection criteria (late-stage competitive losses to Competitor X), provide opening interview questions, driver tagging taxonomy, and founder-scale cadence.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I just lost a big deal I was sure we'd win. The rep said the buyer chose a competitor because of price but I talked to the buyer briefly and it sounded like something else. What questions should I ask in a win/loss call to actually find out what happened?",
+      "expected_output": "Concrete interview question guide: broad narrative openers, then adaptive probing across product/sales/price/competitive. Follow-up probes (tell me more, what made that important, was there a moment your thinking shifted). 5 Whys technique. Interview mechanics (buyer speaks 80-90%, 30-45 min, within 60 days).",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "We're a developer tool with a freemium model. A lot of developers try us and don't convert but they never show up as lost deals in our CRM. How do I capture win/loss data for these users?",
+      "expected_output": "Address PLG blind spot: trial conversion losses don't appear in CRM. Needs a separate interview track for churned high-fit trial users. Different question design (activation, where they got stuck, what they tried instead). Route findings to Product as onboarding/activation signal, not to sales.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I have 15 win/loss interview notes from the last quarter but they're all in different formats and I can't find patterns across them. How do I organize and analyze this data?",
+      "expected_output": "Driver tagging taxonomy (Pricing, Product, Sales Experience, Support, Competitive, Value/Fit), 3-5 tags per deal with positive/negative sentiment, deal metadata schema, pattern detection by segment/competitor/deal stage. How to aggregate across the set to find recurring drivers.",
+      "files": []
+    }
+  ]
+}
