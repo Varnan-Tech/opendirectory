@@ -1,0 +1,29 @@
+{
+  "skill_name": "pql-framework",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a dev tool SaaS with a freemium plan. Users sign up, play around, but I don't know who is actually ready to buy. I'm the only salesperson right now and I can't talk to everyone. How do I figure out which users are high-intent without building some complicated scoring system?",
+      "expected_output": "Founder-scale PQL setup: pre-filter exclusions, 2-3 behavioral signals (activation + teammate invite + pricing page), Slack webhook routing, firmographic filter on ICP, and a manual-touch cadence for Tier A leads. Should be actionable without RevOps or data warehouse.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "We're getting tons of PQL alerts from our scoring system but our sales team says most of them are junk leads that never convert. Our current model fires when someone logs in 5 times in a week. What's wrong and how do we fix it?",
+      "expected_output": "Diagnosis: single-dimension behavioral scoring without firmographic filter, no pre-scoring exclusion logic, threshold too low/wrong signal. Fix: add ICP firmographic check, introduce expansion signals as higher-weight indicators, implement pre-model exclusion for paid/no-upsell accounts, apply decay logic, raise threshold.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "We're a developer-first API tool. Our users are individual developers who sign up, but we want to convert to team plans. What product events should we be tracking to know when an account is ready for a team plan upsell?",
+      "expected_output": "Focus on expansion signals: teammate invite (solo→pair), multi-team/workspace growth, collaboration feature usage, shared project creation. Reference Vercel's two-milestone model. Also cover: API usage growth, repeated core feature use, plan limit proximity. Suggest sdk-adoption-tracker for API-level signals.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "How should I handle users in my PQL model who are already paying customers? Should I score them differently or keep them in the same model?",
+      "expected_output": "Paid users with no upgrade path should be excluded BEFORE scoring (pre-model filter), not just deprioritized. Explain the two separate PQL model types: conversion-stage (free→paid) and expansion-stage (paid→upsell). Existing paid customers with expansion potential belong in an expansion PQL model, not the conversion model.",
+      "files": []
+    }
+  ]
+}

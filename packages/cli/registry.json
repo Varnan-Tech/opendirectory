@@ -402,6 +402,14 @@
     "path": "skills/position-me"
   },
   {
+    "name": "pql-framework",
+    "description": "Build, calibrate, or audit a Product-Qualified Lead (PQL) scoring and routing system for PLG and developer-first companies.",
+    "tags": [],
+    "author": "Varnan",
+    "version": "1.0.0",
+    "path": "skills/pql-framework"
+  },
+  {
     "name": "pr-description-writer",
     "description": "Use when the user asks to write, draft, generate, or update a GitHub pull request description for the current branch.",
     "tags": [
