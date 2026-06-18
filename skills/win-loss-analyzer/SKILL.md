@@ -1,10 +1,7 @@
 ---
 name: win-loss-analyzer
 description: "Build and run a structured win/loss analysis program for B2B SaaS and developer-first companies. Use this skill whenever someone asks why deals are being lost, how to run win/loss interviews, what questions to ask buyers after a deal closes, how to stop relying on CRM loss reasons, how to capture competitive intelligence from real buyer conversations, how to set up a win/loss program without a dedicated analyst, or how to route competitive insights to product and sales teams. Covers the full program: CRM bias problem, buyer-direct interview design, driver tagging taxonomy, data capture schema, founder-scale cadence, and insight routing rituals."
-compatibility:
-  - claude-code
-  - gemini-cli
-  - github-copilot
+compatibility: [claude-code, gemini-cli, github-copilot]
 author: Varnan
 version: 1.0.0
 ---

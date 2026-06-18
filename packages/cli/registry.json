@@ -402,14 +402,6 @@
     "path": "skills/position-me"
   },
   {
-    "name": "pql-framework",
-    "description": "No description available",
-    "tags": [],
-    "author": "opendirectory",
-    "version": "0.0.1",
-    "path": "skills/pql-framework"
-  },
-  {
     "name": "pr-description-writer",
     "description": "Use when the user asks to write, draft, generate, or update a GitHub pull request description for the current branch.",
     "tags": [
