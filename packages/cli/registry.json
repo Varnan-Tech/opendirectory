@@ -391,6 +391,16 @@
     "path": "skills/outreach-sequence-builder"
   },
   {
+    "name": "podcast-transcript-fetcher",
+    "description": "Use when fetching, searching, or analyzing transcripts from Lenny's Podcast, Dwarkesh Podcast, Cheeky Pint, 20VC, or A16z Podcast.",
+    "tags": [
+      "SEO"
+    ],
+    "author": "farizanjum",
+    "version": "1.0.0",
+    "path": "skills/podcast-transcript-fetcher"
+  },
+  {
     "name": "position-me",
     "description": "Elite Website Reviewer Agent for AEO, GEO, SEO, UI/UX Psychology, and Copywriting.",
     "tags": [
