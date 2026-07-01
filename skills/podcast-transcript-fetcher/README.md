@@ -1,6 +1,6 @@
 # Podcast Transcript Fetcher
 
-> Fetch, search, and batch-transcribe transcripts from 5 top podcasts using a 3-tier approach: free sources, RSS+Whisper, and commercial API.
+> Fetch, search, and batch-transcribe transcripts from 5 top podcasts. Tier 2 (RSS+Groq Whisper) is the recommended approach -- fast, free, and the most reliable. Tier 1 free sources are best-effort; Tier 3 Taddy API is the commercial/premium option.
 
 [![opendirectory](https://img.shields.io/badge/opendirectory-skill-blue)](https://opendirectory.dev)
 [![version](https://img.shields.io/badge/version-1.0.0-green)](https://github.com/Varnan-Tech/opendirectory)
@@ -63,21 +63,18 @@ Run these commands inside Claude Code:
 
 [**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fpodcast-transcript-fetcher&utm_source=opendirectory)
 
-Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
-
-1. Open the skill you want from the [opendirectory homepage](https://opendirectory.dev).
+Manus AI users can import a skill directly from its OpenDirectory skill page.
+1. Open the skill from the [opendirectory homepage](https://opendirectory.dev).
 2. In the install panel, select the **Manus AI** tab.
-3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
+3. Click **Install in Manus AI**.
 4. Confirm the import inside Manus AI.
-
-> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 <!-- OPENDIRECTORY_INSTALL_END -->
 
 
 ## Quick Start
 
 ```bash
-# Set up Python dependencies
+# Install Python dependencies
 pip install requests python-dotenv
 
 # Copy and fill in your API key
@@ -96,12 +93,12 @@ python scripts/get_transcript.py "Dwarkesh Podcast" --last 3
 
 ## Transcription Methods
 
-| Method | Cost | Speed | Quality | Setup |
-|--------|------|-------|---------|-------|
-| Free sources | $0 | Instant | Varies | None |
-| Groq Whisper | Free tier | ~10s/hr audio | 2.7% WER | `pip install groq` + API key |
-| Local faster-whisper | $0 (compute) | ~1.5x realtime | 2.7% WER | `pip install faster-whisper` |
-| Taddy API | $75/mo+ | Instant | High | `TADDY_API_KEY` |
+| Method | Cost | Speed | Quality | Setup | Recommendation |
+|--------|------|-------|---------|-------|---------------|
+| Free sources | $0 | Instant | Varies | None | Best-effort, limited availability |
+| Groq Whisper (Tier 2) | Free tier | ~10s/hr audio | 2.7% WER | `pip install groq` + API key | **RECOMMENDED** |
+| Local faster-whisper | $0 (compute) | ~1.5x realtime | 2.7% WER | `pip install faster-whisper` | Offline alternative |
+| Taddy API (Tier 3) | $75/mo+ | Instant | High | `TADDY_API_KEY` | Premium / commercial |
 
 ## Prerequisites
 
@@ -154,47 +151,26 @@ python scripts/get_transcript.py "20vc" --last 5
 python scripts/get_transcript.py --search "AI safety" --transcribe --transcribe-count 5
 ```
 
-### Parallel Transcription
-
-Speed up batch and pipeline jobs with the `--parallel N` flag:
-
-```bash
-# Set up multiple API keys (optional -- round-robin across workers)
-export GROQ_API_KEY="gsk_..."
-export GROQ_API_KEY_2="gsk_..."
-export GROQ_API_KEY_3="gsk_..."
-
-# Batch-transcribe 12 episodes with 3 parallel workers
-python scripts/get_transcript.py "Dwarkesh Podcast" --last 12 --parallel 3
-
-# Search pipeline with parallel transcription
-python scripts/get_transcript.py --search "AI safety" --transcribe --transcribe-count 10 --parallel 3
-```
-
-**How it works:**
-- Each worker independently downloads, compresses, and transcribes one episode
-- API keys are assigned round-robin across workers (`GROQ_API_KEY`, `GROQ_API_KEY_2`, ...)
-- Groq rate limit: ~30 req/min per key → 3 keys × 3 workers = ~90 req/min
-- Default `--parallel 1` maintains sequential backward-compatible behavior
-- Requires ffmpeg (for audio compression under Groq's 25 MB limit)
-- Output files are written independently with unique filenames (no contention)
-
 ## How It Works
 
 ```
 User provides podcast + episode
       ↓
-Tier 1: Free sources (GitHub archive, PodScripts, YouTube)
-  → Found? Return transcript instantly
-  → Not found? Fall through
+Tier 1: Free sources (best-effort, limited availability)
+  → Lenny's: GitHub archive (269 transcripts)
+  → Others: website scrape, Substack PDF
+  → Found? Return instantly
+  → Not found? Fall through to Tier 2
       ↓
-Tier 2: RSS + Whisper transcription
+Tier 2: RSS + Whisper transcription [RECOMMENDED]
   → Download MP3 from podcast RSS feed
   → Compress if >25 MB (ffmpeg)
-  → Transcribe via Groq Whisper API
+  → Transcribe via Groq Whisper API (free tier, ~10s/hr audio)
+  → Fast, free, and works for every podcast
       ↓
-Tier 3: Taddy API (commercial fallback)
-  → Requires TADDY_API_KEY
+Tier 3: Taddy API (commercial/premium)
+  → Requires TADDY_API_KEY ($75/mo+)
+  → Use for large-scale or production needs
 ```
 
 Search and batch features build on Tier 2:

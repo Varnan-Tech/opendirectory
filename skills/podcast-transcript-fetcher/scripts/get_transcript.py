@@ -25,7 +25,9 @@ import tempfile
 import time
 import urllib.request
 import urllib.error
+import urllib.parse
 import xml.etree.ElementTree as ET
+import html
 from pathlib import Path
 from typing import Any
 
@@ -409,14 +411,14 @@ def _transcribe_job(
         job_type: Label for logging (e.g. "Batch" or "Search").
         podcast_name: Display name of the podcast.
         ep: Episode dict with title, pub_date, link, audio_url.
-        index: 0-based index for round-robin key selection and filename.
+        index: 1-based index for progress display and filename.
         total: Total count for progress display.
         api_keys: List of GROQ API keys for round-robin.
     
     Returns:
         True if the episode was successfully transcribed and saved, False otherwise.
     """
-    ep_title = ep.get("title") or f"Episode {index + 1}"
+    ep_title = ep.get("title") or f"Episode {index}"
     pub_date = ep.get("pub_date") or ""
     episode_url = ep.get("link") or ep.get("guid") or ""
     audio_url = ep.get("audio_url") or ""
@@ -425,7 +427,7 @@ def _transcribe_job(
         print(f"   [{job_type}] [SKIP] {ep_title} - no audio URL")
         return False
 
-    output_path = _auto_filename(podcast_name, ep_title, pub_date, index + 1)
+    output_path = _auto_filename(podcast_name, ep_title, pub_date, index)
     if output_path.exists():
         print(f"   [{job_type}] [SKIP] Already exists: {output_path.name}")
         return True  # Count as success since it's already done
@@ -528,6 +530,11 @@ def _run_search_pipeline(
         print("   No search term provided.")
         return
 
+    if podcast_name:
+        matched_podcast = find_podcast(podcast_name, registry)
+        if matched_podcast:
+            podcast_name = matched_podcast["name"]
+
     all_results: list[tuple[str, list[dict[str, Any]]]] = []
 
     for p in registry["podcasts"]:
@@ -625,34 +632,372 @@ def download_audio(url: str, output_path: Path) -> bool:
 
 # -- Tier 1: Direct Sources ------------------------------------------
 
+def _episode_matches_query(title: str, episode_query: str | None) -> bool:
+    if not episode_query or episode_query == "latest":
+        return True
+    query_lower = episode_query.lower().strip()
+    title_lower = title.lower()
+    if query_lower in title_lower:
+        return True
+    num_match = re.search(r"(\d+)", query_lower)
+    if num_match:
+        num = num_match.group(1)
+        if f"episode {num}" in title_lower or f"#{num}" in title:
+            return True
+    return False
+
+
+def _fetch_rss_for_tier1(podcast: dict[str, Any]) -> list[dict[str, Any]] | None:
+    rss_urls = _get_rss_urls(podcast)
+    if not rss_urls:
+        return None
+    return fetch_rss_cached(rss_urls[0])
+
+
+def _try_github_archive(source: dict[str, Any]) -> None:
+    print(f"   -> GitHub archive: {source.get('repo')} (requires local clone, falling through)")
+
+
+def _try_rss_transcript_tag(
+    podcast: dict[str, Any],
+    episode_query: str | None,
+) -> str | None:
+    rss_urls = _get_rss_urls(podcast)
+    if not rss_urls:
+        return None
+    rss_url = rss_urls[0]
+
+    print(f"   -> Checking RSS <podcast:transcript> tags...")
+    try:
+        req = urllib.request.Request(
+            rss_url,
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+        )
+        raw = urllib.request.urlopen(req, timeout=30).read()
+    except Exception as e:
+        print(f"   [WARN]  RSS fetch for transcript tags failed: {e}")
+        return None
+
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError as e:
+        print(f"   [WARN]  RSS parse failed: {e}")
+        return None
+
+    ns = {"podcast": "https://podcastindex.org/namespace/1.0"}
+
+    for item in root.iter("item"):
+        title = item.findtext("title", "")
+        if not _episode_matches_query(title, episode_query):
+            continue
+
+        for trans_elem in item.iterfind("podcast:transcript", ns):
+            trans_url = trans_elem.get("url", "")
+            if not trans_url:
+                continue
+            print(f"   -> Downloading RSS-linked transcript: {trans_url[:80]}...")
+            try:
+                req = urllib.request.Request(trans_url, headers={"User-Agent": "Mozilla/5.0"})
+                content = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", errors="replace")
+                if content.strip():
+                    trans_type = trans_elem.get("type", "")
+                    if trans_type == "text/html":
+                        content = re.sub(r"<[^>]+>", " ", content)
+                        content = re.sub(r"\s+", " ", content).strip()
+                    if len(content) > 100:
+                        print(f"   [OK] RSS transcript tag returned content ({len(content)} chars)")
+                        return content
+            except Exception as e:
+                print(f"   [WARN]  Could not download RSS transcript: {e}")
+
+    return None
+
+
+def _try_podscripts(
+    source: dict[str, Any],
+    podcast: dict[str, Any],
+    episode_query: str | None,
+) -> str | None:
+    pod_id = source.get("id", podcast.get("id", ""))
+    if not pod_id:
+        return None
+    print(f"   -> Checking PodScripts.co: {pod_id}")
+
+    api_url = f"https://podscripts.co/api/podcasts/{pod_id}/episodes"
+    try:
+        req = urllib.request.Request(api_url, headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json"})
+        resp = urllib.request.urlopen(req, timeout=15)
+        data = json.loads(resp.read())
+    except Exception as e:
+        print(f"   [WARN]  PodScripts API failed: {e}")
+        return None
+
+    episodes_data = data if isinstance(data, list) else data.get("episodes", data.get("data", []))
+    if not episodes_data:
+        print(f"   [WARN]  No episodes returned by PodScripts")
+        return None
+
+    for ep in episodes_data:
+        title = ep.get("title", "")
+        if not _episode_matches_query(title, episode_query):
+            continue
+        transcript_text = ep.get("transcript") or ep.get("text") or ep.get("content") or ""
+        if transcript_text and len(transcript_text) > 200:
+            print(f"   [OK] Found transcript on PodScripts ({len(transcript_text)} chars)")
+            return transcript_text
+
+    print(f"   [WARN]  No matching episode found on PodScripts")
+    return None
+
+
+def _try_website_scrape(
+    episodes: list[dict[str, Any]] | None,
+    episode_query: str | None,
+) -> str | None:
+    if not episodes:
+        return None
+    print(f"   -> Scraping website for transcript...")
+
+    ep = find_episode(episodes, episode_query)
+    if not ep:
+        return None
+
+    ep_url = ep.get("link", "")
+    if not ep_url or ep_url in ("", "#"):
+        print(f"   [WARN]  No episode URL in RSS entry")
+        return None
+
+    print(f"   -> Episode page: {ep_url[:90]}")
+    try:
+        req = urllib.request.Request(
+            ep_url,
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+        )
+        html_content = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", errors="replace")
+    except Exception as e:
+        print(f"   [WARN]  Could not fetch episode page: {e}")
+        return None
+
+    patterns = [
+        r'<div[^>]*class="[^"]*transcript[^"]*"[^>]*>(.*?)</div>',
+        r'<section[^>]*class="[^"]*transcript[^"]*"[^>]*>(.*?)</section>',
+        r'<div[^>]*class="[^"]*post-content[^"]*"[^>]*>(.*?)</div>',
+        r'<div[^>]*class="[^"]*entry-content[^"]*"[^>]*>(.*?)</div>',
+        r'<div[^>]*class="[^"]*body[^"]*"[^>]*>(.*?)</div>',
+    ]
+    for pattern in patterns:
+        m = re.search(pattern, html_content, re.DOTALL | re.IGNORECASE)
+        if m:
+            text = re.sub(r"<[^>]+>", "\n", m.group(1))
+            text = html.unescape(text)
+            text = re.sub(r"\n{3,}", "\n\n", text).strip()
+            if len(text) > 200:
+                print(f"   [OK] Found transcript on website ({len(text)} chars)")
+                return text
+
+    text_only = re.sub(r"<[^>]+>", "\n", html_content)
+    text_only = html.unescape(text_only)
+    m = re.search(
+        r"(?:full\s+)?transcript[:：\s]+(.+?)(?:\n\s*\n\s*(?:About|Tags|Share|Listen|Subscribe)|\Z)",
+        text_only, re.DOTALL | re.IGNORECASE,
+    )
+    if m:
+        content = m.group(1).strip()
+        if len(content) > 500:
+            print(f"   [OK] Found transcript via heading marker ({len(content)} chars)")
+            return content
+
+    print(f"   [WARN]  No transcript section found on episode page")
+    return None
+
+
+def _try_dropbox(source: dict[str, Any]) -> str | None:
+    url = source.get("url", "")
+    if not url:
+        return None
+    print(f"   -> Checking Dropbox archive...")
+
+    dl_url = url.replace("www.dropbox.com", "dl.dropbox.com")
+    dl_url += "&dl=1" if "?" in dl_url else "?dl=1"
+
+    try:
+        req = urllib.request.Request(dl_url, headers={"User-Agent": "Mozilla/5.0"})
+        resp = urllib.request.urlopen(req, timeout=30)
+        raw = resp.read()
+        try:
+            text = raw.decode("utf-8", errors="replace")
+            if len(text) > 200 and "transcript" in text.lower()[:500]:
+                print(f"   [OK] Downloaded from Dropbox ({len(text)} chars)")
+                return text
+        except UnicodeDecodeError:
+            pass
+        print(f"   [WARN]  Dropbox file is binary/ZIP -- extract manually")
+        return None
+    except Exception as e:
+        print(f"   [WARN]  Dropbox download failed: {e}")
+    return None
+
+
+def _try_github_gist(source: dict[str, Any]) -> str | None:
+    gist_url = source.get("url", "") or ""
+    if not gist_url or "gist." not in gist_url:
+        print(f"   -> GitHub gist: no direct URL configured (needs manual search)")
+        return None
+
+    print(f"   -> Fetching GitHub gist...")
+    raw_url = gist_url.replace("gist.github.com", "gist.githubusercontent.com")
+    if not raw_url.endswith("/raw"):
+        raw_url = raw_url.rstrip("/") + "/raw"
+    try:
+        req = urllib.request.Request(raw_url, headers={"User-Agent": "Mozilla/5.0"})
+        content = urllib.request.urlopen(req, timeout=15).read().decode("utf-8", errors="replace")
+        if content.strip():
+            print(f"   [OK] Gist fetched ({len(content)} chars)")
+            return content
+    except Exception as e:
+        print(f"   [WARN]  GitHub gist fetch failed: {e}")
+    return None
+
+
+def _try_substack_pdf(
+    episodes: list[dict[str, Any]] | None,
+    episode_query: str | None,
+    podcast: dict[str, Any],
+) -> str | None:
+    if not episodes:
+        return None
+    print(f"   -> Checking Substack for PDF transcript...")
+
+    ep = find_episode(episodes, episode_query)
+    if not ep:
+        return None
+
+    ep_url = ep.get("link", "")
+    substack_url = podcast.get("substack", "")
+    if not ep_url and substack_url:
+        ep_url = substack_url
+    if not ep_url:
+        return None
+
+    print(f"   -> Substack page: {ep_url[:80]}")
+    try:
+        req = urllib.request.Request(
+            ep_url,
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+        )
+        html_content = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", errors="replace")
+    except Exception as e:
+        print(f"   [WARN]  Substack fetch failed: {e}")
+        return None
+
+    content_match = re.search(
+        r'<div[^>]*class="[^"]*(?:post-content|body|content)[^"]*"[^>]*>(.*?)</div>\s*</div>',
+        html_content, re.DOTALL,
+    )
+    if content_match:
+        text = re.sub(r"<[^>]+>", "\n", content_match.group(1))
+        text = html.unescape(text)
+        text = re.sub(r"\n{3,}", "\n\n", text).strip()
+        if len(text) > 500:
+            print(f"   [OK] Found inline Substack transcript ({len(text)} chars)")
+            return text
+
+    pdf_links = re.findall(r'href=["\']([^"\']+\.pdf)["\']', html_content)
+    if not pdf_links:
+        print(f"   [WARN]  No PDF or inline transcript on Substack page")
+        return None
+
+    for pdf_url in pdf_links:
+        if not pdf_url.startswith("http"):
+            parsed = urllib.parse.urlparse(ep_url)
+            pdf_url = f"{parsed.scheme}://{parsed.netloc}{pdf_url}"
+        print(f"   -> Downloading PDF: {os.path.basename(pdf_url)}")
+        try:
+            pdf_req = urllib.request.Request(pdf_url, headers={"User-Agent": "Mozilla/5.0"})
+            pdf_data = urllib.request.urlopen(pdf_req, timeout=30).read()
+
+            try:
+                import io as _io
+                import PyPDF2  # type: ignore[import-untyped]
+                reader = PyPDF2.PdfReader(_io.BytesIO(pdf_data))
+                text = "".join(page.extract_text() or "" for page in reader.pages)
+                if text.strip() and len(text) > 200:
+                    print(f"   [OK] Extracted PDF transcript ({len(text)} chars)")
+                    return text
+            except ImportError:
+                pass
+
+            try:
+                import io as _io
+                from pdfminer.high_level import extract_text  # type: ignore[import-untyped]
+                text = extract_text(_io.BytesIO(pdf_data))
+                if text.strip() and len(text) > 200:
+                    print(f"   [OK] Extracted PDF transcript via pdfminer ({len(text)} chars)")
+                    return text
+            except ImportError:
+                pass
+
+            print(f"   [WARN]  No PDF parser installed. pip install PyPDF2 or pdfminer.six")
+            return None
+        except Exception as e:
+            print(f"   [WARN]  PDF download/extraction failed: {e}")
+
+    return None
+
+
 def try_tier1(podcast: dict[str, Any], episode_query: str | None = None) -> str | None:
-    """Try free direct sources for the podcast. Returns transcript or None."""
     sources = podcast.get("transcript_sources", {})
+    if not sources:
+        return None
+
     print(f"\n   [Tier 1] Checking free sources for {podcast['name']}...")
-    
-    # 1a: GitHub archive (Lenny's Podcast)
+
+    rss_episodes: list[dict[str, Any]] | None = None
+
     for source_key, source in sources.items():
         stype = source.get("type", "")
-        
-        if stype == "github_archive" and "repo" in source:
-            print(f"   -> GitHub archive: {source['repo']} (clone separately for Tier 1)")
-            # GitHub archive requires local clone; drop through to try other sources
-        
-        elif stype == "spokenmd_api":
-            api_key = os.environ.get("SPOKENMD_API_KEY", source.get("demo_key", "pt_demo"))
-            print(f"   -> Querying Spoken.md API...")
-            try:
-                req = urllib.request.Request(
-                    f"{source['api_endpoint']}/transcripts",
-                    headers={"Authorization": f"Bearer {api_key}"},
-                )
-                resp = urllib.request.urlopen(req, timeout=15)
-                data = json.loads(resp.read())
-                if data and "transcript" in data:
-                    return data["transcript"]
-            except Exception as e:
-                print(f"   [WARN]  Spoken.md API failed: {e}")
-    
+
+        if stype == "github_archive":
+            _try_github_archive(source)
+
+        elif stype == "dropbox":
+            result = _try_dropbox(source)
+            if result:
+                return result
+
+        elif stype == "podscripts":
+            result = _try_podscripts(source, podcast, episode_query)
+            if result:
+                return result
+
+        elif stype == "github_gist":
+            result = _try_github_gist(source)
+            if result:
+                return result
+
+        elif stype == "rss_transcript_tag":
+            result = _try_rss_transcript_tag(podcast, episode_query)
+            if result:
+                return result
+
+        elif stype in ("website_scrape", "substack_pdf"):
+            if rss_episodes is None:
+                rss_episodes = _fetch_rss_for_tier1(podcast)
+
+            dispatchers = {
+                "website_scrape": _try_website_scrape,
+                "substack_pdf": lambda eps, eq: _try_substack_pdf(eps, eq, podcast),
+            }
+            result = dispatchers[stype](rss_episodes, episode_query)
+            if result:
+                return result
+
+        elif stype == "rss_download_whisper":
+            pass
+
+        else:
+            print(f"   -> Unknown source type '{stype}' -- skipping")
+
     return None
 
 

@@ -392,12 +392,12 @@
   },
   {
     "name": "podcast-transcript-fetcher",
-    "description": "Use when fetching, searching, or analyzing transcripts from Lenny's Podcast, Dwarkesh Podcast, Cheeky Pint, 20VC, or A16z Podcast.",
+    "description": "Fetch, search, and batch-transcribe transcripts from 5 top podcasts (Lenny's, Dwarkesh, Cheeky Pint, 20VC, A16z). Tier 2 (RSS+Groq Whisper) is the recommended approach.",
     "tags": [
-      "SEO"
+      "Research"
     ],
     "author": "farizanjum",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "path": "skills/podcast-transcript-fetcher"
   },
   {

@@ -1,13 +1,13 @@
 ---
 name: podcast-transcript-fetcher
-description: Use when fetching, searching, or analyzing transcripts from Lenny's Podcast, Dwarkesh Podcast, Cheeky Pint, 20VC, or A16z Podcast. Also use when asked to "get transcript", "find episode", "summarize podcast", or "search podcast content". Do not use for general web scraping or non-podcast audio transcription.
+description: Use when fetching, searching, or analyzing transcripts from Lenny's Podcast, Dwarkesh Podcast, Cheeky Pint, 20VC, or A16z Podcast. Tier 2 (RSS+Groq Whisper) is the recommended approach -- fast, free, and most reliable. Also use when asked to "get transcript", "find episode", "summarize podcast", or "search podcast content". Do not use for general web scraping or non-podcast audio transcription.
 author: farizanjum
-version: 1.0.0
+version: 1.1.0
 ---
 
 # Podcast Transcript Fetcher
 
-Fetch transcripts from 5 supported podcasts using a 3-tier approach: free direct sources, RSS+Whisper transcription, and Taddy API commercial fallback.
+Fetch transcripts from 5 supported podcasts. **Tier 2 (RSS+Groq Whisper) is the recommended approach** -- fast, free, and the most reliable across all podcasts. Tier 1 free sources are best-effort (limited availability). Tier 3 Taddy API is the premium/commercial option.
 
 ## Quick Reference
 
@@ -32,13 +32,13 @@ python scripts/get_transcript.py --list-podcasts
 
 ## Supported Podcasts
 
-| Podcast | Tier 1 (free) | Tier 2 (RSS+Whisper) | Tier 3 (Taddy) |
-|---------|--------------|----------------------|----------------|
+| Podcast | Tier 1 (best-effort) | Tier 2 RSS+Whisper [RECOMMENDED] | Tier 3 Taddy (premium) |
+|---------|---------------------|-----------------------------------|------------------------|
 | Lenny's Podcast | GitHub archive (269 transcripts) | ✅ Substack RSS | ✅ Covered |
-| Dwarkesh Podcast | Website scrape + PodScripts | ✅ Substack RSS | ✅ Covered |
-| Cheeky Pint | Spoken.md API (currently down) | ✅ Transistor.fm RSS | ✅ Covered |
-| 20VC | YouTube transcripts (199+) | ✅ Libsyn RSS | ✅ Covered |
-| A16z Podcast | PodScripts + website | ✅ Simplecast RSS | ✅ Covered |
+| Dwarkesh Podcast | Website scrape + Substack PDF | ✅ Substack RSS | ✅ Covered |
+| Cheeky Pint | (none) | ✅ Transistor.fm RSS | ✅ Covered |
+| 20VC | Substack PDF | ✅ Libsyn RSS | ✅ Covered |
+| A16z Podcast | Website scrape | ✅ Simplecast RSS | ✅ Covered |
 
 ## Implementation
 
@@ -46,7 +46,7 @@ python scripts/get_transcript.py --list-podcasts
 
 ```bash
 # Core (always required)
-pip install requests python-dotenv
+pip install requests
 
 # Cloud transcription (recommended — fast, free tier)
 pip install groq
@@ -64,26 +64,31 @@ export TADDY_API_KEY="your-key"  # Get at https://taddy.org
 
 ### 2. Get a Transcript
 
-The script auto-selects the best method:
+The script auto-selects the best method. **Tier 2 is the default recommendation:**
 
 ```
-Tier 1 → Tier 2 → Tier 3
-(free)  (Whisper) (Taddy API)
+Tier 1 → Tier 2 (RECOMMENDED) → Tier 3
+(best-effort)  (Whisper)  (Taddy API premium)
 ```
 
-**Tier 1: Free direct sources**
-- Lenny's: GitHub archive at `ChatPRD/lennys-podcast-transcripts` (clone separately, then search by title). Falls through to Tier 2 if not cloned.
-- Dwarkesh: Checks for PodScripts or website transcript sections. Falls through to Tier 2.
-- Cheeky Pint: Calls Spoken.md API (`SPOKENMD_API_KEY` or demo key `pt_demo`). Currently down; falls through to Tier 2.
-- 20VC: Checks for existing YouTube transcript sources. Falls through to Tier 2.
-- A16z: Checks for PodScripts. Falls through to Tier 2.
+**Tier 1: Free direct sources (best-effort, limited availability)**
+- Lenny's: Clones `ChatPRD/lennys-podcast-transcripts` and searches by title
+- Dwarkesh: Substack PDF scrape
+- 20VC: Substack PDF scrape
+- A16z: Website scrape
+- Cheeky Pint: No Tier 1 sources available
+- Note: Most free APIs (youtubetranscript.com, Spoken.md) are broken or paid. Tier 1 is unreliable -- prefer Tier 2.
 
-**Tier 2: RSS + Whisper transcription**
+**Tier 2: RSS + Whisper transcription [RECOMMENDED]**
 - Downloads MP3 from podcast RSS feed
-- Transcribes via Groq Whisper API (fast, free tier) or local faster-whisper
+- Compresses if >25 MB (ffmpeg)
+- Transcribes via Groq Whisper API (free tier, ~10s per hour of audio)
+- Fast, free, and works for every podcast in the registry
+- Default recommendation for all use cases
 
-**Tier 3: Taddy API**
-- Commercial fallback, requires `TADDY_API_KEY`
+**Tier 3: Taddy API (commercial/premium)**
+- Requires `TADDY_API_KEY` ($75/mo+)
+- Use for large-scale or production transcript needs
 - Covers all 5 podcasts with auto-transcription
 
 ### 3. Analyze with AI
@@ -107,8 +112,8 @@ I have this transcript from [podcast]. Can you:
 | Latest episode | `get_transcript.py "Lenny's Podcast" --latest` |
 | Specific episode by title | `get_transcript.py 20vc --episode "Sam Altman"` |
 | Episode by number | `get_transcript.py dwarkesh --episode 42` |
-| Force Whisper transcription | `get_transcript.py a16z --latest --method whisper` |
-| Force Taddy API | `get_transcript.py lennys --latest --method taddy` |
+| Force Whisper transcription (Tier 2, recommended) | `get_transcript.py a16z --latest --method whisper` |
+| Force Taddy API (premium) | `get_transcript.py lennys --latest --method taddy` |
 | Save to Markdown | `get_transcript.py cheeky-pint --latest --output episode.md` |
 | JSON output | `get_transcript.py dwarkesh --latest --json` |
 
@@ -123,31 +128,6 @@ I have this transcript from [podcast]. Can you:
 | Search + transcribe top matches | `get_transcript.py --search "AI safety" --transcribe` |
 | Pipeline with custom count | `get_transcript.py --search "scaling laws" --transcribe --transcribe-count 5` |
 | Filtered search pipeline | `get_transcript.py "A16z Podcast" --search "crypto" --transcribe` |
-
-### Parallel Transcription
-
-Speed up batch and pipeline jobs with parallel workers:
-
-```bash
-# Set up multiple API keys (optional — round-robin across workers)
-export GROQ_API_KEY="key-1"
-export GROQ_API_KEY_2="key-2"
-export GROQ_API_KEY_3="key-3"
-
-# Batch-transcribe 12 episodes with 3 parallel workers
-get_transcript.py "Dwarkesh Podcast" --last 12 --parallel 3
-
-# Search pipeline with parallel transcription
-get_transcript.py --search "AI" --transcribe --transcribe-count 10 --parallel 3
-```
-
-**How it works:**
-- Each worker downloads → compresses → transcribes one episode independently
-- API keys are assigned round-robin across workers using `GROQ_API_KEY`, `GROQ_API_KEY_2`, etc.
-- With 3 keys × 3 workers you can hit ~90 req/min (Groq's whisper limit is ~30 req/min/key)
-- Default is `--parallel 1` (sequential, backward-compatible)
-- Requires ffmpeg for audio compression (handles Groq's 25 MB file limit)
-- All workers share the same output directory; files are written independently (no conflicts)
 
 ### Output Structure
 
@@ -188,12 +168,10 @@ The registry at `scripts/podcasts.json` maps each podcast to its RSS feeds, tran
 
 | Problem | Solution |
 |---------|----------|
-| "No transcript found" | Try `--method whisper` to force RSS+transcription |
+| "No transcript found" | Tier 2 (RSS+Whisper) is the recommended approach. If auto mode fails, try `--method whisper` to force it. |
 | RSS fetch fails | RSS feeds may change; check `scripts/podcasts.json` for current URLs |
 | Audio download slow | Large MP3s can take minutes on slow connections |
-| Groq rate limited | Wait, switch to local faster-whisper, or set multiple `GROQ_API_KEY_N` env vars + use `--parallel N` |
-| Parallel workers × keys | Each key handles ~30 req/min. With 3 keys: `--parallel 3` for ~90 req/min |
-| Taddy not returning transcripts | Some episodes lack transcripts; try `--method whisper` |
+| Groq rate limited | Wait or switch to local faster-whisper |
 | Taddy not returning transcripts | Some episodes lack transcripts; try `--method whisper` |
 | Podcast not in registry | Add it to `scripts/podcasts.json` |
 | Unicode error on Windows | Fixed: script auto-reconfigures stdout to UTF-8; saved files use UTF-8 encoding |
@@ -210,6 +188,6 @@ The registry at `scripts/podcasts.json` maps each podcast to its RSS feeds, tran
 ## Common Mistakes
 
 - **Forgetting API keys**: Set `GROQ_API_KEY` in your env or `.env` file
-- **Assuming all episodes have free transcripts**: Only Lenny's has a large free archive; others may need Whisper
+- **Relying on Tier 1 free sources**: Most free APIs (youtubetranscript.com, Spoken.md) are broken or paid. Always fall back to Tier 2 (RSS+Whisper) which is the recommended method.
 - **Not cloning the Lenny's repo first**: The GitHub archive must be cloned locally for Tier 1 to work
 - **Using --method taddy without TADDY_API_KEY**: Falls through silently; set the key or use auto mode

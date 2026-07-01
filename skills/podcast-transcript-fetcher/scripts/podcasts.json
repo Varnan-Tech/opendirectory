@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-06-30",
-  "description": "Podcast registry for the podcast-transcript-fetcher skill. Maps each podcast to its RSS feeds, transcript sources, and known archives.",
+  "description": "Podcast registry for the podcast-transcript skill. Maps each podcast to its RSS feeds, transcript sources, and known archives.",
   "podcasts": [
     {
       "id": "lennys-podcast",
@@ -67,20 +67,13 @@
       "host": "Multiple hosts",
       "website": "https://thecheekypint.com",
       "rss": "https://feeds.transistor.fm/cheeky-pint-with-john-collison",
-      "transcript_sources": {
-        "primary": {
-          "type": "spokenmd_api",
-          "description": "Spoken.md API with pt_demo key",
-          "api_endpoint": "https://api.spoken.md/v1",
-          "api_key_var": "SPOKENMD_API_KEY",
-          "demo_key": "pt_demo"
+        "transcript_sources": {
+          "primary": {
+            "type": "rss_download_whisper",
+            "description": "Download audio from RSS, transcribe with Whisper",
+            "note": "Free fallback, needs compute"
+          }
         },
-        "secondary": {
-          "type": "rss_download_whisper",
-          "description": "Download audio from RSS, transcribe with Whisper",
-          "note": "Free fallback, needs compute"
-        }
-      },
       "search_pattern": "cheeky pint {episode}"
     },
     {
@@ -92,17 +85,11 @@
       "rss": "https://feeds.libsyn.com/61840/rss",
       "transcript_sources": {
         "primary": {
-          "type": "youtube_transcript",
-          "description": "199+ YouTube episode transcripts",
-          "url": "https://github.com/sboghossian/20vc-claude-skill",
-          "note": "Existing Claude Code skill with pre-extracted transcripts"
-        },
-        "secondary": {
           "type": "rss_download_whisper",
           "description": "Download audio from RSS, transcribe with Whisper",
           "note": "Hosted on Libsyn (12MB feed, 1476+ episodes)"
         },
-        "tertiary": {
+        "secondary": {
           "type": "substack_pdf",
           "description": "Some episodes have PDF transcripts on Substack",
           "url": "https://20vc.substack.com"

@@ -509,8 +509,8 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
   </tr>
   <tr>
     <td><a href="skills/podcast-transcript-fetcher"><code>podcast-transcript-fetcher</code></a></td>
-    <td>Fetch, search, and batch-transcribe transcripts from 5 top podcasts using a 3-tier approach: free sources, RSS+Whisper, and commercial API.</td>
-    <td><code>1.0.0</code></td>
+    <td>Fetch, search, and batch-transcribe transcripts from 5 top podcasts. Tier 2 (RSS+Groq Whisper) is the recommended approach -- fast, free, and the most reliable. Tier 1 free sources are best-effort; Tier 3 Taddy API is the commercial/premium option.</td>
+    <td><code>1.1.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/position-me"><code>position-me</code></a></td>

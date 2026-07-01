@@ -109,7 +109,7 @@ Detailed reference for each podcast's transcript availability and how to access 
 **Tier 2 — YouTube Transcripts (free, 199+ episodes)**
 - Existing skill: `sboghossian/20vc-claude-skill` — 199 YouTube transcripts
 - GitHub: https://github.com/sboghossian/20vc-claude-skill
-- Extracted via `youtube-transcript-api`
+
 - Covers many recent episodes
 
 **Tier 3 — Substack PDFs**
@@ -147,7 +147,7 @@ Detailed reference for each podcast's transcript availability and how to access 
 
 ---
 
-## Taddy API (Commercial, Tier 3)
+## Taddy API (Commercial, Tier 2)
 
 For any podcast not covered by free sources above:
 
@@ -173,7 +173,7 @@ query {
 
 ---
 
-## Whisper Transcription (Tier 2 Fallback)
+## Whisper Transcription (Tier 3 Fallback)
 
 ### Local (faster-whisper)
 ```bash
@@ -190,7 +190,7 @@ for seg in segments:
 ### Cloud (Groq API — generous free tier)
 ```bash
 pip install groq
-# Set GROQ_API_KEY (and optional GROQ_API_KEY_2, GROQ_API_KEY_3 for parallel)
+# Set GROQ_API_KEY
 python -c "
 from groq import Groq
 client = Groq()
@@ -201,12 +201,3 @@ with open('episode.mp3', 'rb') as f:
     print(transcription.text)
 "
 ```
-
-## Parallel Transcription
-
-The `--parallel N` flag (default: 1) speed up batch and pipeline jobs via `concurrent.futures.ThreadPoolExecutor`:
-
-- **Multiple API keys**: Set `GROQ_API_KEY`, `GROQ_API_KEY_2`, `GROQ_API_KEY_3`, etc. Keys are assigned round-robin across workers.
-- **Rate limit**: Groq's whisper endpoint is ~30 req/min per key. With 3 keys, `--parallel 3` can hit ~90 req/min.
-- **Per-worker**: Each worker independently downloads the MP3, compresses it (ffmpeg), transcribes it, and saves the file.
-- **Safety**: Temp directories are cleaned per-worker; file writes use unique filenames (no contention).
