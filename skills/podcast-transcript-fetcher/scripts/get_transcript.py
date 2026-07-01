@@ -1098,11 +1098,16 @@ def try_tier2(podcast: dict[str, Any], episode_query: str | None = None) -> str 
         try:
             return _transcribe_local(audio_path)
         except ImportError:
+            # Save audio to a persistent location before tmp_dir is cleaned up
+            persistent_dir = OUTPUT_DIR / _slugify(podcast["name"]) / "audio"
+            persistent_dir.mkdir(parents=True, exist_ok=True)
+            persistent_audio = persistent_dir / audio_path.name
+            shutil.copy2(audio_path, persistent_audio)
             print("   [WARN]  No transcription backend available.")
             print("   Install one:")
             print("      Cloud (recommended): pip install groq && export GROQ_API_KEY=...")
             print("      Local:              pip install faster-whisper")
-            print(f"   Audio saved at: {audio_path}")
+            print(f"   Audio saved at: {persistent_audio}")
             print(f"   Audio URL: {audio_url}")
             return None
     finally:
