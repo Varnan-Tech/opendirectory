@@ -28,6 +28,8 @@ import urllib.error
 import urllib.parse
 import xml.etree.ElementTree as ET
 import html
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 
@@ -68,9 +70,13 @@ def load_registry():
         return json.load(f)
 
 
-def find_podcast(query: str, registry: dict[str, Any]):
+def find_podcast(query: str | None, registry: dict[str, Any]):
     """Fuzzy-match a podcast name/slug against the registry."""
+    if not query:
+        return None
     query = query.strip().lower()
+    if not query:
+        return None
     podcasts = registry.get("podcasts", [])
     
     # Exact match on id, slug, or name
@@ -87,14 +93,18 @@ def find_podcast(query: str, registry: dict[str, Any]):
     
     # Token overlap ("lenny" -> "Lenny's Podcast", "20vc" -> "20 Minutes VC")
     query_tokens = set(re.split(r"[\s'-]+", query))
+    query_tokens.discard("")
+    if not query_tokens:
+        return None
     scored = []
     for p in podcasts:
         name_tokens = set(re.split(r"[\s'-]+", p["name"].lower()))
+        name_tokens.discard("")
         overlap = len(query_tokens & name_tokens)
         if overlap > 0:
             scored.append((overlap, p))
     if scored:
-        scored.sort(reverse=True)
+        scored.sort(reverse=True, key=lambda x: x[0])
         return scored[0][1]
     
     return None
@@ -346,6 +356,25 @@ def _get_rss_urls(podcast: dict[str, Any]) -> list[str]:
     return [rss] if rss else []
 
 
+def _parse_pub_date(ep: dict[str, Any]) -> datetime:
+    """Parse an episode's pub_date into a datetime (timezone-aware). Returns epoch for unparseable dates."""
+    raw = (ep.get("pub_date") or "").strip()
+    if not raw:
+        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    try:
+        dt = parsedate_to_datetime(raw)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+    except (ValueError, TypeError, OverflowError):
+        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+
+
+def sort_episodes_newest_first(episodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Sort episode list by publication date descending (newest first)."""
+    return sorted(episodes, key=_parse_pub_date, reverse=True)
+
+
 # -- Search & Batch Transcription ------------------------------------
 
 def search_episodes(
@@ -465,12 +494,21 @@ def batch_transcribe(
     episodes: list[dict[str, Any]],
     parallel: int = 1,
 ):
-    """Transcribe the last N episodes of a podcast and save to output/."""
+    """Transcribe the most recent N episodes of a podcast and save to output/.
+    
+    Episodes are sorted by publication date (newest first) to ensure consistent
+    behaviour regardless of the RSS feed ordering.
+    """
     name = podcast["name"]
-    total = min(count, len(episodes))
+    # Sort newest-first so we always pick the right N
+    sorted_eps = sort_episodes_newest_first(episodes)
+    total = min(count, len(sorted_eps))
     if total == 0:
         print(f"   No episodes available for {name}.")
         return
+
+    # Pick the most recent N
+    selected = sorted_eps[:total]
 
     print(f"\n{'='*60}")
     print(f"   Batch transcribing {total} episodes of {name}")
@@ -484,15 +522,15 @@ def batch_transcribe(
         print("   Fall back to local Whisper by installing faster-whisper.")
         return
 
-    # Reverse: newest episodes first
-    tasks = list(range(total - 1, -1, -1))
+    # Process from oldest-of-the-selected to newest (reverse display order)
+    indices = list(range(total - 1, -1, -1))
 
     success_count = 0
     future_map: dict[concurrent.futures.Future[bool], int] = {}
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=parallel) as pool:
-        for i in tasks:
-            ep = episodes[i]
+        for i in indices:
+            ep = selected[i]
             audio_url = ep.get("audio_url") or ""
             if not audio_url:
                 continue
@@ -562,14 +600,21 @@ def _run_search_pipeline(
     for pname, eps in all_results:
         for ep in eps:
             flat.append((pname, ep))
-    # Deduplicate and limit
-    seen_guids = set()
+    # Deduplicate by BOTH guid and link independently
+    seen_guids: set[str] = set()
+    seen_links: set[str] = set()
     picked = []
     for pname, ep in flat:
-        guid = ep.get("guid") or ep.get("link") or ep.get("title", "")
-        if guid not in seen_guids:
+        guid = (ep.get("guid") or "").strip()
+        link = (ep.get("link") or "").strip()
+        # Skip if we have already seen this guid or this link
+        if (guid and guid in seen_guids) or (link and link in seen_links):
+            continue
+        if guid:
             seen_guids.add(guid)
-            picked.append((pname, ep))
+        if link:
+            seen_links.add(link)
+        picked.append((pname, ep))
         if len(picked) >= transcribe_count:
             break
 
