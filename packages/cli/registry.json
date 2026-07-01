@@ -391,6 +391,16 @@
     "path": "skills/outreach-sequence-builder"
   },
   {
+    "name": "podcast-transcript-fetcher",
+    "description": "Fetch, search, and batch-transcribe transcripts from 5 top podcasts (Lenny's, Dwarkesh, Cheeky Pint, 20VC, A16z). Tier 2 (RSS+Groq Whisper) is the recommended approach.",
+    "tags": [
+      "Research"
+    ],
+    "author": "farizanjum",
+    "version": "1.1.0",
+    "path": "skills/podcast-transcript-fetcher"
+  },
+  {
     "name": "position-me",
     "description": "Elite Website Reviewer Agent for AEO, GEO, SEO, UI/UX Psychology, and Copywriting.",
     "tags": [

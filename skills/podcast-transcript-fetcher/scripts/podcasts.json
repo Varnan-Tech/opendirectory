@@ -1,0 +1,148 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-06-30",
+  "description": "Podcast registry for the podcast-transcript skill. Maps each podcast to its RSS feeds, transcript sources, and known archives.",
+  "podcasts": [
+    {
+      "id": "lennys-podcast",
+      "name": "Lenny's Podcast",
+      "slug": "lennys-podcast",
+      "host": "Lenny Rachitsky",
+      "website": "https://www.lennyspodcast.com",
+      "rss": "https://api.substack.com/feed/podcast/10845.rss",
+      "substack": "https://lennyspodcast.substack.com",
+      "transcript_sources": {
+        "primary": {
+          "type": "github_archive",
+          "repo": "ChatPRD/lennys-podcast-transcripts",
+          "description": "269+ pre-transcribed episodes in Markdown",
+          "url": "https://github.com/ChatPRD/lennys-podcast-transcripts"
+        },
+        "secondary": {
+          "type": "dropbox",
+          "description": "Official transcript archive linked from Substack",
+          "url": "https://www.dropbox.com/scl/fo/.../transcripts"
+        },
+        "tertiary": {
+          "type": "rss_transcript_tag",
+          "description": "Some episodes have <podcast:transcript> in RSS",
+          "format": "text/html"
+        }
+      },
+      "search_pattern": "lenny's podcast {episode}"
+    },
+    {
+      "id": "dwarkesh-podcast",
+      "name": "Dwarkesh Podcast",
+      "slug": "dwarkesh-podcast",
+      "host": "Dwarkesh Patel",
+      "website": "https://www.dwarkesh.com",
+      "rss": "https://api.substack.com/feed/podcast/69345.rss",
+      "substack": "https://dwarkesh.substack.com",
+      "transcript_sources": {
+        "primary": {
+          "type": "website_scrape",
+          "description": "Transcripts available on individual episode pages",
+          "url": "https://www.dwarkesh.com",
+          "pattern": "Each episode page has a transcript section"
+        },
+        "secondary": {
+          "type": "podscripts",
+          "id": "dwarkesh-podcast",
+          "description": "Indexed on PodScripts.co",
+          "url": "https://podscripts.co/podcasts/dwarkesh-podcast"
+        },
+        "tertiary": {
+          "type": "github_gist",
+          "description": "Some transcripts posted as GitHub gists",
+          "note": "Search for 'dwarkesh transcript' on GitHub"
+        }
+      },
+      "search_pattern": "dwarkesh {episode} transcript"
+    },
+    {
+      "id": "cheeky-pint",
+      "name": "The Cheeky Pint",
+      "slug": "cheeky-pint",
+      "host": "Multiple hosts",
+      "website": "https://thecheekypint.com",
+      "rss": "https://feeds.transistor.fm/cheeky-pint-with-john-collison",
+        "transcript_sources": {
+          "primary": {
+            "type": "rss_download_whisper",
+            "description": "Download audio from RSS, transcribe with Whisper",
+            "note": "Free fallback, needs compute"
+          }
+        },
+      "search_pattern": "cheeky pint {episode}"
+    },
+    {
+      "id": "20vc",
+      "name": "20 Minutes VC (20VC)",
+      "slug": "20vc",
+      "host": "Harry Stebbings",
+      "website": "https://20vc.com",
+      "rss": "https://feeds.libsyn.com/61840/rss",
+      "transcript_sources": {
+        "primary": {
+          "type": "rss_download_whisper",
+          "description": "Download audio from RSS, transcribe with Whisper",
+          "note": "Hosted on Libsyn (12MB feed, 1476+ episodes)"
+        },
+        "secondary": {
+          "type": "substack_pdf",
+          "description": "Some episodes have PDF transcripts on Substack",
+          "url": "https://20vc.substack.com"
+        }
+      },
+      "search_pattern": "20vc {episode} transcript"
+    },
+    {
+      "id": "a16z",
+      "name": "A16z Podcast",
+      "slug": "a16z-podcast",
+      "host": "Andreessen Horowitz",
+      "website": "https://a16z.com/podcasts",
+      "rss": "https://feeds.simplecast.com/JGE3yC0V",
+      "transcript_sources": {
+        "primary": {
+          "type": "podscripts",
+          "id": "a16z-podcast",
+          "description": "Indexed on PodScripts.co",
+          "url": "https://podscripts.co/podcasts/a16z-podcast"
+        },
+        "secondary": {
+          "type": "website_scrape",
+          "description": "Some episodes have transcripts on a16z.com",
+          "url": "https://a16z.com/podcasts"
+        }
+      },
+      "search_pattern": "a16z podcast {episode}"
+    }
+  ],
+  "taddy": {
+    "description": "Taddy API covers all 5 podcasts with auto-transcription for top 5000 shows",
+    "api_endpoint": "https://api.taddy.org",
+    "api_key_var": "TADDY_API_KEY",
+    "plans": {
+      "free": "500 req/month",
+      "pro": "$75/mo = 100k req + 100 transcripts",
+      "business": "$150/mo = 350k req + 2000 transcripts"
+    }
+  },
+  "whisper": {
+    "description": "Local or cloud Whisper transcription as fallback",
+    "local": {
+      "tool": "faster-whisper",
+      "model": "large-v3",
+      "ram": "~5GB",
+      "speed": "~1.5x realtime"
+    },
+    "cloud": {
+      "provider": "Groq",
+      "api_key_var": "GROQ_API_KEY",
+      "model": "whisper-large-v3",
+      "speed": "~10s per hour of audio (free tier generous)"
+    }
+  }
+}
