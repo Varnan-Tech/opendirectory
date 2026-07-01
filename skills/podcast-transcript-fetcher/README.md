@@ -154,6 +154,31 @@ python scripts/get_transcript.py "20vc" --last 5
 python scripts/get_transcript.py --search "AI safety" --transcribe --transcribe-count 5
 ```
 
+### Parallel Transcription
+
+Speed up batch and pipeline jobs with the `--parallel N` flag:
+
+```bash
+# Set up multiple API keys (optional -- round-robin across workers)
+export GROQ_API_KEY="gsk_..."
+export GROQ_API_KEY_2="gsk_..."
+export GROQ_API_KEY_3="gsk_..."
+
+# Batch-transcribe 12 episodes with 3 parallel workers
+python scripts/get_transcript.py "Dwarkesh Podcast" --last 12 --parallel 3
+
+# Search pipeline with parallel transcription
+python scripts/get_transcript.py --search "AI safety" --transcribe --transcribe-count 10 --parallel 3
+```
+
+**How it works:**
+- Each worker independently downloads, compresses, and transcribes one episode
+- API keys are assigned round-robin across workers (`GROQ_API_KEY`, `GROQ_API_KEY_2`, ...)
+- Groq rate limit: ~30 req/min per key → 3 keys × 3 workers = ~90 req/min
+- Default `--parallel 1` maintains sequential backward-compatible behavior
+- Requires ffmpeg (for audio compression under Groq's 25 MB limit)
+- Output files are written independently with unique filenames (no contention)
+
 ## How It Works
 
 ```

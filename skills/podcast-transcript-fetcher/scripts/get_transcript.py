@@ -15,6 +15,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import os
 import re
@@ -327,7 +328,9 @@ def find_episode(episodes: list[dict[str, Any]], query: str | None):
         if query_lower in ep["guid"].lower():
             return ep
     
-    return episodes[0]  # fallback to latest
+    # No match found
+    print(f"   [ERROR] Could not find episode matching '{query}'")
+    return None
 
 
 # -- RSS URL helper -------------------------------------------------
@@ -392,10 +395,73 @@ def _print_search_results(
     print()
 
 
+def _transcribe_job(
+    job_type: str,
+    podcast_name: str,
+    ep: dict[str, Any],
+    index: int,
+    total: int,
+    api_keys: list[str],
+) -> bool:
+    """Process a single episode end-to-end: download, compress, transcribe, save.
+    
+    Args:
+        job_type: Label for logging (e.g. "Batch" or "Search").
+        podcast_name: Display name of the podcast.
+        ep: Episode dict with title, pub_date, link, audio_url.
+        index: 0-based index for round-robin key selection and filename.
+        total: Total count for progress display.
+        api_keys: List of GROQ API keys for round-robin.
+    
+    Returns:
+        True if the episode was successfully transcribed and saved, False otherwise.
+    """
+    ep_title = ep.get("title") or f"Episode {index + 1}"
+    pub_date = ep.get("pub_date") or ""
+    episode_url = ep.get("link") or ep.get("guid") or ""
+    audio_url = ep.get("audio_url") or ""
+
+    if not audio_url:
+        print(f"   [{job_type}] [SKIP] {ep_title} - no audio URL")
+        return False
+
+    output_path = _auto_filename(podcast_name, ep_title, pub_date, index + 1)
+    if output_path.exists():
+        print(f"   [{job_type}] [SKIP] Already exists: {output_path.name}")
+        return True  # Count as success since it's already done
+
+    tmp_dir = Path(tempfile.mkdtemp(prefix="podcast_"))
+    audio_path = tmp_dir / "episode.mp3"
+    try:
+        if not download_audio(audio_url, audio_path):
+            print(f"   [{job_type}] [FAIL] Download failed for {ep_title}")
+            return False
+
+        audio_path = _compress_audio(audio_path)
+
+        key = _pick_key(api_keys, index)
+        transcript = _transcribe_groq(audio_path, api_key=key)
+        if transcript:
+            _write_transcript_with_header(
+                transcript, podcast_name, ep_title, pub_date, episode_url, output_path
+            )
+            print(f"   [{job_type}] [OK] Transcribed: {ep_title}")
+            return True
+        else:
+            print(f"   [{job_type}] [FAIL] Transcription returned empty for {ep_title}")
+            return False
+    except Exception as e:
+        print(f"   [{job_type}] [ERROR] {ep_title}: {e}")
+        return False
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+
+
 def batch_transcribe(
     podcast: dict[str, Any],
     count: int,
     episodes: list[dict[str, Any]],
+    parallel: int = 1,
 ):
     """Transcribe the last N episodes of a podcast and save to output/."""
     name = podcast["name"]
@@ -406,59 +472,40 @@ def batch_transcribe(
 
     print(f"\n{'='*60}")
     print(f"   Batch transcribing {total} episodes of {name}")
+    if parallel > 1:
+        print(f"   Parallel workers: {parallel}")
     print(f"{'='*60}\n")
 
-    # Import groq here since it's only needed for this path
+    api_keys = _get_api_keys()
+    if not api_keys:
+        print("   [ERROR] No GROQ_API_KEY found. Set GROQ_API_KEY in your environment.")
+        print("   Fall back to local Whisper by installing faster-whisper.")
+        return
+
+    # Reverse: newest episodes first
+    tasks = list(range(total - 1, -1, -1))
+
     success_count = 0
+    future_map: dict[concurrent.futures.Future[bool], int] = {}
 
-    for i in range(total - 1, -1, -1):
-        ep = episodes[i]
-        ep_title = ep.get("title") or f"Episode {i+1}"
-        pub_date = ep.get("pub_date") or ""
-        episode_url = ep.get("url") or ep.get("guid") or ""
-        audio_url = ep.get("audio_url") or ""
-        if not audio_url:
-            print(f"   [SKIP] {ep_title} - no audio URL")
-            continue
-
-        print(f"\n   --- Episode {total - i}/{total}: {ep_title} ---")
-        print(f"       Date: {pub_date}")
-        print(f"       Audio: {audio_url}")
-
-        output_path = _auto_filename(name, ep_title, pub_date, total - i)
-        if output_path.exists():
-            print(f"   [SKIP] Already exists: {output_path.name}")
-            success_count += 1
-            continue
-
-        # Download
-        tmp_dir = Path(tempfile.mkdtemp(prefix="podcast_"))
-        audio_path = tmp_dir / "episode.mp3"
-        try:
-            ok = download_audio(audio_url, audio_path)
-            if not ok:
-                print(f"   [FAIL] Download failed for {ep_title}")
-                shutil.rmtree(tmp_dir, ignore_errors=True)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=parallel) as pool:
+        for i in tasks:
+            ep = episodes[i]
+            audio_url = ep.get("audio_url") or ""
+            if not audio_url:
                 continue
+            future = pool.submit(
+                _transcribe_job, "Batch", name, ep, total - i, total, api_keys
+            )
+            future_map[future] = total - i
 
-            # Compress if needed
-            audio_path = _compress_audio(audio_path)
-
-            # Transcribe
-            print(f"   [Whisper] Transcribing...")
-            transcript = _transcribe_groq(audio_path)
-            if transcript:
-                _write_transcript_with_header(
-                    transcript, name, ep_title, pub_date, episode_url, output_path
-                )
-                success_count += 1
-                print(f"   [OK] Transcribed: {ep_title}")
-            else:
-                print(f"   [FAIL] Transcription returned empty for {ep_title}")
-        except Exception as e:
-            print(f"   [ERROR] {ep_title}: {e}")
-        finally:
-            shutil.rmtree(tmp_dir, ignore_errors=True)
+        for future in concurrent.futures.as_completed(future_map):
+            idx = future_map[future]
+            try:
+                if future.result():
+                    success_count += 1
+            except Exception as e:
+                print(f"   [Batch] [ERROR] Episode {idx}: {e}")
 
     print(f"\n{'='*60}")
     print(f"   Done. {success_count}/{total} episodes transcribed successfully.")
@@ -473,6 +520,7 @@ def _run_search_pipeline(
     podcast_name: str | None,
     auto_transcribe: bool,
     transcribe_count: int,
+    parallel: int = 1,
 ):
     """Search across podcasts, optionally transcribe top results."""
     term = query or guest or ""
@@ -511,7 +559,7 @@ def _run_search_pipeline(
     seen_guids = set()
     picked = []
     for pname, ep in flat:
-        guid = ep.get("guid") or ep.get("url") or ep.get("title", "")
+        guid = ep.get("guid") or ep.get("link") or ep.get("title", "")
         if guid not in seen_guids:
             seen_guids.add(guid)
             picked.append((pname, ep))
@@ -524,47 +572,32 @@ def _run_search_pipeline(
 
     print(f"\n   Pipeline: searching for '{term}' → transcribing top {len(picked)} episode(s)\n")
 
+    api_keys = _get_api_keys()
+    if not api_keys:
+        print("   [ERROR] No GROQ_API_KEY found. Set GROQ_API_KEY in your environment.")
+        print("   Fall back to local Whisper by installing faster-whisper.")
+        return
+
     success_count = 0
+    future_map: dict[concurrent.futures.Future[bool], tuple[int, str]] = {}
 
-    for pname, ep in picked:
-        ep_title = ep.get("title") or "Untitled"
-        pub_date = ep.get("pub_date") or ""
-        episode_url = ep.get("url") or ep.get("guid") or ""
-        audio_url = ep.get("audio_url") or ""
-        if not audio_url:
-            print(f"   [SKIP] {ep_title} - no audio URL")
-            continue
-
-        print(f"\n   --- {pname}: {ep_title} ---")
-        output_path = _auto_filename(pname, ep_title, pub_date, len(picked))
-        if output_path.exists():
-            print(f"   [SKIP] Already exists: {output_path.name}")
-            success_count += 1
-            continue
-
-        tmp_dir = Path(tempfile.mkdtemp(prefix="podcast_"))
-        audio_path = tmp_dir / "episode.mp3"
-        try:
-            ok = download_audio(audio_url, audio_path)
-            if not ok:
-                print(f"   [FAIL] Download failed")
-                shutil.rmtree(tmp_dir, ignore_errors=True)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=parallel) as pool:
+        for idx, (pname, ep) in enumerate(picked):
+            audio_url = ep.get("audio_url") or ""
+            if not audio_url:
                 continue
+            future = pool.submit(
+                _transcribe_job, "Pipeline", pname, ep, idx + 1, len(picked), api_keys
+            )
+            future_map[future] = (idx + 1, pname)
 
-            audio_path = _compress_audio(audio_path)
-
-            transcript = _transcribe_groq(audio_path)
-            if transcript:
-                _write_transcript_with_header(
-                    transcript, pname, ep_title, pub_date, episode_url, output_path
-                )
-                success_count += 1
-            else:
-                print(f"   [FAIL] Transcription empty")
-        except Exception as e:
-            print(f"   [ERROR] {ep_title}: {e}")
-        finally:
-            shutil.rmtree(tmp_dir, ignore_errors=True)
+        for future in concurrent.futures.as_completed(future_map):
+            seq, pname = future_map[future]
+            try:
+                if future.result():
+                    success_count += 1
+            except Exception as e:
+                print(f"   [Pipeline] [ERROR] ({seq}) {pname}: {e}")
 
     print(f"\n   Pipeline done. {success_count}/{len(picked)} transcribed.\n")
 
@@ -602,10 +635,8 @@ def try_tier1(podcast: dict[str, Any], episode_query: str | None = None) -> str 
         stype = source.get("type", "")
         
         if stype == "github_archive" and "repo" in source:
-            print(f"   -> Checking GitHub archive: {source['repo']}")
-            # We can't clone here (no git token), but we can query raw content
-            # Suggest the user to clone separately or use existing archive
-            return None  # Let the agent handle this via skill instructions
+            print(f"   -> GitHub archive: {source['repo']} (clone separately for Tier 1)")
+            # GitHub archive requires local clone; drop through to try other sources
         
         elif stype == "spokenmd_api":
             api_key = os.environ.get("SPOKENMD_API_KEY", source.get("demo_key", "pt_demo"))
@@ -659,22 +690,25 @@ def try_tier2(podcast: dict[str, Any], episode_query: str | None = None) -> str 
     if not download_audio(audio_url, audio_path):
         return None
     
-    # Check if Groq API key is available
-    groq_key = os.environ.get("GROQ_API_KEY")
-    if groq_key:
-        return _transcribe_groq(audio_path)
-    
-    # Check if faster-whisper is available
     try:
-        return _transcribe_local(audio_path)
-    except ImportError:
-        print("   [WARN]  No transcription backend available.")
-        print("   Install one:")
-        print("      Cloud (recommended): pip install groq && export GROQ_API_KEY=...")
-        print("      Local:              pip install faster-whisper")
-        print(f"   Audio saved at: {audio_path}")
-        print(f"   Audio URL: {audio_url}")
-        return None
+        # Check if Groq API key is available
+        groq_key = os.environ.get("GROQ_API_KEY")
+        if groq_key:
+            return _transcribe_groq(audio_path)
+
+        # Check if faster-whisper is available
+        try:
+            return _transcribe_local(audio_path)
+        except ImportError:
+            print("   [WARN]  No transcription backend available.")
+            print("   Install one:")
+            print("      Cloud (recommended): pip install groq && export GROQ_API_KEY=...")
+            print("      Local:              pip install faster-whisper")
+            print(f"   Audio saved at: {audio_path}")
+            print(f"   Audio URL: {audio_url}")
+            return None
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
 def _compress_audio(path: Path, max_mb: int = 22) -> Path:
@@ -718,10 +752,52 @@ def _compress_audio(path: Path, max_mb: int = 22) -> Path:
     return path
 
 
-def _transcribe_groq(audio_path: Path) -> str | None:
-    """Transcribe audio using Groq's Whisper API."""
-    groq_key = os.environ.get("GROQ_API_KEY")
+def _get_api_keys() -> list[str]:
+    """Collect all available GROQ API keys from environment variables.
+    
+    Reads GROQ_API_KEY (base), GROQ_API_KEY_2, GROQ_API_KEY_3, etc.
+    Returns a list of unique non-empty keys. If none found, returns [].
+    """
+    keys: list[str] = []
+    seen: set[str] = set()
+    
+    # Base key always first
+    base = os.environ.get("GROQ_API_KEY", "").strip()
+    if base and base not in seen:
+        keys.append(base)
+        seen.add(base)
+    
+    # Scan for numbered keys
+    idx = 2
+    while True:
+        val = os.environ.get(f"GROQ_API_KEY_{idx}", "").strip()
+        if not val:
+            break
+        if val not in seen:
+            keys.append(val)
+            seen.add(val)
+        idx += 1
+    
+    return keys
+
+
+def _pick_key(api_keys: list[str], index: int) -> str | None:
+    """Round-robin pick an API key from the list, or return None if empty."""
+    if not api_keys:
+        return None
+    return api_keys[index % len(api_keys)]
+
+
+def _transcribe_groq(audio_path: Path, api_key: str | None = None) -> str | None:
+    """Transcribe audio using Groq's Whisper API.
+    
+    Args:
+        audio_path: Path to the audio file.
+        api_key: Optional explicit API key. If None, reads from GROQ_API_KEY env var.
+    """
+    groq_key = api_key or os.environ.get("GROQ_API_KEY")
     if not groq_key:
+        print("   [ERROR] GROQ_API_KEY is not set. Export GROQ_API_KEY or use local Whisper (pip install faster-whisper).")
         return None
     
     print(f"   [Cloud] Transcribing via Groq Whisper API...")
@@ -938,6 +1014,8 @@ Examples:
                         help="Max episodes to transcribe in search pipeline (default: 3)")
     parser.add_argument("--method", "-m", choices=["auto", "tier1", "whisper", "taddy"], default="auto",
                         help="Transcription method (default: auto = try all tiers)")
+    parser.add_argument("--parallel", type=int, default=1, metavar="N",
+                        help="Parallel transcription workers (default: 1). Set >1 with multiple GROQ_API_KEY_N env vars.")
     parser.add_argument("--output", "-o", default=None, help="Save transcript to file")
     parser.add_argument("--list-podcasts", action="store_true", help="List available podcasts")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
@@ -951,10 +1029,15 @@ Examples:
         term = args.search or args.guest or ""
         # If podcast name is given, filter to that podcast
         podcast_filter = args.podcast if args.podcast else None
+        if podcast_filter:
+            found = find_podcast(podcast_filter, registry)
+            if found:
+                podcast_filter = found["name"]
         
         auto_transcribe = args.transcribe
         _run_search_pipeline(registry, args.search, args.guest,
-                             podcast_filter, auto_transcribe, args.transcribe_count)
+                             podcast_filter, auto_transcribe, args.transcribe_count,
+                             parallel=args.parallel)
         return
     
     # -- Feature: Batch transcribe last N (requires podcast + --last) -
@@ -975,7 +1058,7 @@ Examples:
         if not episodes:
             print(f"[ERROR] No episodes found via RSS for {podcast['name']}")
             sys.exit(1)
-        batch_transcribe(podcast, args.last, episodes)
+        batch_transcribe(podcast, args.last, episodes, parallel=args.parallel)
         return
     
     # -- Feature: List podcasts --------------------------------------

@@ -46,7 +46,7 @@ python scripts/get_transcript.py --list-podcasts
 
 ```bash
 # Core (always required)
-pip install requests
+pip install requests python-dotenv
 
 # Cloud transcription (recommended — fast, free tier)
 pip install groq
@@ -72,11 +72,11 @@ Tier 1 → Tier 2 → Tier 3
 ```
 
 **Tier 1: Free direct sources**
-- Lenny's: Clones `ChatPRD/lennys-podcast-transcripts` and searches by title
-- Dwarkesh: Fetches from PodScripts or scrapes episode pages
-- Cheeky Pint: Calls Spoken.md API (`SPOKENMD_API_KEY` or demo key `pt_demo`). **Note:** Spoken.md API is currently down (DNS lookup failing as of 2026-06); falls through to Tier 2.
-- 20VC: Uses YouTube transcript API or Libsyn RSS + Whisper
-- A16z: Fetches from PodScripts or Simplecast RSS + Whisper
+- Lenny's: GitHub archive at `ChatPRD/lennys-podcast-transcripts` (clone separately, then search by title). Falls through to Tier 2 if not cloned.
+- Dwarkesh: Checks for PodScripts or website transcript sections. Falls through to Tier 2.
+- Cheeky Pint: Calls Spoken.md API (`SPOKENMD_API_KEY` or demo key `pt_demo`). Currently down; falls through to Tier 2.
+- 20VC: Checks for existing YouTube transcript sources. Falls through to Tier 2.
+- A16z: Checks for PodScripts. Falls through to Tier 2.
 
 **Tier 2: RSS + Whisper transcription**
 - Downloads MP3 from podcast RSS feed
@@ -124,6 +124,31 @@ I have this transcript from [podcast]. Can you:
 | Pipeline with custom count | `get_transcript.py --search "scaling laws" --transcribe --transcribe-count 5` |
 | Filtered search pipeline | `get_transcript.py "A16z Podcast" --search "crypto" --transcribe` |
 
+### Parallel Transcription
+
+Speed up batch and pipeline jobs with parallel workers:
+
+```bash
+# Set up multiple API keys (optional — round-robin across workers)
+export GROQ_API_KEY="key-1"
+export GROQ_API_KEY_2="key-2"
+export GROQ_API_KEY_3="key-3"
+
+# Batch-transcribe 12 episodes with 3 parallel workers
+get_transcript.py "Dwarkesh Podcast" --last 12 --parallel 3
+
+# Search pipeline with parallel transcription
+get_transcript.py --search "AI" --transcribe --transcribe-count 10 --parallel 3
+```
+
+**How it works:**
+- Each worker downloads → compresses → transcribes one episode independently
+- API keys are assigned round-robin across workers using `GROQ_API_KEY`, `GROQ_API_KEY_2`, etc.
+- With 3 keys × 3 workers you can hit ~90 req/min (Groq's whisper limit is ~30 req/min/key)
+- Default is `--parallel 1` (sequential, backward-compatible)
+- Requires ffmpeg for audio compression (handles Groq's 25 MB file limit)
+- All workers share the same output directory; files are written independently (no conflicts)
+
 ### Output Structure
 
 Batch transcription saves to `output/` with per-podcast subdirectories:
@@ -166,7 +191,9 @@ The registry at `scripts/podcasts.json` maps each podcast to its RSS feeds, tran
 | "No transcript found" | Try `--method whisper` to force RSS+transcription |
 | RSS fetch fails | RSS feeds may change; check `scripts/podcasts.json` for current URLs |
 | Audio download slow | Large MP3s can take minutes on slow connections |
-| Groq rate limited | Wait or switch to local faster-whisper |
+| Groq rate limited | Wait, switch to local faster-whisper, or set multiple `GROQ_API_KEY_N` env vars + use `--parallel N` |
+| Parallel workers × keys | Each key handles ~30 req/min. With 3 keys: `--parallel 3` for ~90 req/min |
+| Taddy not returning transcripts | Some episodes lack transcripts; try `--method whisper` |
 | Taddy not returning transcripts | Some episodes lack transcripts; try `--method whisper` |
 | Podcast not in registry | Add it to `scripts/podcasts.json` |
 | Unicode error on Windows | Fixed: script auto-reconfigures stdout to UTF-8; saved files use UTF-8 encoding |
