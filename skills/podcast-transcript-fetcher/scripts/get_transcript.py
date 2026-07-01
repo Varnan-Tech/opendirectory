@@ -1076,11 +1076,11 @@ def try_tier2(podcast: dict[str, Any], episode_query: str | None = None) -> str 
     # Download audio to temp file
     tmp_dir = Path(tempfile.mkdtemp(prefix="podcast_"))
     audio_path = tmp_dir / "episode.mp3"
-    
-    if not download_audio(audio_url, audio_path):
-        return None
-    
+
     try:
+        if not download_audio(audio_url, audio_path):
+            return None
+
         # Check if Groq API key is available
         groq_key = os.environ.get("GROQ_API_KEY")
         if groq_key:
