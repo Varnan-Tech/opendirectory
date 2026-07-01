@@ -361,13 +361,25 @@ def _parse_pub_date(ep: dict[str, Any]) -> datetime:
     raw = (ep.get("pub_date") or "").strip()
     if not raw:
         return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    # Try RFC 2822 (standard RSS pubDate format, e.g. "Mon, 01 Jan 2024 00:00:00 GMT")
     try:
         dt = parsedate_to_datetime(raw)
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=timezone.utc)
-        return dt
+        if dt is not None:
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt
     except (ValueError, TypeError, OverflowError):
-        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+        pass
+    # Try ISO 8601 (e.g. "2024-01-01" or "2024-01-01T00:00:00Z")
+    for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%M:%S"):
+        try:
+            dt = datetime.strptime(raw, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt
+        except ValueError:
+            continue
+    return datetime(1970, 1, 1, tzinfo=timezone.utc)
 
 
 def sort_episodes_newest_first(episodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -522,22 +534,18 @@ def batch_transcribe(
         print("   Fall back to local Whisper by installing faster-whisper.")
         return
 
-    # Process from oldest-of-the-selected to newest (reverse display order)
-    indices = list(range(total - 1, -1, -1))
-
     success_count = 0
     future_map: dict[concurrent.futures.Future[bool], int] = {}
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=parallel) as pool:
-        for i in indices:
-            ep = selected[i]
+        for display_index, ep in enumerate(reversed(selected), start=1):
             audio_url = ep.get("audio_url") or ""
             if not audio_url:
                 continue
             future = pool.submit(
-                _transcribe_job, "Batch", name, ep, total - i, total, api_keys
+                _transcribe_job, "Batch", name, ep, display_index, total, api_keys
             )
-            future_map[future] = total - i
+            future_map[future] = display_index
 
         for future in concurrent.futures.as_completed(future_map):
             idx = future_map[future]

@@ -77,7 +77,7 @@ Tier 1 → Tier 2 (RECOMMENDED) → Tier 3
 - 20VC: Substack PDF scrape
 - A16z: Website scrape
 - Cheeky Pint: No Tier 1 sources available
-- Note: Most free APIs (youtubetranscript.com, Spoken.md) are broken or paid. Tier 1 is unreliable -- prefer Tier 2.
+- Note: Tier 1 sources are best-effort and limited. Tier 2 (RSS+Whisper) is the recommended approach.
 
 **Tier 2: RSS + Whisper transcription [RECOMMENDED]**
 - Downloads MP3 from podcast RSS feed
@@ -188,6 +188,6 @@ The registry at `scripts/podcasts.json` maps each podcast to its RSS feeds, tran
 ## Common Mistakes
 
 - **Forgetting API keys**: Set `GROQ_API_KEY` in your env or `.env` file
-- **Relying on Tier 1 free sources**: Most free APIs (youtubetranscript.com, Spoken.md) are broken or paid. Always fall back to Tier 2 (RSS+Whisper) which is the recommended method.
+- **Relying on Tier 1 free sources**: Tier 1 is best-effort and limited. Always fall back to Tier 2 (RSS+Whisper) which is the recommended method.
 - **Not cloning the Lenny's repo first**: The GitHub archive must be cloned locally for Tier 1 to work
 - **Using --method taddy without TADDY_API_KEY**: Falls through silently; set the key or use auto mode

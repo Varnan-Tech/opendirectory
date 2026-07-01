@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated": "2026-06-30",
-  "description": "Podcast registry for the podcast-transcript skill. Maps each podcast to its RSS feeds, transcript sources, and known archives.",
+  "description": "Podcast registry for the podcast-transcript-fetcher skill. Maps each podcast to its RSS feeds, transcript sources, and known archives.",
   "podcasts": [
     {
       "id": "lennys-podcast",

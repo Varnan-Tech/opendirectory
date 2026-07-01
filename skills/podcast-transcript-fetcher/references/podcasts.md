@@ -80,12 +80,6 @@ Detailed reference for each podcast's transcript availability and how to access 
 - Transcribe with local Whisper or Groq API
 - See `get_transcript.py --method whisper`
 
-**Tier 2 — Spoken.md API (currently down)**
-- API endpoint: `https://api.spoken.md/v1` (DNS lookup failing as of 2026-06)
-- Demo key: `pt_demo`
-- Environment variable: `SPOKENMD_API_KEY` (override demo key)
-- Returns JSON with full transcript + speaker labels when online
-
 **Note:** The RSS feed was renamed from `the-cheeky-pint` to `cheeky-pint-with-john-collison` (Transistor.fm migration). The old feed URL returns 404.
 
 ---
