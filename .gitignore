@@ -35,3 +35,7 @@ comments_*.{txt,json}
 
 # OpenCode agent planning & execution artifacts
 /.omo
+/.agents
+
+# pnpm project -- npm lockfile is stale / unnecessary
+package-lock.json
