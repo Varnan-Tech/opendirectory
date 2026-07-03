@@ -32,3 +32,6 @@ review-feedback-*.txt
 review-analysis-*.txt
 comments_*.{txt,json}
 *.fix-summary.md
+
+# OpenCode agent planning & execution artifacts
+/.omo
