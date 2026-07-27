@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import matter from 'gray-matter';
+import { parseFrontmatter } from './lib/frontmatter';
 
 const SKILLS_DIR = path.join(__dirname, '../skills');
 const REGISTRY_PATH = path.join(__dirname, '../packages/cli/registry.json');
@@ -137,7 +137,7 @@ function getVersionFromSkillMd(name: string): string | null {
   if (!fs.existsSync(skillMdPath)) return null;
   try {
     const content = fs.readFileSync(skillMdPath, 'utf-8');
-    const { data } = matter(content);
+    const { data } = parseFrontmatter(content);
     if (data.version) return String(data.version);
   } catch (_) {}
   return null;

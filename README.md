@@ -9,7 +9,7 @@
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=62+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI%2C+Manus+AI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=64+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI%2C+Manus+AI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
 
 <br />
@@ -17,7 +17,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-62-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-64-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
@@ -45,7 +45,7 @@ Or list all skills:
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*62 specialized skills across GTM, growth, and developer tooling*
+*64 specialized skills across GTM, growth, and developer tooling*
 
 ### 2. Pick your agent
 ```bash
@@ -265,7 +265,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 
 ## All Skills
 
-62 skills across GTM, growth automation, technical marketing, and developer tooling.
+64 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
@@ -477,6 +477,16 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
     <td><a href="skills/twitter-GTM-find-skill"><code>twitter-GTM-find-skill</code></a></td>
     <td>Find developer-first GTM, DevRel, and Growth hiring signals from X/Twitter, then verify funding and product fit.</td>
     <td><code>0.0.1</code></td>
+  </tr>
+  <tr>
+    <td><a href="skills/xquik-x-follower-scraper"><code>xquik-x-follower-scraper</code></a></td>
+    <td>Run the Xquik X Follower Scraper Actor on Apify for public audience, relationship, list, community, and overlap research.</td>
+    <td><code>1.0.0</code></td>
+  </tr>
+  <tr>
+    <td><a href="skills/xquik-x-tweet-scraper"><code>xquik-x-tweet-scraper</code></a></td>
+    <td>Run the Xquik X Tweet Scraper Actor on Apify for public post searches, timelines, conversations, lists, articles, and engagement research.</td>
+    <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/yc-intent-radar-skill"><code>yc-intent-radar-skill</code></a></td>

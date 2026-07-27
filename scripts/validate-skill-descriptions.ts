@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
+import { parseFrontmatter } from './lib/frontmatter';
 
 const SKILLS_DIR = path.join(process.cwd(), 'skills');
 const PLACEHOLDER_RE = /^A skill for [a-z0-9-]+$/i;
@@ -29,7 +29,7 @@ for (const folder of fs.readdirSync(SKILLS_DIR)) {
     continue;
   }
   for (const file of files) {
-    const { data } = matter(fs.readFileSync(file, 'utf-8'));
+    const { data } = parseFrontmatter(fs.readFileSync(file, 'utf-8'));
     const desc = data.description;
     if (desc === undefined || desc === null) {
       failures.push({ file, reason: 'no description in frontmatter', value: '' });

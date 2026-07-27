@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
-import matter from 'gray-matter';
+import { parseFrontmatter } from './lib/frontmatter';
 
 const skillsDir = path.join(process.cwd(), 'skills');
 
@@ -122,7 +122,7 @@ function validateSkills() {
 
         try {
           const fileContent = fs.readFileSync(skillMdPath, 'utf-8');
-          const parsed = matter(fileContent);
+          const parsed = parseFrontmatter(fileContent);
           
           if (typeof parsed.data.name !== 'string') {
             errors.push(`Error: Skill '${entry.name}' is missing 'name' in SKILL.md frontmatter.`);

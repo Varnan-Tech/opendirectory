@@ -591,6 +591,34 @@
     "path": "skills/where-your-customer-lives"
   },
   {
+    "name": "xquik-x-follower-scraper",
+    "description": "Run Xquik's Apify Actor for X followers, following, verified audiences, lists, communities, and overlap research.",
+    "tags": [
+      "apify",
+      "x",
+      "twitter",
+      "audience-research",
+      "web-scraping"
+    ],
+    "author": "Xquik",
+    "version": "1.0.0",
+    "path": "skills/xquik-x-follower-scraper"
+  },
+  {
+    "name": "xquik-x-tweet-scraper",
+    "description": "Run Xquik's Apify Actor for X searches, posts, timelines, conversations, lists, articles, and engagement research.",
+    "tags": [
+      "apify",
+      "x",
+      "twitter",
+      "social-research",
+      "web-scraping"
+    ],
+    "author": "Xquik",
+    "version": "1.0.0",
+    "path": "skills/xquik-x-tweet-scraper"
+  },
+  {
     "name": "yc-intent-radar-skill",
     "description": "Scrape daily job listings from YCombinator's Workatastartup platform without duplicates.",
     "tags": [],

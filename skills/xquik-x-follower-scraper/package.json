@@ -1,0 +1,8 @@
+{
+  "name": "xquik-x-follower-scraper",
+  "version": "1.0.0",
+  "description": "Run Xquik's Apify Actor for X followers, following, verified audiences, lists, communities, and overlap research.",
+  "category": "GTM Intelligence",
+  "author": "Xquik",
+  "license": "MIT"
+}
