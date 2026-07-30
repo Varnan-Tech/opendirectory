@@ -35,4 +35,28 @@ describe('parseFrontmatter', () => {
       'Frontmatter must be a YAML mapping.',
     );
   });
+
+  it('strips a UTF-8 BOM before matching frontmatter', () => {
+    const bom = '\uFEFF';
+    const source = `${bom}---\nname: bom-skill\n---\n# Body`;
+    expect(parseFrontmatter(source)).toEqual({
+      data: { name: 'bom-skill' },
+      content: '# Body',
+    });
+  });
+
+  it('handles empty frontmatter delimiters', () => {
+    expect(parseFrontmatter('---\n\n---\n# Body')).toEqual({
+      data: {},
+      content: '# Body',
+    });
+  });
+
+  it('handles CRLF line endings', () => {
+    const source = '---\r\nname: crlf-skill\r\ndescription: "crlf test"\r\n---\r\n# Body';
+    expect(parseFrontmatter(source)).toEqual({
+      data: { name: 'crlf-skill', description: 'crlf test' },
+      content: '# Body',
+    });
+  });
 });

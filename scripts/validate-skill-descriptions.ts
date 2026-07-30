@@ -29,7 +29,13 @@ for (const folder of fs.readdirSync(SKILLS_DIR)) {
     continue;
   }
   for (const file of files) {
-    const { data } = parseFrontmatter(fs.readFileSync(file, 'utf-8'));
+    let data: Record<string, unknown>;
+    try {
+      data = parseFrontmatter(fs.readFileSync(file, 'utf-8')).data;
+    } catch (err: any) {
+      failures.push({ file, reason: `failed to parse frontmatter: ${err.message}`, value: '' });
+      continue;
+    }
     const desc = data.description;
     if (desc === undefined || desc === null) {
       failures.push({ file, reason: 'no description in frontmatter', value: '' });

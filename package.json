@@ -23,8 +23,7 @@
   "pnpm": {
     "overrides": {
       "postcss": "^8.5.18",
-      "esbuild": ">=0.28.1",
-      "js-yaml": ">=3.15.0"
+      "esbuild": ">=0.28.1"
     }
   },
   "lint-staged": {
