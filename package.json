@@ -10,7 +10,6 @@
   "devDependencies": {
     "@types/node": "^25.6.0",
     "husky": "^9.1.7",
-    "image-size": "^2.0.2",
     "lint-staged": "^17.0.4",
     "sharp": "^0.35.3",
     "tsx": "^4.21.0",
@@ -23,7 +22,8 @@
   "pnpm": {
     "overrides": {
       "postcss": "^8.5.18",
-      "esbuild": ">=0.28.1"
+      "esbuild": ">=0.28.1",
+      "nanoid": "3.3.18"
     }
   },
   "lint-staged": {
