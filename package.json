@@ -23,7 +23,7 @@
     "overrides": {
       "postcss": "^8.5.18",
       "esbuild": ">=0.28.1",
-      "nanoid": "3.3.18"
+      "postcss>nanoid": "3.3.18"
     }
   },
   "lint-staged": {
