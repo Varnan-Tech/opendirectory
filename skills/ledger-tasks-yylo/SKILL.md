@@ -172,7 +172,7 @@ Add `--raw` for compact output. Add `-p` for pretty print.
 7. **Use `[blocked_by]` markup** in task body when creating tasks that depend on others
 8. **Use `[task_id]` markup** in task body to cross-reference related tasks
 9. **Use `get TASK_ID`** to see full task details including resolved dependency and related task info
-10. **Concurrent features are supported** — start each selected task with `yy task start TASK_ID`; each gets a dedicated product worktree, while `yy merge` serializes only target updates
+10. **Concurrent features are supported** — the orchestrator's top-level `yy task start TASK_ID` gives each selected task a dedicated product worktree, and the orchestrator's top-level `yy merge` serializes only target updates (orchestrator surface, distinct from the ledger-scoped `yy ledger merge` multi-directory consolidation above)
 
 ### Canonical Controller Routing
 
