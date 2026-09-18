@@ -1,0 +1,6 @@
+{
+  "name": "ledger-tasks-yylo",
+  "version": "1.0.0",
+  "description": "AI-native Kanban task management for coding agents - durable tasks, dependencies, and receipts across sessions.",
+  "category": "Developer Tools"
+}

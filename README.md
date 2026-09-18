@@ -9,7 +9,7 @@
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=64+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI%2C+Manus+AI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=65+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI%2C+Manus+AI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
 
 <br />
@@ -17,7 +17,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-64-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-65-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
@@ -45,7 +45,7 @@ Or list all skills:
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*64 specialized skills across GTM, growth, and developer tooling*
+*65 specialized skills across GTM, growth, and developer tooling*
 
 ### 2. Pick your agent
 ```bash
@@ -265,7 +265,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 
 ## All Skills
 
-64 skills across GTM, growth automation, technical marketing, and developer tooling.
+65 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
@@ -582,6 +582,11 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
   <tr>
     <td><a href="skills/kill-the-standup"><code>kill-the-standup</code></a></td>
     <td>Write your daily standup in seconds. The skill reads yesterday's Linear issues and GitHub commits, formats a done/doing/blockers update, and posts it to Slack.</td>
+    <td><code>1.0.0</code></td>
+  </tr>
+  <tr>
+    <td><a href="skills/ledger-tasks-yylo"><code>ledger-tasks-yylo</code></a></td>
+    <td>AI-native Kanban task management for coding agents. Your agent plans, tracks, and closes its own tasks on a durable board - with responses, commit links, dependency graphs, and receipts that survive across sessions.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>

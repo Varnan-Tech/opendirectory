@@ -262,6 +262,16 @@
     "path": "skills/kill-the-standup"
   },
   {
+    "name": "ledger-tasks-yylo",
+    "description": "AI-native Kanban task management for coding agents.",
+    "tags": [
+      "Developer Tools"
+    ],
+    "author": "yylo-dev",
+    "version": "1.0.0",
+    "path": "skills/ledger-tasks-yylo"
+  },
+  {
     "name": "linkedin-job-post-to-buyer-pain-map",
     "description": "Takes pasted LinkedIn job posts or hiring descriptions and converts them into a structured buyer pain map with inferred pains, capability gaps, buy...",
     "tags": [
