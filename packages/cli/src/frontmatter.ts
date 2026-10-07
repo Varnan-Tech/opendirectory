@@ -10,7 +10,7 @@ export interface SkillFrontmatterDocument extends FrontmatterDocument {
   compatibility: CompatibilityState;
 }
 
-const FRONTMATTER_PATTERN = /^---[^\S\r\n]*\r?\n([\s\S]*?)\r?\n---[^\S\r\n]*(?:\r?\n|$)/;
+const FRONTMATTER_PATTERN = /^---[^\S\r\n]*\r?\n([\s\S]*?(?:\r?\n))?---[^\S\r\n]*(?:\r?\n|$)/;
 const FRONTMATTER_OPENING_PATTERN = /^---[^\S\r\n]*(?:\r?\n|$)/;
 
 export function parseFrontmatter(source: string): FrontmatterDocument {
@@ -23,7 +23,7 @@ export function parseFrontmatter(source: string): FrontmatterDocument {
     return { data: {}, content: cleaned };
   }
 
-  const document = parseDocument(match[1]);
+  const document = parseDocument(match[1] ?? '');
   if (document.errors.length > 0) {
     throw new TypeError(`Invalid YAML frontmatter: ${document.errors[0].message}`);
   }
