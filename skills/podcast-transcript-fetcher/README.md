@@ -63,18 +63,21 @@ Run these commands inside Claude Code:
 
 [**Install in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fpodcast-transcript-fetcher&utm_source=opendirectory)
 
-Manus AI users can import a skill directly from its OpenDirectory skill page.
-1. Open the skill from the [opendirectory homepage](https://opendirectory.dev).
+Manus AI users can import a skill directly from its OpenDirectory skill page. This is the easiest path when you want Manus to pull the skill from GitHub for you.
+
+1. Open the skill you want from the [opendirectory homepage](https://opendirectory.dev).
 2. In the install panel, select the **Manus AI** tab.
-3. Click **Install in Manus AI**.
+3. Click **Install in Manus AI** - this opens Manus with the skill GitHub URL already attached.
 4. Confirm the import inside Manus AI.
+
+> If your Manus workspace prefers file uploads, use the **Download** tab instead and upload the downloaded `.skill.zip` file inside Manus.
 <!-- OPENDIRECTORY_INSTALL_END -->
 
 
 ## Quick Start
 
 ```bash
-# Install Python dependencies
+# Set up Python dependencies
 pip install requests python-dotenv
 
 # Copy and fill in your API key
