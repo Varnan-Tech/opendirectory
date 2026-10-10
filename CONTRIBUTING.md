@@ -81,7 +81,7 @@ When the user asks you to generate a cold email:
 3. Output the final email in a markdown code block.
 ```
 
-**Compatibility:** `compatibility` is the optional list of canonical CLI targets the skill has been tested and is supported on: `claude`, `codex`, `opencode`, `gemini`, `anti-gravity`, `openclaw`, and `hermes`. Omit the field only if the skill supports every target. When present, it must be a non-empty YAML list of those exact strings; aliases, unknown values, scalars, and non-string items fail validation. To add a target, implement and test that support, update this declaration, and submit it in a pull request.
+**Compatibility:** `compatibility` is the optional list of canonical CLI targets the skill has been tested and is supported on: `claude`, `codex`, `opencode`, `gemini`, `anti-gravity`, `openclaw`, and `hermes`. Omit the field only if the skill supports every target. When present, it must be a non-empty YAML list of those canonical targets; values are trimmed and matched case-insensitively, and aliases, unknown values, scalars, and non-string items fail validation. To add a target, implement and test that support, update this declaration, and submit it in a pull request.
 
 **2. The `README.md` File**
 This is the public face of your skill.
