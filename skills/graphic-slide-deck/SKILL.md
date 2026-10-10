@@ -1,7 +1,6 @@
 ---
 name: graphic-slide-deck
 description: Generates a professionally designed HTML slide deck from a brief or content. Outputs a single-file presentation + optional PDF. Supports 13 layout types and 8 style presets. Trigger when user says "create a slide deck", "make a presentation", "build a pitch deck", "make slides", "convert my notes to slides".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

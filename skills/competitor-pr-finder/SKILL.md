@@ -1,7 +1,6 @@
 ---
 name: competitor-pr-finder
 description: 'Give it your product URL or description. It finds your top 5 competitors, runs three-track PR research across all of them (editorial, podcasts, communities), identifies which channels appear most frequently, looks up the journalist or host for each, and returns a tiered outreach list with story angles and ready-to-send cold pitch drafts tailored to your product. Use when asked to find PR opportunities, discover where competitors got featured, build a media outreach list, find which journalists cover my space, or get pitch templates for press coverage.'
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # Competitor PR Finder

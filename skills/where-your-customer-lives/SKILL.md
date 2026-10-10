@@ -1,7 +1,6 @@
 ---
 name: where-your-customer-lives
 description: Given a product utility and ICP, researches the internet to find the specific channels. Where your customer actually lives, ranked by reachability with a full per-channel playbook. Returns evidence that your ICP is there, one entry tactic, one content angle, and specific anti-patterns per channel. Use when asked where my customer hangs out, what communities should I post in, where is my ICP, find channels for outreach, what forums does my ICP use, where should I spend time for distribution, or which communities are right for my product.
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # Where Your Customer Lives

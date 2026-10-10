@@ -58,6 +58,16 @@ The CLI installs skills for the following agents (use the lowercase slug with `-
 
 `--target` is **case-insensitive** (`--target Claude` and `--target CLAUDE` both work).
 
+### Compatibility declarations
+
+Skills may declare an optional top-level `compatibility` list in `SKILL.md`:
+
+```yaml
+compatibility: [codex, claude]
+```
+
+Target names are trimmed and matched case-insensitively, but must be canonical slugs from the Supported Agents table. An omitted `compatibility` key supports all targets; explicit empty, scalar, unknown, or alias values are invalid.
+
 ## Flags
 
 - `--plain` — Disable TUI and use plain text output. Useful for CI, pipes, and screen readers. Also auto-enabled when stdout/stdin is not a TTY or when `CI=1`.

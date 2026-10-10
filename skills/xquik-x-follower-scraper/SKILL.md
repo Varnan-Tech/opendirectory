@@ -1,7 +1,6 @@
 ---
 name: xquik-x-follower-scraper
 description: Run Xquik's Apify Actor for X followers, following, verified audiences, lists, communities, and overlap research.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: Xquik
 version: 1.0.0
 tags: [apify, x, twitter, audience-research, web-scraping]

@@ -1,7 +1,6 @@
 ---
 name: linkedin-post-generator
 description: Converts any content, blog post URL, pasted article, GitHub PR description, or a description of something built, into a formatted LinkedIn post with proper hook, story arc, and formatting. Optionally posts directly to LinkedIn via Composio. Use when asked to write a LinkedIn post, turn a blog into a LinkedIn update, announce a shipped feature, share a case study on LinkedIn, or post something professionally. Trigger when a user mentions LinkedIn, wants to share content professionally, says "post this to LinkedIn", or asks to repurpose a blog/article/PR for social media.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

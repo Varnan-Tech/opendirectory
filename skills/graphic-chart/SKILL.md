@@ -1,7 +1,6 @@
 ---
 name: graphic-chart
 description: Generates data visualization charts (bar, line, area, pie, doughnut, scatter, radar, treemap) as PNG using Apache ECharts v6. 1080×1080px default, 5 style presets, highlight annotations. Trigger when user says "create a chart", "visualize data", "make a bar chart", "line graph", "pie chart", "data visualization", "chart this data", "plot", "graph", or "visualize these numbers".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 2.0.0
 ---

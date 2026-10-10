@@ -1,7 +1,6 @@
 ---
 name: graphic-gif
 description: Creates animated looping GIFs from CSS animations (default) or AI image-to-video. 800×800px default, 6 animation types, 4 style presets. Trigger when user says "create an animated gif", "make a looping gif", "animated banner", "CSS animation gif", "social media animation", "make this loop", "animated graphic", or "motion graphic".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

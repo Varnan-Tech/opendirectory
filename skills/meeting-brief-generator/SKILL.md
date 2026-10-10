@@ -1,7 +1,6 @@
 ---
 name: meeting-brief-generator
 description: Takes a company name and optional contact, runs targeted research via Tavily, synthesizes a 1-page pre-call brief with Gemini, and optionally saves it to Notion. Use when asked to prepare for a meeting, research a prospect before a call, generate a company brief, create a pre-call summary, or write a meeting prep doc. Trigger when a user says "prepare me for a meeting with", "research this company before my call", "generate a meeting brief for", "I have a call with X tomorrow", or "create a prospect brief for".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

@@ -1,7 +1,6 @@
 ---
 name: sdk-adoption-tracker
 description: Given your SDK or library name, searches GitHub code search for public repos that import or require it, classifies each repo as company org, affiliated developer, solo developer, or tutorial noise, scores by adoption signal strength, detects new adopters by date, and outputs a ranked list of who is building on you with outreach context per high-signal company. Use when asked to find who uses your SDK, track SDK adoption, find companies building on your library, identify warm leads from existing SDK users, or see which orgs import your package. Trigger when a user says "who is using my SDK", "find repos that import my library", "track adoption of my package", "which companies are building on my SDK", "find my SDK users on GitHub", or "show me who imports my package".
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # SDK Adoption Tracker

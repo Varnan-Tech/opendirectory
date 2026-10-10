@@ -1,7 +1,6 @@
 ---
 name: dx-roaster
 description: 'Brutally honest developer-experience audit for a GitHub repo. Scores 10 DX dimensions (time-to-first-success, README clarity, visual proof, install, quick-start, docs, examples, community, trust, marketing), writes a shareable roast in the requested tone (brutal/honest/kind), produces a prioritized action plan ranked by impact × effort, and sketches an ideal README. Trigger when user says "roast my repo", "audit my README", "dx audit", "developer experience review", "score my GitHub project", "before launch checklist", or "make my repo shareable".'
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

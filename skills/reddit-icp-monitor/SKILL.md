@@ -1,7 +1,6 @@
 ---
 name: reddit-icp-monitor
 description: Watches subreddits for people describing the exact problem you solve, scores their relevance to your ICP, and drafts a helpful non-spammy reply for each high-signal post. Use when asked to monitor Reddit for ICP signals, find prospects on Reddit, surface pain point posts, draft helpful Reddit replies, or scan subreddits for buying signals. Trigger when a user says "monitor Reddit for my ICP", "find people on Reddit who need my product", "scan subreddits for pain points", "draft Reddit replies for prospects", or "check Reddit for buying signals".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

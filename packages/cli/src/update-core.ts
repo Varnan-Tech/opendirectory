@@ -1,12 +1,13 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { loadRegistry } from './registry';
 import * as manifest from './manifest';
 import { installSkill, InstallResult } from './install-core';
 import { ValidAgent, isValidAgent, getAgentSkillsDir } from './detect';
+import { normalizeTarget, validateCompatibilityState } from './compat';
+import { loadSkillSource } from './skill-discovery';
 
 export async function updateSkill(name: string, target: string): Promise<InstallResult> {
-  const normalizedTarget = target.toLowerCase();
+  const normalizedTarget = normalizeTarget(target);
   if (!isValidAgent(normalizedTarget)) {
     return { skillName: name, target, path: '', success: false, error: new Error(`Unsupported target '${target}'.`) };
   }
@@ -15,10 +16,15 @@ export async function updateSkill(name: string, target: string): Promise<Install
   let originalPath: string | null = null;
 
   try {
-    const skills = await loadRegistry();
-    const registrySkill = skills.find(s => s.name === name);
-    if (!registrySkill) {
-      return { skillName: name, target: normalizedTarget, path: '', success: false, error: new Error(`Skill '${name}' is not in the registry — cannot update.`) };
+    const root = path.resolve(__dirname, '..');
+    const source = await loadSkillSource(path.join(root, 'skills', name));
+    if (!source) {
+      return { skillName: name, target: normalizedTarget, path: '', success: false, error: new Error(`Skill '${name}' missing SKILL.md in registry.`) };
+    }
+
+    const compatibility = validateCompatibilityState(name, source.frontmatter.compatibility, normalizedTarget);
+    if (!compatibility.ok) {
+      return { skillName: name, target: normalizedTarget, path: '', success: false, error: new Error(compatibility.error) };
     }
 
     const m = await manifest.readManifest();

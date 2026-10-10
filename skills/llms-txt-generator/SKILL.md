@@ -1,7 +1,6 @@
 ---
 name: llms-txt-generator
 description: Generates and maintains a standards-compliant llms.txt file for any website — either by crawling the live site OR by reading the website's codebase directly. Use this skill when asked to create an llms.txt, add AI discoverability to a site, improve GEO (Generative Engine Optimization), make a website readable by AI agents, generate an llms-full.txt, check if a site has llms.txt, or audit a site's AI readiness for generative search. Trigger this skill any time a user mentions llms.txt, AI discoverability, LLM site readability, or wants their site to appear in AI-generated answers. Also trigger when the user is inside a website codebase and asks about SEO, AI readiness, or content structure.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

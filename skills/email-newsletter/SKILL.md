@@ -1,7 +1,6 @@
 ---
 name: email-newsletter
 description: Drafts and designs a complete HTML email newsletter from a topic or content brief. Outputs paste-ready HTML for Loops, Mailchimp, Beehiiv, Resend, or any standard email platform. Includes subject line options and plain-text fallback. Trigger when a user says "write a newsletter", "draft an email newsletter", "create an HTML email", "design an email for my subscribers", or "write a newsletter about [topic]".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

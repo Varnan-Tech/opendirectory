@@ -1,7 +1,6 @@
 ---
 name: outreach-sequence-builder
 description: Takes a buying signal and generates a personalized multi-channel outreach sequence across email, LinkedIn, and phone. Outputs 4-6 ready-to-send touchpoints over 10-14 days. Optionally drafts email touchpoints via Composio Gmail. Use when asked to write an outreach sequence, build a sales cadence, create a follow-up sequence, personalize outreach for a signal, or generate cold outreach messages. Trigger when a user says "build an outreach sequence for", "write a sales cadence for", "create outreach based on this signal", "they just raised a round write me a sequence", or "generate personalized outreach for".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

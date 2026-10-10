@@ -1,5 +1,8 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+import { inspectSkillFrontmatter } from './frontmatter';
+import { type CompatibilityState } from './compat';
+import { loadSkillSource } from './skill-discovery';
 
 export interface Skill {
   name: string;
@@ -8,71 +11,51 @@ export interface Skill {
   author: string;
   version: string;
   path: string;
+  compatibility?: unknown;
+  /** Distinguishes an omitted key from an explicit null, scalar, or empty list. */
+  hasCompatibility?: boolean;
+  /** Preserves frontmatter parse failures so malformed skills cannot become universal. */
+  frontmatterError?: string;
+  compatibilityState?: CompatibilityState;
 }
 
 const getProjectRoot = () => path.resolve(__dirname, '..');
 
-async function parseSkillMd(skillDir: string, skillName: string): Promise<Partial<Skill> | null> {
-  const skillMdPath = path.join(skillDir, 'SKILL.md');
+async function parseSkillMd(skillDir: string): Promise<Partial<Skill> | null> {
   try {
-    const content = await fs.readFile(skillMdPath, 'utf-8');
-    if (!content.startsWith('---')) return null;
-    const end = content.indexOf('\n---', 4);
-    if (end === -1) return null;
-    const frontmatter = content.slice(4, end);
-    const result: Partial<Skill> = {};
-    let inDescription = false;
-    let descriptionParts: string[] = [];
-    let descQuote = '';
-    for (let rawLine of frontmatter.split(/\r?\n/)) {
-      if (rawLine.endsWith('\r')) rawLine = rawLine.slice(0, -1);
-      if (inDescription) {
-        if (/^[a-z_]+:/i.test(rawLine.trimStart()) && rawLine.startsWith(rawLine.trimStart())) {
-          inDescription = false;
-        } else {
-          descriptionParts.push(rawLine);
-          continue;
-        }
-      }
-      const match = rawLine.match(/^([a-z_]+):\s*(.*)$/i);
-      if (!match) continue;
-      const [, key, rest] = match;
-      const value = rest.trim();
-      if (key === 'description') {
-        if (value.startsWith("'") || value.startsWith('"')) {
-          descQuote = value[0];
-          const stripped = value.slice(1);
-          if (stripped.endsWith(descQuote)) {
-            result.description = stripped.slice(0, -1);
-          } else {
-            descriptionParts = [stripped];
-            inDescription = true;
-          }
-        } else if (value === '|' || value === '>') {
-          inDescription = true;
-        } else {
-          result.description = value;
-        }
-      } else if (key === 'author') {
-        result.author = value.replace(/^['"]|['"]$/g, '');
-      } else if (key === 'version') {
-        result.version = value.replace(/^['"]|['"]$/g, '');
-      } else if (key === 'tags') {
-        const tagMatch = value.match(/^\[(.*)\]$/);
-        if (tagMatch) {
-          result.tags = tagMatch[1].split(',').map(t => t.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean);
-        }
-      }
-    }
-    if (descriptionParts.length > 0 && !result.description) {
-      let joined = descriptionParts.join(' ').trim();
-      if (descQuote && joined.endsWith(descQuote)) joined = joined.slice(0, -1);
-      result.description = joined.replace(/\s+/g, ' ');
-    }
-    return result;
-  } catch {
-    return null;
+    const source = await loadSkillSource(skillDir);
+    if (!source) return null;
+    return parseSkillFrontmatterDocument(source.frontmatter, true);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const readError = `Unable to load discovered SKILL.md: ${message}`;
+    return { compatibilityState: { kind: 'invalid', error: readError }, frontmatterError: readError };
   }
+}
+
+export function parseSkillFrontmatter(content: string): Partial<Skill> | null {
+  return parseSkillFrontmatterDocument(inspectSkillFrontmatter(content), content.startsWith('---'));
+}
+
+function parseSkillFrontmatterDocument(
+  frontmatter: ReturnType<typeof inspectSkillFrontmatter>,
+  hasSourceFile: boolean,
+): Partial<Skill> | null {
+  const source = frontmatter.data;
+  if (Object.keys(source).length === 0 && !hasSourceFile && frontmatter.compatibility.kind === 'missing') return null;
+  const result: Partial<Skill> = { compatibilityState: frontmatter.compatibility };
+  if (typeof source.description === 'string') result.description = source.description;
+  if (typeof source.author === 'string') result.author = source.author;
+  if (typeof source.version === 'string') result.version = source.version;
+  if (Array.isArray(source.tags)) result.tags = source.tags.filter((tag): tag is string => typeof tag === 'string');
+  if (frontmatter.compatibility.kind === 'valid') {
+    result.hasCompatibility = true;
+    result.compatibility = frontmatter.compatibility.targets;
+  }
+  if (frontmatter.compatibility.kind === 'invalid') {
+    result.frontmatterError = frontmatter.compatibility.error;
+  }
+  return result;
 }
 
 export async function loadRegistry(): Promise<Skill[]> {
@@ -103,14 +86,21 @@ export async function loadRegistry(): Promise<Skill[]> {
   for (const { name, dir } of diskEntries) {
     seen.add(name);
     const fromRegistry = registryMap.get(name);
-    const fromFrontmatter = await parseSkillMd(dir, name);
+    const fromFrontmatter = await parseSkillMd(dir);
+    const compatibilityState = fromFrontmatter?.compatibilityState ?? { kind: 'missing' };
     skills.push({
       name,
       description: cleanDescription(fromRegistry?.description || fromFrontmatter?.description || `Skill: ${name}`),
       tags: Array.isArray(fromRegistry?.tags) ? fromRegistry.tags : (fromFrontmatter?.tags ?? []),
       author: fromRegistry?.author || fromFrontmatter?.author || 'OpenDirectory',
       version: fromRegistry?.version || fromFrontmatter?.version || 'unknown',
-      path: fromRegistry?.path || `skills/${name}`
+      path: fromRegistry?.path || `skills/${name}`,
+      compatibilityState,
+      ...(compatibilityState.kind === 'valid' && {
+        compatibility: compatibilityState.targets,
+        hasCompatibility: true,
+      }),
+      ...(compatibilityState.kind === 'invalid' && { frontmatterError: compatibilityState.error }),
     });
   }
 

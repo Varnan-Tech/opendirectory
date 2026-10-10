@@ -1,7 +1,6 @@
 ---
 name: oss-launch-kit
 description: Higher-level OSS launch orchestrator that analyzes repos, selects channels, and coordinates launch plans.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 0.2.0
 ---

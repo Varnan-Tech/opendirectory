@@ -1,7 +1,6 @@
 ---
 name: kill-the-standup
 description: Reads yesterday's Linear issues and GitHub commits for the authenticated user, formats a standup update (done / doing / blockers), and posts it to Slack. Use when asked to write a standup, generate a standup update, post to the standup channel, summarize yesterday's work, or automate the daily standup. Trigger when a user says "write my standup", "post standup", "generate standup update", "what did I do yesterday", or "kill the standup".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

@@ -1,7 +1,6 @@
 ---
 name: domain-expired-opportunity-finder
 description: Evaluates expired domain candidates against a target niche, scores them by topical relevance, historical activity level, and history cleanliness, then outputs a ranked shortlist with explainable reasoning and risk flags.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: ajaycodesitbetter
 version: 1.0.0
 ---

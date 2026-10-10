@@ -1,7 +1,6 @@
 ---
 name: vid-product-launch
 description: Generates a cinematic product launch video (MP4) from a product description and launch context. 5-section narrative arc — Tease, Build, Reveal, Proof, CTA — rendered as HTML/CSS in headless Chromium via Playwright, assembled with FFmpeg. 4 tone presets. 30/60/90 second durations. Trigger when user says "product launch video", "launch video", "product reveal video", "cinematic product video", "product announcement video", or "launch day video".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.2.0
 ---

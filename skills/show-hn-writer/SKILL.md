@@ -1,7 +1,6 @@
 ---
 name: show-hn-writer
 description: 'Draft a Show HN post backed by real HN performance data. Uses observed patterns from 250 top HN posts to maximise score.'
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: Varnan / Paras Madan
 version: 2.0.0
 data-source: 250 top HN posts scraped April 18 2026

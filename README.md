@@ -169,6 +169,16 @@ npx "@opendirectory.dev/skills" list
 | OpenClaw | `--target openclaw` |
 | Hermes | `--target hermes` |
 
+### Skill compatibility
+
+`compatibility` in a skill's YAML frontmatter is an optional list of the canonical CLI targets the skill has been tested and is supported on: `claude`, `codex`, `opencode`, `gemini`, `anti-gravity`, `openclaw`, and `hermes`.
+
+```yaml
+compatibility: [codex, opencode]
+```
+
+Omit the field only when the skill supports all targets. If the field is present, it must be a non-empty list of canonical target strings; aliases, unknown targets, scalar values, and non-string items are rejected. To expand support, implement it, add tests, update the declaration, and open a pull request.
+
 **3. Install a skill:**
 ```bash
 npx "@opendirectory.dev/skills" install <skill-name> --target <your-agent>

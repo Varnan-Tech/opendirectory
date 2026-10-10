@@ -1,7 +1,6 @@
 ---
 name: vc-finder
 description: 'Takes a startup product URL or description, detects the industry and funding stage, identifies 5 comparable funded companies, searches who invested in those companies (Track A), finds VCs who publish investment theses about this space (Track B), and returns a ranked sourced list of relevant investors with deep-dives and outreach hooks. Use when asked to find investors for a startup, identify which VCs fund products like mine, research who backs companies in my space, build a VC target list, or find investor-market fit.'
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # VC Finder

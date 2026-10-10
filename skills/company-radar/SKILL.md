@@ -1,7 +1,6 @@
 ---
 name: company-radar
 description: Competitive intelligence orchestrator tracking companies across 8+ platforms (GitHub, Twitter, Reddit, HN, PH, YC Jobs) with heat scores and AI briefings.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

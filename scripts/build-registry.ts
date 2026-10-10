@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { z } from 'zod';
+import { inspectSkillFrontmatter } from '../packages/cli/src/frontmatter';
+import { findSkillSourceSync } from '../packages/cli/src/skill-discovery';
 
 const SkillSchema = z.object({
   name: z.string(),
@@ -9,6 +12,7 @@ const SkillSchema = z.object({
   author: z.string().optional().default('Unknown'),
   version: z.string().optional().default('0.0.1'),
   path: z.string(),
+  compatibility: z.unknown().optional(),
 });
 
 type Skill = z.infer<typeof SkillSchema>;
@@ -16,52 +20,47 @@ type Skill = z.infer<typeof SkillSchema>;
 const SKILLS_DIR = path.join(process.cwd(), 'skills');
 const OUTPUT_FILE = path.join(process.cwd(), 'packages', 'cli', 'registry.json');
 
-function extractMetadataFromMarkdown(content: string): any {
-  const metadata: any = {};
-  const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n/);
-  
-  let body = content;
-  if (frontmatterMatch) {
-    const frontmatter = frontmatterMatch[1];
-    body = content.slice(frontmatterMatch[0].length);
-    
-    const lines = frontmatter.split('\n');
-    for (const line of lines) {
-      const [key, ...valueParts] = line.split(':');
-      if (key && valueParts.length > 0) {
-        const value = valueParts.join(':').trim();
-        if (value.startsWith('[') && value.endsWith(']')) {
-          metadata[key.trim()] = value.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, ''));
-        } else {
-          metadata[key.trim()] = value.replace(/^["']|["']$/g, '');
-        }
-      }
-    }
-  }
+function extractMetadataFromSkillMd(content: string): { metadata: Record<string, unknown>; compatibility: ReturnType<typeof inspectSkillFrontmatter>['compatibility'] } {
+  const frontmatter = inspectSkillFrontmatter(content);
+  const metadata: Record<string, unknown> = flattenFrontmatterMetadata(frontmatter.data);
 
   if (!metadata.description) {
-    const lines = body.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+    const lines = frontmatter.content.split('\n').map(line => line.trim()).filter(line => line.length > 0);
     const firstNonTitleLine = lines.find(line => !line.startsWith('#'));
     metadata.description = firstNonTitleLine;
   }
 
-  return metadata;
+  return { metadata, compatibility: frontmatter.compatibility };
 }
 
-function buildRegistry() {
-  if (!fs.existsSync(SKILLS_DIR)) {
-    console.error(`Skills directory not found at ${SKILLS_DIR}`);
+function flattenFrontmatterMetadata(data: Record<string, unknown>): Record<string, unknown> {
+  const nested = data.metadata;
+  if (!nested || typeof nested !== 'object' || Array.isArray(nested)) {
+    return data;
+  }
+
+  // Some skills keep author/version under `metadata`; retain top-level fields
+  // as the explicit override while exposing nested values to the registry schema.
+  const { compatibility: _nestedCompatibility, ...nestedMetadata } = nested as Record<string, unknown>;
+  const { metadata: _nestedMetadata, ...topLevel } = data;
+  return { ...nestedMetadata, ...topLevel };
+}
+
+export function buildRegistry(skillsDir = SKILLS_DIR, outputFile = OUTPUT_FILE): Skill[] {
+  if (!fs.existsSync(skillsDir)) {
+    console.error(`Skills directory not found at ${skillsDir}`);
     process.exit(1);
   }
 
-  const skillFolders = fs.readdirSync(SKILLS_DIR).filter(file => {
-    return fs.statSync(path.join(SKILLS_DIR, file)).isDirectory();
+  const skillFolders = fs.readdirSync(skillsDir).filter(file => {
+    return fs.statSync(path.join(skillsDir, file)).isDirectory();
   }).sort(); // deterministic order across all OS/filesystems
 
   const registry: Skill[] = [];
 
   for (const folder of skillFolders) {
-    const folderPath = path.join(SKILLS_DIR, folder);
+    const folderPath = path.join(skillsDir, folder);
+    const jsonMetadata: Record<string, unknown> = {};
     let metadata: any = {
       name: folder,
       path: `skills/${folder}`,
@@ -71,62 +70,44 @@ function buildRegistry() {
     if (fs.existsSync(metaJsonPath)) {
       try {
         const content = JSON.parse(fs.readFileSync(metaJsonPath, 'utf-8'));
-        metadata = { ...metadata, ...content };
+        const { compatibility: _ignoredCompatibility, ...ordinaryMetadata } = content;
+        Object.assign(jsonMetadata, ordinaryMetadata);
+        metadata = { ...metadata, ...ordinaryMetadata };
       } catch (e) {
         console.warn(`Warning: Failed to parse skill.meta.json in ${folder}`);
       }
-    } else {
-      let skillMdPath = path.join(folderPath, 'SKILL.md');
-      
-      if (!fs.existsSync(skillMdPath)) {
-        try {
-          const subDirs = fs.readdirSync(folderPath, { withFileTypes: true });
-          for (const entry of subDirs) {
-            if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
-              const possiblePath = path.join(folderPath, entry.name, 'SKILL.md');
-              if (fs.existsSync(possiblePath)) {
-                skillMdPath = possiblePath;
-                break;
-              }
-              const subSubDirs = fs.readdirSync(path.join(folderPath, entry.name), { withFileTypes: true });
-              for (const subEntry of subSubDirs) {
-                if (subEntry.isDirectory()) {
-                  const possiblePath2 = path.join(folderPath, entry.name, subEntry.name, 'SKILL.md');
-                  if (fs.existsSync(possiblePath2)) {
-                    skillMdPath = possiblePath2;
-                    break;
-                  }
-                }
-              }
-            }
-          }
-        } catch (e) {}
+    }
+
+    const source = findSkillSourceSync(folderPath);
+    if (source) {
+      const sourceMetadata = extractMetadataFromSkillMd(fs.readFileSync(source.skillMdPath, 'utf-8'));
+      if (sourceMetadata.compatibility.kind === 'invalid') {
+        throw new Error(`Skill '${folder}' has an invalid compatibility declaration: ${sourceMetadata.compatibility.error}`);
       }
-
-      const readmeMdPath = path.join(folderPath, 'README.md');
-      const mdPath = fs.existsSync(skillMdPath) ? skillMdPath : (fs.existsSync(readmeMdPath) ? readmeMdPath : null);
-
-      if (mdPath) {
-        const content = fs.readFileSync(mdPath, 'utf-8');
-        const mdMetadata = extractMetadataFromMarkdown(content);
-        metadata = { ...metadata, ...mdMetadata };
-      }
-
-      const pkgJsonPath = path.join(folderPath, 'package.json');
-      if (fs.existsSync(pkgJsonPath)) {
-        try {
-          const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
-          metadata.name = metadata.name === folder ? (pkg.name || metadata.name) : metadata.name;
-          metadata.description = metadata.description || pkg.description;
-          metadata.version = metadata.version || pkg.version;
-          metadata.author = metadata.author || (typeof pkg.author === 'string' ? pkg.author : pkg.author?.name) || 'opendirectory';
-        } catch (e) {
-          console.warn(`Warning: Failed to parse package.json in ${folder}`);
-          metadata.author = metadata.author || 'opendirectory';
-        }
+      metadata = { ...metadata, ...sourceMetadata.metadata, ...jsonMetadata };
+      if (sourceMetadata.compatibility.kind === 'valid') {
+        metadata.compatibility = sourceMetadata.compatibility.targets;
       } else {
+        delete metadata.compatibility;
+      }
+    } else {
+      delete metadata.compatibility;
+    }
+
+    const pkgJsonPath = path.join(folderPath, 'package.json');
+    if (fs.existsSync(pkgJsonPath)) {
+      try {
+        const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+        metadata.name = metadata.name === folder ? (pkg.name || metadata.name) : metadata.name;
+        metadata.description = metadata.description || pkg.description;
+        metadata.version = metadata.version || pkg.version;
+        metadata.author = metadata.author || (typeof pkg.author === 'string' ? pkg.author : pkg.author?.name) || 'opendirectory';
+      } catch (e) {
+        console.warn(`Warning: Failed to parse package.json in ${folder}`);
         metadata.author = metadata.author || 'opendirectory';
       }
+    } else {
+      metadata.author = metadata.author || 'opendirectory';
     }
 
     metadata.description = metadata.description || 'No description available';
@@ -172,13 +153,17 @@ function buildRegistry() {
     }
   }
 
-  const outputDir = path.dirname(OUTPUT_FILE);
+  const outputDir = path.dirname(outputFile);
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(registry, null, 2));
-  console.log(`Successfully built registry with ${registry.length} skills at ${OUTPUT_FILE}`);
+  fs.writeFileSync(outputFile, JSON.stringify(registry, null, 2));
+  console.log(`Successfully built registry with ${registry.length} skills at ${outputFile}`);
+  return registry;
 }
 
-buildRegistry();
+const executedFile = process.argv[1] ? path.resolve(process.argv[1]) : '';
+if (executedFile === path.resolve(fileURLToPath(import.meta.url))) {
+  buildRegistry();
+}

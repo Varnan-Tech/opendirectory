@@ -2,7 +2,6 @@
 name: app-store-review-arbitrage
 description: "Fetches low-star App Store and Google Play reviews, clusters them into broken-promise patterns, and generates a ranked copy brief with positioning opportunities."
 version: 1.0.0
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # app-store-review-arbitrage

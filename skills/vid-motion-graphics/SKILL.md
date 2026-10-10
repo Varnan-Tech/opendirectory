@@ -1,7 +1,6 @@
 ---
 name: vid-motion-graphics
 description: Generates motion graphics videos (MP4) from a content brief. Multi-scene HTML/CSS animations rendered frame-by-frame in headless Chromium via Playwright, assembled with FFmpeg. 1080×1080 default, 16:9 (1920×1080) and 9:16 (1080×1920) supported. 5 style presets. Trigger when user says "create a video", "motion graphic", "animated video", "make a reel", "create an explainer", "animated infographic", or "short video".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

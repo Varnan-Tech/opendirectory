@@ -1,7 +1,6 @@
 ---
 name: reddit-post-engine
 description: Writes and optionally posts a Reddit post for any subreddit, following that subreddit's specific culture and rules. Drafts a title, body, and first comment using the 90/10 rule. Uses Composio Reddit MCP for optional direct posting. Use when asked to post on Reddit, draft a Reddit post, share a project on Reddit, write a subreddit post, or launch something on Reddit. Trigger when a user says "post this on Reddit", "write a Reddit post for r/...", "help me launch on Reddit", "draft something for Reddit", or "how do I share this on Reddit without getting banned".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

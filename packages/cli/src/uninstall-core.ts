@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import * as manifest from './manifest';
 import { ValidAgent, isValidAgent, getAgentSkillsDir } from './detect';
+import { normalizeTarget } from './compat';
 
 export interface UninstallResult {
   skillName: string;
@@ -12,7 +13,7 @@ export interface UninstallResult {
 
 export async function uninstallSkill(name: string, target: string): Promise<UninstallResult> {
   try {
-    const normalizedTarget = target.toLowerCase();
+    const normalizedTarget = normalizeTarget(target);
     if (!isValidAgent(normalizedTarget)) {
       return { skillName: name, target, removed: false, error: new Error(`Unsupported target '${target}'.`) };
     }

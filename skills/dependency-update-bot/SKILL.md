@@ -1,7 +1,6 @@
 ---
 name: dependency-update-bot
 description: Scans your project for outdated npm, pip, Cargo, Go, or Ruby packages. Runs a CVE security audit. Fetches changelogs, summarizes breaking changes with Gemini, and opens one PR per risk group (patch, minor, major). Includes Diagnosis Mode for install conflicts. Use when asked to update dependencies, check for outdated packages, open dependency PRs, scan for package updates, audit for CVEs, or flag breaking changes in upgrades. Trigger when a user says "check for outdated packages", "update my dependencies", "open PRs for dependency updates", "scan for CVEs", or "which packages need upgrading".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

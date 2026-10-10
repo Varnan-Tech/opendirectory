@@ -2,7 +2,6 @@
 name: store-listing-optimizer
 description: "Rewrites your App Store or Google Play description to explicitly pre-empt competitor flaws (based on review complaints) and optimize for ASO."
 version: 1.0.0
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # `store-listing-optimizer`

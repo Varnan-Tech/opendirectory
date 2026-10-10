@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
-import { parseFrontmatter } from './lib/frontmatter';
+import { inspectSkillFrontmatter } from '../packages/cli/src/frontmatter';
+import { findSkillSourceSync } from '../packages/cli/src/skill-discovery';
 
 const skillsDir = path.join(process.cwd(), 'skills');
 
@@ -44,32 +45,6 @@ function scanDirectory(dir: string, errors: string[]) {
   }
 }
 
-function findSkillMd(dir: string, depth: number = 0): string | null {
-  if (depth > 4) return null;
-  
-  let entries;
-  try {
-    entries = fs.readdirSync(dir, { withFileTypes: true });
-  } catch (e) {
-    return null;
-  }
-  
-  for (const entry of entries) {
-    if ((entry.isFile() || entry.isSymbolicLink()) && entry.name.toLowerCase() === 'skill.md') {
-      return path.join(dir, entry.name);
-    }
-  }
-  
-  for (const entry of entries) {
-    if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
-      const found = findSkillMd(path.join(dir, entry.name), depth + 1);
-      if (found) return found;
-    }
-  }
-  
-  return null;
-}
-
 function findReadmeMd(dir: string, depth: number = 0): string | null {
   if (depth > 4) return null;
   
@@ -108,7 +83,8 @@ function validateSkills() {
   for (const entry of entries) {
     if (entry.isDirectory()) {
       const skillPath = path.join(skillsDir, entry.name);
-      const skillMdPath = findSkillMd(skillPath);
+      const source = findSkillSourceSync(skillPath);
+      const skillMdPath = source?.skillMdPath;
       const errors: string[] = [];
 
       if (!skillMdPath) {
@@ -122,13 +98,16 @@ function validateSkills() {
 
         try {
           const fileContent = fs.readFileSync(skillMdPath, 'utf-8');
-          const parsed = parseFrontmatter(fileContent);
+          const parsed = inspectSkillFrontmatter(fileContent);
           
           if (typeof parsed.data.name !== 'string') {
             errors.push(`Error: Skill '${entry.name}' is missing 'name' in SKILL.md frontmatter.`);
           }
           if (typeof parsed.data.description !== 'string') {
             errors.push(`Error: Skill '${entry.name}' is missing 'description' in SKILL.md frontmatter.`);
+          }
+          if (parsed.compatibility.kind === 'invalid') {
+            errors.push(`Error: Skill '${entry.name}' has invalid compatibility: ${parsed.compatibility.error}`);
           }
         } catch (err: any) {
           errors.push(`Error: Failed to parse SKILL.md for '${entry.name}': ${err.message}`);

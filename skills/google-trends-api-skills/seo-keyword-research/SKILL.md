@@ -2,7 +2,6 @@
 name: seo-keyword-research
 description: SEO keyword research workflow for blog generation using Google Trends data. Use when writing blog posts, planning content calendars, or optimizing articles for search engines. Finds breakout keywords, builds content structure, and generates SEO-optimized blog outlines targeting tech and developer audiences.
 license: MIT
-compatibility: Requires the google-trends-api skill (or direct SerpApi access with SERPAPI_KEY). Designed for Claude Code and similar AI coding agents.
 metadata:
   author: farizanjum
   version: "2.0"

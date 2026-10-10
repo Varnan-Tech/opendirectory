@@ -1,7 +1,6 @@
 ---
 name: graphic-ebook
 description: Creates professionally designed B2B SaaS e-books in HTML + CSS, exported as print-ready PDF. 3–10 pages, 9 style presets, 11 page layout types. Trigger when user says "create an ebook", "design a lead magnet", "make a PDF guide", "build a gated content piece", "write a B2B ebook", "design a white paper", "create a nurture asset", or "make a PDF report".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

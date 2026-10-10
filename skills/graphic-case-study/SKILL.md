@@ -1,7 +1,6 @@
 ---
 name: graphic-case-study
 description: Generates a professionally designed case study PDF for B2B SaaS sales and marketing. Supports 7 page layouts, 9 style presets, 1-4 page output. Trigger when user says "create a case study", "write a customer story", "make a case study PDF", "design a success story", "turn this customer win into a PDF".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

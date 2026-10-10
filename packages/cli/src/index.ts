@@ -21,6 +21,7 @@ import { runInstalledTUI } from './tui/installed';
 import { getDefaultTarget } from './config';
 import { readManifest, reconcile } from './manifest';
 import { enableTabJumpForGroupMultiselect, enableWindowsSafeClose } from './clack-patch';
+import { formatCompatibilityState } from './compat';
 
 enableWindowsSafeClose();
 enableTabJumpForGroupMultiselect();
@@ -36,7 +37,8 @@ program
   .description(chalk.blue.bold('CLI to install OpenDirectory skills'))
   .version(pkg.version)
   .option('--no-banner', 'Hide the ASCII banner')
-  .option('--plain', 'Force plain (non-interactive) output');
+  .option('--plain', 'Force plain (non-interactive) output')
+  .option('-t, --target <tool>', `Target agent (${SUPPORTED_TARGETS}) for the interactive browser.`);
 
 program.addHelpText('after', `
 Examples:
@@ -64,8 +66,8 @@ async function printPlainTable() {
     console.log(chalk.green('Successfully loaded Open Directory registry!\n'));
 
     const table = new Table({
-      head: [chalk.hex('#856FE6').bold('Skill Name'), chalk.hex('#856FE6').bold('Description')],
-      colWidths: [35, 75],
+      head: [chalk.hex('#856FE6').bold('Skill Name'), chalk.hex('#856FE6').bold('Description'), chalk.hex('#856FE6').bold('Compatibility')],
+      colWidths: [30, 60, 25],
       wordWrap: true,
       chars: noColor() ? {
         'top': '-', 'top-mid': '+', 'top-left': '+', 'top-right': '+',
@@ -78,7 +80,8 @@ async function printPlainTable() {
     for (const skill of skills) {
       let desc = skill.description || '';
       if (desc.length > 100) desc = desc.substring(0, 97) + '...';
-      table.push([chalk.white.bold(skill.name), desc]);
+      const compat = formatCompatibilityState(skill.compatibilityState ?? { kind: 'missing' });
+      table.push([chalk.white.bold(skill.name), desc, compat]);
     }
 
     console.log(table.toString());
@@ -129,21 +132,22 @@ program.action(async () => {
 program.command('list')
   .description('List available skills')
   .option('--plain', 'Print plain text table (no TUI)')
+  .option('-t, --target <tool>', `Target agent (${SUPPORTED_TARGETS}) for the interactive browser.`)
   .action(async (cmdOpts, command) => {
     const globalOpts = command.optsWithGlobals();
     const wantsPlain = cmdOpts.plain || globalOpts.plain || isPiped() || !isInteractive();
     if (wantsPlain) {
       await printPlainTable();
     } else {
-      await runBrowseTUI({ target: globalOpts.target, noBanner: !globalOpts.banner });
+      await runBrowseTUI({ target: cmdOpts.target ?? globalOpts.target, noBanner: !globalOpts.banner });
     }
   });
 
 program.command('install <skill>')
   .description('Install a skill for your AI agent')
   .option('-t, --target <tool>', `Target agent (${SUPPORTED_TARGETS}). Falls back to saved default.`)
-  .action(async (skillName, opts) => {
-    const target = (opts.target as string | undefined) || await getDefaultTarget();
+  .action(async (skillName, opts, command) => {
+    const target = (opts.target as string | undefined) || command.parent?.opts().target || await getDefaultTarget();
     if (!target) {
       console.error(chalk.red('Error: No target specified and no default set.'));
       console.log(chalk.gray('Pass `--target <agent>` or run `npx @opendirectory.dev/skills` to set a default.'));
@@ -167,6 +171,8 @@ program.command('install <skill>')
       if (result.error?.message.includes('Unsupported target')) {
         console.error(chalk.red(`Error: ${result.error.message}`));
         console.log(chalk.gray(`Supported targets: ${SUPPORTED_TARGETS}`));
+      } else if (result.error?.message.includes('supports:')) {
+        console.error(chalk.red(`Error: ${result.error.message}`));
       } else if (result.error?.message.includes('not found')) {
         console.error(chalk.red(`Error: ${result.error.message}`));
         console.log(chalk.gray(`Try running \`${chalk.white('npx "@opendirectory.dev/skills" list')}\` to see available skills.`));
@@ -183,8 +189,8 @@ program.command('install <skill>')
 program.command('update <skill>')
   .description('Update an installed skill')
   .option('-t, --target <tool>', 'Target agent (default: from config)')
-  .action(async (skillName, opts) => {
-    const target = opts.target || await getDefaultTarget();
+  .action(async (skillName, opts, command) => {
+    const target = opts.target || command.parent?.opts().target || await getDefaultTarget();
     if (!target) {
       console.error(chalk.red('Error: No target specified and no default set.'));
       console.log(chalk.gray('Run `npx @opendirectory.dev/skills` to set a default.'));
@@ -208,8 +214,8 @@ program.command('update <skill>')
 program.command('uninstall <skill>')
   .description('Uninstall a skill')
   .option('-t, --target <tool>', 'Target agent (default: from config)')
-  .action(async (skillName, opts) => {
-    const target = opts.target || await getDefaultTarget();
+  .action(async (skillName, opts, command) => {
+    const target = opts.target || command.parent?.opts().target || await getDefaultTarget();
     if (!target) {
       console.error(chalk.red('Error: No target specified and no default set.'));
       console.log(chalk.gray('Run `npx @opendirectory.dev/skills` to set a default.'));

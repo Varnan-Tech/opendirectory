@@ -1,7 +1,6 @@
 ---
 name: gh-issue-to-demand-signal
 description: Takes a competitor's public GitHub repo URL, fetches their open issues via the GitHub REST API, filters noise locally, clusters issues into 6 demand categories, computes a demand score per issue and per cluster, and outputs a ranked demand gap report with a GTM messaging brief. Use when asked to scan a competitor's GitHub issues, find what their users are begging for, turn GitHub complaints into product positioning, identify competitor feature gaps, or generate messaging from real user demand. Trigger when a user says "scan competitor issues", "what are users asking for on X repo", "find demand gaps in Y", "turn GitHub issues into messaging", or "what should I build based on competitor complaints".
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # GitHub Issue Demand Signal

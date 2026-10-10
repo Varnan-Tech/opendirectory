@@ -1,7 +1,6 @@
 ---
 name: npm-downloads-to-leads
 description: Takes a list of npm package names (yours or competitors'), fetches 12 weeks of daily download data from the npm API, computes a breakout velocity score per package to identify hockey-stick growth, fetches maintainer profiles from the npm registry and GitHub API, and outputs a ranked lead brief for each breakout package with who built it, how to reach them, and what to say. Use when asked to find evangelists before they are famous, track competitor package momentum, identify breakout npm packages, map npm maintainers to Twitter or GitHub, or find DevTools leads from package growth signals. Trigger when a user says "find leads from npm packages", "who maintains these breakout packages", "track npm download trends", "find evangelists before they are famous", or "map npm maintainers to Twitter".
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # npm Downloads to Leads

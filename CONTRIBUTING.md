@@ -68,6 +68,7 @@ This is the brain of your skill. It MUST start with YAML frontmatter, followed b
 ---
 name: my-awesome-skill
 description: Scrapes a website and generates a targeted cold email.
+compatibility: [codex, opencode]
 author: your-github-username
 version: 1.0.0
 ---
@@ -79,6 +80,8 @@ When the user asks you to generate a cold email:
 2. Read the rules in `references/email_guidelines.md`.
 3. Output the final email in a markdown code block.
 ```
+
+**Compatibility:** `compatibility` is the optional list of canonical CLI targets the skill has been tested and is supported on: `claude`, `codex`, `opencode`, `gemini`, `anti-gravity`, `openclaw`, and `hermes`. Omit the field only if the skill supports every target. When present, it must be a non-empty YAML list of those exact strings; aliases, unknown values, scalars, and non-string items fail validation. To add a target, implement and test that support, update this declaration, and submit it in a pull request.
 
 **2. The `README.md` File**
 This is the public face of your skill.

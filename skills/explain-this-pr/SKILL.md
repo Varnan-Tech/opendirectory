@@ -1,7 +1,6 @@
 ---
 name: explain-this-pr
 description: Takes a GitHub PR URL or the current branch and writes a plain-English explanation of what it does and why, then posts it as a PR comment. Use when asked to explain a PR, summarize a pull request, write a plain-English description of a PR, add a summary comment to a PR, or understand what a PR changes. Trigger when a user says "explain this PR", "summarize this pull request", "what does this PR do", "add a comment explaining the PR", or shares a GitHub PR URL and asks what it does.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

@@ -1,7 +1,6 @@
 ---
 name: noise2blog
 description: Turns rough notes, bullet points, voice transcripts, or tweet dumps into a polished, publication-ready blog post. Optionally enriches with Tavily research to add supporting data and credibility to claims. Use when asked to write a blog post from notes, turn rough ideas into an article, expand bullet points into a full post, clean up a voice transcript into a blog, or repurpose a tweet thread as an article. Trigger when a user says "write a blog post from this", "turn these notes into a post", "expand this into an article", "make this publishable", "I have rough notes write a blog", or "clean up this transcript".
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

@@ -1,7 +1,6 @@
 ---
 name: github-discussion-to-devrel-content
 description: Find recurring confusion in your repo's GitHub Discussions, rank it by urgency, and draft the actual docs fixes and content angles — with verbatim community quotes and source links as evidence.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: ajaycodesitbetter
 version: 1.0.0
 ---

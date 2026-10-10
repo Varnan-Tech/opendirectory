@@ -1,7 +1,6 @@
 ---
 name: tweet-thread-from-blog
 description: Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA. Optionally posts the full thread to X via Composio using a reply chain. Use when asked to turn a blog post into a tweet thread, repurpose an article for Twitter, create a thread from a blog, write a Twitter thread about a topic, or share a blog post as a thread. Trigger when a user mentions Twitter thread, X thread, tweet thread, or wants to repurpose blog content for X/Twitter.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: OpenDirectory
 version: 1.0.0
 ---

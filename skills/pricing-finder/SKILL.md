@@ -1,7 +1,6 @@
 ---
 name: pricing-finder
 description: 'Tell it what your product is (URL or description) and it finds 5 competitors globally, fetches their actual pricing pages, extracts every tier and price point, and returns a complete pricing intelligence report: the dominant pricing model in your space, a benchmark price table, feature gate analysis, competitive positioning map, and a concrete recommended pricing strategy for your product. Use when asked to research competitor pricing, find pricing benchmarks, decide how to price a product, understand pricing models in a space, or build a pricing strategy.'
-compatibility: [claude-code, gemini-cli, github-copilot]
 ---
 
 # Pricing Finder

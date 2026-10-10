@@ -1,7 +1,6 @@
 ---
 name: xquik-x-tweet-scraper
 description: Run Xquik's Apify Actor for X searches, posts, timelines, conversations, lists, articles, and engagement research.
-compatibility: [claude-code, gemini-cli, github-copilot]
 author: Xquik
 version: 1.0.0
 tags: [apify, x, twitter, social-research, web-scraping]

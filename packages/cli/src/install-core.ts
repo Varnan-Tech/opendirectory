@@ -3,6 +3,8 @@ import * as path from 'node:path';
 import { loadRegistry } from './registry';
 import { ValidAgent, isValidAgent, getAgentSkillsDir } from './detect';
 import * as manifest from './manifest';
+import { normalizeTarget, validateCompatibilityState } from './compat';
+import { loadSkillSource } from './skill-discovery';
 
 export interface InstallResult {
   skillName: string;
@@ -12,65 +14,44 @@ export interface InstallResult {
   error?: Error;
 }
 
-export async function installSkill(skillName: string, target: string): Promise<InstallResult> {
+export interface PreparedInstall {
+  skillName: string;
+  target: string;
+  skillDir: string;
+  manifestName: string;
+  destPath: string;
+  version: string;
+}
+
+export interface InstallPreparationResult {
+  skillName: string;
+  target: string;
+  success: boolean;
+  preparation?: PreparedInstall;
+  error?: Error;
+}
+
+export async function prepareInstallSkill(skillName: string, target: string): Promise<InstallPreparationResult> {
   try {
-    const normalizedTarget = target.toLowerCase();
+    const normalizedTarget = normalizeTarget(target);
     if (!isValidAgent(normalizedTarget)) {
-      return { skillName, target, path: '', success: false, error: new Error(`Unsupported target '${target}'.`) };
+      return { skillName, target, success: false, error: new Error(`Unsupported target '${target}'.`) };
     }
 
     const root = path.resolve(__dirname, '..');
     const repoDir = path.join(root, 'skills', skillName);
-    let skillDir = repoDir;
-    let skillMdPath = path.join(skillDir, 'SKILL.md');
-
     try {
-      await fs.access(skillMdPath);
-    } catch (e) {
-      let foundAtDepth1 = false;
-      try {
-        const entries = await fs.readdir(repoDir, { withFileTypes: true });
-        for (const entry of entries) {
-          if (entry.isDirectory()) {
-            const possiblePath = path.join(repoDir, entry.name, 'SKILL.md');
-            try {
-              await fs.access(possiblePath);
-              skillDir = path.join(repoDir, entry.name);
-              skillMdPath = possiblePath;
-              foundAtDepth1 = true;
-              break;
-            } catch (err) {}
-          }
-        }
-        if (!foundAtDepth1) {
-          outer: for (const entry of entries) {
-            if (entry.isDirectory() && entry.name !== 'node_modules' && entry.name !== '.git') {
-              const subDir = path.join(repoDir, entry.name);
-              const subEntries = await fs.readdir(subDir, { withFileTypes: true });
-              for (const subEntry of subEntries) {
-                if (subEntry.isDirectory()) {
-                  const possiblePath = path.join(subDir, subEntry.name, 'SKILL.md');
-                  try {
-                    await fs.access(possiblePath);
-                    skillDir = path.join(subDir, subEntry.name);
-                    skillMdPath = possiblePath;
-                    break outer;
-                  } catch (err) {}
-                }
-              }
-            }
-          }
-        }
-      } catch (dirErr) {
-        return { skillName, target: normalizedTarget, path: '', success: false, error: new Error(`Repository '${skillName}' not found.`) };
-      }
+      await fs.access(repoDir);
+    } catch {
+      return { skillName, target: normalizedTarget, success: false, error: new Error(`Repository '${skillName}' not found.`) };
     }
 
-    try {
-      await fs.access(skillMdPath);
-    } catch (e) {
-      return { skillName, target: normalizedTarget, path: '', success: false, error: new Error(`Skill '${skillName}' missing SKILL.md in registry.`) };
+    const source = await loadSkillSource(repoDir);
+    if (!source) {
+      return { skillName, target: normalizedTarget, success: false, error: new Error(`Skill '${skillName}' missing SKILL.md in registry.`) };
     }
+
+    const skillDir = source.skillDir;
 
     // Path-boundary guard: verify resolved skillDir stays inside skills/
     const skillsRoot = path.resolve(root, 'skills');
@@ -80,36 +61,73 @@ export async function installSkill(skillName: string, target: string): Promise<I
       return {
         skillName,
         target: normalizedTarget,
-        path: '',
         success: false,
         error: new Error(`Refusing to install '${resolvedSkillDir}': resolved path is outside the skills directory.`)
       };
     }
 
+    const compatibility = validateCompatibilityState(
+      skillName,
+      source.frontmatter.compatibility,
+      normalizedTarget,
+    );
+    if (!compatibility.ok) {
+      return { skillName, target: normalizedTarget, success: false, error: new Error(compatibility.error) };
+    }
+
     const registrySkills = await loadRegistry();
     const registryEntry = registrySkills.find(s => s.name === skillName);
-
     const manifestName = registryEntry ? skillName : path.basename(skillDir);
     const destFolderName = path.basename(skillDir);
 
-    const destPath = path.join(getAgentSkillsDir(normalizedTarget as ValidAgent), destFolderName);
+    return {
+      skillName,
+      target: normalizedTarget,
+      success: true,
+      preparation: {
+        skillName,
+        target: normalizedTarget,
+        skillDir,
+        manifestName,
+        destPath: path.join(getAgentSkillsDir(normalizedTarget as ValidAgent), destFolderName),
+        version: registryEntry?.version || 'unknown',
+      },
+    };
+  } catch (error: any) {
+    return { skillName, target, success: false, error };
+  }
+}
 
-    await fs.mkdir(destPath, { recursive: true });
-
-    await fs.cp(skillDir, destPath, { recursive: true });
-
-    const version = registryEntry?.version || 'unknown';
+export async function installPreparedSkill(prepared: PreparedInstall): Promise<InstallResult> {
+  try {
+    await fs.mkdir(prepared.destPath, { recursive: true });
+    await fs.cp(prepared.skillDir, prepared.destPath, { recursive: true });
 
     await manifest.addInstalled({
-      name: manifestName,
-      target: normalizedTarget,
-      version,
+      name: prepared.manifestName,
+      target: prepared.target,
+      version: prepared.version,
       installedAt: new Date().toISOString(),
-      path: destPath
+      path: prepared.destPath
     });
 
-    return { skillName: manifestName, target: normalizedTarget, path: destPath, success: true };
+    return { skillName: prepared.manifestName, target: prepared.target, path: prepared.destPath, success: true };
   } catch (error: any) {
-    return { skillName, target, path: '', success: false, error };
+    return { skillName: prepared.skillName, target: prepared.target, path: '', success: false, error };
   }
+}
+
+export async function installSkill(skillName: string, target: string): Promise<InstallResult> {
+  const preparation = await prepareInstallSkill(skillName, target);
+  if (!preparation.success) {
+    return {
+      skillName,
+      target: preparation.target,
+      path: '',
+      success: false,
+      error: preparation.error,
+    };
+  }
+
+  return installPreparedSkill(preparation.preparation!);
 }
