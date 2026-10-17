@@ -3,6 +3,12 @@
   "theme": "mint",
   "name": "OpenDirectory",
   "description": "The open-source registry of AI agent skills for founders who hate marketing.",
+  "logo": {
+    "light": "/assets/logo-light.webp",
+    "dark": "/assets/logo-dark.webp",
+    "href": "https://www.opendirectory.dev"
+  },
+  "favicon": "/assets/favicon.png",
   "colors": {
     "primary": "#3B82F6",
     "light": "#58A6FF",
