@@ -9,7 +9,7 @@ If the video's cuts are at fixed times T_cut, pick a beat B from beats.json near
 ffmpeg -i sfx/music.mp3 -af "adelay=<delay_ms>|<delay_ms>" -c:a pcm_f32le music_shifted.wav
 ```
 
-(delay_ms = (T_cut - B) * 1000; use 0 if negative and instead trim with `-ss`. If the music track is shorter than the video, loop and trim it to the video duration with `-stream_loop -1 -i sfx/music.mp3 ... -t <video_duration_s>` before mixing.)
+(delay_ms = (T_cut - B) * 1000; use 0 if negative and instead trim with `-ss`. Loop or trim the music track to the video duration with `-stream_loop -1 -i sfx/music.mp3 ... -t <video_duration_s>` before mixing so it matches whether the source song is shorter or longer than the video.)
 
 ## 2. Place one SFX per cue time
 Source files arrive at wildly different loudness (a Freesound whoosh can be 15 LU quieter than a music bed), so NEVER trust "SFX at full volume". Normalize every layer by measurement first:
@@ -63,10 +63,10 @@ ffmpeg -i ducked.wav -af "loudnorm=I=-16:TP=-4.5:LRA=11:measured_I=<v>:measured_
 ```
 
 ## 5. Mux onto the video (re-encode audio to AAC, copy video)
-Do not pass `-shortest` here - if `final_audio.wav` is ever shorter than `input.mp4`, `-shortest` truncates the video stream. Loop or pad the music bed in Step 1 so the soundtrack matches the video length.
+Pair `-af apad` on the audio stream with `-shortest` on the output: `apad` extends shorter audio with silence so `-shortest` never truncates video frames, while `-shortest` still caps longer soundtracks at the exact end of `0:v`.
 
 ```
-ffmpeg -i input.mp4 -i final_audio.wav -map 0:v -c:v copy -map 1:a -c:a aac -b:a 192k final.mp4
+ffmpeg -i input.mp4 -i final_audio.wav -map 0:v -c:v copy -map 1:a -af apad -c:a aac -b:a 192k -shortest final.mp4
 ```
 
 Then verify: `python3 scripts/verify_mix.py final.mp4 --cue 3.0 --cue 7.2`
