@@ -372,6 +372,14 @@
     "path": "skills/npm-downloads-to-leads"
   },
   {
+    "name": "openverse-sfx",
+    "description": "Add a licensed soundtrack to any video for $0 with beat-matched music, Openverse sound effects, -16 LUFS mastering, and FFmpeg verification.",
+    "tags": [],
+    "author": "farizanjum",
+    "version": "1.0.0",
+    "path": "skills/openverse-sfx"
+  },
+  {
     "name": "oss-launch-kit",
     "description": "Higher-level OSS launch orchestrator that analyzes repos, selects channels, and coordinates launch plans.",
     "tags": [],
