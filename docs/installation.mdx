@@ -1,0 +1,83 @@
+---
+title: "Installation"
+description: "Five ways to install OpenDirectory skills into Claude Code, OpenCode, Codex, Gemini CLI, Anti-Gravity, OpenClaw, Hermes, and Manus AI."
+---
+
+OpenDirectory supports five installation methods so you can equip any terminal or desktop AI agent in under 30 seconds.
+
+<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    Run the official `@opendirectory.dev/skills` CLI with zero global setup:
+
+    ```bash
+    # Launch interactive TUI browser
+    npx "@opendirectory.dev/skills"
+
+    # Or install a specific skill directly
+    npx "@opendirectory.dev/skills" install <skill-name> --target claude
+    ```
+
+    <Note>
+      Requires Node.js 22+. The `--target` flag is required on first use and saved as your default for subsequent installs.
+    </Note>
+  </Tab>
+
+  <Tab title="skills.sh">
+    Install the entire OpenDirectory catalog or a single skill via [skills.sh](https://www.skills.sh/Varnan-Tech/opendirectory):
+
+    ```bash
+    # Install all skills (auto-detects your installed coding agents)
+    npx skills add Varnan-Tech/opendirectory
+
+    # Install a single skill
+    npx skills add Varnan-Tech/opendirectory --skill <skill-name>
+    ```
+
+    Add `--global` to install to `~/.claude/skills/` instead of the current project directory.
+  </Tab>
+
+  <Tab title="Claude Code Native">
+    Add the official OpenDirectory plugin marketplace directly inside Claude Code:
+
+    ```bash
+    # 1. Register the OpenDirectory marketplace
+    /plugin marketplace add Varnan-Tech/opendirectory
+
+    # 2. Install the skill pack
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    ```
+  </Tab>
+
+  <Tab title="Claude Desktop App">
+    1. Copy the GitHub URL of the skill folder you want to install (for example, `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/show-hn-writer`).
+    2. Paste the URL into [download-directory.github.io](https://download-directory.github.io/) and press **Enter** to download the `.zip` archive.
+    3. Open the **Claude Desktop App**, click **Customize** in the left sidebar, open the **Skills** tab, and click **+**.
+    4. Select **Upload a skill** and drag in the downloaded `.zip` archive or extracted folder containing `SKILL.md`.
+  </Tab>
+
+  <Tab title="Manus AI">
+    Manus AI users can import any skill directly from [opendirectory.dev](https://www.opendirectory.dev):
+
+    1. Open the skill page on [opendirectory.dev](https://www.opendirectory.dev).
+    2. Select the **Manus AI** tab in the installation panel.
+    3. Click **Install in Manus AI** to open Manus with the GitHub skill URL pre-filled.
+    4. Confirm the import inside your Manus workspace.
+  </Tab>
+</Tabs>
+
+---
+
+## Managing Installed Skills
+
+Once installed via the CLI, you can inspect, update, or remove skills at any time:
+
+```bash
+# View installed skills across all agents
+npx "@opendirectory.dev/skills" installed
+
+# Update a skill with automatic rollback on failure
+npx "@opendirectory.dev/skills" update <skill-name>
+
+# Uninstall a skill
+npx "@opendirectory.dev/skills" uninstall <skill-name>
+```

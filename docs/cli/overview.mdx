@@ -1,0 +1,62 @@
+---
+title: "CLI Overview"
+description: "Complete command, flag, and environment variable reference for @opendirectory.dev/skills."
+---
+
+The `@opendirectory.dev/skills` package is the official command-line interface for browsing, installing, updating, and managing OpenDirectory skills.
+
+```bash
+npx "@opendirectory.dev/skills" [command] [options]
+```
+
+## Interactive Mode
+
+Run the CLI with no arguments to launch the full-screen terminal UI (TUI):
+
+```bash
+npx "@opendirectory.dev/skills"
+```
+
+- Browse skills grouped by category (`Visual & Media`, `Content`, `Launch`, `GTM Intelligence`, `Outreach`, `Research`, `Developer Tools`)
+- Type to filter skills in real time
+- Press `Space` to multi-select skills and `Enter` to install them in one batch
+
+---
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `list` | List all available skills in the registry (interactive by default; pass `--plain` for a static table). |
+| `install <skill-name> --target <agent>` | Install a skill for the specified coding agent. Saves the target as your default after the first run. |
+| `update <skill-name> [--target <agent>]` | Update an installed skill to the latest version with automatic rollback if the update fails. |
+| `uninstall <skill-name> [--target <agent>]` | Remove an installed skill from the target agent directory. |
+| `installed` | Inspect and manage currently installed skills (`--plain` outputs a static summary). |
+
+---
+
+## Supported Agent Targets
+
+Pass any of the canonical target slugs to `--target` (case-insensitive):
+
+| Target Slug | Agent | Install Directory |
+|---|---|---|
+| `claude` | Claude Code | `~/.claude/skills/` |
+| `opencode` | OpenCode | `~/.config/opencode/skills/` |
+| `codex` | OpenAI Codex CLI | `~/.codex/skills/` |
+| `gemini` | Gemini CLI | `~/.gemini/skills/` |
+| `anti-gravity` | Gemini Anti-Gravity | `~/.gemini/antigravity/skills/` |
+| `openclaw` | OpenClaw | `~/.openclaw/skills/` |
+| `hermes` | Hermes | `~/.hermes/skills/` |
+
+---
+
+## Global Flags & Environment Variables
+
+### Flags
+- `--plain`: Disable the interactive TUI and emit plain text output for CI pipelines, scripts, and screen readers.
+- `--no-banner`: Suppress the ASCII banner on startup.
+
+### Environment Variables
+- `NO_COLOR`: Set to any non-empty value to disable ANSI color output (per [no-color.org](https://no-color.org)).
+- `CI`: When set to any non-empty value (or when `stdout`/`stdin` is not a TTY), the CLI automatically enables `--plain` mode.

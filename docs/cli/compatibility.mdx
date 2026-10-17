@@ -1,0 +1,45 @@
+---
+title: "Agent Compatibility"
+description: "How OpenDirectory validates and enforces per-skill target compatibility across coding agents."
+---
+
+Every skill in OpenDirectory can declare an optional `compatibility` field in its `SKILL.md` YAML frontmatter to specify which coding agents it supports.
+
+## Frontmatter Specification
+
+```yaml
+---
+name: my-awesome-skill
+description: Scrapes a website and generates a targeted cold email.
+compatibility: [codex, opencode]
+author: your-github-username
+version: 1.0.0
+---
+```
+
+### Canonical Target Slugs
+
+When `compatibility` is present, it must be a non-empty YAML array containing only canonical target slugs:
+
+- `claude`
+- `codex`
+- `opencode`
+- `gemini`
+- `anti-gravity`
+- `openclaw`
+- `hermes`
+
+<Tip>
+  **Universal Skills:** Omit the `compatibility` key entirely when a skill supports all seven canonical targets.
+</Tip>
+
+---
+
+## Validation & Enforcement Rules
+
+The `@opendirectory.dev/skills` CLI and pull request validation pipeline strictly enforce compatibility metadata:
+
+1. **Universal by omission:** If `compatibility` is omitted from `SKILL.md`, the skill is marked as compatible with `all` targets.
+2. **Case-insensitive canonical matching:** Values inside the array are trimmed and matched case-insensitively (`Claude` normalizes to `claude`), and returned in canonical target order.
+3. **Strict rejection of invalid values:** Empty arrays (`[]`), scalar strings (`compatibility: claude`), non-string items, unknown agent names, or legacy aliases (`claude-code`, `gemini-cli`) fail both PR validation (`scripts/validate-pr.ts`) and CLI installation.
+4. **Install-time target check:** If a skill declares `compatibility: [claude, opencode]` and a user runs `install <skill> --target gemini`, the CLI blocks installation with an explicit message explaining which targets the skill supports.
