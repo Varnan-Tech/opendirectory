@@ -56,7 +56,7 @@ Run `python3 scripts/verify_mix.py final.mp4 --cue <t1> --cue <t2> ...` with eve
 | Script | Purpose |
 |---|---|
 | `scripts/sfx_search.py` | Openverse search, license/source filters enforced (`cc0,by,pdm` from `freesound,jamendo`), duration filtering, JSON shortlist with attribution fields |
-| `scripts/sfx_fetch.py` | Downloads the chosen file into `sfx/` via `curl` and appends its verbatim attribution to `credits.txt` |
+| `scripts/sfx_fetch.py` | Downloads the chosen file into `sfx/` via Python stdlib (`urllib.request`) and appends its verbatim attribution to `credits.txt` |
 | `scripts/sfx_normalize.py` | `ebur128` measure + gain + re-measure; peak mode (`-3 dBTP`) for SFX one-shots, LUFS mode for beds - safe where `loudnorm` destroys short files |
 | `scripts/beat_grid.py` | `librosa` beat tracking + numerical off-beat lock check + sub-120 Hz kick-band/grid plot (`beatgrid.png`) + `beats.json` |
 | `scripts/verify_mix.py` | `ebur128` loudness + true peak on the exported MP4, before/after cue frame grabs, waveform plot (`verify/waveform.png`), `PASS` / `NEEDS FIX` verdict |

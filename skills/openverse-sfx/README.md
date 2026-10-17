@@ -84,7 +84,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 | Requirement | Purpose | How to Set Up |
 |---|---|---|
 | FFmpeg | EBU R128 measurement, sidechain ducking, two-pass loudnorm, MP4 muxing | `brew install ffmpeg` / `apt install ffmpeg` / `winget install ffmpeg` |
-| Python 3.9+ | Runs the search, beat-grid, normalization, and verification scripts | python.org |
+| Python 3.9+ | Runs the search, download (`urllib.request`), beat-grid, normalization, and verification scripts | python.org |
 | Python packages | Beat tracking (`librosa`), Butterworth filtering (`scipy`), waveform plots (`matplotlib`) | `pip install librosa matplotlib numpy scipy` |
 
 No API keys required. The public anonymous Openverse API allows ~200 searches/day, and the skill searches once per sound type.
