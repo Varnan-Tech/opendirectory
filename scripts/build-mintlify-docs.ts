@@ -1,0 +1,528 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { inspectSkillFrontmatter } from '../packages/cli/src/frontmatter';
+import { findSkillSourceSync } from '../packages/cli/src/skill-discovery';
+
+const ROOT_DIR = path.resolve(__dirname, '..');
+const SKILLS_DIR = path.join(ROOT_DIR, 'skills');
+const REGISTRY_PATH = path.join(ROOT_DIR, 'packages', 'cli', 'registry.json');
+const CONTRIBUTING_PATH = path.join(ROOT_DIR, 'CONTRIBUTING.md');
+const DOCS_DIR = path.join(ROOT_DIR, 'docs');
+const DOCS_SKILLS_DIR = path.join(DOCS_DIR, 'skills');
+const DOCS_JSON_PATH = path.join(DOCS_DIR, 'docs.json');
+
+interface SkillEntry {
+  name: string;
+  description: string;
+  version: string;
+  author: string;
+  compatibility: string;
+  category: string;
+  categorySlug: string;
+  docRoute: string;
+}
+
+const CATEGORY_ORDER = [
+  'Visual & Media',
+  'Content',
+  'Launch',
+  'GTM Intelligence',
+  'Outreach',
+  'Research',
+  'Developer Tools',
+  'Other',
+];
+
+const TAG_TO_CATEGORY: Record<string, string> = {
+  'AI': 'Developer Tools',
+  'Branding': 'Launch',
+  'Copywriting': 'Content',
+  'Developer Tools': 'Developer Tools',
+  'Email': 'Outreach',
+  'Marketing': 'GTM Intelligence',
+  'SEO': 'Research',
+  'Social Media': 'Content',
+};
+
+const ALLOWED_HTML_TAGS = new Set([
+  'a', 'b', 'i', 'u', 's', 'em', 'strong', 'sub', 'sup', 'code', 'pre',
+  'div', 'span', 'p', 'br', 'hr', 'img', 'video', 'picture', 'source',
+  'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td', 'ul', 'ol', 'li',
+  'dl', 'dt', 'dd', 'details', 'summary', 'blockquote', 'h1', 'h2', 'h3',
+  'h4', 'h5', 'h6', 'kbd', 'mark', 'small',
+  'Info', 'Note', 'Tip', 'Warning', 'Check', 'Tabs', 'Tab', 'Card',
+  'CardGroup', 'Steps', 'Step', 'Frame', 'Accordion', 'AccordionGroup',
+  'CodeGroup', 'Callout',
+]);
+
+function categoryToSlug(category: string): string {
+  return category
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function getCategoryFromPkg(skillDir: string): string | null {
+  const pkgPath = path.join(skillDir, 'package.json');
+  if (!fs.existsSync(pkgPath)) return null;
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+    if (typeof pkg.category === 'string' && pkg.category.trim()) {
+      return pkg.category.trim();
+    }
+  } catch (_) {}
+  return null;
+}
+
+function detectCategoryFromContent(name: string, description: string): string {
+  const n = name.toLowerCase();
+  const text = (name + ' ' + description).toLowerCase();
+
+  if (/^(vid-|graphic-|blog-cover-image)/.test(n)) return 'Visual & Media';
+  if (/^(email-newsletter|cook-the-blog|noise2blog|human-tone|linkedin-post|tweet-thread|noise-to-linkedin|newsletter)/.test(n)) return 'Content';
+  if (/^(producthunt|show-hn|oss-launch|brand-alchemy|product-update-logger)/.test(n)) return 'Launch';
+  if (/^(hackernews|reddit-icp|reddit-post|npm-downloads|yc-intent|twitter-gtm|sdk-adoption|gh-issue|map-your-market|competitor-pr|google-trends|meta-ads|meta-tribe|company-radar)/.test(n)) return 'GTM Intelligence';
+  if (/^(outreach-sequence|cold-email)/.test(n)) return 'Outreach';
+  if (/^(pricing-|position-me|meeting-brief|linkedin-job-post|where-your-customer|vc-)/.test(n)) return 'Research';
+  if (/^(kill-the-standup|dependency-update|docs-from-code|pr-description|explain-this-pr|claude-md|llms-txt|schema-markup)/.test(n)) return 'Developer Tools';
+
+  if (/\b(gif|mp4|motion.graphic|animation|slide.?deck|e.?book|cover.image|chart|graphic|png|video)\b/.test(text)) return 'Visual & Media';
+  if (/pull.request|\bstandup\b|\bdependency\b|llms\.txt|json.?ld|schema.markup|claude\.md|agents\.md|codebase.scan|docs.from.code/.test(text)) return 'Developer Tools';
+  if (/product.hunt|show.hn|\boss.launch\b|\bbrand.strateg|\bnaming.expert\b|\blaunch.kit\b|\bproduct.update\b/.test(text)) return 'Launch';
+  if (/cold.email|outreach.sequence|email.verif/.test(text)) return 'Outreach';
+  if (/pricing.page|venture.capital|\binvestor\b|\bvc\b|buyer.pain|pre.call.brief|where.*customer|icp.*channel/.test(text)) return 'Research';
+  if (/hacker.news|npm.*download|yc.*startup|sdk.*adopt|google.trends|meta.ads|demand.signal|competitor.*pr|map.*market|\bgtm\b|tribe.v2|reddit.*monitor|twitter.*gtm/.test(text)) return 'GTM Intelligence';
+  if (/\breddit\b|\bblog\b|newsletter|linkedin.post|carousel|tweet.thread/.test(text)) return 'Content';
+  return 'Other';
+}
+
+function getCategory(name: string, description: string, tags?: string[], skillDir?: string): string {
+  if (skillDir) {
+    const pkg = getCategoryFromPkg(skillDir);
+    if (pkg) return pkg;
+  }
+  const fromContent = detectCategoryFromContent(name, description);
+  if (fromContent !== 'Other') return fromContent;
+  if (tags && tags.length > 0) {
+    for (const tag of tags) {
+      if (TAG_TO_CATEGORY[tag]) return TAG_TO_CATEGORY[tag];
+    }
+  }
+  return 'Other';
+}
+
+function extractReadmeDescription(skillDir: string): string {
+  const readmePath = path.join(skillDir, 'README.md');
+  if (!fs.existsSync(readmePath)) return '';
+
+  const content = fs.readFileSync(readmePath, 'utf-8');
+  const lines = content.split('\n');
+
+  for (const line of lines) {
+    const trimmed = line.trim().replace(/^\uFEFF/, '');
+    if (!trimmed) continue;
+    if (trimmed.startsWith('#')) continue;
+    if (trimmed.startsWith('<')) continue;
+    if (trimmed.startsWith('![')) continue;
+    if (trimmed.startsWith('```')) continue;
+    if (trimmed.startsWith('---')) continue;
+    if (trimmed.startsWith('[![')) continue;
+    if (trimmed.startsWith('| ')) continue;
+    if (trimmed === '**') continue;
+    if (trimmed.startsWith('> ')) {
+      const text = trimmed.slice(2).trim().replace(/\*\*/g, '').replace(/`/g, '');
+      if (text.length > 20) return sanitizePlainText(text);
+    }
+    if (trimmed.length > 20) {
+      return sanitizePlainText(trimmed.replace(/\*\*/g, '').replace(/`/g, ''));
+    }
+  }
+  return '';
+}
+
+function sanitizePlainText(raw: string): string {
+  return raw
+    .replace(/<img[^>]*>/gm, '')
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/(\*\*|__|\*|_)/g, '')
+    .replace(/`/g, '')
+    .replace(/\r?\n/g, ' ')
+    .trim();
+}
+
+function buildInstallTabsMdx(skillName: string): string {
+  const githubUrl = encodeURIComponent(`https://github.com/Varnan-Tech/opendirectory/tree/main/skills/${skillName}`);
+  const manusUrl = `https://manus.im/import-skills?githubUrl=${githubUrl}&utm_source=opendirectory`;
+
+  return `<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    \`\`\`bash
+    npx "@opendirectory.dev/skills" install ${skillName} --target claude
+    \`\`\`
+  </Tab>
+  <Tab title="skills.sh">
+    \`\`\`bash
+    npx skills add Varnan-Tech/opendirectory --skill ${skillName}
+    \`\`\`
+  </Tab>
+  <Tab title="Claude Code Native">
+    \`\`\`bash
+    /plugin marketplace add Varnan-Tech/opendirectory
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    \`\`\`
+  </Tab>
+  <Tab title="Claude Desktop">
+    1. Copy \`https://github.com/Varnan-Tech/opendirectory/tree/main/skills/${skillName}\` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
+    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing \`SKILL.md\`.
+  </Tab>
+  <Tab title="Manus AI">
+    [**Install ${skillName} in Manus AI**](${manusUrl})
+  </Tab>
+</Tabs>`;
+}
+
+/**
+ * Sanitizes a single line of Markdown (outside fenced code blocks) so that
+ * Mintlify's strict MDX v2/v3 parser never fails on unescaped `{`, `}`, `<`,
+ * or non-self-closed HTML void tags.
+ */
+function sanitizeNonCodeLine(line: string, skillRouteMap: Map<string, string>): string {
+  // Rewrite relative links to other skills: (../skill-name) or (../skill-name/...)
+  let updated = line.replace(/\]\(\.\.\/([a-zA-Z0-9_-]+)\/?\)/g, (full, targetSkill) => {
+    const route = skillRouteMap.get(targetSkill);
+    return route ? `](/${route})` : full;
+  });
+
+  // Self-close void HTML tags (<img ...>, <br>, <hr>, <source ...>)
+  updated = updated.replace(/<(img|source)\b([^>]*?)(?<!\/)>/gi, '<$1$2 />');
+  updated = updated.replace(/<br\s*>/gi, '<br />');
+  updated = updated.replace(/<hr\s*>/gi, '<hr />');
+
+  // Split by inline code spans (`...`) so we never touch characters inside backticks
+  const segments = updated.split(/(`+[^`]*`+)/g);
+  for (let i = 0; i < segments.length; i++) {
+    if (i % 2 === 1) continue; // inside inline code span
+    let seg = segments[i];
+
+    // Escape { and } in regular text
+    seg = seg.replace(/\{/g, '\\{').replace(/\}/g, '\\}');
+
+    // Escape bare < that are not valid HTML/MDX tags
+    seg = seg.replace(/<(\/?)([a-zA-Z0-9_-]+)?([^>]*>)?/g, (match, slash, tagName, rest) => {
+      if (tagName && rest !== undefined && ALLOWED_HTML_TAGS.has(tagName)) {
+        return match;
+      }
+      return '&lt;' + match.slice(1);
+    });
+
+    segments[i] = seg;
+  }
+
+  return segments.join('');
+}
+
+function convertMarkdownToMdxBody(
+  rawMarkdown: string,
+  skillRouteMap: Map<string, string>,
+  stripFirstH1 = true,
+): string {
+  let content = rawMarkdown.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+
+  // Strip YAML frontmatter if any exists in README
+  if (content.startsWith('---\n')) {
+    const endIdx = content.indexOf('\n---\n', 4);
+    if (endIdx !== -1) {
+      content = content.slice(endIdx + 5);
+    }
+  }
+
+  // Extract managed install block and replace with a placeholder before line-by-line sanitization
+  const installPlaceholder = '___MINTLIFY_INSTALL_TABS_PLACEHOLDER___';
+  content = content.replace(
+    /<!--\s*OPENDIRECTORY_INSTALL_START\s*-->[\s\S]*?<!--\s*OPENDIRECTORY_INSTALL_END\s*-->/g,
+    installPlaceholder,
+  );
+
+  // Strip any remaining HTML comments
+  content = content.replace(/<!--[\s\S]*?-->/g, '');
+
+  const lines = content.split('\n');
+  const outLines: string[] = [];
+  let inCodeFence = false;
+  let fenceMarker = '';
+  let h1Stripped = !stripFirstH1;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    // Detect code fence start/end
+    const fenceMatch = trimmed.match(/^(`{3,}|~{3,})/);
+    if (fenceMatch) {
+      if (!inCodeFence) {
+        inCodeFence = true;
+        fenceMarker = fenceMatch[1][0].repeat(fenceMatch[1].length);
+      } else if (trimmed.startsWith(fenceMarker[0].repeat(fenceMarker.length))) {
+        inCodeFence = false;
+        fenceMarker = '';
+      }
+      outLines.push(line);
+      continue;
+    }
+
+    if (inCodeFence) {
+      outLines.push(line);
+      continue;
+    }
+
+    if (!h1Stripped && /^#\s+/.test(trimmed)) {
+      h1Stripped = true;
+      continue;
+    }
+
+    if (trimmed === installPlaceholder) {
+      outLines.push(installPlaceholder);
+      continue;
+    }
+
+    outLines.push(sanitizeNonCodeLine(line, skillRouteMap));
+  }
+
+  return outLines.join('\n').trim();
+}
+
+function loadSkills(): SkillEntry[] {
+  let registry: any[] = [];
+  if (fs.existsSync(REGISTRY_PATH)) {
+    try {
+      registry = JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf-8'));
+    } catch (_) {}
+  }
+
+  const folders = fs
+    .readdirSync(SKILLS_DIR)
+    .filter(name => fs.statSync(path.join(SKILLS_DIR, name)).isDirectory())
+    .sort((a, b) => a.localeCompare(b));
+
+  return folders.map(name => {
+    const skillDir = path.join(SKILLS_DIR, name);
+    const regEntry = registry.find(r => r.name === name);
+    const readmeDesc = extractReadmeDescription(skillDir);
+    const description = readmeDesc || regEntry?.description || `Documentation for the ${name} skill.`;
+
+    let version = regEntry?.version || '1.0.0';
+    let author = regEntry?.author || 'opendirectory';
+    let compatibility = 'All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)';
+
+    const source = findSkillSourceSync(skillDir);
+    if (source && fs.existsSync(source.skillMdPath)) {
+      try {
+        const parsed = inspectSkillFrontmatter(fs.readFileSync(source.skillMdPath, 'utf-8'));
+        if (parsed.data.version) version = String(parsed.data.version);
+        if (parsed.data.author) author = String(parsed.data.author);
+        if (parsed.compatibility.kind === 'valid') {
+          compatibility = parsed.compatibility.targets.join(', ');
+        }
+      } catch (_) {}
+    }
+
+    const category = getCategory(name, description, regEntry?.tags, skillDir);
+    const categorySlug = categoryToSlug(category);
+    const docRoute = `skills/${categorySlug}/${name}`;
+
+    return {
+      name,
+      description,
+      version,
+      author,
+      compatibility,
+      category,
+      categorySlug,
+      docRoute,
+    };
+  });
+}
+
+function buildMintlifyDocs() {
+  const skills = loadSkills();
+  const skillRouteMap = new Map<string, string>();
+  for (const s of skills) {
+    skillRouteMap.set(s.name, s.docRoute);
+  }
+
+  // Clean and recreate docs/skills
+  if (fs.existsSync(DOCS_SKILLS_DIR)) {
+    fs.rmSync(DOCS_SKILLS_DIR, { recursive: true, force: true });
+  }
+  fs.mkdirSync(DOCS_SKILLS_DIR, { recursive: true });
+
+  // 1. Generate each skill's .mdx file
+  for (const skill of skills) {
+    const skillDir = path.join(SKILLS_DIR, skill.name);
+    const readmePath = path.join(skillDir, 'README.md');
+    const source = findSkillSourceSync(skillDir);
+    const rawContent = fs.existsSync(readmePath)
+      ? fs.readFileSync(readmePath, 'utf-8')
+      : source && fs.existsSync(source.skillMdPath)
+        ? fs.readFileSync(source.skillMdPath, 'utf-8')
+        : `# ${skill.name}\n\n${skill.description}`;
+
+    let body = convertMarkdownToMdxBody(rawContent, skillRouteMap, true);
+    const installTabs = buildInstallTabsMdx(skill.name);
+
+    if (body.includes('___MINTLIFY_INSTALL_TABS_PLACEHOLDER___')) {
+      body = body.replace('___MINTLIFY_INSTALL_TABS_PLACEHOLDER___', `## Install\n\n${installTabs}`);
+    } else {
+      body = `## Install\n\n${installTabs}\n\n${body}`;
+    }
+
+    const shortDesc = skill.description.length > 160
+      ? skill.description.slice(0, 157).trim() + '...'
+      : skill.description;
+
+    const mdx = `---
+title: ${JSON.stringify(skill.name)}
+description: ${JSON.stringify(shortDesc)}
+---
+
+<Info>
+  **Category:** ${skill.category} · **Version:** \`${skill.version}\` · **Author:** \`${skill.author}\` · **Compatibility:** ${skill.compatibility}
+</Info>
+
+${body}
+`;
+
+    const outDir = path.join(DOCS_SKILLS_DIR, skill.categorySlug);
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(path.join(outDir, `${skill.name}.mdx`), mdx, 'utf-8');
+  }
+
+  // 2. Generate docs/skills/overview.mdx
+  const grouped = new Map<string, SkillEntry[]>();
+  for (const skill of skills) {
+    if (!grouped.has(skill.category)) grouped.set(skill.category, []);
+    grouped.get(skill.category)!.push(skill);
+  }
+
+  const orderedCategories = [
+    ...CATEGORY_ORDER.filter(c => grouped.has(c)),
+    ...[...grouped.keys()].filter(c => !CATEGORY_ORDER.includes(c)).sort(),
+  ];
+
+  let overviewBody = `---
+title: "Skills Catalog"
+description: "Browse all ${skills.length} OpenDirectory agent skills across ${orderedCategories.length} categories."
+---
+
+OpenDirectory includes **${skills.length} specialized skills** across GTM intelligence, content generation, launch orchestration, outreach, research, visual media, and developer tooling.
+
+`;
+
+  for (const category of orderedCategories) {
+    const catSkills = grouped.get(category)!;
+    overviewBody += `## ${category}\n\n`;
+    overviewBody += `| Skill | Description | Version |\n|---|---|---|\n`;
+    for (const s of catSkills) {
+      const safeDesc = sanitizeNonCodeLine(s.description.replace(/\|/g, '&#124;'), skillRouteMap);
+      overviewBody += `| [\`${s.name}\`](/${s.docRoute}) | ${safeDesc} | \`${s.version}\` |\n`;
+    }
+    overviewBody += `\n`;
+  }
+
+  fs.writeFileSync(path.join(DOCS_SKILLS_DIR, 'overview.mdx'), overviewBody, 'utf-8');
+
+  // 3. Generate docs/contributing.mdx from root CONTRIBUTING.md
+  if (fs.existsSync(CONTRIBUTING_PATH)) {
+    const rawContributing = fs.readFileSync(CONTRIBUTING_PATH, 'utf-8');
+    const contributingBody = convertMarkdownToMdxBody(rawContributing, skillRouteMap, true);
+    const contributingMdx = `---
+title: "Contributing Guide"
+description: "How to build, test, and submit an AI Agent Skill to OpenDirectory."
+---
+
+${contributingBody}
+`;
+    fs.writeFileSync(path.join(DOCS_DIR, 'contributing.mdx'), contributingMdx, 'utf-8');
+  }
+
+  // 4. Write docs/docs.json with auto-synced skill groups
+  const skillGroups = [
+    {
+      group: 'Catalog',
+      pages: ['skills/overview'],
+    },
+    ...orderedCategories.map(category => ({
+      group: category,
+      pages: grouped.get(category)!.map(s => s.docRoute),
+    })),
+  ];
+
+  const docsJson = {
+    $schema: 'https://mintlify.com/docs.json',
+    theme: 'mint',
+    name: 'OpenDirectory',
+    description: 'The open-source registry of AI agent skills for founders who hate marketing.',
+    colors: {
+      primary: '#3B82F6',
+      light: '#58A6FF',
+      dark: '#1D4ED8',
+    },
+    appearance: {
+      default: 'dark',
+    },
+    contextual: {
+      options: ['copy', 'view', 'claude', 'chatgpt', 'mcp', 'cursor', 'vscode'],
+    },
+    navbar: {
+      links: [
+        {
+          label: 'Website',
+          href: 'https://www.opendirectory.dev',
+        },
+        {
+          label: 'npm',
+          href: 'https://www.npmjs.com/package/@opendirectory.dev/skills',
+        },
+      ],
+      primary: {
+        type: 'button',
+        label: 'GitHub',
+        href: 'https://github.com/Varnan-Tech/opendirectory',
+      },
+    },
+    footer: {
+      socials: {
+        github: 'https://github.com/Varnan-Tech/opendirectory',
+      },
+    },
+    navigation: {
+      tabs: [
+        {
+          tab: 'Documentation',
+          icon: 'book-open',
+          groups: [
+            {
+              group: 'Getting Started',
+              pages: ['introduction', 'installation', 'contributing'],
+            },
+            {
+              group: 'CLI Reference',
+              pages: ['cli/overview', 'cli/compatibility'],
+            },
+          ],
+        },
+        {
+          tab: 'Skills Catalog',
+          icon: 'layer-group',
+          groups: skillGroups,
+        },
+      ],
+    },
+  };
+
+  fs.writeFileSync(DOCS_JSON_PATH, JSON.stringify(docsJson, null, 2) + '\n', 'utf-8');
+  console.log(`Successfully generated Mintlify docs for ${skills.length} skills across ${orderedCategories.length} categories in ${DOCS_DIR}`);
+}
+
+buildMintlifyDocs();
