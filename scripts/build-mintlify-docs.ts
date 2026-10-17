@@ -183,17 +183,98 @@ function buildInstallTabsMdx(skillName: string): string {
 </Tabs>`;
 }
 
-/**
- * Sanitizes a single line of Markdown (outside fenced code blocks) so that
- * Mintlify's strict MDX v2/v3 parser never fails on unescaped `{`, `}`, `<`,
- * or non-self-closed HTML void tags.
- */
-function sanitizeNonCodeLine(line: string, skillRouteMap: Map<string, string>): string {
-  // Rewrite relative links to other skills: (../skill-name) or (../skill-name/...)
-  let updated = line.replace(/\]\(\.\.\/([a-zA-Z0-9_-]+)\/?\)/g, (full, targetSkill) => {
-    const route = skillRouteMap.get(targetSkill);
-    return route ? `](/${route})` : full;
+const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg']);
+
+interface SanitizeContext {
+  skillRouteMap: Map<string, string>;
+  skill?: SkillEntry;
+  skillDir?: string;
+  extraMdxPages?: Array<{ route: string; title: string; sourcePath: string }>;
+}
+
+function resolveSkillLocalTarget(
+  rawTarget: string,
+  isImage: boolean,
+  ctx: SanitizeContext,
+): string {
+  const trimmed = rawTarget.trim();
+  if (
+    !trimmed ||
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://') ||
+    trimmed.startsWith('mailto:') ||
+    trimmed.startsWith('#') ||
+    trimmed.startsWith('/')
+  ) {
+    return rawTarget;
+  }
+
+  const crossSkillMatch = trimmed.match(/^\.\.\/([a-zA-Z0-9_-]+)\/?$/);
+  if (crossSkillMatch) {
+    const route = ctx.skillRouteMap.get(crossSkillMatch[1]);
+    if (route) return `/${route}`;
+  }
+
+  if (!ctx.skill || !ctx.skillDir) {
+    return `https://github.com/Varnan-Tech/opendirectory/blob/main/${trimmed.replace(/^\.\//, '')}`;
+  }
+
+  let relClean = trimmed.replace(/^\.\//, '');
+  let absPath = path.resolve(ctx.skillDir, relClean);
+
+  if (!fs.existsSync(absPath) && relClean === 'results_showcase.md') {
+    const fallback = path.resolve(ctx.skillDir, 'showcase.md');
+    if (fs.existsSync(fallback)) {
+      relClean = 'showcase.md';
+      absPath = fallback;
+    }
+  }
+
+  if (fs.existsSync(absPath) && fs.statSync(absPath).isFile()) {
+    const ext = path.extname(relClean).toLowerCase();
+    const posixRel = relClean.split(path.sep).join('/');
+
+    if (isImage || IMAGE_EXTENSIONS.has(ext)) {
+      const destAssetRel = `assets/skills/${ctx.skill.name}/${posixRel}`;
+      const destAssetAbs = path.join(DOCS_DIR, destAssetRel);
+      fs.mkdirSync(path.dirname(destAssetAbs), { recursive: true });
+      fs.copyFileSync(absPath, destAssetAbs);
+      return `/${destAssetRel}`;
+    }
+
+    if (ext === '.md' || ext === '.mdx') {
+      const withoutExt = posixRel.replace(/\.(md|mdx)$/i, '');
+      const subRoute = `${ctx.skill.docRoute}/${withoutExt}`;
+      if (ctx.extraMdxPages && !ctx.extraMdxPages.some(p => p.route === subRoute)) {
+        ctx.extraMdxPages.push({
+          route: subRoute,
+          title: `${ctx.skill.name} - ${path.basename(withoutExt)}`,
+          sourcePath: absPath,
+        });
+      }
+      return `/${subRoute}`;
+    }
+
+    return `https://github.com/Varnan-Tech/opendirectory/blob/main/skills/${ctx.skill.name}/${posixRel}`;
+  }
+
+  return `https://github.com/Varnan-Tech/opendirectory/blob/main/skills/${ctx.skill.name}/${relClean}`;
+}
+
+function sanitizeNonCodeLine(line: string, ctx: SanitizeContext): string {
+  let updated = line.replace(/(!?\[[^\]]*\])\(([^)]+)\)/g, (full, prefix, target) => {
+    const isImg = prefix.startsWith('!');
+    const resolved = resolveSkillLocalTarget(target, isImg, ctx);
+    return `${prefix}(${resolved})`;
   });
+
+  updated = updated.replace(
+    /(<img\b[^>]*?\bsrc=["'])([^"']+)(["'][^>]*>)/gi,
+    (full, before, srcVal, after) => {
+      const resolved = resolveSkillLocalTarget(srcVal, true, ctx);
+      return `${before}${resolved}${after}`;
+    },
+  );
 
   // Self-close void HTML tags (<img ...>, <br>, <hr>, <source ...>)
   updated = updated.replace(/<(img|source)\b([^>]*?)(?<!\/)>/gi, '<$1$2 />');
@@ -225,7 +306,7 @@ function sanitizeNonCodeLine(line: string, skillRouteMap: Map<string, string>): 
 
 function convertMarkdownToMdxBody(
   rawMarkdown: string,
-  skillRouteMap: Map<string, string>,
+  ctx: SanitizeContext,
   stripFirstH1 = true,
 ): string {
   let content = rawMarkdown.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
@@ -286,7 +367,7 @@ function convertMarkdownToMdxBody(
       continue;
     }
 
-    outLines.push(sanitizeNonCodeLine(line, skillRouteMap));
+    outLines.push(sanitizeNonCodeLine(line, ctx));
   }
 
   return outLines.join('\n').trim();
@@ -351,13 +432,18 @@ function buildMintlifyDocs() {
     skillRouteMap.set(s.name, s.docRoute);
   }
 
-  // Clean and recreate docs/skills
   if (fs.existsSync(DOCS_SKILLS_DIR)) {
     fs.rmSync(DOCS_SKILLS_DIR, { recursive: true, force: true });
   }
   fs.mkdirSync(DOCS_SKILLS_DIR, { recursive: true });
 
-  // 1. Generate each skill's .mdx file
+  const docsSkillAssetsDir = path.join(DOCS_DIR, 'assets', 'skills');
+  if (fs.existsSync(docsSkillAssetsDir)) {
+    fs.rmSync(docsSkillAssetsDir, { recursive: true, force: true });
+  }
+
+  const extraMdxPages: Array<{ route: string; title: string; sourcePath: string }> = [];
+
   for (const skill of skills) {
     const skillDir = path.join(SKILLS_DIR, skill.name);
     const readmePath = path.join(skillDir, 'README.md');
@@ -368,7 +454,14 @@ function buildMintlifyDocs() {
         ? fs.readFileSync(source.skillMdPath, 'utf-8')
         : `# ${skill.name}\n\n${skill.description}`;
 
-    let body = convertMarkdownToMdxBody(rawContent, skillRouteMap, true);
+    const ctx: SanitizeContext = {
+      skillRouteMap,
+      skill,
+      skillDir,
+      extraMdxPages,
+    };
+
+    let body = convertMarkdownToMdxBody(rawContent, ctx, true);
     const installTabs = buildInstallTabsMdx(skill.name);
 
     if (body.includes('___MINTLIFY_INSTALL_TABS_PLACEHOLDER___')) {
@@ -398,7 +491,21 @@ ${body}
     fs.writeFileSync(path.join(outDir, `${skill.name}.mdx`), mdx, 'utf-8');
   }
 
-  // 2. Generate docs/skills/overview.mdx
+  for (const extra of extraMdxPages) {
+    const rawExtra = fs.readFileSync(extra.sourcePath, 'utf-8');
+    const extraBody = convertMarkdownToMdxBody(rawExtra, { skillRouteMap }, true);
+    const extraMdx = `---
+title: ${JSON.stringify(extra.title)}
+description: ${JSON.stringify(`Reference documentation for ${extra.title}.`)}
+---
+
+${extraBody}
+`;
+    const extraOutPath = path.join(DOCS_DIR, `${extra.route}.mdx`);
+    fs.mkdirSync(path.dirname(extraOutPath), { recursive: true });
+    fs.writeFileSync(extraOutPath, extraMdx, 'utf-8');
+  }
+
   const grouped = new Map<string, SkillEntry[]>();
   for (const skill of skills) {
     if (!grouped.has(skill.category)) grouped.set(skill.category, []);
@@ -424,7 +531,7 @@ OpenDirectory includes **${skills.length} specialized skills** across GTM intell
     overviewBody += `## ${category}\n\n`;
     overviewBody += `| Skill | Description | Version |\n|---|---|---|\n`;
     for (const s of catSkills) {
-      const safeDesc = sanitizeNonCodeLine(s.description.replace(/\|/g, '&#124;'), skillRouteMap);
+      const safeDesc = sanitizeNonCodeLine(s.description.replace(/\|/g, '&#124;'), { skillRouteMap });
       overviewBody += `| [\`${s.name}\`](/${s.docRoute}) | ${safeDesc} | \`${s.version}\` |\n`;
     }
     overviewBody += `\n`;
@@ -432,10 +539,9 @@ OpenDirectory includes **${skills.length} specialized skills** across GTM intell
 
   fs.writeFileSync(path.join(DOCS_SKILLS_DIR, 'overview.mdx'), overviewBody, 'utf-8');
 
-  // 3. Generate docs/contributing.mdx from root CONTRIBUTING.md
   if (fs.existsSync(CONTRIBUTING_PATH)) {
     const rawContributing = fs.readFileSync(CONTRIBUTING_PATH, 'utf-8');
-    const contributingBody = convertMarkdownToMdxBody(rawContributing, skillRouteMap, true);
+    const contributingBody = convertMarkdownToMdxBody(rawContributing, { skillRouteMap }, true);
     const contributingMdx = `---
 title: "Contributing Guide"
 description: "How to build, test, and submit an AI Agent Skill to OpenDirectory."

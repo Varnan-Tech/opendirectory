@@ -28,7 +28,7 @@ npx "@opendirectory.dev/skills"
 | Command | Description |
 |---|---|
 | `list` | List all available skills in the registry (interactive by default; pass `--plain` for a static table). |
-| `install <skill-name> --target <agent>` | Install a skill for the specified coding agent. Saves the target as your default after the first run. |
+| `install <skill-name> [--target <agent>]` | Install a skill for the specified coding agent. When `--target` is omitted in an interactive terminal, launches the target picker and offers to save your selection as the default. |
 | `update <skill-name> [--target <agent>]` | Update an installed skill to the latest version with automatic rollback if the update fails. |
 | `uninstall <skill-name> [--target <agent>]` | Remove an installed skill from the target agent directory. |
 | `installed` | Inspect and manage currently installed skills (`--plain` outputs a static summary). |

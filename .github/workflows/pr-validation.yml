@@ -38,12 +38,13 @@ jobs:
       - name: Validate skills structure
         run: pnpm exec tsx scripts/validate-pr.ts
 
-      - name: Enforce README and CONTRIBUTING updates
+      - name: Enforce README, CONTRIBUTING, and Mintlify docs updates
         run: |
           pnpm exec tsx scripts/update-readme.ts
           pnpm exec tsx scripts/update-contributing.ts
-          if ! git diff --exit-code README.md CONTRIBUTING.md; then
-            echo "::error::README.md or CONTRIBUTING.md is out of date. Please run 'pnpm exec tsx scripts/update-readme.ts' and 'pnpm exec tsx scripts/update-contributing.ts' locally and commit the changes."
+          pnpm exec tsx scripts/build-mintlify-docs.ts
+          if ! git diff --exit-code README.md CONTRIBUTING.md docs/docs.json docs/contributing.mdx docs/skills docs/assets/skills; then
+            echo "::error::README.md, CONTRIBUTING.md, or generated Mintlify docs are out of date. Please run 'pnpm exec tsx scripts/update-readme.ts', 'pnpm exec tsx scripts/update-contributing.ts', and 'pnpm exec tsx scripts/build-mintlify-docs.ts' locally and commit the changes."
             exit 1
           fi
 

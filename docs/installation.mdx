@@ -18,7 +18,7 @@ OpenDirectory supports five installation methods so you can equip any terminal o
     ```
 
     <Note>
-      Requires Node.js 22+. The `--target` flag is required on first use and saved as your default for subsequent installs.
+      Requires Node.js 22+. Pass `--target <agent>` explicitly, or run `install <skill-name>` in an interactive terminal without `--target` to pick a target and optionally save it as your default.
     </Note>
   </Tab>
 
@@ -76,8 +76,8 @@ Once installed via the CLI, you can inspect, update, or remove skills at any tim
 npx "@opendirectory.dev/skills" installed
 
 # Update a skill with automatic rollback on failure
-npx "@opendirectory.dev/skills" update <skill-name>
+npx "@opendirectory.dev/skills" update <skill-name> --target claude
 
 # Uninstall a skill
-npx "@opendirectory.dev/skills" uninstall <skill-name>
+npx "@opendirectory.dev/skills" uninstall <skill-name> --target claude
 ```

@@ -28,11 +28,11 @@
     }
   },
   "lint-staged": {
-    "skills/**": [
+    "{skills/**,CONTRIBUTING.md}": [
       "tsx scripts/update-readme.ts",
       "tsx scripts/update-contributing.ts",
       "tsx scripts/build-mintlify-docs.ts",
-      "git add README.md CONTRIBUTING.md docs"
+      "git add README.md CONTRIBUTING.md docs/docs.json docs/contributing.mdx docs/skills docs/assets/skills"
     ]
   }
 }
