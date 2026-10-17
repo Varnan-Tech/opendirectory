@@ -5,6 +5,7 @@
   "scripts": {
     "test": "vitest",
     "build:plugin": "tsx scripts/build-claude-plugin.ts",
+    "build:docs": "tsx scripts/build-mintlify-docs.ts",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -30,7 +31,8 @@
     "skills/**": [
       "tsx scripts/update-readme.ts",
       "tsx scripts/update-contributing.ts",
-      "git add README.md CONTRIBUTING.md"
+      "tsx scripts/build-mintlify-docs.ts",
+      "git add README.md CONTRIBUTING.md docs"
     ]
   }
 }
