@@ -1,0 +1,6 @@
+{
+  "name": "openverse-sfx",
+  "version": "1.0.0",
+  "description": "Add a licensed, beat-matched soundtrack (music + SFX) to any video for $0 using Openverse, with ffmpeg-verified loudness and auto-written credits.",
+  "category": "Visual & Media"
+}
