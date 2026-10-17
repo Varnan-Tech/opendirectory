@@ -316,6 +316,19 @@ function sanitizeNonCodeLine(line: string, ctx: SanitizeContext): string {
   return segments.join('');
 }
 
+function convertShieldBadgeLineToHtml(line: string): string | null {
+  const trimmed = line.trim();
+  const linkedMatch = trimmed.match(/^\[!\[([^\]]*)\]\((https:\/\/img\.shields\.io\/[^)]+)\)\]\(([^)]+)\)$/);
+  if (linkedMatch) {
+    return `<a href="${linkedMatch[3]}" target="_blank" rel="noreferrer"><img noZoom src="${linkedMatch[2]}" alt="${linkedMatch[1]}" /></a>`;
+  }
+  const plainMatch = trimmed.match(/^!\[([^\]]*)\]\((https:\/\/img\.shields\.io\/[^)]+)\)$/);
+  if (plainMatch) {
+    return `<img noZoom src="${plainMatch[2]}" alt="${plainMatch[1]}" />`;
+  }
+  return null;
+}
+
 function convertMarkdownToMdxBody(
   rawMarkdown: string,
   ctx: SanitizeContext,
@@ -323,7 +336,6 @@ function convertMarkdownToMdxBody(
 ): string {
   let content = rawMarkdown.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
 
-  // Strip YAML frontmatter if any exists in README
   if (content.startsWith('---\n')) {
     const endIdx = content.indexOf('\n---\n', 4);
     if (endIdx !== -1) {
@@ -331,14 +343,12 @@ function convertMarkdownToMdxBody(
     }
   }
 
-  // Extract managed install block and replace with a placeholder before line-by-line sanitization
   const installPlaceholder = '___MINTLIFY_INSTALL_TABS_PLACEHOLDER___';
   content = content.replace(
     /<!--\s*OPENDIRECTORY_INSTALL_START\s*-->[\s\S]*?<!--\s*OPENDIRECTORY_INSTALL_END\s*-->/g,
     installPlaceholder,
   );
 
-  // Strip any remaining HTML comments
   content = content.replace(/<!--[\s\S]*?-->/g, '');
 
   const lines = content.split('\n');
@@ -346,13 +356,21 @@ function convertMarkdownToMdxBody(
   let inCodeFence = false;
   let fenceMarker = '';
   let h1Stripped = !stripFirstH1;
+  let badgeBuffer: string[] = [];
+
+  const flushBadges = () => {
+    if (badgeBuffer.length > 0) {
+      outLines.push(`<div className="od-badge-row">${badgeBuffer.join(' ')}</div>`);
+      badgeBuffer = [];
+    }
+  };
 
   for (const line of lines) {
     const trimmed = line.trim();
 
-    // Detect code fence start/end
     const fenceMatch = trimmed.match(/^(`{3,}|~{3,})/);
     if (fenceMatch) {
+      flushBadges();
       if (!inCodeFence) {
         inCodeFence = true;
         fenceMarker = fenceMatch[1][0].repeat(fenceMatch[1].length);
@@ -369,6 +387,13 @@ function convertMarkdownToMdxBody(
       continue;
     }
 
+    const badgeHtml = convertShieldBadgeLineToHtml(line);
+    if (badgeHtml) {
+      badgeBuffer.push(badgeHtml);
+      continue;
+    }
+    flushBadges();
+
     if (!h1Stripped && /^#\s+/.test(trimmed)) {
       h1Stripped = true;
       continue;
@@ -382,6 +407,7 @@ function convertMarkdownToMdxBody(
     outLines.push(sanitizeNonCodeLine(line, ctx));
   }
 
+  flushBadges();
   return outLines.join('\n').trim();
 }
 
@@ -531,10 +557,10 @@ ${extraBody}
 
   let overviewBody = `---
 title: "Skills Catalog"
-description: "Browse all ${skills.length} OpenDirectory agent skills across ${orderedCategories.length} categories."
+description: "Browse all ${skills.length} opendirectory agent skills across ${orderedCategories.length} categories."
 ---
 
-OpenDirectory includes **${skills.length} specialized skills** across GTM intelligence, content generation, launch orchestration, outreach, research, visual media, and developer tooling.
+opendirectory includes **${skills.length} specialized skills** across GTM intelligence, content generation, launch orchestration, outreach, research, visual media, and developer tooling.
 
 `;
 
@@ -556,7 +582,7 @@ OpenDirectory includes **${skills.length} specialized skills** across GTM intell
     const contributingBody = convertMarkdownToMdxBody(rawContributing, { skillRouteMap }, true);
     const contributingMdx = `---
 title: "Contributing Guide"
-description: "How to build, test, and submit an AI Agent Skill to OpenDirectory."
+description: "How to build, test, and submit an AI Agent Skill to opendirectory."
 ---
 
 ${contributingBody}
@@ -564,7 +590,6 @@ ${contributingBody}
     fs.writeFileSync(path.join(DOCS_DIR, 'contributing.mdx'), contributingMdx, 'utf-8');
   }
 
-  // 4. Write docs/docs.json with auto-synced skill groups
   const skillGroups = [
     {
       group: 'Catalog',
@@ -579,7 +604,7 @@ ${contributingBody}
   const docsJson = {
     $schema: 'https://mintlify.com/docs.json',
     theme: 'mint',
-    name: 'OpenDirectory',
+    name: 'opendirectory',
     description: 'The open-source registry of AI agent skills for founders who hate marketing.',
     logo: {
       light: '/assets/logo-light.webp',
