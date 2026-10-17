@@ -174,10 +174,22 @@ function buildInstallTabsMdx(skillName: string): string {
     \`\`\`
   </Tab>
   <Tab title="Claude Desktop">
+    <video
+      controls
+      className="w-full aspect-video rounded-xl mb-4"
+      src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c"
+    ></video>
+
     1. Copy \`https://github.com/Varnan-Tech/opendirectory/tree/main/skills/${skillName}\` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
     2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing \`SKILL.md\`.
   </Tab>
   <Tab title="Manus AI">
+    <video
+      controls
+      className="w-full aspect-video rounded-xl mb-4"
+      src="https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4"
+    ></video>
+
     [**Install ${skillName} in Manus AI**](${manusUrl})
   </Tab>
 </Tabs>`;
@@ -569,6 +581,12 @@ ${contributingBody}
     theme: 'mint',
     name: 'OpenDirectory',
     description: 'The open-source registry of AI agent skills for founders who hate marketing.',
+    logo: {
+      light: '/assets/logo-light.webp',
+      dark: '/assets/logo-dark.webp',
+      href: 'https://www.opendirectory.dev',
+    },
+    favicon: '/assets/favicon.png',
     colors: {
       primary: '#3B82F6',
       light: '#58A6FF',
