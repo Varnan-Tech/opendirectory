@@ -27,6 +27,7 @@ export const SKILL_CATEGORIES: Record<string, string> = {
   'graphic-ebook': 'Video & Graphics',
   'graphic-gif': 'Video & Graphics',
   'graphic-slide-deck': 'Video & Graphics',
+  'openverse-sfx': 'Video & Graphics',
   'cold-email-verifier': 'Outreach & Sales',
   'email-newsletter': 'Outreach & Sales',
   'newsletter-digest': 'Outreach & Sales',

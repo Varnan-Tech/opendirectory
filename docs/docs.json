@@ -1,0 +1,195 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "opendirectory",
+  "description": "The open-source registry of AI agent skills for founders who hate marketing.",
+  "logo": {
+    "light": "/assets/logo-light.webp",
+    "dark": "/assets/logo-dark.webp",
+    "href": "https://www.opendirectory.dev"
+  },
+  "favicon": "/assets/favicon.png",
+  "colors": {
+    "primary": "#3B82F6",
+    "light": "#58A6FF",
+    "dark": "#1D4ED8"
+  },
+  "appearance": {
+    "default": "dark"
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "claude",
+      "chatgpt",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Website",
+        "href": "https://www.opendirectory.dev"
+      },
+      {
+        "label": "npm",
+        "href": "https://www.npmjs.com/package/@opendirectory.dev/skills"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "GitHub",
+      "href": "https://github.com/Varnan-Tech/opendirectory"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/Varnan-Tech/opendirectory"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "contributing"
+            ]
+          },
+          {
+            "group": "CLI Reference",
+            "pages": [
+              "cli/overview",
+              "cli/compatibility"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Skills Catalog",
+        "icon": "layer-group",
+        "groups": [
+          {
+            "group": "Catalog",
+            "pages": [
+              "skills/overview"
+            ]
+          },
+          {
+            "group": "Visual & Media",
+            "pages": [
+              "skills/visual-and-media/blog-cover-image-cli",
+              "skills/visual-and-media/graphic-case-study",
+              "skills/visual-and-media/graphic-chart",
+              "skills/visual-and-media/graphic-ebook",
+              "skills/visual-and-media/graphic-gif",
+              "skills/visual-and-media/graphic-slide-deck",
+              "skills/visual-and-media/hyperframes-product-launch-video",
+              "skills/visual-and-media/openverse-sfx",
+              "skills/visual-and-media/vid-motion-graphics",
+              "skills/visual-and-media/vid-product-launch",
+              "skills/visual-and-media/vid-sizzle-reel"
+            ]
+          },
+          {
+            "group": "Content",
+            "pages": [
+              "skills/content/cook-the-blog",
+              "skills/content/email-newsletter",
+              "skills/content/github-discussion-to-devrel-content",
+              "skills/content/human-tone",
+              "skills/content/linkedin-post-generator",
+              "skills/content/newsletter-digest",
+              "skills/content/noise-to-linkedin-carousel",
+              "skills/content/noise2blog",
+              "skills/content/store-listing-optimizer",
+              "skills/content/tweet-thread-from-blog"
+            ]
+          },
+          {
+            "group": "Launch",
+            "pages": [
+              "skills/launch/brand-alchemy",
+              "skills/launch/oss-launch-kit",
+              "skills/launch/product-update-logger",
+              "skills/launch/producthunt-launch-kit",
+              "skills/launch/show-hn-writer"
+            ]
+          },
+          {
+            "group": "GTM Intelligence",
+            "pages": [
+              "skills/gtm-intelligence/app-store-review-arbitrage",
+              "skills/gtm-intelligence/company-radar",
+              "skills/gtm-intelligence/competitor-pr-finder",
+              "skills/gtm-intelligence/geo-gap-fixer",
+              "skills/gtm-intelligence/gh-issue-to-demand-signal",
+              "skills/gtm-intelligence/google-trends-api-skills",
+              "skills/gtm-intelligence/hackernews-intel",
+              "skills/gtm-intelligence/map-your-market",
+              "skills/gtm-intelligence/meta-ads-skill",
+              "skills/gtm-intelligence/meta-tribeV2-skill",
+              "skills/gtm-intelligence/npm-downloads-to-leads",
+              "skills/gtm-intelligence/reddit-icp-monitor",
+              "skills/gtm-intelligence/reddit-post-engine",
+              "skills/gtm-intelligence/sdk-adoption-tracker",
+              "skills/gtm-intelligence/twitter-GTM-find-skill",
+              "skills/gtm-intelligence/xquik-x-follower-scraper",
+              "skills/gtm-intelligence/xquik-x-tweet-scraper",
+              "skills/gtm-intelligence/yc-intent-radar-skill"
+            ]
+          },
+          {
+            "group": "Outreach",
+            "pages": [
+              "skills/outreach/cold-email-verifier",
+              "skills/outreach/outreach-sequence-builder"
+            ]
+          },
+          {
+            "group": "Research",
+            "pages": [
+              "skills/research/linkedin-job-post-to-buyer-pain-map",
+              "skills/research/meeting-brief-generator",
+              "skills/research/podcast-transcript-fetcher",
+              "skills/research/position-me",
+              "skills/research/pricing-finder",
+              "skills/research/pricing-page-psychology-audit",
+              "skills/research/vc-curated-match",
+              "skills/research/vc-finder",
+              "skills/research/where-your-customer-lives"
+            ]
+          },
+          {
+            "group": "Developer Tools",
+            "pages": [
+              "skills/developer-tools/claude-md-generator",
+              "skills/developer-tools/dependency-update-bot",
+              "skills/developer-tools/docs-from-code",
+              "skills/developer-tools/dx-roaster",
+              "skills/developer-tools/explain-this-pr",
+              "skills/developer-tools/kill-the-standup",
+              "skills/developer-tools/llms-txt-generator",
+              "skills/developer-tools/pr-description-writer",
+              "skills/developer-tools/schema-markup-generator"
+            ]
+          },
+          {
+            "group": "Other",
+            "pages": [
+              "skills/other/domain-expired-opportunity-finder"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

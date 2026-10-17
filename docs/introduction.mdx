@@ -1,0 +1,68 @@
+---
+title: "Introduction"
+description: "Agent skills for founders who hate marketing. Install production-grade GTM, growth, and developer tooling skills in seconds."
+---
+
+<img
+  className="block rounded-xl border border-zinc-800"
+  src="/assets/opendirectory_banner.webp"
+  alt="opendirectory Banner"
+/>
+
+## What is opendirectory?
+
+opendirectory is an open-source registry of AI agent skills built for founders, growth engineers, and technical marketers. Each skill packages a verified workflow (`SKILL.md`), executable scripts (`scripts/`), and reference playbooks (`references/`) that install directly into your AI coding agent.
+
+Instead of rewriting long prompts every session, install a skill once and your agent immediately knows what scripts to run, how to process data, and how to verify the output.
+
+<CardGroup cols={2}>
+  <Card title="Quick Installation" icon="terminal" href="/installation">
+    Install any skill in seconds via `npx "@opendirectory.dev/skills"`, `skills.sh`, Claude Desktop, Claude Code Plugin, or Manus AI.
+  </Card>
+  <Card title="Browse All Skills" icon="layer-group" href="/skills/overview">
+    Explore 60+ production-grade skills across Visual & Media, Content, Launch, GTM Intelligence, Outreach, Research, and Developer Tools.
+  </Card>
+  <Card title="CLI Reference" icon="square-terminal" href="/cli/overview">
+    Interactive TUI browser, non-interactive CI flags, and multi-agent installation commands.
+  </Card>
+  <Card title="Contribute a Skill" icon="code-pull-request" href="/contributing">
+    Build and submit your own Basic or Advanced skill to the opendirectory registry.
+  </Card>
+</CardGroup>
+
+---
+
+## Quick Start
+
+<Steps>
+  <Step title="Browse skills interactively">
+    Launch the full-screen terminal UI to browse by category, search, and multi-select skills:
+    ```bash
+    npx "@opendirectory.dev/skills"
+    ```
+  </Step>
+  <Step title="Pick your coding agent">
+    Choose your target agent (`claude`, `opencode`, `codex`, `gemini`, `anti-gravity`, `openclaw`, or `hermes`):
+    ```bash
+    npx "@opendirectory.dev/skills" install show-hn-writer --target claude
+    ```
+  </Step>
+  <Step title="Invoke the skill inside your agent">
+    Ask your agent in plain English or trigger the skill directly with `/show-hn-writer`.
+  </Step>
+</Steps>
+
+---
+
+## Supported Coding Agents
+
+| Agent | CLI Target Flag | Default Install Path |
+|---|---|---|
+| **Claude Code** | `--target claude` | `~/.claude/skills/` |
+| **OpenCode** | `--target opencode` | `~/.config/opencode/skills/` |
+| **OpenAI Codex CLI** | `--target codex` | `~/.codex/skills/` |
+| **Gemini CLI** | `--target gemini` | `~/.gemini/skills/` |
+| **Gemini Anti-Gravity** | `--target anti-gravity` | `~/.gemini/antigravity/skills/` |
+| **OpenClaw** | `--target openclaw` | `~/.openclaw/skills/` |
+| **Hermes** | `--target hermes` | `~/.hermes/skills/` |
+| **Manus AI** | 1-click web import | Imported directly via [opendirectory.dev](https://www.opendirectory.dev) |

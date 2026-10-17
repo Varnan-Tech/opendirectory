@@ -1,0 +1,23 @@
+img.nav-logo {
+  height: 2.75rem !important;
+  max-height: 2.75rem !important;
+  width: auto !important;
+}
+
+.od-badge-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  margin: 0.75rem 0 !important;
+}
+
+.od-badge-row > *,
+.od-badge-row img,
+.od-badge-row a,
+.od-badge-row span,
+.od-badge-row figure {
+  display: inline-flex !important;
+  margin: 0 !important;
+}

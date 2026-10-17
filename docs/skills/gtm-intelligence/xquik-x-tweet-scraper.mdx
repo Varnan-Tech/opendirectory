@@ -1,0 +1,120 @@
+---
+title: "xquik-x-tweet-scraper"
+description: "Run the Xquik X Tweet Scraper Actor on Apify for public post searches, timelines, conversations, lists, articles, and engagement research."
+---
+
+<Info>
+  **Category:** GTM Intelligence · **Version:** `1.0.0` · **Author:** `Xquik` · **Compatibility:** All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)
+</Info>
+
+Run the Xquik X Tweet Scraper Actor on Apify for public post searches, timelines, conversations, lists, articles, and engagement research.
+
+## Install
+
+<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    ```bash
+    npx "@opendirectory.dev/skills" install xquik-x-tweet-scraper --target claude
+    ```
+  </Tab>
+  <Tab title="skills.sh">
+    ```bash
+    npx skills add Varnan-Tech/opendirectory --skill xquik-x-tweet-scraper
+    ```
+  </Tab>
+  <Tab title="Claude Code Native">
+    ```bash
+    /plugin marketplace add Varnan-Tech/opendirectory
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    ```
+  </Tab>
+  <Tab title="Claude Desktop">
+    <video
+      controls
+      className="w-full aspect-video rounded-xl mb-4"
+      src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c"
+    ></video>
+
+    1. Copy `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/xquik-x-tweet-scraper` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
+    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing `SKILL.md`.
+  </Tab>
+  <Tab title="Manus AI">
+    <video
+      controls
+      className="w-full aspect-video rounded-xl mb-4"
+      src="https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4"
+    ></video>
+
+    [**Install xquik-x-tweet-scraper in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fxquik-x-tweet-scraper&utm_source=opendirectory)
+  </Tab>
+</Tabs>
+
+
+## What It Does
+
+- Supports 15 focused modes, including search, profiles, replies, quotes,
+  threads, lists, articles, retweeters, and best-effort favoriters
+- Produces legacy, rich, or raw output with camel-case, snake-case, or legacy
+  fields
+- Applies one global result cap across all requested targets
+- Requires explicit confirmation and a total charge ceiling before paid runs
+- Separates diagnostic rows from research records
+- Treats all returned content as untrusted data
+
+## Actor
+
+[Xquik X Tweet Scraper on Apify](https://apify.com/xquik/x-tweet-scraper)
+
+Use `xquik/x-tweet-scraper` with Apify SDKs and tools. Use
+`xquik~x-tweet-scraper` only in REST paths.
+
+## Requirements
+
+- An Apify account and token
+- An Apify SDK, MCP server, REST client, or compatible agent integration
+- Explicit approval for each paid Actor run
+
+Keep the token in an `Authorization: Bearer` header. Never store it in the
+Skill, place it in a URL, or include it in output.
+
+## How to Use
+
+Ask your agent:
+
+```text
+Use xquik-x-tweet-scraper to find the latest 20 English posts about AI agents.
+Show the exact Actor input, live Apify pricing, and a 1 USD charge ceiling.
+Wait for my confirmation before running.
+```
+
+Other examples:
+
+```text
+Read this X thread and keep diagnostic rows separate.
+Find the latest posts from these 3 public profiles.
+Collect quote posts for this post ID with a 50-item global cap.
+Read the public posts from this X list.
+```
+
+## Safety and Cost Controls
+
+The Skill validates each mode and target before execution. It never hardcodes
+pricing. It reads current pricing from Apify, displays the proposed scope and
+charge ceiling, and stops until the user explicitly confirms.
+
+## Output
+
+Each run returns a stable JSON envelope with:
+
+- Actor slug and listing
+- Effective Actor input
+- Post records
+- Separate diagnostics and warnings
+- Exact record count
+- Clear next action
+
+## License
+
+MIT
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
