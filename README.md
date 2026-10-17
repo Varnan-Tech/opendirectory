@@ -23,7 +23,7 @@
 [![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![skills.sh](https://img.shields.io/badge/skills.sh-listed-brightgreen.svg?style=flat-square)](https://www.skills.sh/Varnan-Tech/opendirectory)
-[![Code Review: Greptile](https://img.shields.io/badge/AI%20Review-Greptile-10B981?style=flat-square)](https://www.greptile.com)
+[![Code Review: Greptile](https://img.shields.io/badge/AI%20Review-Greptile-28E99F?style=flat-square&logoColor=2A2A2A)](https://www.greptile.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -636,13 +636,27 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the required format, the security val
 
 ## OSS Partners
 
-<table>
-  <tr>
-    <td valign="top" width="100%">
-      <a href="https://www.greptile.com"><b>Greptile</b></a> - Automated codebase-aware AI code reviews on every OpenDirectory pull request and skill submission.
-    </td>
-  </tr>
-</table>
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" valign="middle" width="420">
+        <br />
+        <a href="https://www.greptile.com" target="_blank">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://www.greptile.com/wordmark-logo-green.svg" />
+            <source media="(prefers-color-scheme: light)" srcset="https://www.greptile.com/wordmark-logo.svg" />
+            <img alt="Greptile" src="https://www.greptile.com/wordmark-logo-green.svg" height="36" />
+          </picture>
+        </a>
+        <br /><br />
+        <sub><b>AI Code Review Partner</b></sub>
+        <br />
+        <sub>Automated codebase-aware AI code reviews on every OpenDirectory pull request and skill submission.</sub>
+        <br /><br />
+      </td>
+    </tr>
+  </table>
+</div>
 
 ---
 
