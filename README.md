@@ -24,6 +24,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![skills.sh](https://img.shields.io/badge/skills.sh-listed-brightgreen.svg?style=flat-square)](https://www.skills.sh/Varnan-Tech/opendirectory)
 [![Code Review: Greptile](https://img.shields.io/badge/AI%20Review-Greptile-28E99F?style=flat-square&logoColor=2A2A2A)](https://www.greptile.com)
+[![Docs: Mintlify](https://img.shields.io/badge/Docs-Mintlify-0D9373?style=flat-square&logo=mintlify&logoColor=white)](https://www.opendirectory.dev/docs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -657,6 +658,21 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the required format, the security val
         <sub><b>AI Code Review Partner</b></sub>
         <br />
         <sub>Automated codebase-aware AI code reviews on every OpenDirectory pull request and skill submission.</sub>
+        <br /><br />
+      </td>
+      <td align="center" valign="middle" width="420">
+        <br />
+        <a href="https://www.mintlify.com" target="_blank">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/mintlify/starter/main/logo/dark.svg" />
+            <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/mintlify/starter/main/logo/light.svg" />
+            <img alt="Mintlify" src="https://raw.githubusercontent.com/mintlify/starter/main/logo/dark.svg" height="36" />
+          </picture>
+        </a>
+        <br /><br />
+        <sub><b>Documentation Partner</b></sub>
+        <br />
+        <sub>AI-native documentation infrastructure powering the <a href="https://www.opendirectory.dev/docs">opendirectory.dev/docs</a> skill catalog and <code>llms.txt</code> index.</sub>
         <br /><br />
       </td>
     </tr>
