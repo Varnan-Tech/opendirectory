@@ -41,7 +41,11 @@ def main():
 
     # waveform with cue lines
     wav = os.path.join(args.outdir, "exported_audio.wav")
+    if os.path.exists(wav):
+        os.remove(wav)
     run(["ffmpeg", "-y", "-i", args.video, "-vn", "-ac", "1", "-ar", "22050", wav])
+    if not os.path.isfile(wav) or os.path.getsize(wav) == 0:
+        sys.exit(f"could not extract audio stream from {args.video}")
     import numpy as np, wave
     with wave.open(wav) as w:
         sr = w.getframerate()
@@ -60,12 +64,24 @@ def main():
     fig.savefig(wave_plot, dpi=110)
 
     frames = []
+    missing_frames = []
     for c in args.cue:
         for label, t in (("before", max(c - 0.1, 0)), ("after", c + 0.1)):
             out = os.path.join(args.outdir, f"cue_{c:.2f}_{label}.png")
+            if os.path.exists(out):
+                os.remove(out)
+            if c < 0:
+                missing_frames.append(out)
+                continue
             run(["ffmpeg", "-y", "-ss", f"{t:.3f}", "-i", args.video,
                  "-frames:v", "1", "-q:v", "2", out])
-            frames.append(out)
+            if os.path.isfile(out) and os.path.getsize(out) > 0:
+                frames.append(out)
+            else:
+                missing_frames.append(out)
+
+    ok_frames = len(missing_frames) == 0
+    ok = ok_loud and ok_peak and ok_frames
 
     report = {
         "file": args.video,
@@ -74,15 +90,21 @@ def main():
         "loudness_ok": ok_loud,
         "true_peak_dbfs": true_peak,
         "peak_ok": ok_peak,
+        "frames_ok": ok_frames,
         "waveform_plot": wave_plot,
         "cue_frames": frames,
+        "missing_cue_frames": missing_frames,
     }
     print(json.dumps(report, indent=2))
-    print("\nVERDICT:", "PASS" if (ok_loud and ok_peak) else "NEEDS FIX", file=sys.stderr)
+    print("\nVERDICT:", "PASS" if ok else "NEEDS FIX", file=sys.stderr)
     if not ok_loud:
         print(f"  integrated {integrated} LUFS vs target {args.target} (+-{args.tolerance}) - re-run loudnorm", file=sys.stderr)
     if not ok_peak:
         print(f"  true peak {true_peak} dBFS above -4 - lower gains and re-run loudnorm with true_peak=-4", file=sys.stderr)
+    if not ok_frames:
+        print(f"  missing cue frames {missing_frames} - cue timestamp may be negative or at/past the end of the video", file=sys.stderr)
+    if not ok:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
