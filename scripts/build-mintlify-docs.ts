@@ -316,15 +316,30 @@ function sanitizeNonCodeLine(line: string, ctx: SanitizeContext): string {
   return segments.join('');
 }
 
+function escapeHtmlAttribute(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\{/g, '&#123;')
+    .replace(/\}/g, '&#125;');
+}
+
 function convertShieldBadgeLineToHtml(line: string): string | null {
   const trimmed = line.trim();
   const linkedMatch = trimmed.match(/^\[!\[([^\]]*)\]\((https:\/\/img\.shields\.io\/[^)]+)\)\]\(([^)]+)\)$/);
   if (linkedMatch) {
-    return `<a href="${linkedMatch[3]}" target="_blank" rel="noreferrer"><img noZoom src="${linkedMatch[2]}" alt="${linkedMatch[1]}" /></a>`;
+    const alt = escapeHtmlAttribute(linkedMatch[1]);
+    const src = escapeHtmlAttribute(linkedMatch[2]);
+    const href = escapeHtmlAttribute(linkedMatch[3]);
+    return `<a href="${href}" target="_blank" rel="noreferrer"><img noZoom src="${src}" alt="${alt}" /></a>`;
   }
   const plainMatch = trimmed.match(/^!\[([^\]]*)\]\((https:\/\/img\.shields\.io\/[^)]+)\)$/);
   if (plainMatch) {
-    return `<img noZoom src="${plainMatch[2]}" alt="${plainMatch[1]}" />`;
+    const alt = escapeHtmlAttribute(plainMatch[1]);
+    const src = escapeHtmlAttribute(plainMatch[2]);
+    return `<img noZoom src="${src}" alt="${alt}" />`;
   }
   return null;
 }
