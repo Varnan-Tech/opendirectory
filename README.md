@@ -9,7 +9,7 @@
 <br />
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=64+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI%2C+Manus+AI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=800&color=58A6FF&center=true&vCenter=true&width=620&height=50&lines=65+Agent+Skills;Works+with+Claude%2C+Codex%2C+Gemini+CLI%2C+Manus+AI;Agent+Skills+for+Founders+Who+Hate+Marketing;Install+in+seconds.+No+setup+required." alt="Typing SVG" />
 </div>
 
 <br />
@@ -17,7 +17,7 @@
 <div align="center">
 
 [![npm version](https://img.shields.io/npm/v/@opendirectory.dev/skills.svg?style=flat-square)](https://www.npmjs.com/package/@opendirectory.dev/skills)
-[![Skills](https://img.shields.io/badge/skills-64-blue.svg?style=flat-square)](skills/)
+[![Skills](https://img.shields.io/badge/skills-65-blue.svg?style=flat-square)](skills/)
 [![Stars](https://img.shields.io/github/stars/Varnan-Tech/opendirectory?style=flat-square&color=yellow)](https://github.com/Varnan-Tech/opendirectory/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/Varnan-Tech/opendirectory?style=flat-square&color=orange)](https://github.com/Varnan-Tech/opendirectory/graphs/contributors)
 [![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
@@ -45,7 +45,7 @@ Or list all skills:
 ```bash
 npx "@opendirectory.dev/skills" list
 ```
-*64 specialized skills across GTM, growth, and developer tooling*
+*65 specialized skills across GTM, growth, and developer tooling*
 
 ### 2. Pick your agent
 ```bash
@@ -275,7 +275,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
 
 ## All Skills
 
-64 skills across GTM, growth automation, technical marketing, and developer tooling.
+65 skills across GTM, growth automation, technical marketing, and developer tooling.
 
 <!-- SKILLS_LIST_START -->
 
@@ -316,6 +316,11 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
     <td><a href="skills/hyperframes-product-launch-video"><code>hyperframes-product-launch-video</code></a></td>
     <td>A specialized AI agent skill designed for creating elite, premium product launch videos using the Hyperframes framework. This skill distills months of motion design expertise, brand DNA extraction, and technical debugging into a structured workflow that guides your AI agent.</td>
     <td><code>0.0.1</code></td>
+  </tr>
+  <tr>
+    <td><a href="skills/openverse-sfx"><code>openverse-sfx</code></a></td>
+    <td>Add a full licensed soundtrack to any video for $0. Searches Openverse's 5.2M free audio files (no API key), beat-matches music to your cuts with librosa, places one sound effect per big move, mixes to -16 LUFS with broadcast-safe peaks, verifies the exported MP4 with FFmpeg, and writes credits.txt automatically.</td>
+    <td><code>1.0.0</code></td>
   </tr>
   <tr>
     <td><a href="skills/vid-motion-graphics"><code>vid-motion-graphics</code></a></td>
