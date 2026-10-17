@@ -10,14 +10,14 @@ half-beat-shifted grid and shifts the grid if the shifted one wins.
 Usage:
   python3 beat_grid.py <music_file> [--out beats.json] [--plot beatgrid.png]
 """
-import argparse, json
+import argparse, json, sys
 import numpy as np
 
 def lowband_env(y, sr, cutoff=120.0):
-    from scipy.signal import butter, filtfilt
+    from scipy.signal import butter, sosfiltfilt
     nyq = sr / 2.0
-    b, a = butter(4, min(cutoff / nyq, 0.99), btype="low")
-    yl = filtfilt(b, a, y)
+    sos = butter(4, min(cutoff / nyq, 0.99), btype="low", output="sos")
+    yl = sosfiltfilt(sos, y)
     return np.abs(yl)
 
 def grid_score(env, sr, times):
@@ -36,6 +36,8 @@ def main():
     tempo, frames = librosa.beat.beat_track(y=y, sr=sr)
     beats = librosa.frames_to_time(frames, sr=sr)
     tempo = float(np.atleast_1d(tempo)[0])
+    if len(y) == 0 or not np.isfinite(tempo) or tempo <= 0 or len(beats) == 0:
+        sys.exit("no beats detected (silent or ambient track with 0 BPM) - choose a rhythmic track or specify cue timestamps manually")
     half = (60.0 / tempo) / 2.0
 
     env = lowband_env(y, sr)
@@ -43,7 +45,9 @@ def main():
     off = grid_score(env, sr, beats + half)
     shifted = off > on * 1.05  # shifted grid must win by 5% to override
     if shifted:
-        beats = beats + half
+        shifted_beats = beats + half
+        valid = shifted_beats[shifted_beats <= len(y) / sr]
+        beats = valid if len(valid) > 0 else shifted_beats
 
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump({"tempo_bpm": round(tempo, 1),
