@@ -1,0 +1,139 @@
+---
+title: "graphic-slide-deck"
+description: "Generate a professionally designed HTML slide deck from a brief, content notes, or an existing PowerPoint. Outputs a browser-ready presentation + optional PD..."
+---
+
+<Info>
+  **Category:** Visual & Media · **Version:** `1.0.0` · **Author:** `OpenDirectory` · **Compatibility:** All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)
+</Info>
+
+Generate a professionally designed HTML slide deck from a brief, content notes, or an existing PowerPoint. Outputs a browser-ready presentation + optional PDF. Supports 13 named layout types and 8 business style presets.
+
+## Install
+
+<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    ```bash
+    npx "@opendirectory.dev/skills" install graphic-slide-deck --target claude
+    ```
+  </Tab>
+  <Tab title="skills.sh">
+    ```bash
+    npx skills add Varnan-Tech/opendirectory --skill graphic-slide-deck
+    ```
+  </Tab>
+  <Tab title="Claude Code Native">
+    ```bash
+    /plugin marketplace add Varnan-Tech/opendirectory
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    ```
+  </Tab>
+  <Tab title="Claude Desktop">
+    1. Copy `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/graphic-slide-deck` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
+    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing `SKILL.md`.
+  </Tab>
+  <Tab title="Manus AI">
+    [**Install graphic-slide-deck in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fgraphic-slide-deck&utm_source=opendirectory)
+  </Tab>
+</Tabs>
+
+
+## What it does
+
+- Asks the questions that determine how a deck should be structured
+- Plans the slide sequence with named layout types for each slide
+- Generates a single self-contained HTML file -- opens in any browser, no build tools
+- Splits into per-slide HTML files for individual sharing or editing
+- Exports a PDF via Playwright (renders animations to final state)
+- Optionally deploys to a live URL via Vercel for phone/tablet sharing
+- Converts existing PowerPoint files to HTML
+
+## Example
+
+> "Create a 12-slide Series A investor deck for DataPulse. Audience: Series A VCs. Style: midnight-editorial."
+
+Output: 12-slide HTML presentation, per-slide HTML files, and a PDF -- covering problem/solution/traction/team/market/ask.
+
+---
+
+## Supported Styles
+
+| Style | Best for |
+|---|---|
+| midnight-editorial | Investor decks, premium B2B, thought leadership |
+| matt-gray | Internal decks, operational reviews, mixed audiences |
+| clean-slate | Sales decks, customer-facing, enterprise-safe |
+| brutalist | Startup pitches, design-forward, tech conferences |
+| mint-pixel-corporate | SaaS sales, product demos, growth-stage pitches |
+| product-minimal | Product demos, feature showcases, design audiences |
+| magazine-red | Marketing reports, campaign reviews, bold internal |
+| soft-cloud | Onboarding, customer education, approachable SaaS |
+
+---
+
+## Supported Layouts
+
+| Layout | Use case |
+|---|---|
+| title-hero | Opening slide -- large headline + subtext |
+| section-divider | Section break -- bold label, minimal design |
+| text-full | Headers + bullet points or paragraphs |
+| text-left-image-right | Side-by-side: text column + visual |
+| image-left-text-right | Side-by-side: image first, text second |
+| two-column-text | Comparisons, pros/cons, before/after |
+| image-full | Full-bleed image with optional caption overlay |
+| image-grid | 2x2 or 3x2 grid of images or screenshots |
+| stat-highlight | 2-4 large KPI metrics (the unmissable slide) |
+| quote-callout | Pull quote with attribution |
+| comparison-table | Feature or option comparison grid |
+| timeline | Horizontal or vertical milestones |
+| closing-cta | Final slide -- CTA, contact info, next steps |
+
+---
+
+## Output
+
+| File | What it is |
+|---|---|
+| `deck/[name]-slides/index.html` | Full presentation, browser-ready |
+| `deck/[name]-slides/slide-001.html` ... | Per-slide HTML files for individual sharing |
+| `deck/[name].pdf` | PDF export (if requested) |
+| Live URL | Deployed Vercel URL (if requested) |
+
+Slides are 1920x1080px (16:9) by default. 1:1 (1080x1080) available for LinkedIn.
+
+---
+
+## Parameters
+
+| Param | Required | Notes |
+|---|---|---|
+| purpose | Yes | investor pitch / sales call / conference talk / internal / onboarding |
+| audience | Yes | VCs, prospects, your team, executives, conference room |
+| topic_or_content | Yes | Freeform brief, notes, URL, or uploaded file |
+| key_message | No | Single sentence the audience must remember |
+| slide_count | No | Default: 12 |
+| style | No | One of 8 named presets or "show me options" (default: clean-slate) |
+| aspect_ratio | No | 16:9 or 1:1 (default: 16:9) |
+| inline_editing | No | Yes/No -- editable in-browser (default: No) |
+| output_format | No | HTML only / HTML+PDF / HTML+PDF+deploy (default: HTML+PDF) |
+| deck_name | No | Slug for file/folder naming (derived from topic if omitted) |
+
+---
+
+## Dependencies
+
+This skill requires the `frontend-slides` skill files at:
+`/Users/ksd/Desktop/Varnan_skills/frontend-slides/`
+
+Specifically:
+- `viewport-base.css` -- responsive slide foundation (included verbatim in generated HTML)
+- `html-template.md` -- SlidePresentation class and inline editing system
+- `animation-patterns.md` -- entrance animations and background effects
+- `scripts/export-pdf.sh` -- PDF export via Playwright (Node.js required, auto-installs)
+- `scripts/deploy.sh` -- Vercel deployment (Node.js required)
+- `scripts/extract-pptx.py` -- PowerPoint content extraction (Python + `python-pptx` required)
+
+## No API keys required
+
+Pure AI skill. No external services, no scraping, no dependencies to install beyond the above.

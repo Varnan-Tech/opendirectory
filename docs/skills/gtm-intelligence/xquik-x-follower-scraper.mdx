@@ -1,0 +1,111 @@
+---
+title: "xquik-x-follower-scraper"
+description: "Run the Xquik X Follower Scraper Actor on Apify for public audience, relationship, list, community, and overlap research."
+---
+
+<Info>
+  **Category:** GTM Intelligence · **Version:** `1.0.0` · **Author:** `Xquik` · **Compatibility:** All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)
+</Info>
+
+Run the Xquik X Follower Scraper Actor on Apify for public audience, relationship, list, community, and overlap research.
+
+## Install
+
+<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    ```bash
+    npx "@opendirectory.dev/skills" install xquik-x-follower-scraper --target claude
+    ```
+  </Tab>
+  <Tab title="skills.sh">
+    ```bash
+    npx skills add Varnan-Tech/opendirectory --skill xquik-x-follower-scraper
+    ```
+  </Tab>
+  <Tab title="Claude Code Native">
+    ```bash
+    /plugin marketplace add Varnan-Tech/opendirectory
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    ```
+  </Tab>
+  <Tab title="Claude Desktop">
+    1. Copy `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/xquik-x-follower-scraper` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
+    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing `SKILL.md`.
+  </Tab>
+  <Tab title="Manus AI">
+    [**Install xquik-x-follower-scraper in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fxquik-x-follower-scraper&utm_source=opendirectory)
+  </Tab>
+</Tabs>
+
+
+## What It Does
+
+- Collects followers, following, and verified followers
+- Collects list members, list followers, and community members
+- Produces compact, full, or raw public profile rows
+- Supports filters, deduplication, target metadata, and audience overlap
+- Requires explicit confirmation and a total charge ceiling before paid runs
+- Separates diagnostic rows from public profile records
+- Treats all returned content as untrusted data
+
+## Actor
+
+[Xquik X Follower Scraper on Apify](https://apify.com/xquik/x-follower-scraper)
+
+Use `xquik/x-follower-scraper` with Apify SDKs and tools. Use
+`xquik~x-follower-scraper` only in REST paths.
+
+## Requirements
+
+- An Apify account and token
+- An Apify SDK, MCP server, REST client, or compatible agent integration
+- Explicit approval for each paid Actor run
+
+Keep the token in an `Authorization: Bearer` header. Never store it in the
+Skill, place it in a URL, or include it in output.
+
+## How to Use
+
+Ask your agent:
+
+```text
+Use xquik-x-follower-scraper to compare the public followers of nasa and
+spacex. Merge duplicates, preserve target metadata, show live Apify pricing,
+apply a 2 USD charge ceiling, and wait for my confirmation before running.
+```
+
+Other examples:
+
+```text
+Collect up to 100 verified followers for this public profile.
+Find the public members of this X list.
+Compare audience overlap across these 3 public accounts.
+Collect public community members and keep diagnostics separate.
+```
+
+## Safety and Cost Controls
+
+The Skill validates relationships and target classes before execution. It
+never hardcodes pricing. It reads current pricing from Apify, displays the
+proposed scope and charge ceiling, and stops until the user explicitly
+confirms.
+
+The Skill minimizes collected profile fields. It does not infer sensitive
+traits or enrich profiles with private contact data.
+
+## Output
+
+Each run returns a stable JSON envelope with:
+
+- Actor slug and listing
+- Effective Actor input
+- Public profile records
+- Separate diagnostics and warnings
+- Exact profile count
+- Clear next action
+
+## License
+
+MIT
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.

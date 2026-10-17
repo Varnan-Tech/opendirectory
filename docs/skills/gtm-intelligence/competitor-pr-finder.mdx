@@ -1,0 +1,139 @@
+---
+title: "competitor-pr-finder"
+description: "Give it your product URL. It finds your top 5 competitors, researches every press mention, podcast appearance, and community post across all of them, and tel..."
+---
+
+<Info>
+  **Category:** GTM Intelligence · **Version:** `0.0.1` · **Author:** `opendirectory` · **Compatibility:** All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)
+</Info>
+
+Give it your product URL. It finds your top 5 competitors, researches every press mention, podcast appearance, and community post across all of them, and tells you exactly which channels to pitch -- with the journalist's name, the angle that got your competitors featured, and a ready-to-send cold pitch for your product.
+
+## Install
+
+<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    ```bash
+    npx "@opendirectory.dev/skills" install competitor-pr-finder --target claude
+    ```
+  </Tab>
+  <Tab title="skills.sh">
+    ```bash
+    npx skills add Varnan-Tech/opendirectory --skill competitor-pr-finder
+    ```
+  </Tab>
+  <Tab title="Claude Code Native">
+    ```bash
+    /plugin marketplace add Varnan-Tech/opendirectory
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    ```
+  </Tab>
+  <Tab title="Claude Desktop">
+    1. Copy `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/competitor-pr-finder` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
+    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing `SKILL.md`.
+  </Tab>
+  <Tab title="Manus AI">
+    [**Install competitor-pr-finder in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fcompetitor-pr-finder&utm_source=opendirectory)
+  </Tab>
+</Tabs>
+
+
+## What It Does
+
+1. Fetches your product page (Firecrawl or Tavily extract)
+2. Analyzes your product: taxonomy, differentiators, ICP
+3. Discovers 5 competitor companies via Tavily search
+4. **Asks you to confirm the competitor list** before running research
+5. Runs three-track PR research across all 5 competitors:
+   - **Track A (Editorial):** News articles, feature pieces, funded announcements
+   - **Track B (Podcasts):** Founder interviews, guest appearances, episode mentions
+   - **Track C (Communities):** Reddit threads, HN posts, ProductHunt launches
+6. Tiers channels by how many competitors appeared in each (Tier 1 = 3+ competitors)
+7. Looks up the journalist or host name for each Tier 1 channel
+8. Generates a cold pitch draft per Tier 1 channel: subject line + 3-4 sentence body
+
+## Output
+
+A PR intel report saved to `docs/pr-intel/[product-slug]-[date].md` containing:
+
+- **Tier 1 channels** (proven beats for your space) with journalist name, story angle, and cold pitch draft
+- **Tier 2 channels** (quick hits table -- channels that covered 2 of 5 competitors)
+- **Tier 3 channels** (discovery list -- one mention only)
+- **3 bonus hooks** -- pitch angles none of your competitors have used
+
+## Requirements
+
+| Tool | Required | Purpose | Free Tier |
+|---|---|---|---|
+| Tavily API | Yes | Competitor discovery, PR research, journalist lookup | 1000 credits/month (~40 runs) |
+| Firecrawl API | No | Fetch JS-rendered product pages | 500 credits/month |
+
+If Firecrawl is not set, Tavily extract is used as a fallback.
+
+## Setup
+
+```bash
+cp .env.example .env
+# Add TAVILY_API_KEY (required) and FIRECRAWL_API_KEY (optional)
+```
+
+## Usage
+
+```
+Find my PR targets: https://yourstartup.com
+```
+
+Or paste a description if you don't have a live URL:
+```
+Find PR targets for my startup. We build [what you do] for [who]. [Stage], [geography].
+```
+
+## Cost
+
+| Operation | Searches | Cost |
+|---|---|---|
+| Product page fetch | 1 Firecrawl or Tavily extract | ~$0.001 |
+| Competitor discovery | 2 Tavily searches | ~$0.02 |
+| 3-track PR research (5 competitors) | 15 Tavily searches | ~$0.15 |
+| Journalist lookup (up to 7 Tier 1 channels) | ~6 Tavily searches | ~$0.06 |
+| **Total** | **~23-24 searches** | **~$0.23/run** |
+
+## Zero-Hallucination Policy
+
+Every channel name in the output traces to a URL in the search results. Every journalist name traces to a search result snippet. Story angles are extracted from article titles found by Tavily -- not inferred from AI training knowledge. Fields that could not be sourced are labeled "not found in search data."
+
+## Project Structure
+
+```
+competitor-pr-finder/
+├── SKILL.md                    -- 10-step workflow for Claude Code
+├── README.md                   -- this file
+├── .env.example                -- environment variable template
+├── scripts/
+│   └── research.py             -- two-phase Tavily data collector
+├── evals/
+│   └── evals.json              -- 5 test cases
+└── references/
+    ├── pr-channel-types.md     -- how to identify editorial, podcast, community channels
+    ├── pitch-guide.md          -- cold pitch structure, forbidden phrases, angle extraction
+    └── tier-scoring.md         -- channel tiering rules and frequency map construction
+```
+
+## Standalone Script Usage
+
+```bash
+# Phase 1: competitor discovery
+python3 scripts/research.py \
+    --phase discover \
+    --product-analysis /tmp/cprf-product-analysis.json \
+    --tavily-key "$TAVILY_API_KEY" \
+    --output /tmp/cprf-competitors-raw.json
+
+# Phase 2: PR research on confirmed competitors
+python3 scripts/research.py \
+    --phase pr-research \
+    --competitors /tmp/cprf-competitors-confirmed.json \
+    --product-analysis /tmp/cprf-product-analysis.json \
+    --tavily-key "$TAVILY_API_KEY" \
+    --output /tmp/cprf-pr-raw.json
+```

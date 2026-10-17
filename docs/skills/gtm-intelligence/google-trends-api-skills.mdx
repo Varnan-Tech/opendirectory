@@ -1,0 +1,114 @@
+---
+title: "google-trends-api-skills"
+description: "Agent Skills for SEO keyword research using Google Trends data via SerpApi. Built for AI agents that generate tech and developer-focused blog content."
+---
+
+<Info>
+  **Category:** GTM Intelligence · **Version:** `2.0` · **Author:** `farizanjum` · **Compatibility:** All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)
+</Info>
+
+<img width="1280" height="640" alt="google-trends-skills-cover" src="https://github.com/user-attachments/assets/848aa1be-64af-4b4b-bf46-af3d0798b7ee" />
+
+Agent Skills for SEO keyword research using Google Trends data via SerpApi. Built for AI agents that generate tech and developer-focused blog content.
+
+## Install
+
+<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    ```bash
+    npx "@opendirectory.dev/skills" install google-trends-api-skills --target claude
+    ```
+  </Tab>
+  <Tab title="skills.sh">
+    ```bash
+    npx skills add Varnan-Tech/opendirectory --skill google-trends-api-skills
+    ```
+  </Tab>
+  <Tab title="Claude Code Native">
+    ```bash
+    /plugin marketplace add Varnan-Tech/opendirectory
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    ```
+  </Tab>
+  <Tab title="Claude Desktop">
+    1. Copy `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/google-trends-api-skills` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
+    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing `SKILL.md`.
+  </Tab>
+  <Tab title="Manus AI">
+    [**Install google-trends-api-skills in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fgoogle-trends-api-skills&utm_source=opendirectory)
+  </Tab>
+</Tabs>
+
+
+## Skills
+
+### 1. `google-trends-api/`
+The API layer — knows how to query Google Trends through SerpApi, handle responses, manage rate limits, and cache results.
+
+### 2. `seo-keyword-research/`
+The SEO workflow — uses Google Trends data to find breakout keywords, build content structure, and generate SEO-optimized blog outlines.
+
+## Quick Start
+
+```bash
+# 1. Get a free API key (250 searches/month)
+# https://serpapi.com/
+
+# 2. Set your key
+export SERPAPI_KEY="your_key_here"
+
+# 3. Set up dependency
+pip install requests
+
+# 4. Run keyword research for a blog topic
+python seo-keyword-research/scripts/blog_seo_research.py "kubernetes deployment"
+
+# 5. Or just discover trending keywords
+python google-trends-api/scripts/discover_keywords.py "AI developer tools"
+```
+
+## Directory Structure
+
+```
+google-trends-api/
+├── SKILL.md                        # API skill (endpoints, params, usage)
+├── scripts/
+│   └── discover_keywords.py        # Keyword discovery script
+└── references/
+    └── api-responses.md            # Full API response structures
+
+seo-keyword-research/
+├── SKILL.md                        # SEO workflow skill (research -> outline)
+├── scripts/
+│   └── blog_seo_research.py        # Full blog SEO research script
+└── references/
+    ├── keyword-placement-guide.md  # Detailed keyword placement rules
+    └── tech-blog-examples.md       # Real examples for tech/dev blogs
+```
+
+## How It Works
+
+```
+User: "Write a blog about kubernetes deployment"
+  |
+  v
+[google-trends-api] RELATED_QUERIES -> finds "kubernetes vs docker" (Breakout!)
+[google-trends-api] RELATED_TOPICS  -> finds "Helm", "CI/CD", "Container Orchestration"
+  |
+  v
+[seo-keyword-research] Selects primary keyword, builds outline
+  |
+  v
+Output: SEO-optimized blog outline targeting trending keywords
+```
+
+## Specification
+
+These skills follow the [Agent Skills specification](https://agentskills.io/specification). Each skill has:
+- `SKILL.md` with YAML frontmatter (name, description, compatibility, metadata)
+- `scripts/` for executable code
+- `references/` for detailed documentation (loaded on demand)
+
+## License
+
+MIT

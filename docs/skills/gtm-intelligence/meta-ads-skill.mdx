@@ -1,0 +1,105 @@
+---
+title: "meta-ads-skill"
+description: "The Meta Ads Skill is a comprehensive, production-ready  skill designed to give LLMs and AI agents expert-level capabilities to orchestrate the official Meta..."
+---
+
+<Info>
+  **Category:** GTM Intelligence · **Version:** `0.0.1` · **Author:** `opendirectory` · **Compatibility:** All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)
+</Info>
+
+<img width="1376" height="768" alt="meta-ads-skill" src="https://github.com/user-attachments/assets/baf2509b-0ee0-41ca-9555-3ad350a6824c" />
+
+## Overview
+
+The **Meta Ads Skill** is a comprehensive, production-ready  skill designed to give LLMs and AI agents expert-level capabilities to orchestrate the official **Meta Ads Python CLI**.
+
+By using this skill, an agent transforms into an **Expert Media Buyer**. It will know exactly how to explore ad structures, troubleshoot campaign performance (like CPA spikes), discover new audiences, and format massive Meta APIs JSON payloads into beautiful, readable markdown reports.
+
+---
+
+## Install
+
+<Tabs>
+  <Tab title="npx CLI (Recommended)">
+    ```bash
+    npx "@opendirectory.dev/skills" install meta-ads-skill --target claude
+    ```
+  </Tab>
+  <Tab title="skills.sh">
+    ```bash
+    npx skills add Varnan-Tech/opendirectory --skill meta-ads-skill
+    ```
+  </Tab>
+  <Tab title="Claude Code Native">
+    ```bash
+    /plugin marketplace add Varnan-Tech/opendirectory
+    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
+    ```
+  </Tab>
+  <Tab title="Claude Desktop">
+    1. Copy `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/meta-ads-skill` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
+    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing `SKILL.md`.
+  </Tab>
+  <Tab title="Manus AI">
+    [**Install meta-ads-skill in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Fmeta-ads-skill&utm_source=opendirectory)
+  </Tab>
+</Tabs>
+
+
+## For Agents: How to Use This Skill Efficiently
+
+This skill is designed using a **Progressive Disclosure (Hub-and-Spoke)** architecture to maximize context window efficiency:
+
+1. **The Hub (`SKILL.md`)**: The primary entry point. It provides strict guardrails, safety protocols, and the authentication troubleshooting workflow.
+2. **The Spokes (`references/`)**: 
+   - When you need to perform a specific task (e.g., investigating a CPA spike), read `references/workflows.md` for the exact step-by-step orchestration strategy.
+   - When presenting data to the user, read `references/report_templates.md` to strictly follow the required Markdown layout.
+
+###  Strict Agent Guardrails
+* **Context Protection**: ALWAYS default to `time_range="last_7d"` for insights. ALWAYS use `limit=10` for listing campaigns/adsets initially.
+* **Safety First**: NEVER execute state-changing tools (`create_campaign`, `update_campaign`) without explicitly showing the parameters to the user and waiting for their affirmative confirmation.
+
+---
+
+## Setup
+
+To use this skill, you must install the official Meta Ads CLI and configure your credentials.
+
+### 1. Set up the CLI
+The skill relies on the `meta-ads` Python package:
+```bash
+pip install meta-ads
+```
+
+### 2. Authentication (System User Token)
+The CLI uses a **System User Access Token** for authentication. 
+1. Generate a System User Token in your [Meta Business Suite](https://business.facebook.com/settings/system-users).
+2. Ensure the token has `ads_management`, `ads_read`, and `read_insights` permissions.
+3. Set the following environment variables on your machine:
+
+```bash
+export ACCESS_TOKEN="your_system_user_access_token"
+export AD_ACCOUNT_ID="act_your_ad_account_id"
+```
+
+---
+
+## Skill Repository Structure
+
+When you deploy this skill, the structure will look like this:
+
+```text
+meta-ads-skill/
+ SKILL.md                          # The core router & guardrails
+ references/
+    report_templates.md           # Standardized markdown report structures
+    workflows.md                  # Orchestration strategies (e.g., CPA troubleshooting)
+```
+
+## Supported Commands
+
+This skill orchestrates the `meta-ads` CLI using a noun-verb structure:
+* **Campaigns**: `meta ads campaign list`, `meta ads campaign create`
+* **Ad Sets**: `meta ads adset list`
+* **Ads**: `meta ads ad list`
+* **Insights**: `meta ads insights get`
