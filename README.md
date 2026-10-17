@@ -23,6 +23,7 @@
 [![Agents](https://img.shields.io/badge/agents-8-blueviolet.svg?style=flat-square)](#quick-start)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![skills.sh](https://img.shields.io/badge/skills.sh-listed-brightgreen.svg?style=flat-square)](https://www.skills.sh/Varnan-Tech/opendirectory)
+[![Code Review: Greptile](https://img.shields.io/badge/AI%20Review-Greptile-10B981?style=flat-square)](https://www.greptile.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -630,6 +631,18 @@ We welcome skills across GTM, growth automation, and developer tooling.
 > **Top contributors receive OpenDirectory swag.** Limited-edition merchandise shipped to you.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the required format, the security validation process, and please ensure your skill's README includes installation steps, npx install instructions, prerequisites, and usage examples. We provide a helper script at `scripts/update_skill_readmes.py` to auto-generate the standard install section.
+
+---
+
+## OSS Partners
+
+<table>
+  <tr>
+    <td valign="top" width="100%">
+      <a href="https://www.greptile.com"><b>Greptile</b></a> - Automated codebase-aware AI code reviews on every OpenDirectory pull request and skill submission.
+    </td>
+  </tr>
+</table>
 
 ---
 
