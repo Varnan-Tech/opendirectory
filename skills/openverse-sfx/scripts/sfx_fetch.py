@@ -9,7 +9,7 @@ Usage:
       --attribution '"Deep Whoosh #1" by Alice (CC0) ...' \
       [--dir sfx] [--credits credits.txt]
 """
-import argparse, os, subprocess, sys
+import argparse, os, shutil, sys, urllib.error, urllib.request
 
 def main():
     p = argparse.ArgumentParser()
@@ -23,14 +23,25 @@ def main():
     os.makedirs(args.dir, exist_ok=True)
     ext = os.path.splitext(args.audio_url.split("?")[0])[1] or ".mp3"
     dest = os.path.join(args.dir, args.name + ext)
-    subprocess.run(["curl", "-fsSL", "-o", dest, args.audio_url], check=True)
+    tmp_dest = dest + ".part"
+    try:
+        req = urllib.request.Request(args.audio_url, headers={"User-Agent": "openverse-sfx-skill/1.0"})
+        with urllib.request.urlopen(req, timeout=60) as resp, open(tmp_dest, "wb") as out_f:
+            shutil.copyfileobj(resp, out_f)
+        if os.path.getsize(tmp_dest) == 0:
+            raise OSError("empty response")
+        os.replace(tmp_dest, dest)
+    except (urllib.error.URLError, TimeoutError, OSError):
+        if os.path.exists(tmp_dest):
+            os.remove(tmp_dest)
+        sys.exit("download failed - re-check the audio_url from sfx_search.py output")
 
-    with open(args.credits, "a", encoding="utf-8") as f:
-        f.write(f"{args.name}{ext}: {args.attribution}\n")
+    line = f"{args.name}{ext}: {args.attribution}\n"
+    existing = open(args.credits, encoding="utf-8").read() if os.path.isfile(args.credits) else ""
+    if line not in existing:
+        with open(args.credits, "a", encoding="utf-8") as f:
+            f.write(line)
     print(f"saved {dest} ({os.path.getsize(dest)} bytes); attribution appended to {args.credits}")
 
 if __name__ == "__main__":
-    try:
-        main()
-    except subprocess.CalledProcessError:
-        sys.exit("download failed - re-check the audio_url from sfx_search.py output")
+    main()

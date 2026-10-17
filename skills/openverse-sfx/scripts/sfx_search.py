@@ -11,7 +11,7 @@ Only returns results with license in (cc0, by, pdm) and source in
 Usage:
   python3 sfx_search.py --query "whoosh" [--max-results 8] [--min-ms 0] [--max-ms 30000]
 """
-import argparse, json, sys, urllib.parse, urllib.request
+import argparse, json, sys, urllib.error, urllib.parse, urllib.request
 
 API = "https://api.openverse.org/v1/audio/"
 LICENSES = "cc0,by,pdm"
@@ -33,8 +33,11 @@ def main():
     }
     url = API + "?" + urllib.parse.urlencode(qs)
     req = urllib.request.Request(url, headers={"User-Agent": "openverse-sfx-skill/1.0"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        data = json.load(r)
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = json.load(r)
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        sys.exit(f"search failed: {e}")
 
     out = []
     for res in data.get("results", []):
@@ -51,7 +54,7 @@ def main():
             "license_url": res.get("license_url"),
             "source": res.get("source"),
             "duration_s": round(dur / 1000.0, 2),
-            "audio_url": res.get("url"),                 # direct file for curl
+            "audio_url": res.get("url"),                 # direct file for sfx_fetch.py
             "landing_url": res.get("foreign_landing_url"),
             "attribution": res.get("attribution"),       # copy into credits.txt AS IS
         })
