@@ -1,61 +1,23 @@
 ---
 title: "transcript-quote-sheet"
-description: "Find the moment someone makes a claim and give an editor the quotation, timestamp and original recording. This skill searches across transcripts indexed by A..."
+description: "Search indexed YouTube and podcast transcripts with Arcmira. Build a quote sheet that links each passage to its timestamp in the original recording."
 ---
 
 <Info>
   **Category:** Research · **Version:** `1.0.0` · **Author:** `zealous1` · **Compatibility:** codex
 </Info>
 
-## Install
+Search indexed YouTube and podcast transcripts with [Arcmira](https://arcmira.com). Build a quote sheet that links each passage to its timestamp in the original recording.
 
-<Tabs>
-  <Tab title="npx CLI (Recommended)">
-    ```bash
-    npx "@opendirectory.dev/skills" install transcript-quote-sheet --target claude
-    ```
-  </Tab>
-  <Tab title="skills.sh">
-    ```bash
-    npx skills add Varnan-Tech/opendirectory --skill transcript-quote-sheet
-    ```
-  </Tab>
-  <Tab title="Claude Code Native">
-    ```bash
-    /plugin marketplace add Varnan-Tech/opendirectory
-    /plugin install opendirectory-gtm-skills@opendirectory-marketplace
-    ```
-  </Tab>
-  <Tab title="Claude Desktop">
-    <video
-      controls
-      className="w-full aspect-video rounded-xl mb-4"
-      src="https://github.com/user-attachments/assets/cea8b565-2002-4a87-8857-d902bfcfdc1c"
-    ></video>
-
-    1. Copy `https://github.com/Varnan-Tech/opendirectory/tree/main/skills/transcript-quote-sheet` into [download-directory.github.io](https://download-directory.github.io/) to download the ZIP.
-    2. Open **Claude Desktop** -> **Customize** -> **Skills** -> **+** -> **Upload a skill** and drop the folder containing `SKILL.md`.
-  </Tab>
-  <Tab title="Manus AI">
-    <video
-      controls
-      className="w-full aspect-video rounded-xl mb-4"
-      src="https://github.com/user-attachments/assets/17cbee2a-9e17-4bd4-ac46-68e0e92ffab4"
-    ></video>
-
-    [**Install transcript-quote-sheet in Manus AI**](https://manus.im/import-skills?githubUrl=https%3A%2F%2Fgithub.com%2FVarnan-Tech%2Fopendirectory%2Ftree%2Fmain%2Fskills%2Ftranscript-quote-sheet&utm_source=opendirectory)
-  </Tab>
-</Tabs>
-
-Find the moment someone makes a claim and give an editor the quotation, timestamp and original recording. This skill searches across transcripts indexed by [Arcmira](https://arcmira.com).
+Requires Node.js 22 or later.
 
 ## Install
 
-With Node.js 22 or later, install the skill for Codex:
-
-```sh
-npx @opendirectory.dev/skills install transcript-quote-sheet --target codex
+```bash
+npx "@opendirectory.dev/skills" install transcript-quote-sheet --target codex
 ```
+
+## Connect Arcmira
 
 Connect your Arcmira account using the [MCP setup guide](https://arcmira.com/docs/mcp-server). The [API documentation](https://arcmira.com/docs) describes search coverage and account access.
 

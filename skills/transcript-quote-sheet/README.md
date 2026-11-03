@@ -1,14 +1,19 @@
 # YouTube and podcast transcript quote sheets
 
-Find the moment someone makes a claim and give an editor the quotation, timestamp and original recording. This skill searches across transcripts indexed by [Arcmira](https://arcmira.com).
+Search indexed YouTube and podcast transcripts with [Arcmira](https://arcmira.com). Build a quote sheet that links each passage to its timestamp in the original recording.
 
+Requires Node.js 22 or later.
+
+<!-- OPENDIRECTORY_INSTALL_START -->
 ## Install
-
-With Node.js 22 or later, install the skill for Codex:
 
 ```sh
 npx @opendirectory.dev/skills install transcript-quote-sheet --target codex
 ```
+
+<!-- OPENDIRECTORY_INSTALL_END -->
+
+## Connect Arcmira
 
 Connect your Arcmira account using the [MCP setup guide](https://arcmira.com/docs/mcp-server). The [API documentation](https://arcmira.com/docs) describes search coverage and account access.
 

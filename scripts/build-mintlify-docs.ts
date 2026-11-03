@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { CANONICAL_TARGETS } from '../packages/cli/src/detect';
 import { inspectSkillFrontmatter } from '../packages/cli/src/frontmatter';
 import { findSkillSourceSync } from '../packages/cli/src/skill-discovery';
 
@@ -16,7 +17,7 @@ interface SkillEntry {
   description: string;
   version: string;
   author: string;
-  compatibility: string;
+  targets?: string[];
   category: string;
   categorySlug: string;
   docRoute: string;
@@ -152,7 +153,15 @@ function sanitizePlainText(raw: string): string {
     .trim();
 }
 
-function buildInstallTabsMdx(skillName: string): string {
+function buildInstallTabsMdx(skillName: string, targets?: string[]): string {
+  if (targets) {
+    const command = (target: string) =>
+      '```bash\n' + `npx "@opendirectory.dev/skills" install ${skillName} --target ${target}` + '\n```';
+    if (targets.length === 1) return command(targets[0]);
+    const tabs = targets.map(target => `<Tab title="${target}">\n${command(target)}\n</Tab>`);
+    return `<Tabs>\n${tabs.join('\n')}\n</Tabs>`;
+  }
+
   const githubUrl = encodeURIComponent(`https://github.com/Varnan-Tech/opendirectory/tree/main/skills/${skillName}`);
   const manusUrl = `https://manus.im/import-skills?githubUrl=${githubUrl}&utm_source=opendirectory`;
 
@@ -447,18 +456,17 @@ function loadSkills(): SkillEntry[] {
 
     let version = regEntry?.version || '1.0.0';
     let author = regEntry?.author || 'opendirectory';
-    let compatibility = 'All targets (claude, codex, opencode, gemini, anti-gravity, openclaw, hermes)';
+    let targets: string[] | undefined;
 
     const source = findSkillSourceSync(skillDir);
-    if (source && fs.existsSync(source.skillMdPath)) {
-      try {
-        const parsed = inspectSkillFrontmatter(fs.readFileSync(source.skillMdPath, 'utf-8'));
-        if (parsed.data.version) version = String(parsed.data.version);
-        if (parsed.data.author) author = String(parsed.data.author);
-        if (parsed.compatibility.kind === 'valid') {
-          compatibility = parsed.compatibility.targets.join(', ');
-        }
-      } catch (_) {}
+    if (source) {
+      const parsed = inspectSkillFrontmatter(fs.readFileSync(source.skillMdPath, 'utf-8'));
+      if (parsed.data.version) version = String(parsed.data.version);
+      if (parsed.data.author) author = String(parsed.data.author);
+      if (parsed.compatibility.kind === 'invalid') {
+        throw new Error(`Invalid compatibility for ${name}: ${parsed.compatibility.error}`);
+      }
+      if (parsed.compatibility.kind === 'valid') targets = parsed.compatibility.targets;
     }
 
     const category = getCategory(name, description, regEntry?.tags, skillDir);
@@ -470,7 +478,7 @@ function loadSkills(): SkillEntry[] {
       description,
       version,
       author,
-      compatibility,
+      targets,
       category,
       categorySlug,
       docRoute,
@@ -515,7 +523,7 @@ function buildMintlifyDocs() {
     };
 
     let body = convertMarkdownToMdxBody(rawContent, ctx, true);
-    const installTabs = buildInstallTabsMdx(skill.name);
+    const installTabs = buildInstallTabsMdx(skill.name, skill.targets);
 
     if (body.includes('___MINTLIFY_INSTALL_TABS_PLACEHOLDER___')) {
       body = body.replace('___MINTLIFY_INSTALL_TABS_PLACEHOLDER___', `## Install\n\n${installTabs}`);
@@ -533,7 +541,7 @@ description: ${JSON.stringify(shortDesc)}
 ---
 
 <Info>
-  **Category:** ${skill.category} · **Version:** \`${skill.version}\` · **Author:** \`${skill.author}\` · **Compatibility:** ${skill.compatibility}
+  **Category:** ${skill.category} · **Version:** \`${skill.version}\` · **Author:** \`${skill.author}\` · **Compatibility:** ${skill.targets?.join(', ') ?? `All targets (${CANONICAL_TARGETS.join(', ')})`}
 </Info>
 
 ${body}

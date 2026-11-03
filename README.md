@@ -556,7 +556,7 @@ Manus AI users can import a skill directly from its OpenDirectory skill page. Th
   </tr>
   <tr>
     <td><a href="skills/transcript-quote-sheet"><code>transcript-quote-sheet</code></a></td>
-    <td>Find the moment someone makes a claim and give an editor the quotation, timestamp and original recording. This skill searches across transcripts indexed by Arcmira.</td>
+    <td>Search indexed YouTube and podcast transcripts with Arcmira. Build a quote sheet that links each passage to its timestamp in the original recording.</td>
     <td><code>1.0.0</code></td>
   </tr>
   <tr>
