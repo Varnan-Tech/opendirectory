@@ -1,0 +1,6 @@
+{
+  "name": "transcript-quote-sheet",
+  "version": "1.0.0",
+  "description": "Build a timestamped quote sheet from YouTube and podcast transcript search with Arcmira.",
+  "category": "Research"
+}
