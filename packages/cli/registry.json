@@ -521,6 +521,17 @@
     "path": "skills/store-listing-optimizer"
   },
   {
+    "name": "transcript-quote-sheet",
+    "description": "Find timestamped passages across indexed YouTube and podcast transcripts with Arcmira and assemble a source-linked quote sheet for an article, inte...",
+    "tags": [],
+    "author": "zealous1",
+    "version": "1.0.0",
+    "path": "skills/transcript-quote-sheet",
+    "compatibility": [
+      "codex"
+    ]
+  },
+  {
     "name": "tweet-thread-from-blog",
     "description": "Converts a blog post URL or article into a Twitter/X thread with a strong hook, one insight per tweet, and a CTA.",
     "tags": [

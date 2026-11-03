@@ -1,3 +1,4 @@
+import json
 import os
 import re
 from urllib.parse import quote
@@ -212,6 +213,9 @@ def update_readmes(base_dir: str = "skills") -> None:
         print(f"Error: {base_dir} directory not found.")
         return
 
+    with open("packages/cli/registry.json", encoding="utf-8") as registry_file:
+        registry = {entry["name"]: entry for entry in json.load(registry_file)}
+
     for skill_dir in sorted(os.listdir(base_dir)):
         skill_path = os.path.join(base_dir, skill_dir)
         if not os.path.isdir(skill_path):
@@ -220,6 +224,13 @@ def update_readmes(base_dir: str = "skills") -> None:
         readme_path = os.path.join(skill_path, "README.md")
         if not os.path.exists(readme_path):
             print(f"SKIP (no README.md): {skill_dir}")
+            continue
+
+        if skill_dir not in registry:
+            print(f"SKIP (build registry first): {skill_dir}")
+            continue
+        if registry[skill_dir].get("compatibility"):
+            print(f"SKIP (keep target-specific install instructions): {skill_dir}")
             continue
 
         with open(readme_path, "r", encoding="utf-8") as f:
