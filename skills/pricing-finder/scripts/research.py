@@ -193,7 +193,7 @@ def fetch_firecrawl(url, key, timeout=30):
             "onlyMainContent": True,
         }).encode()
         req = urllib.request.Request(
-            "https://api.firecrawl.dev/v1/scrape",
+            "https://api.firecrawl.dev/v2/scrape",
             data=payload,
             headers={
                 "Authorization": f"Bearer {key}",
