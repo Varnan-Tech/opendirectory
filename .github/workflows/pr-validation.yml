@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Test Firecrawl requests and examples (offline)
+        run: python3 -m unittest discover -s scripts -p test_pricing_firecrawl.py -v
+
       - name: Validate skill descriptions
         run: pnpm exec tsx scripts/validate-skill-descriptions.ts
 
