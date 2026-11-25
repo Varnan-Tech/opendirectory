@@ -191,6 +191,7 @@ def fetch_firecrawl(url, key, timeout=30):
             "url": url,
             "formats": ["markdown"],
             "onlyMainContent": True,
+            "maxAge": 0,  # Pricing research needs a fresh scrape, not v2's cached default.
         }).encode()
         req = urllib.request.Request(
             "https://api.firecrawl.dev/v2/scrape",

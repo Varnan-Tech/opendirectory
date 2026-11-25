@@ -73,11 +73,13 @@ print(host.split('.')[0])
 
 **Primary: Firecrawl (if FIRECRAWL_API_KEY is set)**
 
+Use `maxAge: 0` to fetch fresh content instead of v2's default two-day cache.
+
 ```bash
 curl -s -X POST https://api.firecrawl.dev/v2/scrape \
   -H "Authorization: Bearer $FIRECRAWL_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"url": "URL_HERE", "formats": ["markdown"], "onlyMainContent": true}' \
+  -d '{"url": "URL_HERE", "formats": ["markdown"], "onlyMainContent": true, "maxAge": 0}' \
   | python3 -c "
 import sys, json
 d = json.load(sys.stdin)
